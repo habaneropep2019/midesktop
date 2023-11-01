@@ -1,4 +1,0 @@
-#ifndef KSCORER_H_INCLUDED
-#define KSCORER_H_INCLUDED
-
-#endif
