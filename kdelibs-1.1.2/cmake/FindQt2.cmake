@@ -19,14 +19,14 @@ include(Qt2Macros)
 
 if(UNIX)
   find_path(QT_INCLUDE_DIR qapp.h
-    /opt/qt2/include
-    /opt/qt2/include/qt
+    /opt/osiris/include
+    /opt/osiris/include/qt
     ${QT2_INCLUDE_DIR}
     )
 
   find_library(QT_LIBRARIES libqt
-    /opt/qt2/lib64
-    /opt/qt2/lib
+    /opt/osiris/lib64
+    /opt/osiris/lib
     ${QT2_LIBRARY_DIR}
     )
 
