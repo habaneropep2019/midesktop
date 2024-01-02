@@ -25,7 +25,7 @@ DatePickerDialog::DatePickerDialog(QWidget* parent, const char* name)
   ok=new QPushButton(i18n("OK"), this);
   cancel=new QPushButton(i18n("Cancel"), this);
   dateLabel=new DateLabel(this);
-  dateLabel->setAlignment(AlignHCenter | AlignVCenter);
+  dateLabel->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
   initializeGeometry();
   connect(datePicker, SIGNAL(dateSelected(QDate)), 
 	  dateLabel, SLOT(setDate(QDate)));
@@ -94,7 +94,7 @@ DateLabel::DateLabel(QWidget* parent, const char* name,
     changeDate(false)
 {
   // ############################################################################
-  setAlignment(AlignVCenter | AlignCenter);
+  setAlignment(Qt::AlignVCenter | Qt::AlignCenter);
   setBackgroundColor("peachpuff");
   setFrameStyle(QFrame::Box | QFrame::Plain);
   setText(date.toString());

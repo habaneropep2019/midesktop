@@ -152,8 +152,8 @@ KDatePicker::KDatePicker(QWidget *parent, QDate dt, const char *name)
   connect(m_tbl, SIGNAL(yearChanged(QDate)), SLOT(updateHeader(QDate)));
   connect(m_tbl, SIGNAL(dateSelected(QDate)), SIGNAL(dateSelected(QDate)));
   // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ 
-  m_header->setAlignment(AlignCenter);
-  m_footer->setAlignment(AlignCenter);
+  m_header->setAlignment(Qt::AlignCenter);
+  m_footer->setAlignment(Qt::AlignCenter);
    
   m_footer->setBackgroundColor(white);
    

@@ -152,7 +152,7 @@
 // Revision 1.58  1998/04/27 19:22:41  ettrich
 // Matthias: the nifty feature that you can globally change the size of the
 //   toolbars broke the nifty-as-well feature that a client can pass another
-//   size than 26 to the toolbar´s constructor.
+//   size than 26 to the toolbar's constructor.
 //
 //   I hope I found a solution which allows both. If you pass an argument
 //   to the constructor, than a new attribute fixed_size is set.
@@ -411,7 +411,7 @@ void KToolBarButton::setRadio (bool f)
 bool KToolBarButton::eventFilter (QObject *o, QEvent *ev)
 {
   // From Kai-Uwe Sattler <kus@iti.CS.Uni-Magdeburg.De>
-  if ((KToolBarButton *)o == this && ev->type () == Event_MouseButtonDblClick)
+  if ((KToolBarButton *)o == this && ev->type () == QEvent::MouseButtonDblClick)
   {
     //debug ("Doubleclick");
     emit doubleClicked (id);
@@ -419,9 +419,9 @@ bool KToolBarButton::eventFilter (QObject *o, QEvent *ev)
   }
       
   if ((KToolBarButton *) o == this)
-    if ((ev->type() == Event_MouseButtonPress ||
-         ev->type() == Event_MouseButtonRelease ||
-         ev->type() == Event_MouseButtonDblClick) && radio && isOn())
+    if ((ev->type() == QEvent::MouseButtonPress ||
+         ev->type() == QEvent::MouseButtonRelease ||
+         ev->type() == QEvent::MouseButtonDblClick) && radio && isOn())
       return true;
 
   if ((QPopupMenu *) o != myPopup)
@@ -429,8 +429,8 @@ bool KToolBarButton::eventFilter (QObject *o, QEvent *ev)
   
   switch (ev->type())
   {
-    case Event_MouseButtonDblClick:
-    case Event_MouseButtonPress:
+    case QEvent::MouseButtonDblClick:
+    case QEvent::MouseButtonPress:
       //debug ("Got press | doubleclick");
       // If I get this, it means that popup is visible
       {
@@ -441,7 +441,7 @@ bool KToolBarButton::eventFilter (QObject *o, QEvent *ev)
       }
       break;
     
-    case Event_MouseButtonRelease:
+    case QEvent::MouseButtonRelease:
       //debug ("Got release");
       if (!myPopup->geometry().contains(QCursor::pos())) // not in menu...
       {
@@ -456,7 +456,7 @@ bool KToolBarButton::eventFilter (QObject *o, QEvent *ev)
       }
       break;
 
-    case Event_Hide:
+    case QEvent::Hide:
       //debug ("Got hide");
       on(false);
       return false;
@@ -519,7 +519,7 @@ void KToolBarButton::drawButton( QPainter *_painter )
 
     if (!btext.isNull())
     {
-      int tf = AlignVCenter|AlignLeft;
+      int tf = Qt::AlignVCenter|Qt::AlignLeft;
       if (!isEnabled())
         _painter->setPen(palette().disabled().dark());
       if (pixmap())
@@ -544,7 +544,7 @@ void KToolBarButton::drawButton( QPainter *_painter )
   {
     if (!btext.isNull())
     {
-      int tf = AlignVCenter|AlignLeft;
+      int tf = Qt::AlignVCenter|Qt::AlignLeft;
       if (!isEnabled())
         _painter->setPen(palette().disabled().dark());
       dx= 1;
@@ -578,7 +578,7 @@ void KToolBarButton::drawButton( QPainter *_painter )
 
     if (!btext.isNull())
     {
-      int tf = AlignBottom|AlignHCenter;
+      int tf = Qt::AlignBottom|AlignHCenter;
       if (!isEnabled())
         _painter->setPen(palette().disabled().dark());
       dy= pixmap()->height();

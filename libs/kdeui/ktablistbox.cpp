@@ -853,7 +853,7 @@ const QString& KTabListBox::text(int row, int col) const
 
   if (!item)
   {
-    str = 0L;
+    str = QString::null;
     return str;
   }
   if (col >= 0) return item->text(col);
@@ -937,7 +937,6 @@ void KTabListBox::changeItem(const char* aStr, int row)
   if (row < 0 || row >= numRows()) return;
 
   str = aStr;
-  str.detach();
 
   sepStr[0] = sepChar;
   sepStr[1] = '\0';
@@ -1359,7 +1358,7 @@ void KTabListBox::mouseMoveEvent(QMouseEvent* e)
     {
       mResizeCol = FALSE;
       mMouseCol = -1;
-      setCursor(arrowCursor);
+      setCursor(Qt::arrowCursor);
     }
   }
 }
@@ -1583,7 +1582,7 @@ KTabListBoxTable::KTabListBoxTable(KTabListBox *parent):
   setCellHeight(fm.lineSpacing() + 1);
   setNumRows(0);
 
-  setCursor(arrowCursor);
+  setCursor(Qt::arrowCursor);
   setMouseTracking(FALSE);
 
   setFocusPolicy(NoFocus);
@@ -1880,7 +1879,7 @@ void KNumCheckButton::paintEvent( QPaintEvent *event )
   else
       qDrawShadeRect( &painter, 0, 0, width(), height(), colorGroup(),
                       TRUE, 1,1, 0L );
-  int tf = AlignCenter;
+  int tf = Qt::AlignCenter;
   oldfont=painter.font();
   font=oldfont;
   font.setPointSize(height()-7);

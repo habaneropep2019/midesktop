@@ -169,7 +169,7 @@ KMsgBox::KMsgBox( QWidget *parent, const char *caption,
 	picture->setFixedSize( picture->size() );
 	
 	msg = new QLabel( message, this, "_msg" );
-    //msg->setAlignment( AlignCenter );
+    //msg->setAlignment( Qt::AlignCenter );
     msg->adjustSize();
 	msg->setFixedSize( msg->size().width()+10, msg->size().height() );
 	

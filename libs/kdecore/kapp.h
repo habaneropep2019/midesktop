@@ -55,6 +55,8 @@ class KCharsets;
 #include <qfile.h>
 #include <qpopupmenu.h>
 #include <qstrlist.h>
+#include <qmotifstyle.h>
+#include <qwindowsstyle.h>
 
 #define kapp KApplication::getKApplication()
 
@@ -419,7 +421,7 @@ public:
 	*  
 	*  @return true on success.
 	*/
-  bool getKDEFonts(QStrList *fontlist);
+  bool getKDEFonts(QStringList& fontlist);
 
 
   /**
@@ -576,7 +578,7 @@ private:
   QString aCaption; // the name for the window title
   QString aWmCommand; // for userdefined session management
   ConfigState eConfigState;
-  static QStrList* pSearchPaths;
+  static QStringList pSearchPaths;
   KIconLoader* pIconLoader; // the application's own icon loader
   KLocale* pLocale;  
   static KCharsets* pCharsets;  // it shouldn't be static, but you would loose binary compatibility 
@@ -598,7 +600,7 @@ private:
   void parseCommandLine( int&, char** ); // search for special KDE arguments
 
   void buildSearchPaths();
-  void appendSearchPath( const char *path );
+  void appendSearchPath( const QString& path );
 
   virtual void kdisplaySetPalette();
   virtual void kdisplaySetStyle();
@@ -606,7 +608,7 @@ private:
   virtual void kdisplaySetStyleAndFont();
   virtual void readSettings();
   void resizeAll();
-  virtual void applyGUIStyle(GUIStyle newstyle);
+  virtual void applyGUIStyle(const QStyle* newstyle);
 
 public:
 
@@ -623,7 +625,7 @@ public:
   int contrast;
   QFont generalFont;
   QFont fixedFont;
-  GUIStyle applicationStyle;
+  QStyle *applicationStyle;
   
   /** for internal purposes only
     */
@@ -711,6 +713,8 @@ private:
         * @return Whether the access is allowed, true = Access allowed
         */
   bool checkAccess(const char *pathname, int mode);
+
+  bool checkAccess(const QString& pathname, int mode);
 
 #endif
 

@@ -1,5 +1,5 @@
 /* -*- C++ -*-
- * §Header§
+ * Header
  */
 
 #include <qsize.h>
@@ -137,7 +137,7 @@ void StringListEditWidget::getStrings(list<string>& result)
   CHECK(result.empty());
   for(count=0; (unsigned)count<lbStrings->count(); count++)
     {
-      result.push_back(lbStrings->text(count));
+      result.push_back(lbStrings->text(count).latin1());
     }
   CHECK(result.size()==lbStrings->count());
   // ############################################################################

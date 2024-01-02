@@ -83,7 +83,7 @@ protected:
   int            max_height;
   int            curr_indx;
   QList<QPixmap> pixmap_list;
-  QStrList       file_list;
+  QStringList    file_list;
   QStrList       name_list;
   QTimer         *timer;
   QString        dir_name;
@@ -137,7 +137,7 @@ public:
 	 those icons which names start with 'mini'.
   */
   QPixmap selectIcon( QString &name, const QString &filter);
-  void setDir( const QStrList *l ) { cb_dirs->clear(); cb_dirs->insertStrList(l); }
+  void setDir( const QStringList& l ) { cb_dirs->clear(); cb_dirs->insertStringList(l); }
   int exec(QString filter);
 
 protected slots:

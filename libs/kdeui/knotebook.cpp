@@ -646,7 +646,7 @@ void KNoteBook::paintEvent(QPaintEvent *)
 // Grab QDialogs keypresses if non-modal
 bool KNoteBook::eventFilter( QObject *obj, QEvent *e )
 {
-  if ( e->type() == Event_KeyPress && obj == this && !testWFlags(WType_Modal))
+  if ( e->type() == QEvent::KeyPress && obj == this && !testWFlags(WType_Modal))
   {
     QKeyEvent *k = (QKeyEvent*)e;
     if(k->key() == Key_Escape || k->key() == Key_Return || k->key() == Key_Enter)

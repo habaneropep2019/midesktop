@@ -36,38 +36,39 @@ void KURL::encodeURL( QString& _url ) {
     // a worst case approximation
     char *new_url = new char[ old_length * 3 + 1 ];
     int new_length = 0;
+
+    const char* urlLatin1 = _url.latin1();
      
     for (int i = 0; i < old_length; i++) 
     {
-        static char *safe = "$-._!*(),/"; /* RFC 1738 */
+        const char *safe = "$-._!*(),/"; /* RFC 1738 */
         // '/' added by David, fix found by Michael Reiher
 
-        char t = _url[i];
-
+        char t = urlLatin1[i];
         if ( (( t >= 'A') && ( t <= 'Z')) ||
              (( t >= 'a') && ( t <= 'z')) ||
              (( t >= '0') && ( t <= '9')) ||
              (strchr(safe, t))
            )
 	{
-	    new_url[ new_length++ ] = _url[i];
+	    new_url[ new_length++ ] = urlLatin1[i];
 	}
 	else
 	{
 	    new_url[ new_length++ ] = '%';
 
-	    unsigned char c = ((unsigned char)_url[ i ]) / 16;
+	    unsigned char c = ((unsigned char)urlLatin1[ i ]) / 16;
 	    c += (c > 9) ? ('A' - 10) : '0';
 	    new_url[ new_length++ ] = c;
 
-	    c = ((unsigned char)_url[ i ]) % 16;
+	    c = ((unsigned char)_url[ i ].latin1()) % 16;
 	    c += (c > 9) ? ('A' - 10) : '0';
 	    new_url[ new_length++ ] = c;
 	    
 	} 
     }
 
-    new_url[new_length]=0;
+    new_url[new_length] = '\0';
     _url = new_url;
     delete [] new_url;
 }
@@ -87,7 +88,9 @@ void KURL::decodeURL( QString& _url ) {
     int old_length = _url.length();
     if (!old_length)
 	return;
-    
+
+    const char* urlLatin1 = _url.latin1();
+
     int new_length = 0;
 
     // make a copy of the old one
@@ -95,32 +98,17 @@ void KURL::decodeURL( QString& _url ) {
         
     for (int i = 0; i < old_length; i++) 
     {
-	uchar character = _url[ i ];
-	if ( character == '%' ) 
-	{
-	    character = hex2int( _url[i+1] ) * 16 + hex2int( _url[i+2] );
-	    i += 2;
-	}
-	new_url [ new_length++ ] = character;
+	    uchar character = urlLatin1[ i ];
+        if ( character == '%' ) 
+        {
+            character = hex2int( urlLatin1[i+1] ) * 16 + hex2int( urlLatin1[i+2] );
+            i += 2;
+        }
+        new_url [ new_length++ ] = character;
     }
     new_url [ new_length ] = 0;
     _url = new_url;
     delete [] new_url;
-}
-
-void
-KURL::detach()
-{
-    protocol_part.detach();
-    host_part.detach();
-    path_part.detach();
-    ref_part.detach();
-    /* temporarily removed */
-    // dir_part.detach();
-    user_part.detach();
-    passwd_part.detach();
-    path_part_decoded.detach();
-    search_part.detach();
 }
 
 KURL::KURL() 
@@ -148,7 +136,10 @@ KURL::KURL( KURL & _base_url, const char * _rel_url )
         parse( _rel_url );
     // Relative URL - starts with a "net_path" (RFC 2396).
     else if ( relURL.find ( "//" ) == 0 )
-        parse( _base_url.protocol_part + ":" + _rel_url );
+    {
+        QString url = _base_url.protocol_part + ":" + _rel_url;
+        parse(url.latin1());
+    }
     // Relative URL - all others (RFC 2396)	
     else
     {
@@ -163,7 +154,6 @@ KURL::KURL( KURL & _base_url, const char * _rel_url )
         user_part = _base_url.user_part;
         passwd_part = _base_url.passwd_part;
         bNoPath = _base_url.bNoPath;
-        detach();
 	if ( same_protocol )
 	  cd( _rel_url + (sep_loc + 1), false );
 	else
@@ -181,9 +171,9 @@ void KURL::parse( const char * _url )
     QString url(_url);
     // defaults
     malformed = false;
-    path_part_decoded = 0;
-    search_part = 0;
-    ref_part = "";
+    path_part_decoded = QString::null;
+    search_part = QString::null;
+    ref_part = QString::null;
     bNoPath = false;
 
     // Empty or Null string ?
@@ -218,7 +208,6 @@ void KURL::parse( const char * _url )
 	 protocol_part == "man" || protocol_part == "news" )
     {
 	path_part = url.mid( pos + 1, url.length() );
-	detach();
 	return;
     }
     
@@ -360,7 +349,6 @@ void KURL::parse( const char * _url )
     // hostpart -> Host[:Port]
     // userpart -> User[:Pass]
 
-    detach();
 }
 
 KURL::KURL( const char* _protocol, const char* _host, 
@@ -374,9 +362,8 @@ KURL::KURL( const char* _protocol, const char* _host,
 }     
 
 bool KURL::hasSubProtocol()
-{
-    return ( !path_part.isNull() && 
-	     strchr( path_part, '#' ) != 0L );
+{    
+    return (!path_part.isNull() && path_part.find('#', 0, false) != -1);
 }
 
 const char* KURL::directory( bool _trailing )
@@ -621,7 +608,7 @@ bool KURL::cd( const char* _dir, bool zapRef)
     if ( !_dir )
 	return false;
     
-    path_part_decoded = 0;
+    path_part_decoded = QString::null;
 
     // Now we have a path for shure
     bNoPath = ( _dir[0] == 0);
@@ -693,8 +680,7 @@ KURL& KURL::operator=( const KURL &u)
   dir_part = u.dir_part;
   user_part = u.user_part;
   passwd_part = u.passwd_part;
-  
-  detach();
+
   return *this;
 }
 

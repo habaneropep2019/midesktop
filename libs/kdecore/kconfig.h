@@ -89,8 +89,8 @@ public:
 	* @param pLocalAppFile Another file to parse in addition to the
 	* normally parsed files (has priority over pGlobalAppFile 
 	*/
-  KConfig( const char* pGlobalAppFile = 0L, 
-		   const char* pLocalAppFile = 0L );
+  KConfig( const QString& pGlobalAppFile = QString::null, 
+		       const QString& pLocalAppFile = QString::null );
 
   /** 
 	* Destructor. 

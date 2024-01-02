@@ -52,7 +52,7 @@ KFileDialogConfigureDlg::KFileDialogConfigureDlg(QWidget *parent,
 				 "Mario Weilguni <mweilguni@sime.com>\n"
 				 "and Martin Jones <mjones@kde.org>"),
 			    this);
-  label->setAlignment(AlignCenter);
+  label->setAlignment(Qt::AlignCenter);
   label->adjustSize();
   addTab(label, i18n("About"));
 
@@ -152,7 +152,7 @@ KFileDialogConfigure::KFileDialogConfigure(QWidget *parent,
    QLabel *tmpLabel;
    tmpLabel= new QLabel(findPathEdit, i18n("&Find command:"), this);
    tmpLabel->adjustSize();
-   tmpLabel->setAlignment(AlignCenter);
+   tmpLabel->setAlignment(Qt::AlignCenter);
    tmpLabel->setMinimumSize(tmpLabel->size());
    tmpLabel->setMaximumHeight(tmpLabel->height());
    findPathEdit->setMinimumHeight(tmpLabel->size().height()+8);

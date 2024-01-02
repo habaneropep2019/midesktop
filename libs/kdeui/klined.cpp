@@ -40,19 +40,19 @@ KLined::~KLined ()
 
 void KLined::cursorAtEnd ()
 {
-  QKeyEvent ev( Event_KeyPress, Key_End, 0, 0 );
+  QKeyEvent ev( QEvent::KeyPress, Qt::Key_End, 0, 0 );
   QLineEdit::keyPressEvent( &ev );
 }
 
 bool KLined::eventFilter (QObject *, QEvent *e)
 {
-  if (e->type() == Event_KeyPress)
+  if (e->type() == QEvent::KeyPress)
     {
       QKeyEvent *k = (QKeyEvent *) e;
       
-      if ( ((k->state() == ControlButton) && (k->key() == Key_S || k->key() == Key_D))
-	   || k->key() == Key_Tab) {   
-	      if (k->key() == Key_Tab || k->key() == Key_S)
+      if ( ((k->state() == Qt::ControlButton) && (k->key() == Qt::Key_S || k->key() == Qt::Key_D))
+	   || k->key() == Qt::Key_Tab) {   
+	      if (k->key() == Qt::Key_Tab || k->key() == Qt::Key_S)
 		      emit completion ();
 	      else
 		      emit rotation ();

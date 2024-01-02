@@ -172,7 +172,7 @@ KSpellDlg::KSpellDlg (QWidget *, const char *name,
 
 	QLabel *tmpQLabelID = new QLabel( this, "Label_5" );
 	tmpQLabelID->setGeometry( 20, 240, 520, 40 );
-	tmpQLabelID->setAlignment(AlignRight | AlignBottom);
+	tmpQLabelID->setAlignment(Qt::AlignRight | Qt::AlignBottom);
 	//	tmpQLabelID->setMargin( -1 );
 	layout->addMultiCellWidget (tmpQLabelID, 6, 7, 0, 3);
 	//	tmpQPushButton->setMinimumSize (butSH);
@@ -190,7 +190,7 @@ KSpellDlg::KSpellDlg (QWidget *, const char *name,
 	qss+=KSPELLID;
 	qss+=" ";
 	tmpQLabelID->setText (qss.data());
-	tmpQLabelID->setAlignment (AlignRight);
+	tmpQLabelID->setAlignment (Qt::AlignRight);
 	QFont ital;
 	ital.setItalic (TRUE);
 	tmpQLabelID->setFont (ital);

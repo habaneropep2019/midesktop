@@ -21,10 +21,10 @@
 
 #include <kapp.h>
 
+#include <qdict.h>
+
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
-
-#include <qdict.h>
 
 /** 
 * KDE desktop resources stored on the root window.

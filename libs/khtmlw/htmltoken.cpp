@@ -365,7 +365,7 @@ void HTMLTokenizer::write( const char *str )
 	              res = charsets->convertTag(searchBuffer+1, len).copy();
 	              if (len <= 0)
 	              {
-		    	res = 0;
+		    	res = QString::null;
 	              }
 	           }
 	        }

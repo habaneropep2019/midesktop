@@ -238,7 +238,7 @@ void KFileBaseDialog::init()
 	myStatusLine->setText("Dir and File Info");
         myStatusLine->adjustSize();
 	myStatusLine->setFrameStyle( QFrame::Panel | QFrame::Sunken );
-	myStatusLine->setAlignment( AlignHCenter | AlignVCenter );
+	myStatusLine->setAlignment( AlignHCenter | Qt::AlignVCenter );
 	myStatusLine->setMinimumSize( myStatusLine->sizeHint() );
     } else
 	myStatusLine = 0L;
@@ -422,7 +422,7 @@ void KFileBaseDialog::checkPath(const char *_txt, bool takeFiles) // SLOT
 	ASSERT(position >= 0); // we already inserted the current dir in case
 	QString filename = text.mid(position + 1, text.length());
 	if (filename != selection)
-	    selection = 0;
+	    selection = QString::null;
     }
 
     KURL u = text.data(); // I have to take care of entered URLs
@@ -478,7 +478,7 @@ QString KFileBaseDialog::dirPath()
 void KFileBaseDialog::setDir(const char *_pathstr, bool clearforward)
 {
     debugC("setDir %s %ld", _pathstr, time(0));
-    filename_ = 0;
+    filename_ = QString::null;
     QString pathstr = _pathstr;
 
     if (pathstr.length() == 0 || pathstr.right(1)[0] != '/')
@@ -883,7 +883,7 @@ void KFileBaseDialog::mkdir()
     lMakeDir = new QDialog(0,"MakeDir Dialog",true);
     lLayout = new QVBoxLayout( lMakeDir, 5 );
     label = new QLabel(lMakeDir);
-    label->setAlignment( AlignLeft | AlignVCenter );
+    label->setAlignment( Qt::AlignLeft | Qt::AlignVCenter );
     label->setText(QString(i18n("Create new directory in: ")) + dir->path() );
     label->setMinimumSize( label->sizeHint() );
     ed= new QLineEdit(lMakeDir);
@@ -971,8 +971,8 @@ void KFileBaseDialog::toolbarPressedCallback(int i)
 	bookmarksMenu->move(p);
 
 	int choice= bookmarksMenu->exec();
-	QEvent ev(Event_Leave);
-	QMouseEvent mev (Event_MouseButtonRelease,
+	QEvent ev(QEvent::Leave);
+	QMouseEvent mev (QEvent::MouseButtonRelease,
 			 QCursor::pos(), LeftButton, LeftButton);
 	QApplication::sendEvent(btn, &ev);
 	QApplication::sendEvent(btn, &mev);
@@ -1042,7 +1042,7 @@ void KFileBaseDialog::fileActivated(KFileInfo *item)
 void KFileBaseDialog::fileHighlighted(KFileInfo *item)
 {
     // remove the predefined selection
-    selection = 0;
+    selection = QString::null;
 
     const char *highlighted = item->fileName();
 
@@ -1106,7 +1106,7 @@ void KFileBaseDialog::setSelection(const char *name)
     debugC("setSelection %s", name);
 
     if (!name) {
-	selection = 0;
+	selection = QString::null;
 	return;
     }
 
@@ -1153,7 +1153,7 @@ void KFileBaseDialog::completion() // SLOT
 
     // if someone uses completion, he doesn't like the current
     // selection
-    selection = 0;
+    selection = QString::null;
 
     QString text = locationEdit->currentText();
     if ( KURL(text).isMalformed() )
@@ -1221,7 +1221,7 @@ QString KFileDialog::getOpenFileURL(const char *url, const char *filter,
     if (dlg->exec() == QDialog::Accepted)
 	retval = dlg->selectedFileURL();
     else
-	retval = 0;
+	retval = QString::null;
 
     delete dlg;
     if (!retval.isNull())
@@ -1255,7 +1255,7 @@ QString KFileBaseDialog::getDirectory(const char *url,
     if (dlg->exec() == QDialog::Accepted)
 	retval = dlg->selectedFile();
     else
-	retval= 0;
+	retval= QString::null;
 
     delete dlg;
     if (!retval.isNull())
@@ -1415,7 +1415,7 @@ QString KFilePreviewDialog::getOpenFileURL(const char *url, const char *filter,
     if (dlg->exec() == QDialog::Accepted)
 	retval = dlg->selectedFileURL();
     else
-	retval= 0;
+	retval= QString::null;
 
     delete dlg;
     if (!retval.isNull())

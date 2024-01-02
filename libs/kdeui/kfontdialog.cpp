@@ -161,11 +161,12 @@
 #include <qfile.h>
 #include <qtextstream.h> 
 #include <qapplication.h>
-#include <X11/Xlib.h>
 
 #include <klocale.h>
 #include <kcharsets.h>
 #include <kapp.h>
+
+#include <X11/Xlib.h>
 
 #define MINSIZE(x) x->setMinimumSize(x->sizeHint());
 
@@ -360,7 +361,7 @@ KFontDialog::KFontDialog( QWidget *parent, const char *name,
   
   example_edit->setFont(selFont);
   
-  //  example_edit->setAlignment(AlignCenter);
+  //  example_edit->setAlignment(Qt::AlignCenter);
   //  example_edit->setBackgroundColor(white);
   //  example_edit->setFrameStyle( QFrame::WinPanel | QFrame::Sunken );
   //  example_edit->setLineWidth( 1 );

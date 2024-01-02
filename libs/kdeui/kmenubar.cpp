@@ -359,14 +359,16 @@ void KMenuBar::slotReadConfig ()
 
   if (style() == MotifStyle)
   {
-    menu->setStyle(style()); //Uh!
+    QStyle* new_style = new QMotifStyle;
+    menu->setStyle(new_style); //Uh!
     menu->setMouseTracking(false);
     if (position != Floating || position == FloatingSystem)
       menu->setFrameStyle(Panel | Raised);
   }
   else
   {
-    menu->setStyle(style()); //Uh!
+    QStyle* new_style = new QWindowsStyle;
+    menu->setStyle(new_style); //Uh!
     menu->setMouseTracking(true);
     if (position != Floating && position != FloatingSystem)
       menu->setFrameStyle(NoFrame);
@@ -475,7 +477,7 @@ void KMenuBar::leaveEvent (QEvent *e){
 bool KMenuBar::eventFilter(QObject *ob, QEvent *ev){
 
 
-  if (ob == Parent && ev->type() == Event_Show && standalone_menubar)
+  if (ob == Parent && ev->type() == QEvent::Show && standalone_menubar)
   {
     //bool aha = isVisible(); // did app enable show?
       setMenuBarPos(FloatingSystem);
@@ -488,7 +490,7 @@ bool KMenuBar::eventFilter(QObject *ob, QEvent *ev){
 
 
   if (ob == handle){
-    if (ev->type() == Event_MouseButtonPress)
+    if (ev->type() == QEvent::MouseButtonPress)
     {
       if (standalone_menubar)
       {
@@ -523,7 +525,7 @@ bool KMenuBar::eventFilter(QObject *ob, QEvent *ev){
       return TRUE;
     }
 
-    if (ev->type() == Event_MouseMove &&
+    if (ev->type() == QEvent::MouseMove &&
         ((QMouseEvent*) ev)->state() == LeftButton &&
         toggleFlatOnRelease)
       {
@@ -567,7 +569,7 @@ bool KMenuBar::eventFilter(QObject *ob, QEvent *ev){
         return true; // Or false? Never knew what evFilter returns...
       }
 
-    if (ev->type() == Event_MouseButtonRelease)
+    if (ev->type() == QEvent::MouseButtonRelease)
       {
 	if (mgr)
           mgr->stop();
@@ -577,7 +579,7 @@ bool KMenuBar::eventFilter(QObject *ob, QEvent *ev){
         return TRUE;
       }
 
-    if ((ev->type() == Event_Paint)||(ev->type() == Event_Enter)||(ev->type() == Event_Leave) ){
+    if ((ev->type() == QEvent::Paint)||(ev->type() == QEvent::Enter)||(ev->type() == QEvent::Leave) ){
 
       QColorGroup g = QWidget::colorGroup();
       QPainter paint(handle);
@@ -603,7 +605,7 @@ bool KMenuBar::eventFilter(QObject *ob, QEvent *ev){
       }
 
       int stipple_height;
-      if (ev->type() == Event_Enter && highlight) // highlight? - sven
+      if (ev->type() == QEvent::Enter && highlight) // highlight? - sven
         b = kapp->selectColor; // this is much more logical then
                                // the hardwired value used before!!
       //else

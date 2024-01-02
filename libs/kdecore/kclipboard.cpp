@@ -13,7 +13,7 @@
 #include <string.h>
 
 // Here we depend on Qt not to change their implementation!!!
-extern Time qt_x_clipboardtime;                 // def. in qapp_x11.cpp   
+extern Time qt_x_time;                          // def. in qapp_x11.cpp   
 extern QObject *qt_clipboard;                   // defined in qapp_xyz.cpp
 
 KClipboard* KClipboard::s_pSelf = 0L;
@@ -160,7 +160,7 @@ void KClipboard::setOwner()
   Window win = owner->winId();
   Display *dpy = owner->x11Display();
     
-  XSetSelectionOwner( dpy, XA_PRIMARY, win, qt_x_clipboardtime );
+  XSetSelectionOwner( dpy, XA_PRIMARY, win, qt_x_time );
   if ( XGetSelectionOwner( dpy, XA_PRIMARY ) != win )
   {
     std::cerr <<  "KClipboard::setOwner: Cannot set X11 selection owner" << std::endl;
@@ -264,7 +264,6 @@ void KClipboard::fetchData()
   // printf("#################### READ %i bytes\n", nread );
     
   QBuffer::close();
-
   if ( m_strFormat.isEmpty() )
   {
     // Find non printable characters
@@ -288,11 +287,11 @@ void KClipboard::fetchData()
 
 bool KClipboard::event( QEvent *e )
 {
-  if ( e->type() != Event_Clipboard )
+  if ( e->type() != QEvent::Clipboard )
     return false;
 
   Display *display = qt_xdisplay();
-  XEvent *xevent = (XEvent *)Q_CUSTOM_EVENT(e)->data();
+  XEvent *xevent = (XEvent *)((QCustomEvent*)e)->data();
 
   switch ( xevent->type )
   {

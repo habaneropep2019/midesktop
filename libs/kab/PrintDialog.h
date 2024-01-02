@@ -29,9 +29,9 @@ class PrintDialog : public PrintDialogData
 public:
   PrintDialog(QWidget* parent = 0, const char* name = 0);
   virtual ~PrintDialog();
-  string getHeadline() { return leHeadline->text(); }
-  string getRightFooter() { return leRightFooter->text(); }
-  string getLeftFooter() { return leLeftFooter->text(); }
+  string getHeadline() { return leHeadline->text().latin1(); }
+  string getRightFooter() { return leRightFooter->text().latin1(); }
+  string getLeftFooter() { return leLeftFooter->text().latin1(); }
   void setHeadline(const string& t) { leHeadline->setText(t.c_str()); }
   void setRightFooter(const string& t) { leRightFooter->setText(t.c_str()); }
   void setLeftFooter(const string& t) { leLeftFooter->setText(t.c_str()); }

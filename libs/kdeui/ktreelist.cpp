@@ -317,7 +317,7 @@ void KTreeListItem::paint(QPainter *p, const QColorGroup& cg, bool highlighted)
       p->drawLine(parentLeaderX, cellCenterY - 2, 
 		  parentLeaderX, cellCenterY + 2);
     }
-    p->setBrush(NoBrush);
+    p->setBrush(Qt::NoBrush);
   }
   
   // now draw the item pixmap and text, if applicable
@@ -328,8 +328,8 @@ void KTreeListItem::paint(QPainter *p, const QColorGroup& cg, bool highlighted)
 	  int textY = cellHeight - ((cellHeight - p->fontMetrics().ascent() - 
 			  p->fontMetrics().leading()) / 2);
 	  if(highlighted) {
-	     if(QApplication::style() == WindowsStyle) {
-		      p->setPen(white);
+	     if(QApplication::style() == Qt::WindowsStyle) {
+		      p->setPen(Qt::white);
 		      p->setBackgroundColor(QApplication::winStyleHighlightColor());
 		  }
 		  else {
@@ -523,7 +523,7 @@ KTreeList::KTreeList(QWidget *parent,
       setFrameStyle(QFrame::Panel | QFrame::Plain);
       setLineWidth(1);
   }
-  setAcceptFocus(TRUE);
+  QWidget::setFocusPolicy(StrongFocus);
   treeRoot = new KTreeListItem;
   treeRoot->setBranch(-1);
   treeRoot->setExpanded(TRUE);

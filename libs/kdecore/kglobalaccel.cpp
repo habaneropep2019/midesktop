@@ -21,9 +21,6 @@
 */
 
 #include "kglobalaccel.h"
-#include <X11/X.h>
-#include <X11/Xlib.h>
-#include <X11/keysym.h>
 #include <string.h>
 
 #include <qkeycode.h>
@@ -34,6 +31,10 @@
 #include <qmessagebox.h>
 
 #include <kapp.h>
+
+#include <X11/X.h>
+#include <X11/Xlib.h>
+#include <X11/keysym.h>
 
 // NOTE ABOUT CONFIGURATION CHANGES
 // Test if keys enabled because these keys have made X server grabs
@@ -217,7 +218,7 @@ bool KGlobalAccel::insertItem(  const char* descr, const char * action, uint key
 	pEntry->bEnabled = false;
 	pEntry->aAccelId = 0;
 	pEntry->receiver = 0;
-	pEntry->member = 0;
+	pEntry->member = QString::null;
 	pEntry->descr = descr;
 
 	return TRUE;
@@ -534,11 +535,11 @@ uint keyToXMod( uint keyCode )
 	
 	if ( keyCode == 0 ) return mod;
 	
-	if ( keyCode & SHIFT )
+	if ( keyCode & Qt::SHIFT )
 		 mod |= ShiftMask;
-	if ( keyCode & CTRL )
+	if ( keyCode & Qt::CTRL )
 		 mod |= ControlMask;
-	if ( keyCode & ALT )
+	if ( keyCode & Qt::ALT )
 		 mod |= Mod1Mask;
 		
 	return mod;

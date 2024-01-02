@@ -150,9 +150,9 @@ static QString stringToPrintable(const QString& s){
 }
 
 
-KConfig::KConfig( const char* pGlobalAppFile, const char* pLocalAppFile )
+KConfig::KConfig( const QString& pGlobalAppFile, const QString& pLocalAppFile )
 {
-  if( pGlobalAppFile )
+  if( !pGlobalAppFile.isNull() )
 	{
 	  data()->aGlobalAppFile = pGlobalAppFile;
 	  // the file should exist in any case
@@ -160,7 +160,7 @@ KConfig::KConfig( const char* pGlobalAppFile, const char* pLocalAppFile )
 	  if( !info.exists() )
 		{
 		  // Can we allow the write? (see above)
-		  if( checkAccess( pGlobalAppFile, W_OK ) )
+		  if( checkAccess( pGlobalAppFile.utf8().data(), W_OK ) )
 		    {
 		      // Yes, write OK
 		      QFile file( pGlobalAppFile );
@@ -169,7 +169,7 @@ KConfig::KConfig( const char* pGlobalAppFile, const char* pLocalAppFile )
 		    }
 		}
 	}
-  if( pLocalAppFile )
+  if( !pLocalAppFile.isNull() )
 	{
 	  data()->aLocalAppFile = pLocalAppFile;
 	  // the file should exist in any case
@@ -177,13 +177,13 @@ KConfig::KConfig( const char* pGlobalAppFile, const char* pLocalAppFile )
 	  if( !info.exists() )
 		{
 		  // Can we allow the write? (see above)
-		  if ( checkAccess( pLocalAppFile, W_OK ) )
+		  if ( checkAccess( pLocalAppFile.utf8().data(), W_OK ) )
 		    {
 		      // Yes, write OK
 		      QFile file( pLocalAppFile );
 		      file.open( IO_WriteOnly );
                       // Set uid/gid (neccesary for SUID programs)
-                      chown(file.name(), getuid(), getgid());
+                      chown(file.name().utf8().data(), getuid(), getgid());
 		      file.close();
 		    }
 		}
@@ -320,16 +320,19 @@ bool KConfig::writeConfigFile( QFile& rConfigFile, bool bGlobal )
   delete pStream;
   rConfigFile.close();
 
+  
+  const char* configFileNameUTF8 = rConfigFile.name().utf8().data();
+
   /* Does program run SUID and user would not be allowed to write 
    * to the file, if it doesn't run  SUID?
    */
-  if( ! checkAccess( rConfigFile.name(), W_OK ) ) // write not allowed
+  if( ! checkAccess( (const char *) rConfigFile.name().utf8().data(), W_OK ) ) // write not allowed
     return false; // can't allow to write config data.
 
 
   rConfigFile.open( IO_Truncate | IO_WriteOnly );
   // Set uid/gid (neccesary for SUID programs)
-  chown(rConfigFile.name(), getuid(), getgid());
+  chown(configFileNameUTF8, getuid(), getgid());
  
   pStream = new QTextStream( &rConfigFile );
   
@@ -361,7 +364,7 @@ bool KConfig::writeConfigFile( QFile& rConfigFile, bool bGlobal )
   while( aWriteIt.current() )
 	{
 	  // check if it's not the default group (which has already been written)
-	  if( strcmp (aWriteIt.currentKey(), "<default>" ) )
+	  if( aWriteIt.currentKey().compare("<default>" ) )
 		{
 		  *pStream << '[' << aWriteIt.currentKey() << ']' << '\n';
 		  QDictIterator<KEntryDictEntry> aWriteInnerIt( *aWriteIt.current() );
@@ -391,7 +394,7 @@ bool KConfig::writeConfigFile( QFile& rConfigFile, bool bGlobal )
   // Reopen the config file.
 
   // Can we allow the write? (see above)
-  if( checkAccess( rConfigFile.name(), W_OK ) )
+  if( checkAccess( configFileNameUTF8, W_OK ) )
     // Yes, write OK
     rConfigFile.open( IO_ReadWrite );
   else
@@ -417,13 +420,13 @@ void KConfig::sync()
 	      // doesn't run SUID. But if it runs SUID, we must
 	      // check if the user would be allowed to write if
 	      // it wasn't SUID.
-	      if( checkAccess( data()->aLocalAppFile, W_OK ) ) // we would be allowed anyhow
+	      if( checkAccess(data()->aLocalAppFile.utf8().data(), W_OK ) ) // we would be allowed anyhow
 		{    
 		  // is it writable?
 		  QFile aConfigFile( data()->aLocalAppFile );
 		  aConfigFile.open( IO_ReadWrite );
                   // Set uid/gid (neccesary for SUID programs)
-                  chown(aConfigFile.name(), getuid(), getgid());
+                  chown(aConfigFile.name().utf8().data(), getuid(), getgid());
  
 		  if ( aConfigFile.isWritable() )
 		    {
@@ -440,7 +443,7 @@ void KConfig::sync()
 	  if( !bLocalGood && !data()->aGlobalAppFile.isEmpty() )
 	    {
 	      // Can we allow the write? (see above)
-	      if( checkAccess( data()->aGlobalAppFile, W_OK ) )
+	      if( checkAccess( data()->aGlobalAppFile.utf8().data(), W_OK ) )
 		{    
 		  // is it writable?
 		  QFile aConfigFile( data()->aGlobalAppFile );
@@ -471,7 +474,7 @@ void KConfig::sync()
 			  QFile aConfigFile( aFileName );
 			  QFileInfo aInfo( aConfigFile );
 			  // can we allow the write? (see above)
-			  if( checkAccess ( aFileName, W_OK ) )
+			  if( checkAccess ( aFileName.utf8().data(), W_OK ) )
 			    {
 
 			      if( ( aInfo.exists() && aInfo.isWritable() ) ||
@@ -480,7 +483,7 @@ void KConfig::sync()
 				{
 				  aConfigFile.open( IO_ReadWrite );
                                   // Set uid/gid (neccesary for SUID programs)
-                                  chown(aConfigFile.name(), getuid(), getgid());
+                                  chown(aConfigFile.name().utf8().data(), getuid(), getgid());
  				  writeConfigFile( aConfigFile, true );
 				  break;
 				}

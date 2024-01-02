@@ -93,7 +93,7 @@ void KDateTable::paintCell( QPainter *p, int row, int col )
     { // paint headline
       p->setPen(darkBlue);
       p->setFont(QFont("Arial", fontsize, QFont::Bold, false));
-      p->drawText(0, 0, w, h, AlignCenter, Days[col]);
+      p->drawText(0, 0, w, h, Qt::AlignCenter, Days[col]);
       p->setPen(black);
       p->moveTo(0, h-1);
       p->lineTo(w-1, h-1);
@@ -130,18 +130,18 @@ void KDateTable::paintCell( QPainter *p, int row, int col )
       p->setPen(bSelected? white : black);
       if (nDay > 0 && nDay <= m_date.daysInMonth()) 
 	{
-	  p->drawText(0, 0, w, h, AlignCenter, day);
+	  p->drawText(0, 0, w, h, Qt::AlignCenter, day);
 	} else if (nDay <= 0) 
 	  {
 	    int nDayPrv = m_daysInPrevMonth + nDay;
 	    day.sprintf("%i", nDayPrv);
 	    p->setPen(bSelected? white : gray);
-	    p->drawText(0, 0, w, h, AlignCenter, day);
+	    p->drawText(0, 0, w, h, Qt::AlignCenter, day);
 	  } else {
 	    int nDayNext = nDay - m_date.daysInMonth();
 	    day.sprintf("%i", nDayNext);
 	    p->setPen(bSelected? white : gray);
-	    p->drawText(0, 0, w, h, AlignCenter, day);
+	    p->drawText(0, 0, w, h, Qt::AlignCenter, day);
 	  }
       if (bSelected && hasFocus()) 
 	{
@@ -162,7 +162,7 @@ void KDateTable::paintCell( QPainter *p, int row, int col )
 
 void KDateTable::mousePressEvent(QMouseEvent *e)
 {
-  if (e->type() != Event_MouseButtonPress)
+  if (e->type() != QEvent::MouseButtonPress)
     return;
    
   int row, col;

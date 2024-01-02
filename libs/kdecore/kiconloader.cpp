@@ -133,20 +133,17 @@ void KIconLoader::initPath()
 KIconLoader::KIconLoader( KConfig *conf, 
 			  const QString &app_name, const QString &var_name ){
 
-  QStrList list;
+  QStringList list;
 
   config = conf;
   config->setGroup(app_name);
   config->readListEntry( var_name, list, ':' );
 
-  for (const char *it=list.first(); it; it = list.next())
-    addPath(it);
+  for (QStringList::ConstIterator itr = list.begin(); itr != list.end(); ++itr ) {
+    addPath(*itr);
+  }
 
   initPath();
-
-  name_list.setAutoDelete(TRUE);
-  pixmap_dirs.setAutoDelete(TRUE);
-  pixmap_list.setAutoDelete(TRUE);
 
   /*
   for(char* c = pixmap_dirs.first(); c ; c = pixmap_dirs.next()){
@@ -158,20 +155,17 @@ KIconLoader::KIconLoader( KConfig *conf,
  
 KIconLoader::KIconLoader( ){
 
-  QStrList list;
+  QStringList list;
 
   config = KApplication::getKApplication()->getConfig();
   config->setGroup("KDE Setup");
   config->readListEntry( "IconPath", list, ':' );
 
-  for (const char *it=list.first(); it; it = list.next())
-    addPath(it);
+  for (QStringList::ConstIterator itr = list.begin(); itr != list.end(); ++itr ) {
+    addPath(*itr);
+  }
 
   initPath();
-
-  name_list.setAutoDelete(TRUE);
-  pixmap_dirs.setAutoDelete(TRUE);
-  pixmap_list.setAutoDelete(TRUE);
 
   /*
   for(char* c = pixmap_dirs.first(); c ; c = pixmap_dirs.next()){
@@ -214,7 +208,8 @@ QPixmap KIconLoader::loadMiniIcon ( const QString &name, int w, int h ){
 
   QPixmap result;
 
-  if (name.left(1)!='/'){
+  if (name.left(1)[0] != '/')
+  {
     result = loadInternal( "mini/" + name, w, h);
   }
 
@@ -281,19 +276,19 @@ QString KIconLoader::getIconPath( const QString &name, bool always_valid)
       full_path = name;
     }
     else{
-      QStrListIterator it( pixmap_dirs );
-      while ( it.current() ){
-	
-	full_path = it.current();
-	full_path.detach();
-	full_path += '/';
-	full_path += name;
-	finfo.setFile( full_path );
-	if ( finfo.exists() )
-	      break;
-	++it;
+      QStringList::ConstIterator itr;
+      for (itr = pixmap_dirs.begin(); itr != pixmap_dirs.end(); ++itr ) {
+        full_path = (*itr);
+        full_path += '/';
+        full_path += name;
+        finfo.setFile( full_path );
+        if ( finfo.exists() )
+        {
+          break;
+        }   
       }
-      if ( (always_valid) && (!it.current()) ){
+
+      if ( (always_valid) && (itr == pixmap_dirs.end()) ){
         // Let's be recursive (but just once at most)
         full_path = getIconPath( "unknown.xpm" , false); 
       }
@@ -306,9 +301,20 @@ QPixmap KIconLoader::loadInternal ( const QString &name, int w,  int h ){
   QPixmap *pix;
   KPixmap new_xpm;
 
-  int index;
+  int index = -1;
+  {
+    int i = 0;
+    for (QStringList::ConstIterator itr = name_list.begin(); itr != name_list.end(); ++itr ) {
+      if((*itr) == name)
+      {
+        index = i;
+        break;
+      }
+      i++;
+    }
+  }
 
-  if ( (index = name_list.find(name)) < 0){
+  if(index < 0) {
     
     pix = new QPixmap;
     new_xpm.load( getIconPath(name), 0L, KPixmap::LowColor );
@@ -349,7 +355,7 @@ void KIconLoader::addPath(QString path){
   QDir dir(path.data());
 
   if (dir.exists()){
-    pixmap_dirs.insert(0, path);
+    pixmap_dirs.prepend(path);
   }
   else{
     //    fprintf(stderr,"Path %s doesn't exist\n",path.data());
@@ -359,11 +365,23 @@ void KIconLoader::addPath(QString path){
 
 void KIconLoader::flush( const QString& name  )
 {
-  int index;
+  int index = -1;
 
-  if( (index = name_list.find(name)) >= 0 ) {
-     name_list.remove( index );
-     pixmap_list.remove( index );
+  {
+    int i = 0;
+    for (QStringList::ConstIterator itr = name_list.begin(); itr != name_list.end(); ++itr ) {
+      if((*itr) == name)
+      {
+        index = i;
+        break;
+      }
+      i++;
+    }
+  }
+
+  if( index >= 0 ) {
+     name_list.remove( name_list.at( index ) );
+     pixmap_list.remove( pixmap_list.at( index ));
   }
 }
 

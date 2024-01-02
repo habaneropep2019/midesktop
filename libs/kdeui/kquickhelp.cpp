@@ -278,7 +278,7 @@ void KQuickHelp::widgetDestroyed() {
 
 
 bool KQuickHelp::eventFilter(QObject *o, QEvent *e) {
-  if(e->type() == Event_MouseButtonPress && ((QMouseEvent *)e)->button() == RightButton) {
+  if(e->type() == QEvent::MouseButtonPress && ((QMouseEvent *)e)->button() == RightButton) {
     for(unsigned i = 0; i < tips->count(); i++) {
       if(tips->at(i)->widget == (QWidget *)o) {
 	current = tips->at(i)->widget;
@@ -421,7 +421,7 @@ QString KQuickHelpWindow::token() {
   bool  backslash = false;
 
   while(tokIndex < (int)txt.length()) {
-    char c = txt[tokIndex++];
+    char c = txt[tokIndex++].latin1();
 
     if(backslash) {
       backslash = false;
@@ -607,7 +607,7 @@ void KQuickHelpWindow::paint(QPainter *p, int &w, int &h) {
       p->setFont(f);
 
       QRect r;
-      p->drawText(posx, posy, 1024, 1024, AlignLeft|AlignTop, t.data(), -1, &r, 0);
+      p->drawText(posx, posy, 1024, 1024, Qt::AlignLeft|Qt::AlignTop, t.data(), -1, &r, 0);
       if(link.length() > 0) {
 	KQuickHelp_Link *l = new KQuickHelp_Link;
 	l->area = r;

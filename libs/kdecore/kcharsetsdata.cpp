@@ -760,17 +760,16 @@ const char *KCharsetsData::faceForCharset(const KCharsetEntry *charset){
 
 const KCharsetEntry *KCharsetsData::conversionHint(const KCharsetEntry *charset){
 
-  QStrList list;
-  kchdebug("Serching for conversion hint for %s\n",charset->name);
+  QStringList list;
+  kchdebug("Serching for conversion hint for %s\n", charset->name);
   config->setGroup("conversionHints");
-  int n=config->readListEntry(charset->name,list);
+  int n = config->readListEntry(charset->name, list);
   kchdebug("%i entries found\n",n);
-  for(const char *hint=list.first();hint;hint=list.next()){
-    kchdebug("Found: %s\n",hint);
-    KCharsetEntry *ce=varCharsetEntry(hint);
+  for (QStringList::ConstIterator itr = list.begin(); itr != list.end(); ++itr ) {
+    kchdebug("Found: %s\n", *itr);
+    KCharsetEntry *ce = varCharsetEntry(*itr);
     if (isDisplayable(ce)) return ce;    
-  }
-    
+  }    
   return defaultCh;  
 }
 

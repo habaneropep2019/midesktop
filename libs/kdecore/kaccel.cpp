@@ -162,7 +162,7 @@ bool KAccel::insertItem( const char* descr, const char * action, uint keyCode,
 	pEntry->bConfigurable = configurable;
 	pEntry->aAccelId = 0;
 	pEntry->receiver = 0;
-	pEntry->member = 0;
+	pEntry->member = QString::null;
 	pEntry->descr = descr;
 	
 	return TRUE;
@@ -548,12 +548,12 @@ void KAccel::writeSettings(KConfig* config)
 	while ( aKeyIt.current() ) {
 		if ( aKeyIt.current()->bConfigurable ) {
 			if ( bGlobal )
-				pConfig->writeEntry( aKeyIt.currentKey(),
-					keyToString( aKeyIt.current()->aCurrentKeyCode),
+				pConfig->writeEntry( aKeyIt.currentKey().latin1(),
+					keyToString( aKeyIt.current()->aCurrentKeyCode).latin1(),
 					true, true );
 			 else
-				pConfig->writeEntry( aKeyIt.currentKey(),
-					keyToString( aKeyIt.current()->aCurrentKeyCode ));
+				pConfig->writeEntry( aKeyIt.currentKey().latin1(),
+					keyToString( aKeyIt.current()->aCurrentKeyCode ).latin1());
 		}
 		++aKeyIt;
 	}
@@ -571,35 +571,35 @@ const QString keyToString( uint keyCode, bool i18_n )
 		return res;
 	}
 	if (!i18_n){
-	  if ( keyCode & SHIFT ){
+	  if ( keyCode & Qt::SHIFT ){
 	    res += ("SHIFT");
 	    res += "+";
 	  }
-	  if ( keyCode & CTRL ){
+	  if ( keyCode & Qt::CTRL ){
 	    res +=("CTRL");
 	    res += "+";
 	  }
-	  if ( keyCode & ALT ){
+	  if ( keyCode & Qt::ALT ){
 	    res +=("ALT");
 	    res += "+";
 	  }
 	}
 	else {
-	  if ( keyCode & SHIFT ){
+	  if ( keyCode & Qt::SHIFT ){
 	    res = i18n("SHIFT");
 	    res += "+";
 	  }
-	  if ( keyCode & CTRL ){
+	  if ( keyCode & Qt::CTRL ){
 	    res += i18n("CTRL");
 	    res += "+";
 	  }
-	  if ( keyCode & ALT ){
+	  if ( keyCode & Qt::ALT ){
 	    res += i18n("ALT");
 	    res += "+";
 	  }
 	}
 
-	uint kCode = keyCode & ~(SHIFT | CTRL | ALT);
+	uint kCode = keyCode & ~(Qt::SHIFT | Qt::CTRL | Qt::ALT);
 
 	for (int i=0; i<NB_KEYS; i++) {
 		if ( kCode == (uint)KKeys[i].code ) {
@@ -639,23 +639,23 @@ uint stringToKey(const char * key )
 	bool  keyFound = FALSE;
 	for (int i=0; i<nb_toks; i++) {
 		if ( strcmp(toks[i], "SHIFT")==0 )
-		  keyCode |= SHIFT;
+		  keyCode |= Qt::SHIFT;
 		else if ( strcmp(toks[i], "CTRL")==0 )
-		  keyCode |= CTRL;
+		  keyCode |= Qt::CTRL;
 		else if ( strcmp(toks[i], "ALT")==0 )
-		  keyCode |= ALT;
+		  keyCode |= Qt::ALT;
 		else if ( strcmp(toks[i], "Umschalt")==0 )
-		  keyCode |= SHIFT;
+		  keyCode |= Qt::SHIFT;
 		else if ( strcmp(toks[i], "Strg")==0 )
-		  keyCode |= CTRL;
+		  keyCode |= Qt::CTRL;
 		else if ( strcmp(toks[i], "Alt")==0 )
-		  keyCode |= ALT;
+		  keyCode |= Qt::ALT;
 		else if ( strcmp(toks[i], i18n("SHIFT"))==0 )
-		  keyCode |= SHIFT;
+		  keyCode |= Qt::SHIFT;
 		else if ( strcmp(toks[i], i18n("CTRL"))==0 )
-		  keyCode |= CTRL;
+		  keyCode |= Qt::CTRL;
 		else if ( strcmp(toks[i], i18n("ALT"))==0 )
-		  keyCode |= ALT;
+		  keyCode |= Qt::ALT;
 	    else {
 			/* key already found ? */
 			if ( keyFound ) return 0;

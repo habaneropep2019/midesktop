@@ -151,7 +151,7 @@ void KSpinBox::setEditable(bool flag)
 
 void KSpinBox::setAlign(int align)
 {
-  if(align == AlignCenter || align == AlignLeft || align == AlignRight)
+  if(align == Qt::AlignCenter || align == Qt::AlignLeft || align == Qt::AlignRight)
 	{
 	  _align=align;
 	  resizeEvent(0);
@@ -172,21 +172,21 @@ void KSpinBox::resizeEvent(QResizeEvent *)
 	
   switch(_align)
 	{
-	case AlignCenter:		// horizontal, text centered
+	case Qt::AlignCenter:		// horizontal, text centered
 	  _edit->setGeometry(h,0,w-2*h,h);
 	  _label->setGeometry(h,0,w-2*h,h);
 	  _decr->setGeometry(0,0,h,h);
 	  _incr->setGeometry(w-h,0,h,h);
 	  break;
 
-	case AlignRight:		// horizontal, text right
+	case Qt::AlignRight:		// horizontal, text right
 	  _edit->setGeometry(h2,0,w-h2,h);
 	  _label->setGeometry(h2,0,w-h2,h);
 	  _incr->setGeometry(0,0,h2,h2);
 	  _decr->setGeometry(0,h2,h2,h2);
 	  break;
 		
-	case AlignLeft:		// horizontal, text left
+	case Qt::AlignLeft:		// horizontal, text left
 	  _edit->setGeometry(0,0,w-h2,h);
 	  _label->setGeometry(0,0,w-h2,h);
 	  _incr->setGeometry(w-h2,0,h2,h2);

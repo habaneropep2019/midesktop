@@ -165,14 +165,14 @@ bool KPanner::eventFilter(QObject *obj, QEvent *ev)
      * initiate divider drag action. record current position
      */
     
-    if(ev->type() == Event_MouseButtonPress) {
+    if(ev->type() == QEvent::MouseButtonPress) {
         if((u_flags & P_ORIENTATION) == O_HORIZONTAL)
             old_coord = divider->y();
         else // O_VERTICAL
             old_coord = divider->x();
     }
     
-    if(ev->type() == Event_MouseMove) {
+    if(ev->type() == QEvent::MouseMove) {
 
         if(obj == (QObject *)divider) {
             QMouseEvent *mev = (QMouseEvent *)ev;
@@ -200,7 +200,7 @@ bool KPanner::eventFilter(QObject *obj, QEvent *ev)
         }
     }
 
-    if(ev->type() == Event_MouseButtonRelease) {
+    if(ev->type() == QEvent::MouseButtonRelease) {
         int max_value = getMaxValue();
     
         if((u_flags & P_UNITS) == U_PERCENT)

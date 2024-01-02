@@ -338,7 +338,6 @@ void KHTMLWidget::cancelAllRequests()
 void KHTMLWidget::requestBackgroundImage( const char *_url )
 {
     bgPixmapURL = _url;
-    bgPixmapURL.detach();
     emit fileRequest( _url );
 }
 
@@ -434,7 +433,7 @@ void KHTMLWidget::slotFileLoaded( const char *_url, const char *_filename )
 	if ( strcmp( bgPixmapURL, _url ) == 0 )
 	{
 	    bgPixmap.load( _filename );
-	    bgPixmapURL = 0;
+	    bgPixmapURL = QString::null;
             if (fixBackground(bgPixmap, settings->bgColor))
                 scheduleUpdate( true );
 	}
@@ -477,7 +476,7 @@ void KHTMLWidget::slotFileLoaded( const char *_url, const char *_filename )
 	if ( strcmp( bgPixmapURL, _url ) == 0 )
 	{
 	    bgPixmap.load( _filename );					
-	    bgPixmapURL = 0;
+	    bgPixmapURL = QString::null;
 	    scheduleUpdate( true );
 	}
     }    
@@ -581,9 +580,7 @@ void KHTMLWidget::mousePressEvent( QMouseEvent *_mouse )
 		if ( _mouse->button() == LeftButton || _mouse->button() == MidButton )
 		{
 		    pressedURL = obj->getURL();
-		    pressedURL.detach();
 		    pressedTarget = obj->getTarget();
-		    pressedTarget.detach();
 		}
 		
 		// Does the parent want to process the event now ?
@@ -828,7 +825,7 @@ void KHTMLWidget::clearBlob ()
 {
 #ifdef USE_THE_BLOB_ALEX_MADE
   scrollBlobTimer->stop();
-  setCursor(arrowCursor);
+  setCursor(Qt::arrowCursor);
   delete scrollBlob; scrollBlob=0;
 #endif
 }
@@ -1547,11 +1544,11 @@ void KHTMLWidget::begin( const char *_url, int _x_offset, int _y_offset )
     emit scrollHorz( x_offset );
     emit scrollVert( y_offset );
 
-    bgPixmapURL = 0;
+    bgPixmapURL = QString::null;
     
     stopParser();
     
-    reference = 0;
+    reference = QString::null;
     
     if ( _url != 0 )
     {
@@ -2015,7 +2012,7 @@ void KHTMLWidget::timerEvent( QTimerEvent * )
     {
     	if (gotoAnchor())
     	{
-    	    reference = 0;
+    	    reference = QString::null;
     	}
     }
 
@@ -5245,7 +5242,7 @@ bool KHTMLWidget::gotoAnchor( const char *_name )
     
     if (gotoAnchor())
     {
-       reference = 0;
+       reference = QString::null;
        return TRUE;
     }
     return FALSE;
@@ -6502,7 +6499,7 @@ KHTMLWidget::restorePosition( int x, int y )
 
 SavedPage::SavedPage()
 {
-    frameName = 0;
+    frameName = QString::null;
     scrolling = 2;
     frameborder = 0;
     marginwidth = 0;
@@ -6510,7 +6507,7 @@ SavedPage::SavedPage()
     allowresize = true;
     isFrame = false;
     isFrameSet = false;
-    url = 0;
+    url = QString::null;
     xOffset = yOffset = 0;
     frameLayout = 0;
     frames = 0;

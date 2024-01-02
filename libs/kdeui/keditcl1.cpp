@@ -40,7 +40,6 @@ KEdit::KEdit(KApplication *a, QWidget *parent, const char *name,
 
     mykapp = a;
     filename = fname;
-    filename.detach();
     rb_popup =  0L;
     modified = FALSE;
 
@@ -349,7 +348,6 @@ int KEdit::loadFile(QString name, int mode){
 
     if(!(mode == OPEN_INSERT)){
         filename = name;
-	filename.detach();
     }
 
     if( mode == OPEN_READONLY)
@@ -383,8 +381,6 @@ int KEdit::insertFile(){
     }
 
     file_to_insert = box->selectedFile();
-    file_to_insert.detach();
-
 
     int result = loadFile(file_to_insert, OPEN_INSERT);
 
@@ -620,7 +616,6 @@ void KEdit::keyPressEvent ( QKeyEvent *e){
 
     getCursorPosition(&line,&col);
     killstring = textLine(line);
-    killstring.detach();
     killstring = killstring.mid(col,killstring.length());
 
 
@@ -1473,7 +1468,7 @@ QString KEdit::prefixString(QString string){
 
   //  printf(":%s\n",string.data());
 
-  int size = string.size();
+  int size = string.length();
   char* buffer = (char*) malloc(size + 1);
   strncpy (buffer, string.data(),size - 1);
   buffer[size] = '\0';
@@ -1546,7 +1541,6 @@ int KEdit::saveFile(){
     if(exists_already){
       stat_ok = stat(filename.data(), &st);
       backup_filename = filename;
-      backup_filename.detach();
       backup_filename += '~';
 
       rename(filename.data(),backup_filename.data());
@@ -1588,10 +1582,7 @@ int KEdit::saveFile(){
 }
 
 void KEdit::setFileName(char* name){
-
   filename = name;
-  filename.detach();
-
 }
 
 void KEdit::saveasfile(char* name){
@@ -1599,11 +1590,8 @@ void KEdit::saveasfile(char* name){
   QString filenamebackup;
   filenamebackup = filename;
   filename = name;
-  filename.detach();
   saveFile();
   filename = filenamebackup;
-  filename.detach();
-
 }
 
 QFileDialog* KEdit::getFileDialog(const char* captiontext){
@@ -1734,12 +1722,10 @@ int KEdit::doSave( const char *_name ){
 
     QString temp  = filename;
     filename =  _name;
-    filename.detach();
 
     int result = saveFile();
-
     filename = temp;
-    filename.detach();
+
     return result;
 }
 
@@ -1747,7 +1733,6 @@ int KEdit::doSave( const char *_name ){
 void KEdit::setName( const char *_name ){
 
     filename = _name;
-    filename.detach();
 }
 
 
@@ -1802,7 +1787,7 @@ bool KEdit::eventFilter(QObject *o, QEvent *ev){
 
   (void) o;
 
-  if (ev->type() == Event_Paint)
+  if (ev->type() == QEvent::Paint)
 	{
 	if (srchdialog)
 		if (srchdialog->isVisible())
@@ -1815,7 +1800,7 @@ bool KEdit::eventFilter(QObject *o, QEvent *ev){
 
 
 
-  if(ev->type() != Event_MouseButtonPress)
+  if(ev->type() != QEvent::MouseButtonPress)
     return FALSE;
 
   QMouseEvent *e = (QMouseEvent *)ev;

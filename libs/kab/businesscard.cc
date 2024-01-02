@@ -256,7 +256,7 @@ void BusinessCard::paintEvent(QPaintEvent*)
 	  addressHeight+=cy%p.fontMetrics().height();
 	  cy-=cy%p.fontMetrics().height();
 	  p.drawText(Grid, addressHeight, width()-2*Grid, cy,
-		     AlignHCenter | AlignBottom | WordBreak,
+		     AlignHCenter | Qt::AlignBottom | WordBreak,
 		     current.comment.c_str(), -1, &rect);
 	}
     }

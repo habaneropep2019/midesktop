@@ -327,8 +327,6 @@
 
 #include <unistd.h>
 #include <fcntl.h>
-#include <X11/Xlib.h>
-#include <X11/Xatom.h>
 #include <qobjcoll.h>
 #include <qstrlist.h>
 #include <qfile.h>
@@ -344,6 +342,8 @@
 #include <stdlib.h> // getenv()
 #include <signal.h>
 
+#include <X11/Xlib.h>
+#include <X11/Xatom.h>
 
 #include <qwidcoll.h>
 
@@ -357,10 +357,15 @@
 #define _PATH_TMP "/tmp/"
 #endif
 
+// KeyPress (From X.h) conflicts with QEvent::KeyPress
+#ifdef KeyPress
+#undef KeyPress
+#endif
+
 KCharsets* KApplication::pCharsets = 0L;
 
 KApplication* KApplication::KApp = 0L;
-QStrList* KApplication::pSearchPaths;
+QStringList KApplication::pSearchPaths;
 //extern bool bAreaCalculated;
 
 static int kde_xio_errhandler( Display * )
@@ -429,17 +434,20 @@ void KApplication::init()
   // We should check if  mkdir() succeeds, but since we cannot do much anyway...
   // But we'll check at least for access permissions (for SUID case)
   // Don't access if ~/ is unknown (as in kdm).
-  if ( (QDir::home() != QDir::root()) && checkAccess(configPath, W_OK) ) {
-    if ( mkdir (configPath.data(), 0755) == 0) {  // make it public(?)
-      chown(configPath.data(), getuid(), getgid());
+  const char* configPathUtf8 = configPath.utf8().data();
+  if ( (QDir::home() != QDir::root()) && checkAccess(configPathUtf8, W_OK) ) {
+    if ( mkdir (configPathUtf8, 0755) == 0) {  // make it public(?)
+      chown(configPathUtf8, getuid(), getgid());
       configPath += "/share";
-      if ( checkAccess(configPath, W_OK) ) {
-        if ( mkdir (configPath.data(), 0755) == 0 ) { // make it public
-          chown(configPath.data(), getuid(), getgid());
+      configPathUtf8 = configPath.utf8().data();
+      if ( checkAccess(configPathUtf8, W_OK) ) {
+        if ( mkdir (configPathUtf8, 0755) == 0 ) { // make it public
+          chown(configPathUtf8, getuid(), getgid());
           configPath += "/config";
-          if ( checkAccess(configPath, W_OK) ) {
-            if ( mkdir (configPath.data(), 0700) == 0 ) // make it private
-              chown(configPath.data(), getuid(), getgid());
+          configPathUtf8 = configPath.utf8().data();
+          if ( checkAccess(configPathUtf8, W_OK) ) {
+            if ( mkdir (configPathUtf8, 0700) == 0 ) // make it private
+              chown(configPathUtf8, getuid(), getgid());
           }
         }
       }
@@ -474,7 +482,7 @@ void KApplication::init()
     bSuccess = aConfigFile.open( IO_ReadWrite );
     // Set uid/gid (neccesary for SUID programs)
     if ( bSuccess )
-      chown(aConfigFile.name(), getuid(), getgid());
+      chown(aConfigFile.name().utf8().data(), getuid(), getgid());
   }
   if( !bSuccess )
 	{
@@ -516,7 +524,6 @@ void KApplication::init()
   dropZones.setAutoDelete( FALSE );
 
   // initialize file search paths
-  pSearchPaths = new QStrList();
   buildSearchPaths();
 
   WM_SAVE_YOURSELF = XInternAtom( display, "WM_SAVE_YOURSELF", False );
@@ -569,13 +576,14 @@ KConfig* KApplication::getSessionConfig() {
   QFile aConfigFile(aSessionConfigName);
 
   bool bSuccess;
-  if ( ! checkAccess( aConfigFile.name(), W_OK ) )
+  const char* aConfigFileNameUtf8 = aConfigFile.name().utf8().data();
+  if ( ! checkAccess( aConfigFileNameUtf8, W_OK ) )
     bSuccess = false;
   else {
     bSuccess = aConfigFile.open( IO_ReadWrite );
   }
   if( bSuccess ){
-    chown(aConfigFile.name(), getuid(), getgid());
+    chown(aConfigFileNameUtf8, getuid(), getgid());
     aConfigFile.close();
     pSessionConfig = new KConfig(0L, aSessionConfigName);
     aSessionName = aAppName.copy();
@@ -684,7 +692,7 @@ KLocale* KApplication::getLocale()
 
 bool KApplication::eventFilter ( QObject*, QEvent* e )
 {
-  if ( e->type() == Event_KeyPress )
+  if ( e->type() == QEvent::KeyPress )
 	{
 	  QKeyEvent *k = (QKeyEvent*)e;
 	  if( ( k->key() == Key_F12 ) &&
@@ -821,13 +829,14 @@ void KApplication::parseCommandLine( int& argc, char** argv )
 		if (QFile::exists(aSessionConfigName)){
 		  QFile aConfigFile(aSessionConfigName);
 		  bool bSuccess;
-		  if ( ! checkAccess( aConfigFile.name(), W_OK ) )
+      const char* aConfigFileNameUtf8 = aConfigFile.name().utf8().data();
+		  if ( ! checkAccess( aConfigFileNameUtf8, W_OK ) )
 		    bSuccess = false;
 		  else
 		    bSuccess = aConfigFile.open( IO_ReadWrite );
 		  if( bSuccess ){
                         // Set uid/gid (neccesary for SUID programs)
-                        chown(aConfigFile.name(), getuid(), getgid());
+                        chown(aConfigFileNameUtf8, getuid(), getgid());
 
 			aConfigFile.close();
 			pSessionConfig = new KConfig(0L, aSessionConfigName);
@@ -878,8 +887,6 @@ KApplication::~KApplication()
     delete pLocale;
 
   delete pCharsets;
-
-  delete pSearchPaths;
 
   delete pConfig;
 
@@ -969,11 +976,21 @@ bool KApplication::x11EventFilter( XEvent *_event )
 		  getConfig()->setGroup("KDE");
 		  str = getConfig()->readEntry("widgetStyle");
 		  if(!str.isNull())
+      {
 		    if(str == "Motif")
-		      applyGUIStyle(MotifStyle);
+        {
+          QStyle *app_style = new QMotifStyle;
+          applyGUIStyle(app_style);
+        }
 		    else
-		      if(str == "Windows 95")
-			applyGUIStyle(WindowsStyle);
+        {
+          if(str == "Windows 95")
+          {
+            QStyle *app_style = new QWindowsStyle;
+            applyGUIStyle(app_style);
+          }
+        }
+      }
 		  return TRUE;
 		}
 
@@ -1101,7 +1118,7 @@ bool KApplication::x11EventFilter( XEvent *_event )
   return FALSE;
 }
 
-void KApplication::applyGUIStyle(GUIStyle newstyle) {
+void KApplication::applyGUIStyle(const QStyle* newstyle) {
   QApplication::setStyle( applicationStyle );
 
   // get list of toplevels
@@ -1133,30 +1150,28 @@ void KApplication::applyGUIStyle(GUIStyle newstyle) {
 QString KApplication::findFile( const char *file )
 {
   QString fullPath;
-  QStrListIterator it( *pSearchPaths );
+  QStringList::ConstIterator itr = pSearchPaths.begin();
 
-  while ( it.current() )
-    {
-	  fullPath = it.current();
+  while ( itr != pSearchPaths.end() )
+  {
+	  fullPath = (*itr);
 	  fullPath += '/';
 	  fullPath += file;
-	  if ( !access( fullPath, 0 ) )
-		return fullPath;
-	  ++it;
-    }
+	  if ( !access( fullPath.utf8().data(), 0 ) )
+		  return fullPath;
+	  ++itr;
+  }
 
-  fullPath.resize( 0 );
-
-  return fullPath;
+  return QString::null;
 }
 
 
 const char* KApplication::getCaption() const
 {
   if( !aCaption.isNull() )
-	return aCaption;
+	  return aCaption.latin1();
   else
-	return aAppName;
+	  return aAppName.latin1();
 }
 
 
@@ -1172,20 +1187,12 @@ void KApplication::buildSearchPaths()
   QString kdePathRc = getConfig()->readEntry( "Path" );
 
   if ( !kdePathRc.isNull() )
-    {
-      char *start, *end, *workPath = new char [ kdePathRc.length() + 1 ];
-	  strcpy( workPath, kdePathRc );
-	  start = workPath;
-	  while ( start )
-		{
-	  	  end = strchr( start, ':' );
-		  if ( end )
-		    *end = '\0';
-		  appendSearchPath( start );
-		  start = end ? end + 1 : end;
-		}
-	  delete [] workPath;
+  {
+    const QStringList entriesList = QStringList::split(':', kdePathRc);
+    for (QStringList::ConstIterator itr = entriesList.begin(); itr != entriesList.end(); ++itr ) {
+      appendSearchPath(*itr);
     }
+  }
 
   // add paths in the KDEPATH environment variable
   const char *kdePathEnv = getenv( "KDEPATH" );
@@ -1208,19 +1215,13 @@ void KApplication::buildSearchPaths()
   appendSearchPath( kdedir().data() );
 }
 
-void KApplication::appendSearchPath( const char *path )
+void KApplication::appendSearchPath( const QString& path )
 {
-  QStrListIterator it( *pSearchPaths );
-
-  // return if this path has already been added
-  while ( it.current() )
-    {
-	  if ( !strcmp( it.current(), path ) )
-		return;
-	  ++it;
-    }
-
-  pSearchPaths->append( path );
+  for (QStringList::ConstIterator itr = pSearchPaths.begin(); itr != pSearchPaths.end(); ++itr ) {
+    if(! ((*itr).compare(path)) )
+      return;
+  }
+  pSearchPaths.append( path );
 }
 
 void KApplication::readSettings()
@@ -1283,13 +1284,15 @@ void KApplication::readSettings()
   fixedFont = config->readFontEntry( "fixedFont", &fixedFont );
 
   // Finally, read GUI style from config.
-	
   config->setGroup( "KDE" );
   if ( config->readEntry( "widgetStyle", "Windows 95" ) == "Windows 95" )
-    applicationStyle=WindowsStyle;
+  {
+    applicationStyle = new QWindowsStyle;
+  }
   else
-    applicationStyle=MotifStyle;
-	
+  {
+    applicationStyle = new QMotifStyle;
+  }
 }
 
 void KApplication::kdisplaySetPalette()
@@ -1308,7 +1311,7 @@ void KApplication::kdisplaySetPalette()
 	
   // printf("contrast = %d\n", contrast);
 	
-  if ( applicationStyle==MotifStyle ) {
+  if ( applicationStyle->guiStyle() == MotifStyle ) {
 	QColorGroup disabledgrp( textColor, backgroundColor,
 							 backgroundColor.light(highlightVal),
 							 backgroundColor.dark(lowlightVal),
@@ -1618,12 +1621,9 @@ QString KApplication::localconfigdir()
 }
 
 
-bool KApplication::getKDEFonts(QStrList *fontlist)
+bool KApplication::getKDEFonts(QStringList& fontlist)
 {
   QString fontfilename;
-
-  if(fontlist == 0L)
-    return false;
 
   fontfilename = KApplication::localkdedir();
 
@@ -1651,7 +1651,7 @@ bool KApplication::getKDEFonts(QStrList *fontlist)
   while ( !t.eof() ) {
     QString s = t.readLine();
     if(!s.isEmpty())
-      fontlist->append( s );
+      fontlist.append( s );
   }
 
   fontfile.close();
@@ -1725,6 +1725,11 @@ const char* KApplication::checkRecoverFile( const char* pFilename,
 	}
 }
 
+bool checkAccess(const QString& pathname, int mode)
+{
+  const char* pathnameUtf8 = pathname.utf8().data();
+  return checkAccess(pathnameUtf8, mode);
+}
 
 bool checkAccess(const char *pathname, int mode)
 {
@@ -1735,17 +1740,41 @@ bool checkAccess(const char *pathname, int mode)
   // else
   // if we want to write the file would be created. Check, if the
   // user may write to the directory to create the file.
-  if ( mode & W_OK == 0 )
+  if ( (mode & W_OK) == 0 )
     return false;   // Check for write access is not part of mode => bail out
 
+  const std::size_t maxLength = 4096;
+  const std::size_t len = strnlen(pathname, maxLength);
 
-  //strip the filename (everything until '/' from the end
-  QString dirName(pathname);
-  int pos = dirName.findRev('/');
-  if ( pos == -1 )
-    return false;   // No path in argument. This is evil, we won't allow this
+  if(maxLength == len)
+  {
+    return false;
+  }
 
-  dirName.resize(pos+1); // strip everything starting from the last '/'
+  unsigned long slashPosition = ULONG_MAX;
+  {
+    std::size_t i = len;
+    while(i >= 0)
+    {
+      if(pathname[i] == '/')
+      {
+        slashPosition = i;
+        break;
+      }
+      i--;
+    }
+  }
+
+  if(slashPosition == ULONG_MAX)
+  {
+    return false;
+  }
+
+  //
+  // TODO: Perhaps anything > 512 should be heap allocated
+  //
+  char smallBuffer[4097];
+  const char* dirName = strncpy(smallBuffer, pathname, slashPosition + 1);
 
   accessOK = access( dirName, W_OK );
   // -?- Can I write to the accessed diretory

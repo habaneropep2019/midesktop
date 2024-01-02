@@ -55,7 +55,6 @@ public:
     const char *title() const;
     
 private:
-    void paintCell(QPainter *, int, int);
     void initialize(const char *);
 
 };         

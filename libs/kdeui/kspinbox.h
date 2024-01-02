@@ -54,7 +54,7 @@ class KSpinBox : public QWidget
 
 public:
   /** construct a KSpinBox Widget */
-  KSpinBox(QWidget *parent=0,const char *name=0,int align=AlignLeft);
+  KSpinBox(QWidget *parent=0,const char *name=0,int align=Qt::AlignLeft);
   ~KSpinBox();
 
   /** get the value shown the text field */
@@ -70,11 +70,11 @@ public:
   void setEditable(bool);
 
   /** set the alignment of the text field.
-	  possible values for align are AlignLeft, AlignCenter, AlignRight */
+	  possible values for align are Qt::AlignLeft, Qt::AlignCenter, Qt::AlignRight */
   void setAlign(int align);
 
   /** get the alignment of the text field.
-	  possible return values AlignLeft, AlignCenter, AlignRight */
+	  possible return values Qt::AlignLeft, Qt::AlignCenter, Qt::AlignRight */
   int getAlign();
 
   QSize sizeHint();
@@ -127,7 +127,7 @@ class KNumericSpinBox : public KSpinBox
 
 public:
   /** called if you create a KNumericSpinBox widget */
-  KNumericSpinBox(QWidget *parent=0,const char *name=0,int align=AlignLeft);
+  KNumericSpinBox(QWidget *parent=0,const char *name=0,int align=Qt::AlignLeft);
 
   /** called if you destroy a KNumericSpinBox widget */
   ~KNumericSpinBox();
@@ -174,7 +174,7 @@ class KListSpinBox : public KSpinBox
 
 public:
   /** called if you create a KListSpinBox widget */
-  KListSpinBox(QStrList *list,QWidget *parent=0,const char *name=0,int align=AlignLeft);
+  KListSpinBox(QStrList *list,QWidget *parent=0,const char *name=0,int align=Qt::AlignLeft);
 
   /** called if you destroy a KListSpinBox widget */
   ~KListSpinBox();

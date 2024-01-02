@@ -557,7 +557,7 @@ QRect KURLLabel::m_textRect() const
 		}
 	}
 
-	if (alignment() & AlignVCenter)
+	if (alignment() & Qt::AlignVCenter)
 	{
 		switch (m_textAlign)
 		{
@@ -580,7 +580,7 @@ QRect KURLLabel::m_textRect() const
 		}
 	}
 
-	if (alignment() & AlignLeft)
+	if (alignment() & Qt::AlignLeft)
 	{
 		switch (m_textAlign)
 		{
@@ -595,7 +595,7 @@ QRect KURLLabel::m_textRect() const
 		}
 	}	
 
-	if (alignment() & AlignTop)
+	if (alignment() & Qt::AlignTop)
 	{
 		switch (m_textAlign)
 		{
@@ -610,7 +610,7 @@ QRect KURLLabel::m_textRect() const
 		}
 	}
 
-	if (alignment() & AlignRight)
+	if (alignment() & Qt::AlignRight)
 	{
 		switch (m_textAlign)
 		{
@@ -625,7 +625,7 @@ QRect KURLLabel::m_textRect() const
 		}
 	}
 
-	if (alignment() & AlignBottom)
+	if (alignment() & Qt::AlignBottom)
 	{
 		switch (m_textAlign)
 		{
@@ -692,7 +692,7 @@ QRect KURLLabel::m_pixmapRect() const
 		}
 	}
 
-	if (alignment() & AlignVCenter)
+	if (alignment() & Qt::AlignVCenter)
 	{
 		switch (m_textAlign)
 		{
@@ -718,7 +718,7 @@ QRect KURLLabel::m_pixmapRect() const
 		}
 	}
 
-	if (alignment() & AlignLeft)
+	if (alignment() & Qt::AlignLeft)
 	{
 		switch (m_textAlign)
 		{
@@ -732,7 +732,7 @@ QRect KURLLabel::m_pixmapRect() const
 		}
 	}
 
-	if (alignment() & AlignTop)
+	if (alignment() & Qt::AlignTop)
 	{
 		switch (m_textAlign)
 		{
@@ -747,7 +747,7 @@ QRect KURLLabel::m_pixmapRect() const
 		}
 	}
 
-	if (alignment() & AlignRight)
+	if (alignment() & Qt::AlignRight)
 	{
 		switch (m_textAlign)
 		{
@@ -762,7 +762,7 @@ QRect KURLLabel::m_pixmapRect() const
 		}
 	}
 
-	if (alignment() & AlignBottom)
+	if (alignment() & Qt::AlignBottom)
 	{
 		switch (m_textAlign)
 		{

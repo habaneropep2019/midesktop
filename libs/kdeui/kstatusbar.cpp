@@ -83,7 +83,7 @@ KStatusBarLabel::KStatusBarLabel( const char *text, int _id,
   setText( text );
   if ( style() == MotifStyle )
     setFrameStyle( QFrame::Panel | QFrame::Sunken );
-  setAlignment( AlignLeft | AlignVCenter );
+  setAlignment( Qt::AlignLeft | Qt::AlignVCenter );
 }
 
 
@@ -281,7 +281,7 @@ void KStatusBar::setAlignment( int id, int align)
 {
   for ( KStatusBarItem *b = items.first(); b; b=items.next() ) 
     if ( b->ID() == id ){
-	  ((KStatusBarLabel *)b->getItem())->setAlignment(align|AlignVCenter);
+	  ((KStatusBarLabel *)b->getItem())->setAlignment(align|Qt::AlignVCenter);
     }
 }
 

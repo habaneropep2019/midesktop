@@ -236,13 +236,15 @@ bool KSimpleConfig::writeConfigFile( QFile& rFile, bool )
 	}
   
   QDictIterator<KEntryDict> aWriteIt( data()->aGroupDict );
-  while( aWriteIt.current() )
+  const KEntryDict* currentValue = NULL;
+  while( (currentValue = aWriteIt.current()) )
 	{
+		const QString currentKey = aWriteIt.currentKey();
 	  // check if it's not the default group (which has already been written)
-	  if( strcmp (aWriteIt.currentKey(), "<default>" ) )
+	  if( currentKey.compare("<default>") )
 		{
-		  *pStream << '[' << aWriteIt.currentKey() << ']' << '\n';
-		  QDictIterator<KEntryDictEntry> aWriteInnerIt( *aWriteIt.current() );
+		  *pStream << '[' << currentKey << ']' << '\n';
+		  QDictIterator<KEntryDictEntry> aWriteInnerIt( *currentValue );
 		  while( aWriteInnerIt.current() )
 			{
 			  if( aWriteInnerIt.current()->bNLS && 

@@ -640,7 +640,7 @@ void KTMainWindow::saveYourself(){
 void KTMainWindow::savePropertiesInternal (KConfig* config, int number)
 {
     QString entry;
-    QStrList entryList;
+    QStringList entryList;
     int n = 1; // Tolbar counter. toolbars are counted from 1,
                // in order they are in toolbar list
 
@@ -737,7 +737,7 @@ bool KTMainWindow::readPropertiesInternal (KConfig* config, int number)
     // All comments by sven
 
     QString entry;
-    QStrList entryList;
+    QStringList entryList;
     int n = 1; // Tolbar counter. toolbars are counted from 1,
                // in order they are in toolbar list
     int i = 0; // Number of entries in list
@@ -766,85 +766,93 @@ bool KTMainWindow::readPropertiesInternal (KConfig* config, int number)
 
     if (kmenubar)
     {
-        i = config->readListEntry ("MenuBar", entryList, ';');
-        if (i < 2)
-        {
-            //debug ("KTWreadProps: bad number of kmenubar args");
-            return FALSE;
-        }
-	bool showmenubar = False;  //Matthias
-        entry = entryList.first();
-        if (entry=="Enabled")
-	  showmenubar = True; //Matthias
-        else
-	  kmenubar->hide();
-	
-        entry = entryList.next();
-        if (entry == "Top")
-            kmenubar->setMenuBarPos(KMenuBar::Top);
-        else if (entry == "Bottom")
-            kmenubar->setMenuBarPos(KMenuBar::Bottom);
-        else if (entry == "Floating")
-        {
-            kmenubar->setMenuBarPos(KMenuBar::Floating);
-            entry=entryList.next();
-            kmenubar->setGeometry(KWM::setProperties(kmenubar->winId(), entry));
-            showmenubar = true;
-        }
-        else if (entry == "FloatingSystem")
+      i = config->readListEntry ("MenuBar", entryList, ';');
+      if (i < 2)
+      {
+        //debug ("KTWreadProps: bad number of kmenubar args");
+        return FALSE;
+      }
+	    bool showmenubar = False;  //Matthias
+      entry = entryList.first();
+      if (entry == "Enabled")
+	      showmenubar = True; //Matthias
+      else
+	      kmenubar->hide();
+
+      int entryIndex = 1;
+      entry = *entryList.at(entryIndex++);
+
+      if (entry == "Top")
+        kmenubar->setMenuBarPos(KMenuBar::Top);
+      else if (entry == "Bottom")
+        kmenubar->setMenuBarPos(KMenuBar::Bottom);
+      else if (entry == "Floating")
+      {
+        kmenubar->setMenuBarPos(KMenuBar::Floating);
+        entry = *entryList.at(entryIndex++);
+        kmenubar->setGeometry(KWM::setProperties(kmenubar->winId(), entry));
+        showmenubar = true;
+      }
+      else if (entry == "FloatingSystem")
 	    {
-		kmenubar->setMenuBarPos(KMenuBar::FloatingSystem);
-		showmenubar = true;
+        kmenubar->setMenuBarPos(KMenuBar::FloatingSystem);
+        showmenubar = true;
 	    }
-        entryList.clear();
-	if (showmenubar) //Matthias
-	  kmenubar->show();
+      entryList.clear();
+    
+	    if (showmenubar) //Matthias
+	      kmenubar->show();
     }
+
     KToolBar *toolbar;
     QString toolKey;
     QListIterator<KToolBar> it(toolbars); // must use own iterator
 
     for ( ; it.current(); ++it)
     {
-        toolbar= it.current();
-        toolKey.setNum(n);
-        toolKey.prepend("ToolBar");
+      toolbar= it.current();
+      toolKey.setNum(n);
+      toolKey.prepend("ToolBar");
 
-        i = config->readListEntry(toolKey.data(), entryList, ';');
-        if (i < 2)
-        {
-            //printf ("KTWRP: bad number of toolbar%d args\n", n);
-            return FALSE;
-        }
+      i = config->readListEntry(toolKey.data(), entryList, ';');
+      if (i < 2)
+      {
+        //printf ("KTWRP: bad number of toolbar%d args\n", n);
+        return FALSE;
+      }
 
-	bool showtoolbar = False;  //Matthias
-        entry = entryList.first();
-        if (entry=="Enabled")
-	  showtoolbar = True; //Matthias
-        else
-	  toolbar->enable(KToolBar::Hide);
+	    bool showtoolbar = False;  //Matthias
+      entry = entryList.first();
+      if (entry=="Enabled")
+	      showtoolbar = True; //Matthias
+      else
+	      toolbar->enable(KToolBar::Hide);
 
-        entry = entryList.next();
-        if (entry == "Top")
-            toolbar->setBarPos(KToolBar::Top);
-        else if (entry == "Bottom")
-            toolbar->setBarPos(KToolBar::Bottom);
-        else if (entry == "Left")
-            toolbar->setBarPos(KToolBar::Left);
-        else if (entry == "Right")
-            toolbar->setBarPos(KToolBar::Right);
-        else if (entry == "Floating")
-        {
-            toolbar->setBarPos(KToolBar::Floating);
-            entry=entryList.next();
-            toolbar->setGeometry(KWM::setProperties(toolbar->winId(), entry));
-            toolbar->updateRects(TRUE);
-	    toolbar->show();
-        }
-	if (showtoolbar)
-	  toolbar->enable(KToolBar::Show); //Matthias
-        n++; // next toolbar
-        entryList.clear();
+      int entryIndex = 1;
+      entry = *entryList.at(entryIndex++);
+
+      if (entry == "Top")
+        toolbar->setBarPos(KToolBar::Top);
+      else if (entry == "Bottom")
+        toolbar->setBarPos(KToolBar::Bottom);
+      else if (entry == "Left")
+        toolbar->setBarPos(KToolBar::Left);
+      else if (entry == "Right")
+        toolbar->setBarPos(KToolBar::Right);
+      else if (entry == "Floating")
+      {
+        toolbar->setBarPos(KToolBar::Floating);
+        entry = *entryList.at(entryIndex++);
+        toolbar->setGeometry(KWM::setProperties(toolbar->winId(), entry));
+        toolbar->updateRects(TRUE);
+	      toolbar->show();
+      }
+
+	    if (showtoolbar)
+	      toolbar->enable(KToolBar::Show); //Matthias
+      
+      n++; // next toolbar
+      entryList.clear();
     }
 
     s.setNum(number);

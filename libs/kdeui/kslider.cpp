@@ -271,7 +271,7 @@ void KSlider::drawTicks ( QPainter * p, int , int , int )
   drawTickMarks(p);
 }
 
-void KSlider::drawWinGroove (QPainter *, QCOORD)
+void KSlider::drawWinGroove (QPainter *, short int)
 {
   // Do nothing
 }

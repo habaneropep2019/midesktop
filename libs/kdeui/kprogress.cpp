@@ -202,10 +202,10 @@ void KProgress::drawText(QPainter *p)
 	s.sprintf("%i%%", recalcValue(100));
 	p->setPen(text_color);
 	//p->setRasterOp(XorROP);
-	p->drawText(r, AlignCenter, s);
+	p->drawText(r, Qt::AlignCenter, s);
 	p->setClipRegion( fr );
 	p->setPen(bar_text_color);
-	p->drawText(r, AlignCenter, s);
+	p->drawText(r, Qt::AlignCenter, s);
 	
 }
 

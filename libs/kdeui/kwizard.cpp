@@ -113,10 +113,10 @@ KWizard::KWizard(QWidget *parent, const char *name, bool modal, WFlags f)
 
   pwiz->title = new QLabel(this);
   pwiz->title->installEventFilter(this);
-  pwiz->title->setAlignment(AlignLeft|AlignVCenter);
+  pwiz->title->setAlignment(Qt::AlignLeft|Qt::AlignVCenter);
 
   pwiz->pagina = new QLabel("Page 1 of 1", this);
-  pwiz->pagina->setAlignment(AlignLeft|AlignVCenter);
+  pwiz->pagina->setAlignment(Qt::AlignLeft|Qt::AlignVCenter);
 
   pwiz->left = new KDirectionButton(LeftArrow, this);
   connect( pwiz->left, SIGNAL(clicked()), SLOT(previousPage()));
@@ -715,7 +715,7 @@ void KWizard::previousPage()
 // to popup menu.
 bool KWizard::eventFilter( QObject *obj, QEvent *e )
 {
-  if ( e->type() == Event_MouseButtonPress && obj == pwiz->title)
+  if ( e->type() == QEvent::MouseButtonPress && obj == pwiz->title)
   {
     QMouseEvent *m = (QMouseEvent*)e;
     if(pwiz->title->rect().contains( m->pos()) && m->button() == RightButton)
@@ -729,7 +729,7 @@ bool KWizard::eventFilter( QObject *obj, QEvent *e )
     }
   }
 
-  if ( e->type() == Event_KeyPress && obj == this)
+  if ( e->type() == QEvent::KeyPress && obj == this)
   {
     QKeyEvent *k = (QKeyEvent*)e;
     if(k->key() == Key_PageUp)

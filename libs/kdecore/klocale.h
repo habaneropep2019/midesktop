@@ -21,7 +21,7 @@
 
 #include <qintdict.h>
 #include <qstring.h>
-#include <qstrlist.h>
+#include <qstringlist.h>
 
 /**
   *
@@ -50,7 +50,7 @@ public:
       * be used.
       * @param catalogue the name of the language file
       */
-    KLocale( const char *catalogue = 0L );
+    KLocale( const QString& catalogueOpt = QString::null );
 
     /**
       * Destructor.
@@ -107,7 +107,7 @@ public:
       *
       * @return List of language codes
       */
-    QStrList languageList()const;
+    QStringList languageList()const;
     
     /**
       * Returns the charset name used by selected locale.
@@ -177,7 +177,7 @@ public:
     bool numericLocaleEnabled() const;
      
 private:
-    QStrList *catalogues;
+    QStringList catalogues;
     QIntDict<char> aliases;
     QString lang;
     QString chset;

@@ -1,5 +1,5 @@
 /* -*- C++ -*-
- * §Header§
+ * Header
  */
 
 #include "StringListSelectOneDialog.h"
@@ -127,7 +127,7 @@ bool StringListSelectOneDialog::getValues
   assert(strings.empty());
   for(index=0; index<comboStrings->count(); index++)
     {
-      strings.push_back(comboStrings->text(index));
+      strings.push_back(comboStrings->text(index).latin1());
     }
   assert(strings.size()==(unsigned)comboStrings->count());
   return true;

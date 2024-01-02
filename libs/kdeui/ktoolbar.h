@@ -96,7 +96,7 @@
 class KToolBar;
 class KToolBoxManager;
 
-#define Item QWidget
+typedef QWidget Item;
 
 enum itemType {
     ITEM_LINED = 0,

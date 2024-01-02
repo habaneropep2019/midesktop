@@ -91,7 +91,7 @@ public:
 *   tab->enabled = true;
 *   nb->addTab( tab );
 *   QLabel *l = new QLabel(nb);
-*   l->setAlignment(AlignCenter);
+*   l->setAlignment(Qt::AlignCenter);
 *   l->setText("This is a QLabel as a page");
 *   l->setMinimumSize(400, 300);
 *   KWizardPage *p = new KWizardPage;

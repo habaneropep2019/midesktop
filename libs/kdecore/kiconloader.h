@@ -189,9 +189,21 @@ public:
 
   */
 
-  bool insertDirectory( int index, const QString &dir_name ) {
-    return pixmap_dirs.insert( index, dir_name ); }
-  QStrList* getDirList() { return &pixmap_dirs; }
+  bool insertDirectory( int index, const QString &dir_name )
+  {
+    const QStringList::Iterator itr = pixmap_dirs.at(index);
+    if(itr == pixmap_dirs.end())
+    {
+      pixmap_dirs.append(dir_name);
+    }
+    else
+    {
+      pixmap_dirs.insert(itr, dir_name);
+    }
+    return true;
+  }
+
+  QStringList& getDirList() { return pixmap_dirs; }
 
   /// Get the complete path for an icon filename
   /**
@@ -210,8 +222,8 @@ public:
 
 protected:
   KConfig           *config;
-  QStrList           name_list;
-  QStrList           pixmap_dirs;
+  QStringList        name_list;
+  QStringList        pixmap_dirs;
   QList<QPixmap>     pixmap_list;
   QPixmap loadInternal(const QString &name, int w = 0, int h = 0 );
 

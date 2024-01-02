@@ -466,7 +466,7 @@ KKeyChooser::KKeyChooser( QDict<KKeyEntry> *aKeyDict, QWidget *parent ,
 	lNotConfig = new QLabel(fCArea);
 	lNotConfig->resize(0,0);
 	lNotConfig->setFont( QFont("Helvetica", 14, QFont::Bold) );
-	lNotConfig->setAlignment( AlignCenter );
+	lNotConfig->setAlignment( Qt::AlignCenter );
 	lNotConfig->setFrameStyle( QFrame::Panel | QFrame::Sunken );
 	if ( wList->count()==0 )
 		lNotConfig->setText( i18n("No keys defined") );
@@ -478,7 +478,7 @@ KKeyChooser::KKeyChooser( QDict<KKeyEntry> *aKeyDict, QWidget *parent ,
 
 	lInfo = new QLabel(fCArea);
 	resize(0,0);
-	lInfo->setAlignment( AlignCenter );
+	lInfo->setAlignment( Qt::AlignCenter );
 	lInfo->setEnabled( FALSE );
 	lInfo->hide();
 	

@@ -165,7 +165,6 @@ void KDirListBox::keyPressEvent( QKeyEvent *e )
       break;
   case Key_Home:
       highlightItem( 0 );
-      setTopCell( 0 );		  // somehow highlightItem() does NOT scroll!?
       break;
   case Key_End:
       index = QListBox::count() -1;

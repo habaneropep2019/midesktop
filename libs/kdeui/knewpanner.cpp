@@ -301,7 +301,7 @@ bool KNewPanner::eventFilter(QObject *, QEvent *e)
     bool handled= false;
 
     switch (e->type()) {
-    case Event_MouseMove:
+    case QEvent::MouseMove:
 	mev= (QMouseEvent *)e;
 	child0->setUpdatesEnabled(false);
 	child1->setUpdatesEnabled(false);
@@ -317,7 +317,7 @@ bool KNewPanner::eventFilter(QObject *, QEvent *e)
 	}
 	handled= true;
 	break;
-    case Event_MouseButtonRelease:
+    case QEvent::MouseButtonRelease:
 	mev= (QMouseEvent *)e;
 
 	child0->setUpdatesEnabled(true);

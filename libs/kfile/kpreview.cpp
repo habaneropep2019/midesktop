@@ -64,7 +64,6 @@ bool previewXVPicFile( const KFileInfo *i, const QString inFilename,
 {
     bool loaded = false;
     QString iconName(inFilename);
-    iconName.detach();
     int index = iconName.find( i->fileName() );
     iconName.insert(index,".xvpics/");
     QFile miniPic( iconName );
@@ -187,55 +186,55 @@ KPreview::KPreview( const KDir *inDir, QWidget *parent, const char *name)
     QLabel *myNameLabel = new QLabel( i18n("Name:"), myBox, "_namelabel");
     myNameLabel->adjustSize();
     myNameLabel->setMinimumHeight( myNameLabel->sizeHint().height() );
-    myNameLabel->setAlignment( AlignVCenter | AlignLeft );
+    myNameLabel->setAlignment( Qt::AlignVCenter | Qt::AlignLeft );
     vertical->addWidget( myNameLabel, 0, 0 );
     myName = new QLabel( myBox, "_name" );
-    myName->setAlignment( AlignVCenter | AlignLeft );
+    myName->setAlignment( Qt::AlignVCenter | Qt::AlignLeft );
     vertical->addMultiCellWidget( myName, 0, 0, 1, 7 );
 
     QLabel *mySizeLabel = new QLabel( i18n("Size:"), myBox, "_sizelabel");
-    mySizeLabel->setAlignment( AlignVCenter | AlignLeft );
+    mySizeLabel->setAlignment( Qt::AlignVCenter | Qt::AlignLeft );
     mySizeLabel->adjustSize();
     mySizeLabel->setMinimumHeight( mySizeLabel->sizeHint().height() );
     vertical->addWidget( mySizeLabel, 1, 0 );
     mySize = new QLabel( myBox, "_size" );
-    mySize->setAlignment( AlignVCenter | AlignLeft );
+    mySize->setAlignment( Qt::AlignVCenter | Qt::AlignLeft );
     vertical->addMultiCellWidget( mySize, 1, 1, 1, 3 ); 
 
     QLabel *myDateLabel = new QLabel( i18n("Date:"), myBox, "_datelabel");
-    myDateLabel->setAlignment( AlignVCenter | AlignLeft );
+    myDateLabel->setAlignment( Qt::AlignVCenter | Qt::AlignLeft );
     myDateLabel->adjustSize();
     myDateLabel->setMinimumHeight( myDateLabel->sizeHint().height() );
     vertical->addWidget( myDateLabel, 1, 4 );
     myDate = new QLabel( myBox, "_date" );
-    myDate->setAlignment( AlignVCenter | AlignLeft );
+    myDate->setAlignment( Qt::AlignVCenter | Qt::AlignLeft );
     vertical->addMultiCellWidget( myDate, 1, 1, 5, 7 ); 
 
     QLabel *myOwnerLabel = new QLabel( i18n("Owner:"), myBox, "_ownerlabel");
-    myOwnerLabel->setAlignment( AlignVCenter | AlignLeft );
+    myOwnerLabel->setAlignment( Qt::AlignVCenter | Qt::AlignLeft );
     myOwnerLabel->adjustSize();
     myOwnerLabel->setMinimumHeight( myOwnerLabel->sizeHint().height() );
     vertical->addWidget( myOwnerLabel, 2, 0 );
     myOwner = new QLabel( myBox, "_owner" );
-    myOwner->setAlignment( AlignVCenter | AlignLeft );
+    myOwner->setAlignment( Qt::AlignVCenter | Qt::AlignLeft );
     vertical->addMultiCellWidget( myOwner, 2, 2, 1, 3 ); 
 
     QLabel *myGroupLabel = new QLabel( i18n("Group:"), myBox, "_grouplabel");
-    myGroupLabel->setAlignment( AlignVCenter | AlignLeft );
+    myGroupLabel->setAlignment( Qt::AlignVCenter | Qt::AlignLeft );
     myGroupLabel->adjustSize();
     myGroupLabel->setMinimumHeight( myGroupLabel->sizeHint().height() );
     vertical->addWidget( myGroupLabel, 2, 4 );
     myGroup = new QLabel( myBox, "_owner" );
-    myGroup->setAlignment( AlignVCenter | AlignLeft );
+    myGroup->setAlignment( Qt::AlignVCenter | Qt::AlignLeft );
     vertical->addMultiCellWidget( myGroup, 2, 2, 5, 7 ); 
 
     QLabel *myTypeLabel = new QLabel( i18n("Type:"), myBox, "_typelabel");
-    myTypeLabel->setAlignment( AlignVCenter | AlignLeft );
+    myTypeLabel->setAlignment( Qt::AlignVCenter | Qt::AlignLeft );
     myTypeLabel->adjustSize();
     myTypeLabel->setMinimumHeight( myTypeLabel->sizeHint().height() );
     vertical->addWidget( myTypeLabel, 3, 0 );
     myType = new QLabel( myBox, "_name" );
-    myType->setAlignment( AlignVCenter | AlignLeft );
+    myType->setAlignment( Qt::AlignVCenter | Qt::AlignLeft );
     vertical->addMultiCellWidget( myType, 3, 3, 1, 7 );
 
     myPreviewText = new QMultiLineEdit( myBox, "_previewpart" );
@@ -244,7 +243,7 @@ KPreview::KPreview( const KDir *inDir, QWidget *parent, const char *name)
 
     myPreviewPicture = new QLabel( myBox, "_previewpart" );
     // myPreviewText->setBackgroundColor( white );
-    myPreviewPicture->setAlignment( AlignCenter );
+    myPreviewPicture->setAlignment( Qt::AlignCenter );
     myPreviewPicture->setFrameStyle( QFrame::Panel | QFrame::Sunken );
     myPreviewPicture->setLineWidth( 2 );
     myPreviewPicture->setMinimumHeight( 80 );  // this is the size of the mini pictures

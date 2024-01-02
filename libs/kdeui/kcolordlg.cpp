@@ -57,23 +57,23 @@ void createStandardPalette()
 
     int i = 0;
 
-    standardPalette[i++] = red;
-    standardPalette[i++] = green;
-    standardPalette[i++] = blue;
-    standardPalette[i++] = cyan;
-    standardPalette[i++] = magenta;
-    standardPalette[i++] = yellow;
-    standardPalette[i++] = darkRed;
-    standardPalette[i++] = darkGreen;
-    standardPalette[i++] = darkBlue;
-    standardPalette[i++] = darkCyan;
-    standardPalette[i++] = darkMagenta;
-    standardPalette[i++] = darkYellow;
-    standardPalette[i++] = white;
-    standardPalette[i++] = lightGray;
-    standardPalette[i++] = gray;
-    standardPalette[i++] = darkGray;
-    standardPalette[i++] = black;
+    standardPalette[i++] = Qt::red;
+    standardPalette[i++] = Qt::green;
+    standardPalette[i++] = Qt::blue;
+    standardPalette[i++] = Qt::cyan;
+    standardPalette[i++] = Qt::magenta;
+    standardPalette[i++] = Qt::yellow;
+    standardPalette[i++] = Qt::darkRed;
+    standardPalette[i++] = Qt::darkGreen;
+    standardPalette[i++] = Qt::darkBlue;
+    standardPalette[i++] = Qt::darkCyan;
+    standardPalette[i++] = Qt::darkMagenta;
+    standardPalette[i++] = Qt::darkYellow;
+    standardPalette[i++] = Qt::white;
+    standardPalette[i++] = Qt::lightGray;
+    standardPalette[i++] = Qt::gray;
+    standardPalette[i++] = Qt::darkGray;
+    standardPalette[i++] = Qt::black;
 }
 
 KHSSelector::KHSSelector( QWidget *parent )
@@ -128,7 +128,7 @@ KValueSelector::KValueSelector( QWidget *parent )
 	: KSelector( KSelector::Vertical, parent )
 {
 	setRange( 0, 255 );
-	pixmap.optimize( TRUE );
+	pixmap.setOptimization(QPixmap::NormalOptim);
 }
 
 void KValueSelector::resizeEvent( QResizeEvent * )
@@ -296,27 +296,27 @@ KColorDialog::KColorDialog( QWidget *parent, const char *name, bool modal )
 	// system colors
 	label = new QLabel( klocale->translate("System Colors"), this );
 	label->setFixedSize(label->sizeHint());
-	l_left->addWidget(label, 0, AlignLeft);
+	l_left->addWidget(label, 0, Qt::AlignLeft);
 	sysColorCells = new KColorCells( this, 3, 6 );
 	sysColorCells->setMinimumSize(90, 60);
 	sysColorCells->setGeometry( 15, 35, 180, 60 );
-	sysColorCells->setColor( 0, red );
-	sysColorCells->setColor( 1, green );
-	sysColorCells->setColor( 2, blue );
-	sysColorCells->setColor( 3, cyan );
-	sysColorCells->setColor( 4, magenta );
-	sysColorCells->setColor( 5, yellow );
-	sysColorCells->setColor( 6, darkRed );
-	sysColorCells->setColor( 7, darkGreen );
-	sysColorCells->setColor( 8, darkBlue );
-	sysColorCells->setColor( 9, darkCyan );
-	sysColorCells->setColor( 10, darkMagenta );
-	sysColorCells->setColor( 11, darkYellow );
-	sysColorCells->setColor( 12, white );
-	sysColorCells->setColor( 13, lightGray );
-	sysColorCells->setColor( 14, gray );
-	sysColorCells->setColor( 15, darkGray );
-	sysColorCells->setColor( 16, black );
+	sysColorCells->setColor( 0, Qt::red );
+	sysColorCells->setColor( 1, Qt::green );
+	sysColorCells->setColor( 2, Qt::blue );
+	sysColorCells->setColor( 3, Qt::cyan );
+	sysColorCells->setColor( 4, Qt::magenta );
+	sysColorCells->setColor( 5, Qt::yellow );
+	sysColorCells->setColor( 6, Qt::darkRed );
+	sysColorCells->setColor( 7, Qt::darkGreen );
+	sysColorCells->setColor( 8, Qt::darkBlue );
+	sysColorCells->setColor( 9, Qt::darkCyan );
+	sysColorCells->setColor( 10, Qt::darkMagenta );
+	sysColorCells->setColor( 11, Qt::darkYellow );
+	sysColorCells->setColor( 12, Qt::white );
+	sysColorCells->setColor( 13, Qt::lightGray );
+	sysColorCells->setColor( 14, Qt::gray );
+	sysColorCells->setColor( 15, Qt::darkGray );
+	sysColorCells->setColor( 16, Qt::black );
 	connect( sysColorCells, SIGNAL( colorSelected( int ) ),
 		 SLOT( slotSysColorSelected( int ) ) );
 	l_left->addWidget(sysColorCells, 10);
@@ -327,7 +327,7 @@ KColorDialog::KColorDialog( QWidget *parent, const char *name, bool modal )
 	// add custom colors
 	label = new QLabel( klocale->translate("Custom Colors"), this );
 	label->setFixedSize(label->sizeHint());
-	l_left->addWidget(label, 0, AlignLeft);
+	l_left->addWidget(label, 0, Qt::AlignLeft);
 	custColorCells = new KColorCells( this, 3, 6 );
 	custColorCells->setMinimumSize(90, 60);
 	connect( custColorCells, SIGNAL( colorSelected( int ) ),
@@ -374,14 +374,14 @@ KColorDialog::KColorDialog( QWidget *parent, const char *name, bool modal )
 	
 	// and now the entry fields and the patch
 	patch = new KColorPatch( this );
-	l_rbot->addMultiCellWidget(patch, 0, 2, 0, 0, AlignVCenter|AlignLeft);
+	l_rbot->addMultiCellWidget(patch, 0, 2, 0, 0, Qt::AlignVCenter|Qt::AlignLeft);
 	patch->setFixedSize(48, 48);
 	patch->setColor( selColor );
 	
 	// add the HSV fields
 	label = new QLabel( "H:", this );
 	label->setMinimumSize(label->sizeHint());
-	label->setAlignment(AlignRight | AlignVCenter);
+	label->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
 	l_rbot->addWidget(label, 0, 2);
 	hedit = new QLineEdit( this );
 	hedit->setFixedHeight(hedit->sizeHint().height());
@@ -391,7 +391,7 @@ KColorDialog::KColorDialog( QWidget *parent, const char *name, bool modal )
 	
 	label = new QLabel( "S:", this );
 	label->setMinimumSize(label->sizeHint());
-	label->setAlignment(AlignRight | AlignVCenter);
+	label->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
 	l_rbot->addWidget(label, 1, 2);
 	sedit = new QLineEdit( this );
 	sedit->setFixedHeight(sedit->sizeHint().height());
@@ -401,7 +401,7 @@ KColorDialog::KColorDialog( QWidget *parent, const char *name, bool modal )
 	
 	label = new QLabel( "V:", this );
 	label->setMinimumSize(label->sizeHint());
-	label->setAlignment(AlignRight | AlignVCenter);
+	label->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
 	l_rbot->addWidget(label, 2, 2);
 	vedit = new QLineEdit( this );
 	vedit->setFixedHeight(vedit->sizeHint().height());
@@ -413,7 +413,7 @@ KColorDialog::KColorDialog( QWidget *parent, const char *name, bool modal )
 	// add the RGB fields
 	label = new QLabel( "R:", this );
 	label->setMinimumSize(label->sizeHint());
-	label->setAlignment(AlignRight | AlignVCenter);
+	label->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
 	l_rbot->addWidget(label, 0, 4);
 	redit = new QLineEdit( this );
 	redit->setFixedHeight(redit->sizeHint().height());
@@ -423,7 +423,7 @@ KColorDialog::KColorDialog( QWidget *parent, const char *name, bool modal )
 	
 	label = new QLabel( "G:", this );
 	label->setMinimumSize(label->sizeHint());
-	label->setAlignment(AlignRight | AlignVCenter);
+	label->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
 	l_rbot->addWidget(label, 1, 4);
 	gedit = new QLineEdit( this );
 	gedit->setFixedHeight(gedit->sizeHint().height());
@@ -433,7 +433,7 @@ KColorDialog::KColorDialog( QWidget *parent, const char *name, bool modal )
 	
 	label = new QLabel( "B:", this );
 	label->setMinimumSize(label->sizeHint());
-	label->setAlignment(AlignRight | AlignVCenter);
+	label->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
 	l_rbot->addWidget(label, 2, 4);
 	bedit = new QLineEdit( this );
 	bedit->setFixedHeight(bedit->sizeHint().height());

@@ -1095,7 +1095,7 @@ int AddressWidget::printHeadline(QPainter* p, QRect pageSize, const string& text
   //       set large Times font, italic
   p->setFont(QFont("times", 24, QFont::Normal, true));
   p->drawText(LeftMargin, TopMargin, PageWidth, PageHeight,
-	      AlignTop | AlignHCenter, text.c_str(), -1, &rect);
+	      Qt::AlignTop | Qt::AlignHCenter, text.c_str(), -1, &rect);
   y=TopMargin+rect.height()+Grid;
   p->drawLine(LeftMargin, y, PageWidth+LeftMargin, y);
   y+=Grid;
@@ -1133,10 +1133,10 @@ int AddressWidget::printFooter(QPainter* p, QRect pageSize, int pageNum,
       right.insert(pos, buffer);
     }
   // -----
-  p->drawText(LeftMargin, TopMargin, PageWidth, PageHeight, AlignLeft | AlignBottom,
+  p->drawText(LeftMargin, TopMargin, PageWidth, PageHeight, Qt::AlignLeft | Qt::AlignBottom,
 	      left.c_str(), -1, &rect);
   p->drawText(LeftMargin, TopMargin, PageWidth, PageHeight,
-	      AlignRight | AlignBottom, right.c_str());
+	      Qt::AlignRight | Qt::AlignBottom, right.c_str());
   y=rect.height()+Grid;
   p->drawLine(LeftMargin, TopMargin+PageHeight-y, LeftMargin+PageWidth, 
 	      TopMargin+PageHeight-y);
@@ -1350,7 +1350,7 @@ bool AddressWidget::print(QPrinter& printer, const list<string>& fields,
 		 }
 	      // find largest value in pixels:
 	      rect=p.boundingRect(0, 0, PageWidth, PageHeight,
-				  AlignLeft | AlignTop, text.c_str());
+				  Qt::AlignLeft | Qt::AlignTop, text.c_str());
 	      if(fieldWidth[count]<rect.width()+2*Spacing)
 		{
 		  fieldWidth[count]=rect.width()+2*Spacing;
@@ -1503,7 +1503,7 @@ bool AddressWidget::print(QPrinter& printer, const list<string>& fields,
 	      if(keys->get("comment", text))
 		{
 		  rect=p.boundingRect(0, 0, commentFieldWidth, 
-		     PageHeight, AlignLeft | AlignTop | WordBreak, 
+		     PageHeight, Qt::AlignLeft | Qt::AlignTop | WordBreak,
 		     text.c_str());
 		  commentHeight=rect.height();
 		}
@@ -1529,7 +1529,7 @@ bool AddressWidget::print(QPrinter& printer, const list<string>& fields,
 		  if(!text.empty())
 		    {
 		      p.drawText(cx+Spacing, cy, fieldWidth[count], PageHeight,
-				 AlignLeft | AlignTop | WordBreak, 
+				 Qt::AlignLeft | Qt::AlignTop | WordBreak,
 				 text.c_str(), -1, &rect);
 		      if(temp<rect.height()+Spacing)
 			{
@@ -1558,7 +1558,7 @@ bool AddressWidget::print(QPrinter& printer, const list<string>& fields,
 			  if(date.isValid())
 			    {
 			      p.drawText(cx+Spacing, cy, fieldWidth[count], 
-				 PageHeight, AlignLeft | AlignTop, 
+				 PageHeight, Qt::AlignLeft | Qt::AlignTop, 
 				 date.toString());
 			    }
 			} else {
@@ -1586,13 +1586,13 @@ bool AddressWidget::print(QPrinter& printer, const list<string>& fields,
 			} 
 		    }
 		  p.drawText(cx+Spacing, cy, fieldWidth[count], 
-			     PageHeight, AlignLeft | AlignTop, 
+			     PageHeight, Qt::AlignLeft | Qt::AlignTop, 
 			     address.c_str());
 		  continue;
 		}
 	      keys->get(*pos, text);
 	      p.drawText(cx+Spacing, cy, fieldWidth[count], PageHeight,
-		 AlignLeft | AlignTop, text.c_str());
+		 Qt::AlignLeft | Qt::AlignTop, text.c_str());
 	      cx+=fieldWidth[count];
 	      count++;
 	    }

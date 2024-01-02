@@ -130,7 +130,7 @@ KSpellConfig::KSpellConfig (QWidget *parent, char *name,
 	//tmpQLabel->setGeometry( 30, 160, 120, 30 );
 	tmpQLabel->setText( i18n("Personal dictionary:") );
 	//	tmpQLabel->setAlignment( 290 );
-	tmpQLabel->setAlignment( AlignLeft );
+	tmpQLabel->setAlignment( Qt::AlignLeft );
 	tmpQLabel->setMargin( -1 );
 	layout->addWidget (tmpQLabel, rpersdict, 0);
 	tmpQLabel->setMinimumWidth (tmpQLabel->sizeHint().width());
@@ -138,7 +138,7 @@ KSpellConfig::KSpellConfig (QWidget *parent, char *name,
 
 	tmpQLabel = new QLabel( this, "Label_2" );
 	tmpQLabel->setText( i18n("Encoding:") );
-	tmpQLabel->setAlignment( AlignLeft );
+	tmpQLabel->setAlignment( Qt::AlignLeft );
 	tmpQLabel->setMargin( -1 );
 	layout->addWidget (tmpQLabel, rencoding, 0);
 	tmpQLabel->setMinimumSize (tmpQLabel->sizeHint());
@@ -358,9 +358,9 @@ void KSpellConfig::fillInDialog (void)
       QDir thedir (dir.filePath(),"*.aff");
       kdebug(KDEBUG_INFO, 750, "KSpellConfig%s\n",thedir.path());
 
-      kdebug(KDEBUG_INFO, 750, "entryList().count()=%d", thedir.entryList()->count());
+      kdebug(KDEBUG_INFO, 750, "entryList().count()=%d", thedir.entryList().count());
 
-      for (unsigned i=0;i<thedir.entryList()->count();i++)
+      for (unsigned i=0;i<thedir.entryList().count();i++)
 	{
 	  QString fname, lname, hname;
 
