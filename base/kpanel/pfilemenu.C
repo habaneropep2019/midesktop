@@ -81,7 +81,6 @@ extern void execute(const char*);
 extern kPanel *the_panel;
 PFileMenu* PFileMenu::root = 0L;
 int PFileMenu::maxEntriesOnScreen = 256;
-int PFileMenu::entryHeight = 0;
 
 extern void copyFiles(QString, QString);
 
@@ -262,8 +261,7 @@ PFileMenu::~PFileMenu()
 
 void PFileMenu::calculateMaxEntriesOnScreen(PMenuItem* menu)
 {
-  PFileMenu::maxEntriesOnScreen = menu->cmenu->maxEntriesOnScreen() -3;
-  PFileMenu::entryHeight = menu->cmenu->entryHeight();
+  PFileMenu::maxEntriesOnScreen = menu->cmenu->maxEntriesOnScreen() - 3;
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -427,12 +425,6 @@ PFileMenu::aboutToShow()
 
   this->createMenu(this->parentItem->cmenu, the_panel);
 
-
-#if QT_VERSION < 141
-  // no longer necessary :-) (Matthias)
-  this->fixMenuPosition();
-#endif
-
   DEBUG_STMT(printf("[%d %d]\n", ++tot_activated, tot_deactivated);)
 }
 
@@ -446,7 +438,7 @@ int PFileMenu::parseTail()
 
     while ( (fi=it.current()) ) {
       if (numentries > PFileMenu::maxEntriesOnScreen) {
-	QFileInfoListIterator* newit = new QFileInfoListIterator(it);
+	      QFileInfoListIterator* newit = new QFileInfoListIterator(it);
         this->addTailMenu(newit);
         break;
       }
@@ -511,7 +503,7 @@ int PFileMenu::parseDir(QDir d, bool addOpenFolderEntry)
 
   QFileInfo *fi;
   int numentries = 0;
-  int maxentries = PFileMenu::maxEntriesOnScreen -1;
+  int maxentries = PFileMenu::maxEntriesOnScreen - 1;
 
   while ( (fi=it.current()) ) {
     if (numentries > maxentries) {
@@ -864,37 +856,6 @@ void PFileMenu::optionsDlg()
    config->sync();
 
    execute("kcmkpanel disknav");
-}
-
-/////////////////////////////////////////////////////////////////////
-// This method is required due to a bug in implementation of QPopupMenu.
-// After the aboutToShow() signal is emitted, in fact, a call to updateSize()
-// is not followed by a recalculation of the menu position.
-// Here we estimate the height of the menu and move it according to the
-// desktop height.
-// Note: once this bug is fixed in Qt, PFileMenu::entryHeight can be removed
-// as well.
-//
-void PFileMenu::fixMenuPosition()
-{
-  int count_separators = 0;
-  register PMenuItem *mi;
-  QListIterator<PMenuItem> it(this->list);
-
-  while ((mi = it.current())) {
-    if (mi->getType() == separator)
-        count_separators++;
-
-    ++it;
-  }
-
-  int menu_height = (this->cmenu->count() - count_separators)
-                     * PFileMenu::entryHeight + 2 * count_separators;
-
-  int new_y = QApplication::desktop()->height() - menu_height;
-
-  if (this->cmenu->y() > new_y)
-    this->cmenu->move(this->cmenu->x(), new_y -2);
 }
 
 //////////////////////////////////////////////////////////////////////////////

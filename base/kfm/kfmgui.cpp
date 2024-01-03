@@ -42,6 +42,13 @@
 #include <kstring.h>
 #include <kwm.h> // for sendKWMCommand. David.
 
+//
+// Conflicts with XLib.h
+//
+#ifdef KeyPress
+#undef KeyPress
+#endif
+
 #define FIRSTFILEMENUITEM 100
 
 bool KfmGui::sumode = false;
@@ -1018,7 +1025,7 @@ void KfmGui::slotSelectAll()
         KfmView::clipboard->append(((QLineEdit*)focusWidget())->text());
         // Simulate a key event to the widget focused
         // We use Key_Home because Ctrl+A calls this function !
-        QKeyEvent e( Event_KeyPress, Key_Home, 0, 0);
+        QKeyEvent e( QEvent::KeyPress, Key_Home, 0, 0);
         QApplication::sendEvent( focusWidget(), &e);
     }
     else
@@ -1457,7 +1464,6 @@ void KfmGui::slotTitle( const char *_title )
     // This title is *encoded* ! The fix should go to khtml[w], but it's frozen 
     // right now. David.
     title = _title; // keeps a copy of the title. Isn't used at all, AFAIK. David.
-    title.detach();
     KURL::decodeURL(title);
     setCaption( title.data() );
 }

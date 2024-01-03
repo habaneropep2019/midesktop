@@ -9,8 +9,6 @@ configlist.cpp main.cpp toplevel.cpp kdelnk.cpp mainwidget.cpp kswallow.cpp
 )
 set(KCONTROL_MOC toplevel.moc kdelnk.moc mainwidget.moc configlist.moc kswallow.moc)
 
-QT1_WRAP_MOC(MOC_FILES ${KCONTROL_MOC})
-
 add_executable(kcontrol ${KCONTROL_SRCS} ${MOC_FILES})
 target_link_libraries(kcontrol
     ${QT_LIBRARIES}

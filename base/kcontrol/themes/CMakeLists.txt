@@ -12,7 +12,6 @@ theme.cpp installer.cpp main.cpp kwmcom.cpp options.cpp widgetcanvas.cpp about.c
 set(THEMES_MOC
 theme.moc installer.moc colors.moc widgetcanvas.moc options.moc about.moc groupdetails.moc themecreator.moc
 )
-QT1_WRAP_MOC(MOC_FILES ${THEMES_MOC})
 
 add_executable(kthememgr ${THEMES_SRCS} ${MOC_FILES})
 target_link_libraries(kthememgr

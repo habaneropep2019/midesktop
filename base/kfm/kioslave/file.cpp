@@ -16,7 +16,7 @@ SortedKProtocolDirEntry::~SortedKProtocolDirEntry()
 {
 }
 
-int SortedKProtocolDirEntry::compareItems( GCI i1, GCI i2)
+int SortedKProtocolDirEntry::compareItems( QCollection::Item i1, QCollection::Item i2)
 {
     KProtocolDirEntry *de1 = (KProtocolDirEntry *)i1;
     KProtocolDirEntry *de2 = (KProtocolDirEntry *)i2;

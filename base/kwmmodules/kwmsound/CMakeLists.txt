@@ -7,8 +7,6 @@ set(KWMSOUND_SRCS kwmsound.C)
 
 set(KWMSOUND_MOC kwmsound.moc)
 
-QT1_WRAP_MOC(MOC_FILES ${KWMSOUND_MOC})
-
 add_executable(kwmsound ${KWMSOUND_SRCS} ${MOC_FILES})
 target_link_libraries(kwmsound
     ${QT_LIBRARIES}

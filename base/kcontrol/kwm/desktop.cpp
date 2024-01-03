@@ -28,12 +28,12 @@
 #include <qlayout.h> //CT
 #include <kapp.h>
 
+#include "desktop.h"
+#include "geom.h"
+
 #include <X11/X.h>
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
-
-#include "desktop.h"
-#include "geom.h"
 
 // kwm config keywords
 #define KWM_ELECTRIC_BORDER                  "ElectricBorder"
@@ -88,7 +88,7 @@ KDesktopConfig::KDesktopConfig (QWidget * parent, const char *name)
 			  ElectricBox);
   delaylabel->adjustSize();
   delaylabel->setMinimumSize(delaylabel->size());
-  delaylabel->setAlignment(AlignVCenter|AlignLeft);
+  delaylabel->setAlignment(Qt::AlignVCenter|Qt::AlignLeft);
   eLay->addWidget(delaylabel,3,0);
 
   delaylcd = new QLCDNumber (2, ElectricBox);
@@ -126,7 +126,7 @@ KDesktopConfig::KDesktopConfig (QWidget * parent, const char *name)
   BrdrSnapLabel = new QLabel(klocale->translate("Border Snap Zone:\n       (pixels)"), MagicBox);
   BrdrSnapLabel->adjustSize();
   BrdrSnapLabel->setMinimumSize(BrdrSnapLabel->size());
-  BrdrSnapLabel->setAlignment(AlignTop);
+  BrdrSnapLabel->setAlignment(Qt::AlignTop);
   eLay->addWidget(BrdrSnapLabel,1,0);
 
   BrdrSnapLCD = new QLCDNumber (2, MagicBox);
@@ -151,7 +151,7 @@ KDesktopConfig::KDesktopConfig (QWidget * parent, const char *name)
   WndwSnapLabel = new QLabel(klocale->translate("Window Snap Zone:\n       (pixels)"), MagicBox);
   WndwSnapLabel->adjustSize();
   WndwSnapLabel->setMinimumSize(WndwSnapLabel->size());
-  WndwSnapLabel->setAlignment(AlignTop);
+  WndwSnapLabel->setAlignment(Qt::AlignTop);
   eLay->addWidget(WndwSnapLabel,3,0);
 
   WndwSnapLCD = new QLCDNumber (2, MagicBox);

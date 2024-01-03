@@ -1104,7 +1104,7 @@ void KCookieJar::saveConfig(KConfig *_config)
     if (!configChanged)
         return;
 
-    QStrList domainSettings;
+    QStringList domainSettings;
     _config->setGroup("Browser Settings/HTTP");
     _config->writeEntry("CookieGlobalAdvice", adviceToStr( globalAdvice));
     
@@ -1133,7 +1133,7 @@ void KCookieJar::saveConfig(KConfig *_config)
 void KCookieJar::loadConfig(KConfig *_config)
 {
     QString value;
-    QStrList domainSettings;
+    QStringList domainSettings;
     // Reset current domain settings first
     
     for ( char *domain=domainList.first(); 
@@ -1148,11 +1148,8 @@ void KCookieJar::loadConfig(KConfig *_config)
     globalAdvice = strToAdvice(value.data());
 
     (void) _config->readListEntry("CookieDomainAdvice", domainSettings);
-    for (char *value = domainSettings.first();
-         value != 0;
-         value = domainSettings.next())
-    {
-    	QString strVal(value);
+    for (QStringList::ConstIterator itr = domainSettings.begin(); itr != domainSettings.end(); ++itr ) {
+    	QString strVal = *itr;
         int sepPos = strVal.find(':');
         if (sepPos <= 0)
              continue;

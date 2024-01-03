@@ -48,7 +48,7 @@ void PageFrame::Contents(const char* header, QWidget* body, const char* footer)
     QLabel* logo = new QLabel(sb);
     QPixmap pm = kapp->getIconLoader()->loadIcon(QString("konsole.xpm"));
     logo->setPixmap(pm);
-    logo->setAlignment( AlignCenter );
+    logo->setAlignment( Qt::AlignCenter );
     logo->setMinimumSize( logo->sizeHint() );
     sbl->addWidget( logo , 2);
     QLabel* footext = new QLabel(sb);
@@ -70,7 +70,7 @@ GeneralPage::GeneralPage(QWidget* parent) : PageFrame(parent)
 {
   QLabel *bigWidget = new QLabel( "This is work in progress.", this );
   bigWidget->setFrameStyle( QFrame::Panel | QFrame::Sunken );
-  bigWidget->setAlignment( AlignCenter  );
+  bigWidget->setAlignment( Qt::AlignCenter  );
   bigWidget->setBackgroundMode(PaletteBase);
 //bigWidget->setMinimumHeight(400);
  
@@ -211,7 +211,7 @@ ColorTable::ColorTable(QWidget* parent, int lower, int upper) : QLabel(parent)
   //setFrameStyle( QFrame::WinPanel | QFrame::Sunken );
   this->lower = lower;
   this->upper = upper;
-  setAlignment(AlignCenter);
+  setAlignment(Qt::AlignCenter);
   setBackgroundMode(PaletteBase);
   schema = (ColorSchema*)NULL;
   scale = 1;
@@ -261,7 +261,7 @@ SchemaConfig::SchemaConfig(QWidget* parent) : PageFrame(parent)
 {
   QLabel *bigWidget = new QLabel(this); //( "This is work in progress.", this );
   bigWidget->setFrameStyle( QFrame::Panel | QFrame::Sunken );
-  bigWidget->setAlignment( AlignCenter  );
+  bigWidget->setAlignment( Qt::AlignCenter  );
 
   QGridLayout* topLayout = new QGridLayout( bigWidget, 4, 3, 5 ); 
   topLayout->setColStretch(0,1);
@@ -346,7 +346,7 @@ SchemaConfig::SchemaConfig(QWidget* parent) : PageFrame(parent)
   QLabel *smlWidget = new QLabel( i18n("This is work in progress."), bigWidget );
   QToolTip::add(smlWidget,i18n("This is work in progress."));
 //smlWidget->setFrameStyle( QFrame::Panel | QFrame::Sunken );
-  smlWidget->setAlignment( AlignCenter  );
+  smlWidget->setAlignment( Qt::AlignCenter  );
 //smlWidget->setBackgroundMode(PaletteBase);
   topLayout->addMultiCellWidget( smlWidget, 3,3, 1,2 );
 
@@ -425,7 +425,7 @@ SessionConfig::SessionConfig(QWidget* parent) : PageFrame(parent)
 {
   QLabel *bigWidget = new QLabel( "This is work in progress.", this );
   bigWidget->setFrameStyle( QFrame::Panel | QFrame::Sunken );
-  bigWidget->setAlignment( AlignCenter  );
+  bigWidget->setAlignment( Qt::AlignCenter  );
   bigWidget->setBackgroundMode(PaletteBase);
   Contents
   ( i18n(

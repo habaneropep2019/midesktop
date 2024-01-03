@@ -24,7 +24,7 @@ public:
   virtual int height(const QListBox *) const;
   virtual int width(const QListBox *) const;
 
-  virtual const char *text() const;
+  virtual QString text() const;
 
 private:
   QString _text;
@@ -37,7 +37,7 @@ public:
   virtual int height(const QListBox *) const;
   virtual int width(const QListBox *) const;
 
-  virtual const char *text() const;
+  virtual QString text() const;
 
 private:
   QString _text;

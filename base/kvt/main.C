@@ -28,9 +28,6 @@
 #include <unistd.h>
 #include <signal.h>
 #include <locale.h>
-#include <X11/X.h>
-#include <X11/Xlib.h>
-#include <X11/Xutil.h>
 
 // KDE includes
 #include <kconfig.h>
@@ -45,6 +42,10 @@
 #include "kvt_version.h"
 
 #include "main.h"
+
+#include <X11/X.h>
+#include <X11/Xlib.h>
+#include <X11/Xutil.h>
 
 #if !defined(HAVE_SETEUID)
 #define seteuid(_eu) setresuid(-1, _eu, -1)
@@ -1177,7 +1178,7 @@ void kVt::file_menu_activated(int item){
 bool kVt::eventFilter( QObject *obj, QEvent * ev){
   static QPoint tmp_point(-10,-10);
   if (obj == m_options){
-    if (ev->type() == Event_MouseButtonRelease){
+    if (ev->type() == QEvent::MouseButtonRelease){
       if (QCursor::pos() == tmp_point){
 	tmp_point = QPoint(-10,-10);
 	return TRUE;
@@ -1186,7 +1187,7 @@ bool kVt::eventFilter( QObject *obj, QEvent * ev){
   }
   if (obj == rxvt){
     switch (ev->type()){
-    case Event_MouseButtonPress: case Event_MouseButtonDblClick:
+    case QEvent::MouseButtonPress: case QEvent::MouseButtonDblClick:
       {
 	QMouseEvent *e = (QMouseEvent*) ev;
 	tmp_point = QCursor::pos();
@@ -1195,7 +1196,7 @@ bool kVt::eventFilter( QObject *obj, QEvent * ev){
 	}
       }
       break;
-    case Event_MouseButtonRelease:
+    case QEvent::MouseButtonRelease:
       tmp_point = QPoint(-10,-10);
       break;
     }
@@ -1203,7 +1204,7 @@ bool kVt::eventFilter( QObject *obj, QEvent * ev){
 
   if (obj == this){
     switch (ev->type()){
-    case Event_KeyPress: case Event_KeyRelease:
+    case QEvent::KeyPress: case QEvent::KeyRelease:
       {
 	// well... aehh... but this works ;-)
 	if (handle_X_event(stored_xevent_for_keys, ((QKeyEvent*)ev)->ascii()))

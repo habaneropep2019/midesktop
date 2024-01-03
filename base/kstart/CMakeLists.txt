@@ -7,8 +7,6 @@ set(KSTART_SRCS kstart.C)
 
 set(KSTART_MOC kstart.moc)
 
-QT1_WRAP_MOC(MOC_FILES ${KSTART_MOC})
-
 add_executable(kstart ${KSTART_SRCS} ${MOC_FILES})
 target_link_libraries(kstart
     ${QT_LIBRARIES}

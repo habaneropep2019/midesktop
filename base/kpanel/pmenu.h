@@ -48,7 +48,6 @@ private:	// Disabled copy constructor and operator=
 
 public:
   int maxEntriesOnScreen();
-  int entryHeight();
   PFileMenu* parentMenu;
   static int keyStatus;   // ShiftButton | ControlButton | AltButton
 };
@@ -267,7 +266,6 @@ protected:
 
   void addTailMenu(QFileInfoListIterator* tail);
   void copyTailFileInfo(QFileInfoListIterator& it);
-  void fixMenuPosition();
 
 #ifdef DISKNAV_DEBUG
   void doSelfCheck();
@@ -281,7 +279,6 @@ private:
   bool isClean;
   static PFileMenu* root;
   static int maxEntriesOnScreen;
-  static int entryHeight;
   PFileMenu* lastActivated;
 };
 

@@ -384,3 +384,4 @@ void KBookmarkManager::write()
   write(myFilename);
 }
 
+#include "bookmark.moc"

@@ -69,7 +69,7 @@ bool ThemeCreator::create(const QString aThemeName)
   }
 
   mThemercFile = aThemeName + ".themerc";
-  mPreviewFile = 0;
+  mPreviewFile = QString::null;
   mPreview.resize(0,0);
 
   if (mConfig)
@@ -148,7 +148,7 @@ int ThemeCreator::extractGroup(const char* aGroupName)
     {
       appDir = value.copy();
       if (appDir[0] != '/') baseDir = kapp->localkdedir() + "/share/";
-      else baseDir = 0;
+      else baseDir = QString::null;
       appDir = baseDir + appDir;
       len = appDir.length();
       if (len > 0 && appDir[len-1]!='/') appDir += '/';
@@ -216,7 +216,7 @@ int ThemeCreator::extractGroup(const char* aGroupName)
       else 
       {
 	cfgKey = mapValue;
-	cfgValue = 0;
+	cfgValue = QString::null;
       }
       if (cfgKey.isEmpty()) cfgKey = key;
       value = cfg->readEntry(cfgKey);
@@ -328,9 +328,9 @@ const QString ThemeCreator::extractFile(const QString& aFileName)
       ext = fname.mid(i, 255);
       fname = fname.left(i);
     }
-    else ext = 0;
-    for (j=i-1, num=0; j>=0 && fname[j]>='0' && fname[j]<='9'; j--)
-      num = num*10 + (int)(fname[j] - '0');
+    else ext = QString::null;
+    for (j=i-1, num=0; j>=0 && fname[j].isDigit(); j--)
+      num = num*10 + (int)(fname[j].latin1() - '0');
     j++;
     num++;
     fname[j] = '\0';

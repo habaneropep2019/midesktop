@@ -31,13 +31,13 @@
 #include <qlayout.h> //CT 21Oct1998
 #include <kapp.h>
 
-#include <X11/X.h>
-#include <X11/Xlib.h>
-#include <X11/Xutil.h>
-
 #include "windows.h"
 #include "geom.h"
 #include <ksimpleconfig.h>
+
+#include <X11/X.h>
+#include <X11/Xlib.h>
+#include <X11/Xutil.h>
 
 // kwm config keywords
 #define KWM_MOVE      "WindowMoveType"
@@ -111,13 +111,13 @@ KWindowConfig::KWindowConfig (QWidget * parent, const char *name)
   resizeAnimNoneLabel= new QLabel(klocale->translate("None"),windowsBox);
   resizeAnimNoneLabel->adjustSize();
   resizeAnimNoneLabel->setMinimumSize(resizeAnimNoneLabel->size());
-  resizeAnimNoneLabel->setAlignment(AlignTop|AlignLeft);
+  resizeAnimNoneLabel->setAlignment(Qt::AlignTop|Qt::AlignLeft);
   rLay->addWidget(resizeAnimNoneLabel,1,1);
 
   resizeAnimFastLabel= new QLabel(klocale->translate("Fast"),windowsBox);
   resizeAnimFastLabel->adjustSize();
   resizeAnimFastLabel->setMinimumSize(resizeAnimFastLabel->size());
-  resizeAnimFastLabel->setAlignment(AlignTop|AlignRight);
+  resizeAnimFastLabel->setAlignment(Qt::AlignTop|Qt::AlignRight);
   rLay->addWidget(resizeAnimFastLabel,1,2);
 
   wLay->activate();
@@ -156,7 +156,7 @@ KWindowConfig::KWindowConfig (QWidget * parent, const char *name)
 		       plcBox);
   iTLabel->adjustSize();
   iTLabel->setMinimumSize(iTLabel->size());
-  iTLabel->setAlignment(AlignTop|AlignHCenter);
+  iTLabel->setAlignment(Qt::AlignTop|Qt::AlignHCenter);
   pLay->addWidget(iTLabel,1,1);
 
   interactiveTrigger = new KNumericSpinBox(plcBox);
@@ -216,7 +216,7 @@ KWindowConfig::KWindowConfig (QWidget * parent, const char *name)
   alabel = new QLabel(klocale->translate("Delay (ms)"), fcsBox);
   alabel->adjustSize();
   alabel->setMinimumSize(alabel->size());
-  alabel->setAlignment(AlignVCenter|AlignHCenter);
+  alabel->setAlignment(Qt::AlignVCenter|Qt::AlignHCenter);
   fLay->addWidget(alabel,2,1);
 
   s = new QLCDNumber (4, fcsBox);

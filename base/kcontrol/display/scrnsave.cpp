@@ -25,7 +25,6 @@
 #include <qlayout.h>
 #include <kapp.h>
 #include <stdlib.h>
-#include <X11/Xlib.h>
 
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
@@ -37,6 +36,8 @@
 #include "kcolordlg.h"
 #include "scrnsave.h"
 #include "scrnsave.moc"
+
+#include <X11/Xlib.h>
 
 #define SCREENSAVER_DIR	"/usr/local/kde/bin"
 #define CORNER_SIZE		15
@@ -56,7 +57,7 @@ CornerButton::CornerButton( QWidget *parent, int num, char _action )
 
 	setActionText();
 
-	setAlignment( AlignCenter );
+	setAlignment( Qt::AlignCenter );
 }
 
 void CornerButton::setActionText()
@@ -147,7 +148,7 @@ KScreenSaver::KScreenSaver( QWidget *parent, int mode, int desktop )
 	topLayout->setColStretch(3,0);
 
 	monitorLabel = new QLabel( this );
-	monitorLabel->setAlignment( AlignCenter );
+	monitorLabel->setAlignment( Qt::AlignCenter );
 	monitorLabel->setPixmap( p );
 	monitorLabel->setMinimumSize( 220, 160 );
 		 
@@ -191,14 +192,17 @@ KScreenSaver::KScreenSaver( QWidget *parent, int mode, int desktop )
 	ssList->adjustSize();
 	ssList->setMinimumSize(ssList->size());
 //	ssList->insertStrList( &saverNames );
-	QStrListIterator it( *saverList );
-	for ( int i = 1; it.current(); ++it )
+
 	{
-		ssList->insertItem( saverNames.at( i - 1 ), i );
-		if ( saverFile == it.current() )
-			ssList->setCurrentItem( i );
-		i++;
+		int i = 1;
+		for (QStringList::ConstIterator it = saverList.begin(); it != saverList.end(); ++it) {
+			ssList->insertItem( *saverNames.at( i - 1 ), i );
+			if ( saverFile == (*it) )
+				ssList->setCurrentItem( i );
+			i++;
+		}
 	}
+
 	ssList->setTopItem( ssList->currentItem() );
 	connect( ssList, SIGNAL( highlighted( int ) ),
 			SLOT( slotScreenSaver( int ) ) );
@@ -467,7 +471,6 @@ void KScreenSaver::writeSettings()
 	config->writeEntry( "Lock", lock ? "yes" : "no" );
 	config->writeEntry( "allowRoot", allowRoot );
 
-	str.detach();
 	str.setNum( priority );
 	config->writeEntry( "Priority", str );
 
@@ -497,15 +500,13 @@ void KScreenSaver::getSaverNames()
 
 	saverNames.clear();
 
-	QStrListIterator it( *saverList );
-	for ( ; it.current(); ++it )
-	{
-		QString name = config->readEntry( it.current() );
+    for ( QStringList::ConstIterator it = saverList.begin(); it != saverList.end(); ++it ) {
+		QString name = config->readEntry( *it );
 
 		if ( name.isEmpty() )
 		{
 			char buffer[80];
-			QString cmd = saverLocation + '/' + it.current() + " -desc";
+			QString cmd = saverLocation + '/' + (*it) + " -desc";
 			FILE *fp = popen( cmd, "r");
 			if ( fp )
 			{
@@ -514,7 +515,7 @@ void KScreenSaver::getSaverNames()
 					*strchr( buffer, '\n' ) = '\0';
 				pclose( fp );
 				name = buffer;
-				config->writeEntry( it.current(), buffer, true, false, true );
+				config->writeEntry( *it, buffer, true, false, true );
 			}
 			else
 				name = "";
@@ -563,7 +564,7 @@ void KScreenSaver::apply( bool force )
 
 	if ( pid == 0 )
 	{
-		char *lock1, *lock2;
+		const char *lock1, *lock2;
 
 		if( lock ) {
 			lock1 = "-lock";
@@ -619,7 +620,6 @@ void KScreenSaver::slotScreenSaver( int indx )
 {
 	if ( indx == 0 )
 	{
-		saverFile.detach();
 		saverFile.sprintf( i18n("No screensaver") );
 		setupBt->setEnabled( FALSE );
 		testBt->setEnabled( FALSE );
@@ -627,8 +627,7 @@ void KScreenSaver::slotScreenSaver( int indx )
 	}
 	else
 	{
-		QStrListIterator it( *saverList );
-		saverFile = it += (indx - 1);
+		saverFile = *saverList.at(indx - 1);
 		if (!ssSetup->isRunning())
 			setupBt->setEnabled( TRUE );
 		testBt->setEnabled( TRUE );
@@ -740,25 +739,28 @@ void KScreenSaver::slotCornerAction( int num, char action )
 
 void KScreenSaver::loadSettings()
 {
-  ssList->clear();  
-  ssList->insertItem( i18n("No screensaver"), 0 );
+	ssList->clear();  
+	ssList->insertItem( i18n("No screensaver"), 0 );
 
-  readSettings();
+	readSettings();
 
-  findSavers();
-  getSaverNames();
+	findSavers();
+	getSaverNames();
 
-  QStrListIterator it( *saverList );
-  for ( int i = 1; it.current(); ++it )
-    {
-	ssList->insertItem( saverNames.at( i - 1 ), i );
-	if ( saverFile == it.current() )
-           ssList->setCurrentItem( i );
-        i++;
-    }
-  ssList->setTopItem( ssList->currentItem() );
+	{
+		int i = 1;
+		for ( QStringList::ConstIterator it = saverList.begin(); it != saverList.end(); ++it ) {
+			ssList->insertItem( *saverNames.at( i - 1 ), i );
+			if ( saverFile == *it )
+			{
+				ssList->setCurrentItem( i );
+			}
+			i++;
+		}
+	}
 
-  updateValues();
+	ssList->setTopItem( ssList->currentItem() );
+  	updateValues();
 }
 
 void KScreenSaver::applySettings()

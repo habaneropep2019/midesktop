@@ -522,7 +522,7 @@ void MenuButton::dndMouseReleaseEvent( QMouseEvent *e)
   if( move_button || move_group )
       //  if( e->button() == MidButton )
     {
-      setCursor(arrowCursor);
+      setCursor(Qt::arrowCursor);
       move_group = FALSE;
       move_button = FALSE;
       emit posChanged(id, pos());
@@ -724,7 +724,7 @@ void MenuButton::paint( QPainter *painter )
     {
       qDrawArrow( painter, RightArrow, style(), submenu_open,
 		  width() - 10,  height()/2-4,
-		  8, 8, g );
+		  8, 8, g, TRUE );
     }
 }
 

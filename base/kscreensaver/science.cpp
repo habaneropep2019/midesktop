@@ -149,7 +149,7 @@ KPrepareDlg::KPrepareDlg( QWidget *parent ) : QWidget( parent )
 	KApplication::getKApplication()->getCharsets()->setQFont(font);
 
 	label = new QLabel( 0, frame );
-	label->setAlignment( AlignCenter );
+	label->setAlignment( Qt::AlignCenter );
 	label->setFont( font );
 	label->show();
 

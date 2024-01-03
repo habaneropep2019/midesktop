@@ -5,8 +5,6 @@ include_directories(
 
 set(KFMWARN_SRCS main.cpp)
 
-QT1_WRAP_MOC(MOC_FILES main.moc)
-
 add_executable(kfmexec ${KFMWARN_SRCS} ${MOC_FILES})
 target_link_libraries(kfmexec
     ${QT_LIBRARIES}

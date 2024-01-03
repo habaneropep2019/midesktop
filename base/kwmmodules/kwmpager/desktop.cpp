@@ -77,7 +77,7 @@ void Desktop::fillPixmap()
 	
 	if ( !win->name.isNull() ) 
 	    p.drawText( x + 1, y + 1 , w - 2, h - 2,
-			AlignVCenter,
+			Qt::AlignVCenter,
 			win->name, win->name.length()
 			);
     }    

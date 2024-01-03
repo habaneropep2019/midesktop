@@ -61,6 +61,13 @@
 #include <kmsgbox.h>
 #include <X11/Xlib.h>
 
+//
+// Conflicts with X11 KeyPress macro
+//
+#ifdef KeyPress
+#undef KeyPress
+#endif
+
 #define HERE printf("%s(%d): here\n",__FILE__,__LINE__)
 #define HCNT(Name) // { static int cnt = 1; printf("%s(%d): %s %d\n",__FILE__,__LINE__,Name,cnt++); }
 
@@ -151,7 +158,7 @@ TEWidget::TEWidget(QWidget *parent, const char *name) : QFrame(parent,name)
                     this, SLOT(onClearSelection()) );
 
   scrollbar = new QScrollBar(this);
-  scrollbar->setCursor( arrowCursor );
+  scrollbar->setCursor( Qt::arrowCursor );
   connect(scrollbar, SIGNAL(valueChanged(int)), this, SLOT(scrollChanged(int)));
   scrollLoc = SCRNONE;
 
@@ -695,7 +702,7 @@ int TEWidget::charClass(char ch) const
 void TEWidget::setMouseMarks(bool on)
 {
   mouse_marks = on;
-  setCursor( mouse_marks ? ibeamCursor : arrowCursor );
+  setCursor( mouse_marks ? Qt::ibeamCursor : Qt::arrowCursor );
 }
 
 /* ------------------------------------------------------------------------- */
@@ -749,7 +756,7 @@ void TEWidget::onClearSelection()
 
 bool TEWidget::eventFilter( QObject *, QEvent *e )
 {
-  if ( e->type() == Event_KeyPress )
+  if ( e->type() == QEvent::KeyPress )
   { QKeyEvent* ke = (QKeyEvent*)e;
 
     actSel=0; // Key stroke implies a screen update, so TEWidget won't
@@ -780,12 +787,12 @@ bool TEWidget::eventFilter( QObject *, QEvent *e )
   } 
   else
   {
-    if ( e->type() == Event_Enter )
+    if ( e->type() == QEvent::Enter )
     {
         QObject::disconnect( (QObject*)cb, SIGNAL(dataChanged()), 
         this, SLOT(onClearSelection()) );
     }
-    if ( e->type() == Event_Leave )
+    if ( e->type() == QEvent::Leave )
     {
         QObject::connect( (QObject*)cb, SIGNAL(dataChanged()), 
         this, SLOT(onClearSelection()) );

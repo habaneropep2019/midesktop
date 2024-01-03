@@ -111,8 +111,8 @@ void kPanel::reposition(int l){
     i = 1;
     while ( i < nbuttons ) {
 
-    if ( (orientation == vertical && entries[i-1].button->y() > entries[i].button->y()) ||
-    (orientation == horizontal && entries[i-1].button->x() > entries[i].button->x())) {
+    if ( (orientation == Vertical && entries[i-1].button->y() > entries[i].button->y()) ||
+    (orientation == Horizontal && entries[i-1].button->x() > entries[i].button->x())) {
 
     tmp = entries[i-1];
     entries[i-1] = entries[i];
@@ -126,8 +126,8 @@ void kPanel::reposition(int l){
     changed = false;
     for (i = 0; i < (nbuttons - 1); i++) {
 
-      if ( (orientation == vertical && entries[i].button->y() > entries[i+1].button->y()) ||
-	   (orientation == horizontal && entries[i].button->x() > entries[i+1].button->x())) {
+      if ( (orientation == Vertical && entries[i].button->y() > entries[i+1].button->y()) ||
+	   (orientation == Horizontal && entries[i].button->x() > entries[i+1].button->x())) {
 	tmp = entries[i];
 	entries[i] = entries[i+1];
 	entries[i+1] = tmp;
@@ -137,7 +137,7 @@ void kPanel::reposition(int l){
   } while (changed);
 
 
-  if (orientation == vertical){
+  if (orientation == Vertical){
     for (i=0; i<nbuttons-1; i++){
       if (entries[i].button->y()<panel_button->y()+panel_button->height())
 	entries[i].button->move(entries[i].button->x(),
@@ -188,7 +188,7 @@ void kPanel::reposition(int l){
       reposition(l+1);
     }
   }
-  else { // orientation == horizontal
+  else { // orientation == Horizontal
 
     for (i=0; i<nbuttons-1; i++){
       if (entries[i].button->x()<panel_button->x()+panel_button->width())
@@ -245,7 +245,7 @@ void kPanel::reposition(int l){
 
 void kPanel::find_a_free_place(){
   int i;
-  if (orientation == vertical)
+  if (orientation == Vertical)
     entries[nbuttons-1].button->setGeometry(margin,
 					    entries[nbuttons-2].button->y()
 					    +entries[nbuttons-2].button->height(),
@@ -259,7 +259,7 @@ void kPanel::find_a_free_place(){
 
   // find a free place.
   for (i=1; i<nbuttons-1; i++){
-    if (orientation == vertical){
+    if (orientation == Vertical){
       if (entries[i-1].button->y()+box_height <= entries[i].button->y()-box_height){
 	entries[nbuttons-1].button->setGeometry(margin,
 						entries[i-1].button->y()+box_height,
@@ -267,7 +267,7 @@ void kPanel::find_a_free_place(){
 	return;
       }
     }
-    else{   // orientation == horizontal
+    else{   // orientation == Horizontal
       if (entries[i-1].button->x()+box_width <= entries[i].button->x()-box_width){
 	entries[nbuttons-1].button->setGeometry(entries[i-1].button->x()+box_width,
 						margin,
@@ -279,7 +279,7 @@ void kPanel::find_a_free_place(){
 }
 
 void kPanel::check_button_bounds(QWidget* button){
-  if (orientation == vertical){
+  if (orientation == Vertical){
     if (button->y() > bound_top_left - button->height()&&
 	button->y() < bound_bottom_right)
       if ((2 * button->y() + button->height()
@@ -321,7 +321,7 @@ void kPanel::reflow_buttons(QWidget* moved_button){
 
        int tmp_nbuttons = nbuttons; // default: touch all buttons
 
-       if (orientation == vertical){
+       if (orientation == Vertical){
           if (entries[my_pos].button->y() < bound_top_left){
              // determine which buttons are below control-panel
              for(tmp_nbuttons=my_pos ; tmp_nbuttons < nbuttons && entries[tmp_nbuttons].button->y()< bound_top_left ; tmp_nbuttons++);
@@ -344,7 +344,7 @@ void kPanel::reflow_buttons(QWidget* moved_button){
 
         // now adjust buttons-pos right from moving_button
        for( ; my_pos < tmp_nbuttons  ; my_pos++){
-            if (orientation == vertical){
+            if (orientation == Vertical){
                 // will mydelta_? position the button on the control-panel ?
                 if ((bound_top_left - entries[my_pos].button->height() < entries[my_pos].button->y()-mydelta_y)
                     && (bound_bottom_right > entries[my_pos].button->y()-mydelta_y)) {

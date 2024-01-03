@@ -405,7 +405,7 @@ void KFinderWin::mousePressEvent( QMouseEvent *_ev )
 
     QPoint p( _ev->pos().x() + xOffset(), _ev->pos().y() );
     QPoint p2( mapToGlobal( _ev->pos() ) );
-    QMouseEvent ev( Event_MouseButtonPress, p, _ev->button(), _ev->state() );
+    QMouseEvent ev( QEvent::MouseButtonPress, p, _ev->button(), _ev->state() );
     
     itemList.at( row )->mousePressEvent( &ev, p2 );
 }

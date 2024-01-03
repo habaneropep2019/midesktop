@@ -165,10 +165,10 @@ void KDMUsersWidget::setupPage(QWidget *)
       box3->addWidget(n_label);
       box3->addWidget(nouserlb);
 
-      box4->addWidget(userlabel, 5, AlignLeft);
-      box4->addWidget(userbutton, 5, AlignLeft);
-      box4->addWidget(usrGroup, 5, AlignLeft);
-      box4->addWidget(shwGroup, 5, AlignLeft);
+      box4->addWidget(userlabel, 5, Qt::AlignLeft);
+      box4->addWidget(userbutton, 5, Qt::AlignLeft);
+      box4->addWidget(usrGroup, 5, Qt::AlignLeft);
+      box4->addWidget(shwGroup, 5, Qt::AlignLeft);
 
       main->activate();
 }

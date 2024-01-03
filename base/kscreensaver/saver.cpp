@@ -77,7 +77,7 @@ void kScreenSaver::expose( int x, int y, int width, int height )
 
 KPasswordDlg::KPasswordDlg( QWidget *parent, bool s ) : QWidget( parent )
 {
-	setCursor( arrowCursor );
+	setCursor( Qt::arrowCursor );
 
 	stars = s;
 	password = "";
@@ -98,7 +98,7 @@ KPasswordDlg::KPasswordDlg( QWidget *parent, bool s ) : QWidget( parent )
 	label = new QLabel( query, frame );
 	label->setFont( font );
 	label->setGeometry( 20, 20, qwidth, qheight * 2 );
-	label->setAlignment( AlignCenter );
+	label->setAlignment( Qt::AlignCenter );
 	
 	font.setPointSize( 16 );
 	KApplication::getKApplication()->getCharsets()->setQFont(font);

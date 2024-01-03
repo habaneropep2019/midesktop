@@ -388,7 +388,7 @@ Client::Client(Window w, Window _sizegrip, QWidget *parent, const char *name_for
     size.flags = 0;
     generateButtons();
 
-    // create the cursor shapes for all the edges and corners of kwm´s
+    // create the cursor shapes for all the edges and corners of kwm's
     // window decoration.
     if (!bottom_right_cursor)
       bottom_right_cursor = XCreateFontCursor(qt_xdisplay(), XC_bottom_right_corner);
@@ -407,7 +407,7 @@ Client::Client(Window w, Window _sizegrip, QWidget *parent, const char *name_for
     if (!right_side_cursor)
       right_side_cursor = XCreateFontCursor(qt_xdisplay(), XC_right_side);
     if (!normal_cursor)
-      normal_cursor = arrowCursor.handle();
+      normal_cursor = Qt::arrowCursor.handle();
     current_cursor = normal_cursor;
 
     installEventFilter(myapp);
@@ -890,7 +890,7 @@ void Client::mouseMoveEvent( QMouseEvent *ev ){
 void Client::enterEvent( QEvent * ){
   // this is ugly but I see no other way.... fake a mouse move event
   // to set the right cursor shape.
-  QMouseEvent me( Event_MouseButtonPress,
+  QMouseEvent me( QEvent::MouseButtonPress,
 		  mapFromGlobal(QCursor::pos()),
 		  0, 0);
   mouseMoveEvent(&me);
@@ -1357,7 +1357,6 @@ void Client::setLabel(){
     rawlabel = "???";
   if (rawlabel.left(1) == "("){
     // (...) means iconified. MUST be unique!
-    rawlabel.detach();
     rawlabel.prepend("\"");
     rawlabel.append("\"");
   }
@@ -1767,7 +1766,7 @@ void Client::createGimmick(){
     delete gimmick;
   gimmick = 0;
   if (options.GimmickMode){
-    gimmick = new QLabel;
+    gimmick = new QLabel(NULL, "");
     gimmick->resize(options.gimmickPixmap->size());
     gimmick->setPixmap(*(options.gimmickPixmap));
     if (options.gimmickPixmap->mask()){

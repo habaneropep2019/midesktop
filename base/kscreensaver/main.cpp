@@ -19,9 +19,6 @@
 #include <sys/wait.h>
 #include <kprocess.h>
 #include <qapp.h>
-#include <X11/Xlib.h>
-#include <X11/Xutil.h>
-#include <X11/keysym.h>
 #include <qkeycode.h>
 #include <qdialog.h>
 #include <qpushbt.h>
@@ -33,6 +30,10 @@
 #include "main.h"
 #include "main.moc"
 #include <kmsgbox.h>
+
+#include <X11/Xlib.h>
+#include <X11/Xutil.h>
+#include <X11/keysym.h>
 
 KLocale *glocale;
 
@@ -109,7 +110,7 @@ bool ssApp::x11EventFilter( XEvent *event )
 
 			if ( buffer[0] != '\0' || key != 0 )
 			{
-			    QKeyEvent qke( Event_KeyPress, key, buffer[0], 0 );
+			    QKeyEvent qke( QEvent::KeyPress, key, buffer[0], 0 );
 			    passDlg->keyPressed( &qke );
 			}
 			return TRUE;

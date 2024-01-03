@@ -29,7 +29,7 @@ void kPanel::writeOutConfiguration(){
    QStrList button;
    QStrList buttondelta;
 
-   if (orientation == vertical)
+   if (orientation == Vertical)
      real_space = height() - bound_bottom_right + bound_top_left
        - panel_button->y() - panel_button->height();
    else
@@ -54,7 +54,7 @@ void kPanel::writeOutConfiguration(){
      else
        tmp_push_button = panel_button;
 
-     if (orientation == vertical){
+     if (orientation == Vertical){
        delta = entries[i].button->y() - tmp_push_button->y() - tmp_push_button->height();
        left_side = entries[i].button->y() - bound_bottom_right;
      }
@@ -74,7 +74,7 @@ void kPanel::writeOutConfiguration(){
  	tmp_push_button = entries[i].button;
  	config->writeEntry("control", i);
        }
-       if (orientation == vertical)
+       if (orientation == Vertical)
  	delta2 =bound_top_left - tmp_push_button->y() - tmp_push_button->height();
        else
  	delta2 = bound_top_left - tmp_push_button->x() - tmp_push_button->width();
@@ -234,7 +234,7 @@ void kPanel::parseMenus(){
     entries[i].popup = pmenu->getQPopupMenu();
     kmenu = entries[i].popup;
     ready_for_event_loop = false;
-    kde_button->setCursor(arrowCursor);
+    kde_button->setCursor(Qt::arrowCursor);
 }
 
 
@@ -255,7 +255,7 @@ void kPanel::readInConfiguration(){
    float x;
    float y;
    float real_space;
-   if (orientation == vertical){
+   if (orientation == Vertical){
      real_space = height() - bound_bottom_right + bound_top_left
        - panel_button->y() - panel_button->height();
      x = margin; y = panel_button->y() + panel_button->height();
@@ -290,7 +290,7 @@ void kPanel::readInConfiguration(){
      if (num>=0){
        if (button_entry_value == "system"){
  	// the unremovable kde_button!
- 	if (orientation == horizontal){
+ 	if (orientation == Horizontal){
  	  kde_button->move((int)(x + delta * real_space / 10000) , (int)y);
  	  x = kde_button->x() + kde_button->width();
  	}
@@ -301,7 +301,7 @@ void kPanel::readInConfiguration(){
        }
        else {
 
-	 if (orientation == horizontal)
+	 if (orientation == Horizontal)
 	   x += delta * real_space / 10000;
 	 else
 	   y +=delta * real_space / 10000;
@@ -330,7 +330,7 @@ void kPanel::readInConfiguration(){
 	 }
 	
 	 if (buttonAdded){
-	   if (orientation == horizontal)
+	   if (orientation == Horizontal)
 	     x += entries[nbuttons-1].button->width();
 	   else
 	     y += entries[nbuttons-1].button->height();
@@ -340,7 +340,7 @@ void kPanel::readInConfiguration(){
      }
 
      if (num >= control && controldelta>=0){
-       if (orientation == horizontal){
+       if (orientation == Horizontal){
  	control_group->move((int)(x + controldelta * real_space / 10000),
 			    control_group->y());
  	if (control_group->x() + control_group->width() > width())

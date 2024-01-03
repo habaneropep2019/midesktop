@@ -31,7 +31,7 @@ protected:
 class MatchList : public QList<Match>
 {
 protected:
-	virtual int compareItems( GCI m1, GCI m2 )
+	virtual int compareItems( QCollection::Item m1, QCollection::Item m2 )
 	{
 		if ( ((Match *)m1)->getWeight() > ((Match *)m2)->getWeight() )
 			return -1;

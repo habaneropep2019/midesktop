@@ -70,7 +70,7 @@ void KDMBackgroundWidget::setupPage(QWidget *)
       tGroup = new QGroupBox( klocale->translate("Preview"), this );
 
       label = new QLabel( tGroup );
-      label->setAlignment( AlignCenter );
+      label->setAlignment( Qt::AlignCenter );
       label->setPixmap( p );
       label->setFixedSize(label->sizeHint());
 
@@ -79,7 +79,7 @@ void KDMBackgroundWidget::setupPage(QWidget *)
 
       QBoxLayout *tLayout = new QVBoxLayout(tGroup, 10, 10, "tLayout");
       tLayout->addSpacing(tGroup->fontMetrics().height()/2);
-      tLayout->addWidget(label, 1, AlignCenter);
+      tLayout->addWidget(label, 1, Qt::AlignCenter);
       tLayout->activate();
 
       KDropSite *dropsite = new KDropSite( monitor );
@@ -101,17 +101,17 @@ void KDMBackgroundWidget::setupPage(QWidget *)
       QRadioButton *crb1 = new QRadioButton( klocale->translate("Solid Color"), cGroup );
       crb1->setFixedSize( crb1->sizeHint());
       cGroup->insert( crb1, Plain );
-      cl->addWidget(crb1, 0, AlignLeft);
+      cl->addWidget(crb1, 0, Qt::AlignLeft);
 
       QRadioButton *crb2 = new QRadioButton( klocale->translate("Horizontal Blend"), cGroup );
       crb2->setFixedSize( crb2->sizeHint());
       cGroup->insert( crb2, Horizontal );
-      cl->addWidget(crb2, 0, AlignLeft);
+      cl->addWidget(crb2, 0, Qt::AlignLeft);
 
       QRadioButton *crb3 = new QRadioButton( klocale->translate("Vertical Blend"), cGroup );
       crb3->setFixedSize( crb3->sizeHint());
       cGroup->insert( crb3, Vertical );
-      cl->addWidget(crb3, 0, AlignLeft);
+      cl->addWidget(crb3, 0, Qt::AlignLeft);
 
       connect( cGroup, SIGNAL( clicked( int ) ), SLOT( slotColorMode( int ) ) );
 
@@ -131,7 +131,7 @@ void KDMBackgroundWidget::setupPage(QWidget *)
 
       QString path = kapp->kde_wallpaperdir().copy();
       QDir d( path, "*", QDir::Name, QDir::Readable | QDir::Files );
-      QStrList list = *d.entryList();
+      QStringList list = d.entryList();
       if(!wallpaper.isEmpty())
         list.append( wallpaper.data() );
 
@@ -139,9 +139,9 @@ void KDMBackgroundWidget::setupPage(QWidget *)
 
       for ( uint i = 0; i < list.count(); i++ )
       {
-	wpCombo->insertItem( list.at(i) );
-	if ( wallpaper == list.at(i) )
-		wpCombo->setCurrentItem( i );
+        wpCombo->insertItem( *list.at(i) );
+        if ( wallpaper == *list.at(i) )
+          wpCombo->setCurrentItem( i );
       }
 
       if ( wallpaper.length() > 0 && wpCombo->currentItem() == 0 )
@@ -171,47 +171,47 @@ void KDMBackgroundWidget::setupPage(QWidget *)
       rb = new QRadioButton( klocale->translate("None"), wpGroup );
       rb->setFixedSize( rb->sizeHint());
       wpGroup->insert( rb, NoPic );
-      wpl1->addWidget(rb, 0, AlignLeft);
+      wpl1->addWidget(rb, 0, Qt::AlignLeft);
 
       rb = new QRadioButton( klocale->translate("Tile"), wpGroup );
       rb->setFixedSize( rb->sizeHint());
       wpGroup->insert( rb, Tile );
-      wpl1->addWidget(rb, 0, AlignLeft);
+      wpl1->addWidget(rb, 0, Qt::AlignLeft);
 
       rb = new QRadioButton( klocale->translate("Center"), wpGroup );
       rb->setFixedSize( rb->sizeHint() );
       wpGroup->insert( rb, Center );
-      wpl1->addWidget(rb, 0, AlignLeft);
+      wpl1->addWidget(rb, 0, Qt::AlignLeft);
 
       rb = new QRadioButton( klocale->translate("Scale"), wpGroup );
       rb->setFixedSize( rb->sizeHint() );
       wpGroup->insert( rb, Scale );
-      wpl2->addWidget(rb, 0, AlignLeft);
+      wpl2->addWidget(rb, 0, Qt::AlignLeft);
 
       rb = new QRadioButton( klocale->translate("TopLeft"), wpGroup );
       rb->setFixedSize( rb->sizeHint());
       wpGroup->insert( rb, TopLeft );
-      wpl2->addWidget(rb, 0, AlignLeft);
+      wpl2->addWidget(rb, 0, Qt::AlignLeft);
 
       rb = new QRadioButton( klocale->translate("TopRight"), wpGroup );
       rb->setFixedSize( rb->sizeHint());
       wpGroup->insert( rb, TopRight );
-      wpl2->addWidget(rb, 0, AlignLeft);
+      wpl2->addWidget(rb, 0, Qt::AlignLeft);
 
       rb = new QRadioButton( klocale->translate("BottomLeft"), wpGroup );
       rb->setFixedSize( rb->sizeHint());
       wpGroup->insert( rb, BottomLeft );
-      wpl3->addWidget(rb, 0, AlignLeft);
+      wpl3->addWidget(rb, 0, Qt::AlignLeft);
 
       rb = new QRadioButton( klocale->translate("BottomRight"), wpGroup );
       rb->setFixedSize( rb->sizeHint());
       wpGroup->insert( rb, BottomRight );
-      wpl3->addWidget(rb, 0, AlignLeft);
+      wpl3->addWidget(rb, 0, Qt::AlignLeft);
 
       rb = new QRadioButton( klocale->translate("Fancy"), wpGroup );
       rb->setFixedSize( rb->sizeHint());
       wpGroup->insert( rb, Fancy );
-      wpl3->addWidget(rb, 0, AlignLeft);
+      wpl3->addWidget(rb, 0, Qt::AlignLeft);
 
       wpl->activate();
 
@@ -222,7 +222,7 @@ void KDMBackgroundWidget::setupPage(QWidget *)
       // Bottom left (Color group)
       QBoxLayout *lLayout = new QVBoxLayout(lGroup, 10);
       lLayout->addSpacing(lGroup->fontMetrics().height()/2);
-      lLayout->addWidget(cGroup, 0, AlignLeft);
+      lLayout->addWidget(cGroup, 0, Qt::AlignLeft);
       lLayout->addWidget(colButton1);
       lLayout->addWidget(colButton2);
       lLayout->addStretch(1);
@@ -316,7 +316,7 @@ void KDMBackgroundWidget::slotBrowse()
 
 	QDir dir( path );
 	if ( !dir.exists() )
-		path = NULL;
+		path = QString::null;
 
 	QString filename = KFileDialog::getOpenFileName( path );
 	slotWallpaper( filename );

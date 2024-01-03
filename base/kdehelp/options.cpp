@@ -12,7 +12,6 @@
 #include <qchkbox.h>
 #include <kapp.h>
 #include <kconfig.h>
-#include <X11/Xlib.h>
 
 #include "kcolorbtn.h"
 #include "options.h"
@@ -20,6 +19,8 @@
 #include "dbnew.h"
 
 #include <klocale.h>
+
+#include <X11/Xlib.h>
 
 //-----------------------------------------------------------------------------
 
@@ -350,3 +351,4 @@ KHelpOptionsDialog::KHelpOptionsDialog( QWidget *parent, const char *name )
 		colorOptions, SLOT( slotApplyPressed() ) );
 }
 
+#include "options.moc"

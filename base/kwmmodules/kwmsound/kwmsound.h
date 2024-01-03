@@ -68,7 +68,7 @@ public slots:
     void desktopChange(int deskno);
     void processKWMCommand(QString cmd);
     void playSound(QString sound);
-    int  lookup(char* event);
+    int  lookup(const char* event);
 
 private:
 

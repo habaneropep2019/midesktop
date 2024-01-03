@@ -532,8 +532,8 @@ void KRootWm::scanBookmarks( QPopupMenu *_popup, const char * _path )
 }
 
 bool KRootWm::eventFilter( QObject *obj, QEvent * ev){
-  if (ev->type() == Event_MouseButtonPress
-      || ev->type() == Event_MouseButtonDblClick){
+  if (ev->type() == QEvent::MouseButtonPress
+      || ev->type() == QEvent::MouseButtonDblClick){
     QMouseEvent *e = (QMouseEvent*) ev;
     if (obj == QApplication::desktop()){
       switch (e->button()){
@@ -688,7 +688,7 @@ bool KRootWm::select_rectangle(int &x, int &y, int &dx, int &dy){
   XChangeActivePointerGrab( qt_xdisplay(),
 			    ButtonPressMask | ButtonReleaseMask |
 			    PointerMotionMask ,
-			    arrowCursor.handle(), 0);
+			    Qt::arrowCursor.handle(), 0);
   XGrabServer(qt_xdisplay());
 
   draw_selection_rectangle(x, y, dx, dy);
@@ -813,7 +813,6 @@ void KRootWm::slotNewFile( int _id )
 
     QString p = templatesList.at( _id );
     QString tmp = p;
-    tmp.detach();
 
     if ( strcmp( tmp.data(), "Folder" ) != 0 ) {
       QString x = templatePath + p.data();
@@ -848,7 +847,6 @@ void KRootWm::slotNewFile( int _id )
 	if ( strcmp( p.data(), "Folder" ) == 0 )
 	{
 	    QString u = desktopPath.data();
-	    u.detach();
 	    if ( u.right( 1 ) != "/" )
 		u += "/";
 	    u += name.data();

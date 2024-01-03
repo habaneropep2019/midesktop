@@ -65,7 +65,7 @@ KProxyOptions::KProxyOptions(QWidget *parent, const char *name)
   connect( cb_useProxy, SIGNAL( clicked() ), SLOT( changeProxy() ) );
   
   lb_http_url = new QLabel( i18n("HTTP Proxy:"), this);
-  lb_http_url->setAlignment(AlignVCenter);
+  lb_http_url->setAlignment(Qt::AlignVCenter);
   //CT 12Nov1998 layout management
   lb_http_url->adjustSize();
   lb_http_url->setMinimumSize(lb_http_url->size());
@@ -80,7 +80,7 @@ KProxyOptions::KProxyOptions(QWidget *parent, const char *name)
   //CT
 
   lb_http_port = new QLabel( i18n("Port:"), this);
-  lb_http_port->setAlignment(AlignVCenter);
+  lb_http_port->setAlignment(Qt::AlignVCenter);
   //CT 12Nov1998 layout management
   lb_http_port->adjustSize();
   lb_http_port->setMinimumSize(lb_http_port->size());
@@ -96,7 +96,7 @@ KProxyOptions::KProxyOptions(QWidget *parent, const char *name)
   //CT
 
   lb_ftp_url = new QLabel( i18n("FTP Proxy:"), this);
-  lb_ftp_url->setAlignment(AlignVCenter);
+  lb_ftp_url->setAlignment(Qt::AlignVCenter);
   //CT 12Nov1998 layout management
   lb_ftp_url->adjustSize();
   lb_ftp_url->setMinimumSize(lb_ftp_url->size());
@@ -111,7 +111,7 @@ KProxyOptions::KProxyOptions(QWidget *parent, const char *name)
   //CT
 
   lb_ftp_port = new QLabel( i18n("Port:"), this);
-  lb_ftp_port->setAlignment(AlignVCenter);
+  lb_ftp_port->setAlignment(Qt::AlignVCenter);
   //CT 12Nov1998 layout management
   lb_ftp_port->adjustSize();
   lb_ftp_port->setMinimumSize(lb_ftp_port->size());
@@ -126,7 +126,7 @@ KProxyOptions::KProxyOptions(QWidget *parent, const char *name)
   //CT
 
   lb_no_prx = new QLabel(i18n("No Proxy for:"), this);
-  lb_no_prx->setAlignment(AlignVCenter);
+  lb_no_prx->setAlignment(Qt::AlignVCenter);
   //CT 12Nov1998 layout management
   lb_no_prx->adjustSize();
   lb_no_prx->setMinimumSize(lb_no_prx->size());

@@ -53,8 +53,7 @@
 // Define this for some useful debugging output -- Bernd
 //#define SOUND_DEBUG 1
 
-char *eventNames[2][29] = {
-
+const char *eventNames[2][29] = {
   {
     "Desktop1", 
     "Desktop2", 
@@ -170,7 +169,7 @@ KWmSound::~KWmSound(){
 }
 
 
-int  KWmSound::lookup(char* event){
+int  KWmSound::lookup(const char* event){
 
 #ifdef SOUND_DEBUG
   printf("Looking up:%s\n", event);

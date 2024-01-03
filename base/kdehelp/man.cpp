@@ -473,10 +473,10 @@ int cMan::ReadLocation(const char *name)
         sysCmd[0] = '\0';
 
 		sprintf(stdFile, "%s/khelpXXXXXX", _PATH_TMP);	// temp file
-		mktemp(stdFile);
+		mkstemp(stdFile);
 
 		sprintf(errFile, "%s/khelpXXXXXX", _PATH_TMP);	// temp file
-		mktemp(errFile);
+		mkstemp(errFile);
 
 		sprintf(rmanCmd, "%s/rman -f HTML",
 			(const char *)KApplication::kde_bindir());

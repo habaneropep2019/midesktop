@@ -62,7 +62,7 @@ class KVItemList : public QList<KDMViewItem>
 {
 public:
     ~KVItemList();
-    int compareItems( GCI i1, GCI i2);
+    int compareItems( QCollection::Item i1, QCollection::Item i2);
 };
 
 class KDMView : public QTableView {

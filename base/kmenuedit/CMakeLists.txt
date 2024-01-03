@@ -18,8 +18,6 @@ kmenuedit.moc pmenu.moc cpopmenu.moc confmenu.moc
 	DesktopPathDialog.moc DesktopPathDialogData.moc
 	entrydialog.moc	MenuNameDialog.moc MenuNameDialogData.moc)
 
-QT1_WRAP_MOC(MOC_FILES ${KMENUEDIT_MOC})
-
 add_executable(kmenuedit ${KMENUEDIT_SRCS} ${MOC_FILES})
 target_link_libraries(kmenuedit
     ${QT_LIBRARIES}

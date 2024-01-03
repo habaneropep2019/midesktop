@@ -38,22 +38,14 @@ void myPopupMenu::mousePressEvent ( QMouseEvent *e )
   QPopupMenu::mousePressEvent(e);
 }
 
-/////////////////////////////////////////////////////////////////////////////
-int myPopupMenu::entryHeight()
-{
-  return cellHeight(0);
-}
-
-/////////////////////////////////////////////////////////////////////////////
+// /////////////////////////////////////////////////////////////////////////////
 int myPopupMenu::maxEntriesOnScreen()
 {
   QWidget *desktop = QApplication::desktop();
   int sh = desktop->height();			// screen height
 
-  int entryh = entryHeight();
-
+  int entryh = this->height();
   return sh / entryh;
-
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -316,17 +308,16 @@ void myTaskButton::drawButtonLabel( QPainter *painter ){
   if (!s.isNull()){
     QString s2 = s;
     if (fontMetrics().width(s2) > width()-32){
-      s2.detach();
       while (s2.length()>0 &&
 	     fontMetrics().width(s2) > width()-32-fontMetrics().width("...")){
-	s2.resize(s2.length()-1);
+	s2.truncate(s2.length()-1);
       }
       s2.append("...");
     }
     if ( draw_down && style() == WindowsStyle )
-      painter->drawText( 33, 1, width()-31, height()+1, AlignLeft|AlignVCenter, s2);
+      painter->drawText( 33, 1, width()-31, height()+1, Qt::AlignLeft|Qt::AlignVCenter, s2);
     else
-      painter->drawText( 32, 0, width()-32, height(), AlignLeft|AlignVCenter, s2);
+      painter->drawText( 32, 0, width()-32, height(), Qt::AlignLeft|Qt::AlignVCenter, s2);
   }
 }
 
@@ -439,7 +430,7 @@ int kPanel::show_popup(QPopupMenu* popup, QWidget* button, bool isTaskButton){
   popup->show();
 
   if (!isTaskButton){
-    if (orientation == vertical){
+    if (orientation == Vertical){
       yp = button->mapToGlobal(QPoint(0,0)).y();
       if (position == top_left)
 	xp = button->mapToGlobal(QPoint(0,0)).x() + button->width();
@@ -474,8 +465,8 @@ int kPanel::show_popup(QPopupMenu* popup, QWidget* button, bool isTaskButton){
 
   popup->move(QPoint(xp, yp));
   int v = popup->exec();
-  QEvent ev(Event_Leave);
-  QMouseEvent mev (Event_MouseButtonRelease,
+  QEvent ev(QEvent::Leave);
+  QMouseEvent mev (QEvent::MouseButtonRelease,
 		   QCursor::pos(), LeftButton, LeftButton);
   QApplication::sendEvent(button, &ev);
   QApplication::sendEvent(button, &mev);
@@ -542,32 +533,32 @@ QPixmap kPanel::create_arrow_pixmap(QPixmap pm){
 		     *(pm.mask()), 0, 0, pm.mask()->width(), pm.mask()->height());
   }
 
-  if (orientation == horizontal){
+  if (orientation == Horizontal){
     if (position == top_left){
       qDrawArrow( &p, DownArrow, WindowsStyle, false,
-		  box_width-6, box_height-5, 0, 0, colgrp);
+		  box_width-6, box_height-5, 0, 0, colgrp, true);
       qDrawArrow( &p2, DownArrow, WindowsStyle, false,
- 		  box_width-6, box_height-5, 0, 0, colgrp2);
+ 		  box_width-6, box_height-5, 0, 0, colgrp2, true);
     }
     else{
       qDrawArrow( &p, UpArrow, WindowsStyle, false,
-		  box_width-6, 4, 0, 0, colgrp);
+		  box_width-6, 4, 0, 0, colgrp, true);
       qDrawArrow( &p2, UpArrow, WindowsStyle, false,
-		  box_width-6, 4, 0, 0, colgrp2);
+		  box_width-6, 4, 0, 0, colgrp2, true);
     }
   }
-  else{ // position == vertical
+  else{ // position == Vertical
     if (position == top_left){
       qDrawArrow( &p, RightArrow, WindowsStyle, false,
-		  box_width-5, box_height-6, 0, 0, colgrp);
+		  box_width-5, box_height-6, 0, 0, colgrp, true);
       qDrawArrow( &p2, RightArrow, WindowsStyle, false,
- 		  box_width-5, box_height-6, 0, 0, colgrp2);
+ 		  box_width-5, box_height-6, 0, 0, colgrp2, true);
     }
     else{
       qDrawArrow( &p, LeftArrow, WindowsStyle, false,
-		  5, box_height-6, 0, 0, colgrp);
+		  5, box_height-6, 0, 0, colgrp, true);
       qDrawArrow( &p2, LeftArrow, WindowsStyle, false,
-		  5, box_height-6, 0, 0, colgrp2);
+		  5, box_height-6, 0, 0, colgrp2, true);
     }
   }
   p.end();
@@ -590,11 +581,11 @@ void kPanel::arrow_on_pixmap(QPixmap* pm, ArrowType rt){
   qDrawArrow( &paint, rt, WindowsStyle, false,
 	      pm->width()/2, pm->height()/2,
 	      0, 0,
-	      colgrp);
+	      colgrp, true);
   qDrawArrow( &paint2, rt, WindowsStyle, false,
 	      pm->width()/2, pm->height()/2,
 	      0, 0,
-	      colgrp2);
+	      colgrp2, true);
   paint.end();
   paint2.end();
 }
@@ -800,7 +791,7 @@ void kPanel::delete_button(QWidget* button){
     nbuttons--;
     for (;i<nbuttons;i++){
        entries[i] = entries[i+1];
-       if (orientation == vertical)
+       if (orientation == Vertical)
           entries[i].button->move(entries[i].button->x(), entries[i].button->y() - tmp_height );
        else
           entries[i].button->move(entries[i].button->x() - tmp_width, entries[i].button->y());
@@ -953,9 +944,9 @@ void kPanel::showMiniPanel ()
   int sx=0; int sx1 =0;
   if (position == top_left && panelCurrentlyLeft)
     sx = x() + panel_button->x() + panel_button->width()+1;
-  if (position == bottom_right && (orientation == horizontal && panelCurrentlyLeft))
+  if (position == bottom_right && (orientation == Horizontal && panelCurrentlyLeft))
     sx1 = x() + panel_button->x() + panel_button->width()+1;
-  if (position == top_left && (orientation == vertical && !panelCurrentlyLeft))
+  if (position == top_left && (orientation == Vertical && !panelCurrentlyLeft))
     sx1 = x() + panel_button->x() + panel_button->width()+1;
 
   if (taskbar_position == taskbar_top_left)
@@ -1054,8 +1045,8 @@ void kPanel::miniButtons(int i){
     }
 
   QButton* button = miniPanel->find(i);
-  QEvent ev(Event_Leave);
-  QMouseEvent mev (Event_MouseButtonRelease,
+  QEvent ev(QEvent::Leave);
+  QMouseEvent mev (QEvent::MouseButtonRelease,
 		   QCursor::pos(), LeftButton, LeftButton);
   QApplication::sendEvent(button, &ev);
   QApplication::sendEvent(button, &mev);
@@ -1074,7 +1065,7 @@ QString kPanel::findMenuEditor( const QString& folder)
     QFileInfoListIterator it( *list );
     QFileInfo *fi;
     if( it.count() < 3 )
-	return -1;
+	return QString::null;
     while ( (fi=it.current()) && result.isEmpty() )
 	{
 	    if( fi->fileName() == "." || fi->fileName() == ".." )

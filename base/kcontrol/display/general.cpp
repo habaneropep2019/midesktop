@@ -34,18 +34,18 @@
 #include <kwm.h>
 #include <kcolordlg.h>
 
+#include "fontchooser.h"
+#include "kresourceman.h"
+
+#include "general.h"
+#include "general.moc"
+
 #include <X11/Xlib.h>
 #include <X11/X.h>
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
 #include <X11/Xutil.h>
 #include <X11/Xos.h>
-
-#include "fontchooser.h"
-#include "kresourceman.h"
-
-#include "general.h"
-#include "general.moc"
 
 extern int dropError(Display *, XErrorEvent *);
 
@@ -225,11 +225,11 @@ KIconStyle::KIconStyle( QWidget *parent, QBoxLayout * topLayout )
     // The two labels on row 0
     QLabel * label = new QLabel( i18n("Normal"), gb );
     label->setMinimumSize(label->sizeHint());
-    gLayout->addWidget( label, 0, 1, AlignHCenter );
+    gLayout->addWidget( label, 0, 1, Qt::AlignHCenter );
 
     label = new QLabel( i18n("Large"), gb );
     label->setMinimumSize(label->sizeHint());
-    gLayout->addWidget( label, 0, 2, AlignHCenter );
+    gLayout->addWidget( label, 0, 2, Qt::AlignHCenter );
 
     // The label + 2 checkboxes on each row
     QRadioButton * cb;
@@ -243,13 +243,13 @@ KIconStyle::KIconStyle( QWidget *parent, QBoxLayout * topLayout )
         cb = new QRadioButton( gb, "" );
         group->insert(cb);
         cb->setMinimumSize(cb->sizeHint());
-        gLayout->addWidget( cb, i+1, 1, AlignHCenter );
+        gLayout->addWidget( cb, i+1, 1, Qt::AlignHCenter );
         m_dictCBNormal.insert( appName[i], cb ); // store the cb in the dict
 
         cb = new QRadioButton( gb, "" );
         group->insert(cb);
         cb->setMinimumSize(cb->sizeHint());
-        gLayout->addWidget( cb, i+1, 2, AlignHCenter );
+        gLayout->addWidget( cb, i+1, 2, Qt::AlignHCenter );
         m_dictCBLarge.insert( appName[i], cb ); // store the cb in the dict
     }
 }
@@ -304,7 +304,7 @@ void KIconStyle::writeSettings()
     for (int i = 0 ; i < nApp ; i++)
     {
         QString s = m_dictCBNormal[ appName[i] ] -> isChecked() ? "Normal" : "Large";
-        cfg->writeEntry( QString(appName[i])+"IconStyle", s, 
+        cfg->writeEntry( QString(appName[i]) + "IconStyle", s, 
                             true, true /* global setting (.kderc) */ );
         if (!strcmp(appName[i], "kpanel"))
         {
@@ -526,7 +526,7 @@ void KGeneral::writeSettings()
 	config->writeEntry("widgetStyle", str, true, true);
 
 	//CT 30Nov1998 - mac style set
-	config->writeEntry( "macStyle", macStyle?"on":"off", true, true);
+	config->writeEntry( "macStyle", macStyle ? "on" : "off", true, true);
 	//CT
 
 	KConfigGroupSaver saver(kapp->getConfig(), "X11");
@@ -749,8 +749,8 @@ KFonts::KFonts( QWidget *parent, int mode, int desktop )
 	lSample = new FontPreview( this );
 	lSample->setText(i18n( "THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG\n"
 			  "the quick brown fox jumps over the lazy dog\n"
-			  "0 1 2 3 4 5 6 7 8 9   ! \" £ $ % ^ & * ( )" ));
-	lSample->setAlignment( AlignLeft | AlignVCenter );
+			  "0 1 2 3 4 5 6 7 8 9   ! \" ï¿½ $ % ^ & * ( )" ));
+	lSample->setAlignment( Qt::AlignLeft | Qt::AlignVCenter );
 	lSample->setFixedHeight( 2*lSample->sizeHint().height() );
 	lSample->setFrameStyle( QFrame::Panel | QFrame::Sunken );
 	lSample->adjustSize();

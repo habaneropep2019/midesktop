@@ -37,11 +37,11 @@
 #include <kstring.h>
 #include <kimgio.h>
 
-#include <X11/Xlib.h>
-
 #include "backgnd.h"
 #include "backgnd.moc"
 #include "../../kwmmodules/kbgndwm/config-kbgndwm.h"
+
+#include <X11/Xlib.h>
 
 KRenameDeskDlg::KRenameDeskDlg( const char *t, QWidget *parent )
   : QDialog( parent, 0, true )
@@ -208,7 +208,7 @@ KBackground::KBackground( QWidget *parent, int mode, int desktop )
   QPixmap p = iconLoader.loadIcon("monitor.xpm");
 
   monitorLabel = new QLabel( this );
-  monitorLabel->setAlignment( AlignCenter );
+  monitorLabel->setAlignment( Qt::AlignCenter );
   monitorLabel->setPixmap( p );
   monitorLabel->adjustSize();
   monitorLabel->setMinimumSize(monitorLabel->size());
@@ -323,7 +323,7 @@ KBackground::KBackground( QWidget *parent, int mode, int desktop )
 
   QString path = kapp->kde_wallpaperdir().copy();
   QDir d( path, "*", QDir::Name, QDir::Readable | QDir::Files );
-  const QStrList *list = d.entryList();
+  const QStringList list = d.entryList();
 
   wpCombo = new QComboBox( false, group );
   wpCombo->insertItem( i18n("No wallpaper"), 0 );
@@ -332,14 +332,18 @@ KBackground::KBackground( QWidget *parent, int mode, int desktop )
   //CT 30Nov1998
   grid->addMultiCellWidget( wpCombo, 1,1,0,2 );
   //  groupLayout->addStretch( 3 );
-    
-  QStrListIterator it( *list );
-  for ( int i = 1; it.current(); ++it, i++ )
+
+  {
+    int item_index = 1;
+    for(QStringList::ConstIterator itr = list.begin(); itr != list.end(); ++itr, item_index++)
     {
-      wpCombo->insertItem( it.current() );
-      if ( currentItem.wallpaper == it.current() )
-	wpCombo->setCurrentItem( i );
+      wpCombo->insertItem( *itr );
+      if ( currentItem.wallpaper == *itr )
+      {
+        wpCombo->setCurrentItem( item_index );
+      }
     }
+  }
 
   if ( currentItem.bUseWallpaper && wpCombo->currentItem() == 0 )
     {
@@ -614,11 +618,11 @@ void KBackground::writeSettings( int num )
 
   config.setGroup( group );
 	
-  QString col1Name(10);
+  QString col1Name("10");
   col1Name.sprintf("#%02x%02x%02x", currentItem.color1.red(), currentItem.color1.green(), currentItem.color1.blue());
   config.writeEntry( "Color1", col1Name );
 	
-  QString col2Name(10);
+  QString col2Name("10");
   col2Name.sprintf("#%02x%02x%02x", currentItem.color2.red(), currentItem.color2.green(), currentItem.color2.blue());
   config.writeEntry( "Color2", col2Name );
 
@@ -1181,7 +1185,7 @@ void KBackground::slotBrowse()
 
     QDir dir( path );
     if ( !dir.exists() )
-      path = 0;
+      path = QString::null;
 	    
     firsttime = false;
   }

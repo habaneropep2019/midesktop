@@ -334,7 +334,7 @@ int MakeServerAuthFile (d)
     else
     {
     	sprintf (d->authFile, "%s/A%s-XXXXXX", authDir, cleanname);
-    	(void) mktemp (d->authFile);
+    	(void) mkstemp (d->authFile);
     }
     return TRUE;
 }
@@ -1166,7 +1166,7 @@ SetUserAuthorization (d, verify)
 	}
 	if (lockStatus != LOCK_SUCCESS) {
 	    sprintf (backup_name, "%s/.XauthXXXXXX", d->userAuthDir);
-	    (void) mktemp (backup_name);
+	    (void) mkstemp (backup_name);
 	    lockStatus = XauLockAuth (backup_name, 1, 2, 10);
 	    Debug ("backup lock is %d\n", lockStatus);
 	    if (lockStatus == LOCK_SUCCESS) {

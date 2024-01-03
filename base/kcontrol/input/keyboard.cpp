@@ -66,7 +66,7 @@ KeyboardConfig::KeyboardConfig (QWidget * parent, const char *name, bool init)
       click = new KSliderControl(klocale->translate("Key click volume"),
 				 0, 100, 10, 100, "%", this);
       click->setLabelSize(0.3);
-      click->setLabelAlignment(AlignLeft);
+      click->setLabelAlignment(Qt::AlignLeft);
       click->setSteps(5,25);
 
       repeatOn->adjustSize();

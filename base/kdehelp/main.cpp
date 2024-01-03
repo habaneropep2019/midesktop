@@ -87,7 +87,7 @@ void Timer::timerEvent( QTimerEvent * )
 
 void errorHandler( int type, char *msg )
 {
-	QApplication::setOverrideCursor( arrowCursor );
+	QApplication::setOverrideCursor( Qt::arrowCursor );
 
 	QMessageBox::message( klocale->translate("Error"), 
 			      msg, 

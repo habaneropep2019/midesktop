@@ -1207,7 +1207,7 @@ ChooserDlg::ChooserDlg( QWidget *parent, const char *name,
                                          10, 10);
      QBoxLayout* hbox = new QBoxLayout( QBoxLayout::LeftToRight, 10);
      QLabel* title = new QLabel( "XDMCP Host Menu", winFrame);
-     title->setAlignment( AlignCenter);
+     title->setAlignment( Qt::AlignCenter);
      set_min( title);
      vbox->addWidget( title);
      

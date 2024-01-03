@@ -119,11 +119,11 @@ KMenuEdit::KMenuEdit( const char *name )
   scrolly->setSteps( 8, f_mask->height() );
 
   top2bottom = new QGridLayout( f_main, 2, 2, 2 );
-  top2bottom->addWidget( f_mask, 0, 0, AlignCenter );
+  top2bottom->addWidget( f_mask, 0, 0, Qt::AlignCenter );
   top2bottom->setRowStretch( 0, 1 );
   top2bottom->setColStretch( 0, 1 );
-  top2bottom->addWidget( scrolly, 0, 1, AlignCenter );
-  top2bottom->addWidget( scrollx, 1, 0, AlignCenter );
+  top2bottom->addWidget( scrolly, 0, 1, Qt::AlignCenter );
+  top2bottom->addWidget( scrollx, 1, 0, Qt::AlignCenter );
   top2bottom->activate();
 
   connect( scrollx, SIGNAL(valueChanged(int)), this, SLOT(move_h(int)) );

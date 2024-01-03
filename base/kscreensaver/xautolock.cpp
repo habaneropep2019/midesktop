@@ -66,10 +66,6 @@
 #include <processes.h>  /* really needed? */
 #endif /* VMS */
 
-#include <X11/Xlib.h>
-#include <X11/Xatom.h>
-#include <X11/Xresource.h>
-
 #include <time.h>
 #include <signal.h>
 #include <sys/wait.h>
@@ -91,6 +87,10 @@
 
 #include <qapp.h>
 #include "xautolock.h"
+
+#include <X11/Xlib.h>
+#include <X11/Xatom.h>
+#include <X11/Xresource.h>
 
 /*
  *  Usefull macros and customization stuff

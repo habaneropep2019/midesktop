@@ -61,7 +61,7 @@ kPanel::kPanel( KWMModuleApplication* kwmapp_arg,
 
     setMouseTracking(true);
 
-    orientation = horizontal;
+    orientation = Horizontal;
     position = bottom_right;
 
     currentDesktop = KWM::currentDesktop();
@@ -119,22 +119,22 @@ kPanel::kPanel( KWMModuleApplication* kwmapp_arg,
     QString a = config->readEntry("Position");
 
     if ( a == "left"){
-      orientation = vertical;
+      orientation = Vertical;
       position = top_left;
     }
     else if ( a == "right"){
       // no longer valid! Do left instead
-      orientation = vertical;
+      orientation = Vertical;
       //position = top_left;
       position = bottom_right;
 
     }
     else if ( a == "top"){
-      orientation = horizontal;
+      orientation = Horizontal;
       position = top_left;
     }
     else if ( a == "bottom"){
-      orientation = horizontal;
+      orientation = Horizontal;
       position = bottom_right;
     }
 	
@@ -144,9 +144,9 @@ kPanel::kPanel( KWMModuleApplication* kwmapp_arg,
 	mBackTexture = kapp->getIconLoader()
 	  ->loadIcon(config->readEntry( "BackgroundTexture" ) );
 	if (!mBackTexture.isNull()) {
-	  //CT 15Jan1998 - little trick (rotate pixmap) to make vertical kpanel
+	  //CT 15Jan1998 - little trick (rotate pixmap) to make Vertical kpanel
 	  // beautier -  thanks to Stefan Taferner for the idea
-	  if (orientation == vertical) {
+	  if (orientation == Vertical) {
 	    QWMatrix tmp_mtx;
 	    tmp_mtx.rotate(90);
 	    mBackTexture = mBackTexture.xForm(tmp_mtx);
@@ -417,7 +417,7 @@ kPanel::kPanel( KWMModuleApplication* kwmapp_arg,
 	info_label->setFrameStyle( QFrame::Raised | QFrame::Panel );
       info_label->setLineWidth( 1 );
       info_label->setMargin( 1 );
-      info_label->setAlignment( AlignLeft | AlignTop );
+      info_label->setAlignment( Qt::AlignLeft | Qt::AlignTop );
       info_label->setAutoResize( true );
       info_label->setText(klocale->translate("No info available"));
     }
@@ -514,7 +514,7 @@ kPanel::kPanel( KWMModuleApplication* kwmapp_arg,
     connect( panel_button_standalone2, SIGNAL(clicked()),
 	     SLOT(standalonePanelButton2Clicked()) );
 
-    if (orientation == horizontal){
+    if (orientation == Horizontal){
 
 
       if (dbrows == 2){
@@ -612,7 +612,7 @@ kPanel::kPanel( KWMModuleApplication* kwmapp_arg,
 				1,
 				box_height+2*margin-6);
 
-      label_date->setAlignment( AlignRight|AlignVCenter );
+      label_date->setAlignment( Qt::AlignRight|Qt::AlignVCenter );
 
       dock_area->setGeometry(label_date->x() - 2*box_width + 6 - 4,
 			     3,
@@ -634,7 +634,7 @@ kPanel::kPanel( KWMModuleApplication* kwmapp_arg,
 		    box_height+2*margin);
       }
     }
-    else { // orientation == vertical
+    else { // orientation == Vertical
 
 
       exit_button->setGeometry(0,0,
@@ -692,7 +692,7 @@ kPanel::kPanel( KWMModuleApplication* kwmapp_arg,
 				1);
 
 
-      label_date->setAlignment( AlignHCenter|AlignBottom);
+      label_date->setAlignment( AlignHCenter|Qt::AlignBottom);
 
       dock_area->setGeometry(3,
 			     label_date->y() - box_height - 2*margin - 4,
@@ -724,7 +724,7 @@ kPanel::kPanel( KWMModuleApplication* kwmapp_arg,
 // 				      exit_button->height()-4));
 
 
-//     if (orientation == vertical){
+//     if (orientation == Vertical){
 //       QWMatrix m;
 //       m.rotate(90);
 //       QPixmap pm = kapp->getIconLoader()
@@ -747,7 +747,7 @@ kPanel::kPanel( KWMModuleApplication* kwmapp_arg,
       QBitmap bm;
       QPainter paint;
       QPainter paint2;
-      pm.resize(9, (orientation == horizontal)?panel_button->height():panel_button->width());
+      pm.resize(9, (orientation == Horizontal)?panel_button->height():panel_button->width());
       bm.resize(pm.width(), pm.height());
       bm.fill(color0);
       pm.setMask(bm);
@@ -780,7 +780,7 @@ kPanel::kPanel( KWMModuleApplication* kwmapp_arg,
       arrow_on_pixmap(&pm2, RightArrow);
 
       QWMatrix m;
-      m.rotate((orientation == horizontal)?0:90);
+      m.rotate((orientation == Horizontal)?0:90);
       panel_button->setPixmap(pm.xForm(m));
       panel_button_standalone->setPixmap(pm2.xForm(m));
 	  panel_button2->setPixmap(pm2.xForm(m));
@@ -917,7 +917,7 @@ void kPanel::button_clicked(){
       entries[i].pmi->exec();
       //  	// visual feedback to avoid doubleclicks
       //       if (wait_cursor_button)
-      // 	wait_cursor_button->setCursor(arrowCursor);
+      // 	wait_cursor_button->setCursor(Qt::arrowCursor);
       //       wait_cursor_button = active_button;
       //       wait_cursor_button->setCursor(waitCursor);
     }	
@@ -1325,7 +1325,7 @@ void kPanel::hidePanelLeft(){
   if (!panelCurrentlyHidden){
     QPoint p = pos();
     if (autoHidden){
-      if (orientation == horizontal){
+      if (orientation == Horizontal){
 	if (position == top_left)
 	  p.setY(y()+height()-4);
 	else
@@ -1349,7 +1349,7 @@ void kPanel::hidePanelLeft(){
 
     if(hide_show_animation) {
       in_animation = true;
-      if (orientation == vertical) {
+      if (orientation == Vertical) {
 	for (int i = 0; i < geom.height() - panel_button_frame_standalone->height();
 	     i+=PANEL_SPEED(i,geom.height())){
 	  move(geom.x(), geom.y()-i);
@@ -1420,7 +1420,7 @@ void kPanel::hidePanelRight(){
   if (!panelCurrentlyHidden){
     QPoint p = pos();
     if (autoHidden){
-      if (orientation == horizontal){
+      if (orientation == Horizontal){
 	if (position == top_left)
 	  p.setY(y()+height()-4);
 	else
@@ -1445,7 +1445,7 @@ void kPanel::hidePanelRight(){
     if(hide_show_animation) {
       in_animation = true;
 
-      if (orientation == vertical) {
+      if (orientation == Vertical) {
 	for (int i = 0; i < geom.height() - panel_button_frame_standalone2->height();
 	     i += PANEL_SPEED(i,geom.height())){
 	  move(geom.x(), geom.y()+i);
@@ -1516,7 +1516,7 @@ void kPanel::showPanelFromLeft( bool smooth){
     move(-10000, -10000);
     QFrame::show();
     if(hide_show_animation) {
-      if (orientation == vertical) {
+      if (orientation == Vertical) {
 	for (int i = geom.height(); i>12;i-=smooth?(PANEL_SPEED(i,geom.height())):hide_show_animation){
 	  move(geom.x(), geom.y()-i);
 	  qApp->syncX();
@@ -1575,7 +1575,7 @@ void kPanel::showPanelFromRight(bool smooth){
     move(-10000, -10000);
     QFrame::show();
     if(hide_show_animation) {
-      if (orientation == vertical) {
+      if (orientation == Vertical) {
 	for (int i = geom.height(); i>12;i-=smooth?(PANEL_SPEED(i,geom.height())):hide_show_animation){
 	  move(geom.x(), geom.y()+i);
 	  qApp->syncX();
@@ -1705,7 +1705,7 @@ void kPanel::doGeometry (bool do_not_change_taskbar) {
      sx = sw;
      if (!panelCurrentlyLeft) {
 	 //right panel button, grrrrr it is becoming hacky......
-	 if (orientation == horizontal) {
+	 if (orientation == Horizontal) {
 	     if (position == top_left) {
 		 if (taskbar_position == top)
 		     sx = 0;
@@ -1723,7 +1723,7 @@ void kPanel::doGeometry (bool do_not_change_taskbar) {
 		     sx = 0;
 	     }
 	 }
-	 else { // orientation == vertical
+	 else { // orientation == Vertical
 	     if (position == top_left) {
 		 if (taskbar_position == top)
 		     sx = 0;
@@ -1744,7 +1744,7 @@ void kPanel::doGeometry (bool do_not_change_taskbar) {
      }
      else {
 	 // some corrections....
-	 if (orientation == vertical) {
+	 if (orientation == Vertical) {
 	     if (taskbar_position == bottom)
 		 { sx = 0; sw = 0; }
 	 }
@@ -1753,7 +1753,7 @@ void kPanel::doGeometry (bool do_not_change_taskbar) {
    else if (autoHide) {
        // panel is in autohide mode and not hidden. Adjust the window region to the hidden state.
        if (!autoHidden) {
-	   if (orientation == horizontal){
+	   if (orientation == Horizontal){
 	       if (position == top_left)
 		   pyR = pyR -  height() + 4;
 	       else
@@ -1792,7 +1792,7 @@ void kPanel::doGeometry (bool do_not_change_taskbar) {
    }
 
 
-   if (orientation == horizontal)
+   if (orientation == Horizontal)
     {
      if (position == top_left)
       {
@@ -1854,7 +1854,7 @@ void kPanel::doGeometry (bool do_not_change_taskbar) {
 	}
       }
     }
-   else // if (orientation == vertical)
+   else // if (orientation == Vertical)
     {
      if (position == top_left)
       {

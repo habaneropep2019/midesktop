@@ -113,7 +113,6 @@ static void msgHandler(QtMsgType aType, const char* aMsg)
 {
   QString appName = kapp->appName();
   QString msg = aMsg;
-  msg.detach();
 
   switch (aType)
   {

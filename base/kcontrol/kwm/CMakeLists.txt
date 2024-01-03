@@ -10,7 +10,6 @@ set(KWM_SRCS
 set(KWM_MOC
     bell.moc kslidercontrol.moc
 )
-QT1_WRAP_MOC(MOC_FILES ${KWM_MOC})
 
 add_executable(kcmbell ${KWM_SRCS} ${MOC_FILES})
 target_link_libraries(kcmbell

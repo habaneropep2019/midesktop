@@ -244,7 +244,7 @@ public:
      * @param _b is the name of a *.kdelnk file in the $KDEDIR/applnk tree. '_b' does NOT
      *           include the ".kdelnk" suffix.
      */
-    virtual void setDefaultBinding( const char *_b ) { defaultBinding = _b; defaultBinding.detach(); }
+    virtual void setDefaultBinding( const char *_b ) { defaultBinding = _b; }
 
     /**
      * @return the extensions assoziated with this MimeType, for

@@ -1122,7 +1122,7 @@ void KiKbdApplication::activateMenu(int i)
 KiKbdButton::KiKbdButton(QWidget* parent)
   :QLabel(parent)
 {
-  setAlignment(AlignCenter);
+  setAlignment(Qt::AlignCenter);
 }
 void KiKbdButton::mousePressEvent(QMouseEvent* event)
 {
@@ -1137,7 +1137,7 @@ WindowList::WindowList()
 {
   setAutoDelete(TRUE);
 }
-int WindowList::compareItems(GCI item1, GCI item2)
+int WindowList::compareItems(QCollection::Item item1, QCollection::Item item2)
 {
   return ((WindowEntry*)item1)->window - ((WindowEntry*)item2)->window;
 }
@@ -1148,7 +1148,7 @@ WindowClassList::WindowClassList()
 {
   setAutoDelete(TRUE);
 }
-int WindowClassList::compareItems(GCI item1, GCI item2)
+int WindowClassList::compareItems(QCollection::Item item1, QCollection::Item item2)
 {
   return strcmp(((WindowClassEntry*)item1)->name,
 		((WindowClassEntry*)item2)->name);

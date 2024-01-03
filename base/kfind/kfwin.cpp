@@ -25,7 +25,6 @@
 #include <qlined.h> 
 #include <qgrpbox.h> 
 #include <qchkbox.h>
-#include <qfiledef.h>
 #include <qfiledlg.h> 
 #include <qlist.h>
 #include <qfileinf.h> 
@@ -59,10 +58,10 @@ public:
   }
 
   virtual bool eventFilter(QObject *, QEvent *e) {
-    if(e->type() == Event_KeyPress || e->type() == Event_Accel) {
+    if(e->type() == QEvent::KeyPress || e->type() == QEvent::Accel) {
       QKeyEvent *k = (QKeyEvent *)e;
-      if(k->key() == Key_PageUp ||
-	 k->key() == Key_PageDown) {
+      if(k->key() == Qt::Key_PageUp ||
+	 k->key() == Qt::Key_PageDown) {
 	keyPressEvent(k);
 	return TRUE;
       }
@@ -184,7 +183,7 @@ void KfindWindow::copySelection() {
   if(s.length() > 0) {
     QClipboard *cb = kapp->clipboard();
     cb->clear();
-    cb->setData("TEXT", s.data());
+    cb->setText(s);
   }
 }
 

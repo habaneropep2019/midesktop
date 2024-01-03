@@ -79,11 +79,12 @@
 #include <qfile.h>
 #include <qtstream.h> 
 #include <qapp.h>
-#include <X11/Xlib.h>
 
 #include <klocale.h>
 #include <kapp.h>
 #include "kfontexplorer.h"
+
+#include <X11/Xlib.h>
 
 #define YOFFSET  5
 #define XOFFSET  5
@@ -319,7 +320,7 @@ KFontExplorer::KFontExplorer( QWidget *parent, const char *name,
   example_label->setFont(selFont);
 
   example_label->setGeometry(200,190,190, 80);
-  example_label->setAlignment(AlignCenter);
+  example_label->setAlignment(Qt::AlignCenter);
 //  example_label->setBackgroundColor(white);
   example_label->setFrameStyle( QFrame::WinPanel | QFrame::Sunken );
   example_label->setLineWidth( 1 );

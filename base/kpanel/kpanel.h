@@ -46,7 +46,6 @@
 
 #include "pmenu.h"
 
-enum Orientation {horizontal, vertical};
 enum Position {top_left, bottom_right};
 enum TaskbarPosition {hidden, top, bottom, taskbar_top_left};
 

@@ -77,8 +77,8 @@ MenuNameDialogData::MenuNameDialogData
 
 	layoutLE = new QGridLayout(2, 2);
 	layoutTB->addLayout(layoutLE);
-	layoutLE->addWidget(dlgedit_Label_2, 0, 0, AlignRight|AlignVCenter);
-	layoutLE->addWidget(dlgedit_Label_3, 1, 0, AlignRight|AlignVCenter);
+	layoutLE->addWidget(dlgedit_Label_2, 0, 0, Qt::AlignRight|Qt::AlignVCenter);
+	layoutLE->addWidget(dlgedit_Label_3, 1, 0, Qt::AlignRight|Qt::AlignVCenter);
 	layoutLE->addWidget(i_personal, 0, 1);
 	layoutLE->addWidget(i_default, 1, 1);
 	layoutLE->setColStretch(1, 10);

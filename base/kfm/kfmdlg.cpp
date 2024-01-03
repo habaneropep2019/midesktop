@@ -219,9 +219,7 @@ void OpenWithDlg::slotSelected( const char* _name, const char* _exec )
 void OpenWithDlg::slotHighlighted( const char* _name, const char* _exec )
 {
   qName = _name;
-  qName.detach();
   qExec = _exec;
-  qExec.detach();
   haveApp = true;
 
 }

@@ -26,6 +26,9 @@
  *   and Matthias Ettrich (ettrich@kde.org) on 1997
  */
 
+#ifndef _KTRIANGLEBUTTON_H
+#define _KTRIANGLEBUTTON_H
+
 #include <qbutton.h>
 
 class KTriangleButton : public QButton
@@ -68,3 +71,5 @@ protected:
     virtual void timerEvent(QTimerEvent *);
 
 };
+
+#endif

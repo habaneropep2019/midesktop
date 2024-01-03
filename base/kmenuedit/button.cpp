@@ -27,10 +27,6 @@
 #include <qscrbar.h>   // for qDrawArrow
 #include <qmsgbox.h>
 
-#include <X11/Xlib.h>
-#include <X11/Xatom.h>
-#include <X11/Xutil.h>
-#include <X11/Xos.h>
 //#include <X11/extensions/shape.h>
 
 #include <kapp.h>
@@ -39,6 +35,11 @@
 #include "button.h"
 #include "button.moc"
 #include "pmenu.h"
+
+#include <X11/Xlib.h>
+#include <X11/Xatom.h>
+#include <X11/Xutil.h>
+#include <X11/Xos.h>
 
 Window debugWin = 0;
 
@@ -79,7 +80,6 @@ QSize EditButton::sizeHint()
 void EditButton::setText( const char *t )
 {
   btext = t;
-  btext.detach();
   if( bpixmap.isNull() )
     {
       QButton::setText(btext);
@@ -108,7 +108,7 @@ void EditButton::setPixmap( const QPixmap &pixmap )
   p.setFont( font() );
   p.drawText( 2 + bpixmap.width() + 4,        // center text in item
 	      0, w, h,
-	      AlignVCenter | ShowPrefix | DontClip | SingleLine,
+	      Qt::AlignVCenter | ShowPrefix | DontClip | SingleLine,
 	      btext );
   p.end();
 

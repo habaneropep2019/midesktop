@@ -9,8 +9,6 @@ set(KDEHELP_SRCS main.cpp helpwin.cpp info.cpp error.cpp misc.cpp
 
 set(KDEHELP_MOC bookmark.moc cgi.moc finddlg.moc.moc helpwin.moc mainwidget.moc options.moc)
 
-QT1_WRAP_CPP(MOC_FILES ${KDEHELP_MOC})
-
 add_executable(kdehelp ${KDEHELP_SRCS} ${MOC_FILES})
 target_link_libraries(kdehelp
     ${QT_LIBRARIES}

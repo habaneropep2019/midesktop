@@ -104,7 +104,6 @@ void KNewMenu::slotNewFile( int _id )
 
     QString p = templatesList->at( _id );
     QString tmp = p;
-    tmp.detach();
 
     if ( strcmp( tmp.data(), "Folder" ) != 0 ) {
       QString x = KFMPaths::TemplatesPath() + p.data();
@@ -149,7 +148,6 @@ void KNewMenu::slotNewFile( int _id )
 	    {
      	      KIOJob * job = new KIOJob;
               QString u = s;
-              u.detach();
 	      if ( u.right( 1 ) != "/" )
 		u += "/";
 	      u += name.data();
@@ -170,7 +168,6 @@ void KNewMenu::slotNewFile( int _id )
             {
                 KIOJob * job = new KIOJob( ++jobId );
                 QString dest = s;
-                dest.detach();
                 if ( dest.right( 1 ) != "/" )
                     dest += "/";
                 dest += name.data();

@@ -415,7 +415,6 @@ void KfmView::slotFilesChanged( const char *_url )
 	u1 += "/";
     
     QString u2 = manager->getURL().data();
-    u2.detach();
     if ( u2.right( 1 ) != "/" )
 	u2 += "/";
 
@@ -671,7 +670,6 @@ void KfmView::slotOpenWith()
     if (u.isLocalFile())
     {
         QString udir(u.directory());
-        udir.detach();
         KURL::decodeURL(udir); // I hate KURL, you never know when it's encoded ... David.
         openWithOldApplication( l.getText(), popupFiles, udir ); 
     }
@@ -733,7 +731,7 @@ void KfmView::slotSaveLocalProperties()
       QString s1, s2, kurl;
       s1 = _url;
       if (s1.right( 1 ) == "/")
-	s1.resize(s1.length());
+	s1.truncate(s1.length());
       
       for (KRootIcon *i = IconList.first(); i; i = IconList.next())
       {
@@ -747,7 +745,7 @@ void KfmView::slotSaveLocalProperties()
 	      
 	      s2 = cfg.readEntry("URL").data();
 	      if (s2.right( 1 ) == "/")
-		s2.resize(s2.length());
+		s2.truncate(s2.length());
 
               if (s1 == s2)
 	      {
@@ -798,7 +796,6 @@ void KfmView::slotEmptyTrashBin()
 	    if ( strcmp( ep->d_name, "." ) != 0L && strcmp( ep->d_name, ".." ) != 0L && strcmp( ep->d_name, ".directory" ) != 0L )
 	    {
 	      QString trashFile( ep->d_name );
-	      trashFile.detach();
 	      trashFile.prepend (d);
 	      KURL::encodeURL ( trashFile );   // make proper URL (Hen)
 	      trashFile.prepend ("file:");
@@ -1150,7 +1147,6 @@ void KfmView::slotOnURL( const char *_url )
         QString com;
         QString surl =  _url;
         // Delete a trailing '/', for KURL::filename() and for lstat
-        surl.detach();
         if ( surl.right(1) == "/" )
             surl.truncate( surl.length() - 1 );
                    
@@ -1177,7 +1173,6 @@ void KfmView::slotOnURL( const char *_url )
 	QString text2;
 	text = decodedName.copy(); // copy to change it
 	text2 = text;
-	text2.detach();
 	
         if ( url.isLocalFile() )
         {

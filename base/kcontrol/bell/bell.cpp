@@ -75,9 +75,9 @@ KBellConfig::KBellConfig (QWidget * parent, const char *name, bool init)
       pitch->setLabelSize(0.30);
       duration->setLabelSize(0.30);
       
-      volume->setLabelAlignment(AlignLeft);
-      pitch->setLabelAlignment(AlignLeft);
-      duration->setLabelAlignment(AlignLeft);
+      volume->setLabelAlignment(Qt::AlignLeft);
+      pitch->setLabelAlignment(Qt::AlignLeft);
+      duration->setLabelAlignment(Qt::AlignLeft);
 
       // tickmarks: minor, major
       volume->setSteps(5,25);

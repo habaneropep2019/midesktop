@@ -282,7 +282,7 @@ int KHelpWindow::openURL( const char *URL, bool withHistory )
 	int refPos = fullURL.findRev( '#' );
 	if ( refPos < 0 )
 	{
-	    ref.resize( 0 );
+	    ref.truncate( 0 );
 	    refPos = fullURL.length();
 	}
 	else
@@ -460,7 +460,7 @@ int KHelpWindow::openFile( const QString &location )
 			{
 				QMessageBox mb;
 				mb.setText( klocale->translate("Cannot open: ") + fileName );
-				mb.setButtonText( klocale->translate("Oops!") );
+				mb.setButtonText( 0, klocale->translate("Oops!") );
 				mb.show();
 			}
 			break;
@@ -469,7 +469,7 @@ int KHelpWindow::openFile( const QString &location )
 			{
 				QMessageBox mb;
 				mb.setText( klocale->translate("Unknown format: ") + fileName );
-				mb.setButtonText( klocale->translate("Oops!") );
+				mb.setButtonText( 0, klocale->translate("Oops!") );
 				mb.show();
 			}
 	}
@@ -840,7 +840,7 @@ int KHelpWindow::runCGI( const char *_url )
 
 	char filename[256];
 	sprintf( filename, "%s/kdehelpXXXXXX", _PATH_TMP );
-	mktemp( filename );
+	mkstemp( filename );
 	localFile.sprintf( "file:%s", filename );
 
 	CGIServer->get( _url, localFile, "Get" );
@@ -875,7 +875,7 @@ KHelpWindow::FileType KHelpWindow::detectFileType( const QString &fileName )
 		{
 			char sysCmd[256];
 			sprintf( fname, "%s/khelpXXXXXX", _PATH_TMP );
-			mktemp( fname );
+			mkstemp( fname );
 			sprintf(sysCmd, "gzip -cd %s > %s", (const char *)fileName, fname);
             if ( safeCommand( fileName ) )
                 system( sysCmd );
@@ -1518,7 +1518,7 @@ bool KHelpWindow::eventFilter( QObject *obj, QEvent *ev )
 
 	if ( obj == rmbPopup )
 	{
-		if ( ev->type() == Event_MouseButtonRelease )
+		if ( ev->type() == QEvent::MouseButtonRelease )
 		{
 			if ( QCursor::pos() == tmpPoint )
 			{
@@ -1532,12 +1532,12 @@ bool KHelpWindow::eventFilter( QObject *obj, QEvent *ev )
 	{
 		switch ( ev->type() )
 		{
-			case Event_MouseButtonPress:
-			case Event_MouseButtonDblClick:
+			case QEvent::MouseButtonPress:
+			case QEvent::MouseButtonDblClick:
 				tmpPoint = QCursor::pos();
 				break;
 
-			case Event_MouseButtonRelease:
+			case QEvent::MouseButtonRelease:
 				tmpPoint = QPoint(-10,-10);
 				break;
 		}
@@ -1626,3 +1626,4 @@ void KHelpWindow::slotDocumentDone()
 
 //-----------------------------------------------------------------------------
 
+#include "helpwin.moc"

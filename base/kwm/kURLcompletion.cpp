@@ -50,7 +50,6 @@ void KURLCompletion::make_completion ()
 	QString dir = the_text, match;
 	bool ambigous;
 
-	dir.detach();
 	if (!is_fileurl (dir, ambigous))
 		return;
 	
@@ -83,7 +82,6 @@ void KURLCompletion::make_rotation ()
 	bool ambigous;
 	const char * item = 0L;
 
-	dir.detach();
 	if (!is_fileurl (dir, ambigous))
 		return;
 	

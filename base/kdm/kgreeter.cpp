@@ -40,14 +40,14 @@
 #include <qmsgbox.h>
 #include <kstring.h>
 
-#include <X11/Xlib.h>
-#include <X11/keysym.h>
-
 #include "dm.h"
 #include "greet.h"
 
 #include <kiconloader.h>
 #include <kimgio.h>
+
+#include <X11/Xlib.h>
+#include <X11/keysym.h>
 
 // Make the C++ compiler shut the f... up:
 extern "C" {
@@ -168,7 +168,7 @@ KGreeter::KGreeter(QWidget *parent = 0, const char *t = 0)
      QGridLayout* grid = new QGridLayout( 4, 2, 5);
 
      QLabel* welcomeLabel = new QLabel( kdmcfg->greetString()->data(), this);
-     welcomeLabel->setAlignment(AlignCenter);
+     welcomeLabel->setAlignment(Qt::AlignCenter);
      welcomeLabel->setFont( *kdmcfg->greetFont());
      set_min( welcomeLabel);
      vbox->addWidget( welcomeLabel);
@@ -218,7 +218,7 @@ KGreeter::KGreeter(QWidget *parent = 0, const char *t = 0)
      passwdEdit->setEchoMode( QLineEdit::NoEcho);
      vbox->addLayout( hbox1);
      vbox->addLayout( hbox2);
-     hbox1->addWidget( pixLabel, 0, AlignTop);
+     hbox1->addWidget( pixLabel, 0, Qt::AlignTop);
      hbox1->addLayout( grid, 3);
      
      QFrame* sepFrame = new QFrame( this);
@@ -241,7 +241,7 @@ KGreeter::KGreeter(QWidget *parent = 0, const char *t = 0)
      QLabel* sessionargLabel = new QLabel(klocale->translate("Session Type:"),
 					  this);
      set_min( sessionargLabel);
-     sessionargLabel->setAlignment( AlignRight|AlignVCenter);
+     sessionargLabel->setAlignment( Qt::AlignRight|Qt::AlignVCenter);
      hbox2->addWidget( sessionargLabel);
      sessionargBox = new QComboBox( false, this);
 
@@ -289,12 +289,12 @@ KGreeter::KGreeter(QWidget *parent = 0, const char *t = 0)
      connect( goButton, SIGNAL( clicked()), SLOT(go_button_clicked()));
 
      set_fixed( goButton);
-     hbox2->addWidget( goButton, AlignBottom);
+     hbox2->addWidget( goButton, Qt::AlignBottom);
 
      cancelButton = new QPushButton( klocale->translate("Cancel"), this);
      connect( cancelButton, SIGNAL(clicked()), SLOT(cancel_button_clicked()));
      set_fixed( cancelButton);
-     hbox2->addWidget( cancelButton, AlignBottom);
+     hbox2->addWidget( cancelButton, Qt::AlignBottom);
 
      int sbw;
 #ifndef TEST_KDM
@@ -306,7 +306,7 @@ KGreeter::KGreeter(QWidget *parent = 0, const char *t = 0)
 	  connect( shutdownButton, SIGNAL(clicked()), 
 		   SLOT(shutdown_button_clicked()));
 	  set_fixed( shutdownButton);
-	  hbox2->addWidget( shutdownButton, AlignBottom);
+	  hbox2->addWidget( shutdownButton, Qt::AlignBottom);
 	  sbw = shutdownButton->width();
      } else
 #endif

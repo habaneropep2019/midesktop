@@ -33,14 +33,13 @@
 #include <kapp.h>
 #include <qfileinf.h>
 
-#include <X11/Xlib.h>
-#include <X11/Xutil.h>
-#include <kwm.h>
-
 #include "kdelnk.h"
 #include "configlist.moc"
 #include "configlist.h"
 
+#include <X11/Xlib.h>
+#include <X11/Xutil.h>
+#include <kwm.h>
 
 // ---------------------------------------------------------------
 // class KModuleList

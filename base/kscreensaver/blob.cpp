@@ -28,9 +28,6 @@
 #include <time.h>
 #include <limits.h>
 #include <math.h>
-#include <X11/Xlib.h>
-#include <X11/Xutil.h>
-#include "xlock.h"
 
 #include "blob.moc"
 #include "blob.h"
@@ -38,6 +35,10 @@
 #include "helpers.h"
 #include <kbuttonbox.h>
 #include <qlayout.h>
+
+#include <X11/Xlib.h>
+#include <X11/Xutil.h>
+#include "xlock.h"
 
 // this refers to klock.po. If you want an extra dictionary, 
 // create an extra KLocale instance here.

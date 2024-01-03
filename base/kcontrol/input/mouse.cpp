@@ -35,11 +35,11 @@
 #include <kmsgbox.h> 
 #include "mouse.h"
 
+#include "geom.h"
+
 #include <X11/X.h>
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
-
-#include "geom.h"
 
 static bool GUI;
 
@@ -73,8 +73,8 @@ MouseConfig::MouseConfig (QWidget * parent, const char *name, bool init)
 				  this);
       accel->setLabelSize(0.3);
       thresh->setLabelSize(0.3);
-      accel->setLabelAlignment(AlignLeft);
-      thresh->setLabelAlignment(AlignLeft);
+      accel->setLabelAlignment(Qt::AlignLeft);
+      thresh->setLabelAlignment(Qt::AlignLeft);
       accel->setSteps(1,20);
       thresh->setSteps(1,20);
 

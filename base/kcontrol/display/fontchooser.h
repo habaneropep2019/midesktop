@@ -90,9 +90,9 @@ protected slots:
 
 protected:
 	void fillCharsetCombo();
-	void getFontList( QStrList &list, bool fixed = false );
-	void getFontList( QStrList &list, const char *pattern );
-	void addFont( QStrList &list, const char *xfont );
+	void getFontList( QStringList &list, bool fixed = false );
+	void getFontList( QStringList &list, const char *pattern );
+	void addFont( QStringList &list, const char *xfont );
 	
 protected:
 	QFont fnt;
@@ -107,8 +107,8 @@ protected:
 	
 	QLabel *example_label;
 	QLabel *charset_label;
-	QStrList fontList;
-	QStrList fixedList;
+	QStringList fontList;
+	QStringList fixedList;
 	Bool defaultCharset;
 };
 

@@ -23,6 +23,13 @@
 #include "manager.h"
 #include "main.h"
 
+//
+// Undefine X11 KeyPress macro as it conflicts with QEvent::KeyPress
+//
+#ifdef KeyPress
+#undef KeyPress
+#endif
+
 extern Manager* manager;
 
 extern bool do_not_draw;
@@ -43,8 +50,8 @@ void KListBoxItem_Desktop::paint(QPainter *p) {
   p->restore();
 }
 
-const char *KListBoxItem_Desktop::text() const {
-  return _text.data();
+QString KListBoxItem_Desktop::text() const {
+  return _text;
 }
 
 int KListBoxItem_Desktop::height(const QListBox *lb) const {
@@ -78,8 +85,8 @@ void KListBoxItem_Program::paint(QPainter *p) {
   p->restore();
 }
 
-const char *KListBoxItem_Program::text() const {
-  return _text.data();
+QString KListBoxItem_Program::text() const {
+  return _text;
 }
 
 int KListBoxItem_Program::height(const QListBox *lb) const {
@@ -121,7 +128,7 @@ Ktask::Ktask( QWidget *parent, const char *name, WFlags f)
     label = new QLabel(klocale->translate("Current session"), this);
     label->installEventFilter( this );
     label->setMouseTracking(true);
-    label->setAlignment(AlignCenter);
+    label->setAlignment(Qt::AlignCenter);
 
     listbox = new QListBox(this);
     listbox->installEventFilter( this );
@@ -210,7 +217,7 @@ void Ktask::SetPointerGrab(QPoint pos){
 }
 
 bool Ktask::eventFilter( QObject *ob, QEvent * e){
-  if (e->type() == Event_MouseButtonPress){
+  if (e->type() == QEvent::MouseButtonPress){
     if (ob->isWidgetType() &&
 	!rect().contains(
 			 mapFromGlobal(
@@ -219,12 +226,12 @@ bool Ktask::eventFilter( QObject *ob, QEvent * e){
       cleanup();
     }
   }
-  if (e->type() == Event_KeyPress){
+  if (e->type() == QEvent::KeyPress){
     int a = ((QKeyEvent*)e)->ascii();
     if (a == 3 || a == 7 || a == 27)
       cleanup();
   }
-  if (e->type() == Event_MouseMove){
+  if (e->type() == QEvent::MouseMove){
     QMouseEvent* mev = (QMouseEvent*) e;
     if (ob->isWidgetType()
 	&& !(mev->state() & LeftButton)

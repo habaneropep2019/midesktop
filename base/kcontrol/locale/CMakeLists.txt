@@ -12,7 +12,6 @@ main.cpp locale.cpp klangcombo.cpp
 set(LOCALE_MOC
 locale.moc klangcombo.moc
 )
-QT1_WRAP_MOC(MOC_FILES ${LOCALE_MOC})
 
 add_executable(kcmlocale ${LOCALE_SRCS} ${MOC_FILES})
 target_link_libraries(kcmlocale

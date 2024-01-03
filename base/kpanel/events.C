@@ -14,6 +14,13 @@
 #include <ksimpleconfig.h>
 #include <qregexp.h>
 
+//
+// Conflicts with X11 KeyPress macro
+//
+#ifdef KeyPress
+#undef KeyPress
+#endif
+
 bool in_animation = false;
 void animateMove(QWidget*w, int xn, int yn, int step ){
     in_animation = true;
@@ -324,7 +331,7 @@ void kPanel::layoutDockArea(){
   }
   Window* w;
   int i;
-  if (orientation == vertical){
+  if (orientation == Vertical){
     dock_area->setGeometry(dock_area->x(),
 			   dock_area->y() + dock_area->height()
 			   - kwmmapp->dock_windows.count() * 24 - 2,
@@ -483,7 +490,7 @@ void kPanel::kwmCommandReceived(QString com){
 
 bool kPanel::eventFilter(QObject *ob, QEvent *ev){
   // --sven: kdisknav button start --
-  if (ob == kdisknav && ev->type() == Event_MouseButtonRelease) {
+  if (ob == kdisknav && ev->type() == QEvent::MouseButtonRelease) {
     bool doIt = false;
 
     if (miniPanelHidden) {
@@ -507,7 +514,7 @@ bool kPanel::eventFilter(QObject *ob, QEvent *ev){
 
   switch (ev->type()){
 
-  case Event_KeyPress:
+  case QEvent::KeyPress:
 
     // people requested for this. I do not understand why (Matthias)
     tipSleepTimerDone();
@@ -529,7 +536,7 @@ bool kPanel::eventFilter(QObject *ob, QEvent *ev){
     };
     break;
 
-  case Event_MouseButtonPress: case Event_MouseButtonDblClick: {
+  case QEvent::MouseButtonPress: case QEvent::MouseButtonDblClick: {
 
 
     if (info_label->isVisible())
@@ -632,7 +639,7 @@ bool kPanel::eventFilter(QObject *ob, QEvent *ev){
   break;
 
 
-  case Event_MouseButtonRelease: {
+  case QEvent::MouseButtonRelease: {
     QMouseEvent* mev = (QMouseEvent*)ev;
     tipSleepTimerDone();
 
@@ -654,7 +661,7 @@ bool kPanel::eventFilter(QObject *ob, QEvent *ev){
  	((myPushButton*)moving_button)->flat = True;
  	moving_button->repaint();
       }
-      moving_button->setCursor(arrowCursor);
+      moving_button->setCursor(Qt::arrowCursor);
       XUngrabPointer( qt_xdisplay(),0 );
       // moving_button->releaseMouse();
 
@@ -663,7 +670,7 @@ bool kPanel::eventFilter(QObject *ob, QEvent *ev){
 	  && moving_button != panel_button_frame_standalone2)
 	check_button_bounds(moving_button);
       else {
-	if (orientation == horizontal){
+	if (orientation == Horizontal){
 	  bound_top_left = control_group->x();
 	  bound_bottom_right = control_group->x() + control_group->width();
 	}
@@ -690,7 +697,7 @@ bool kPanel::eventFilter(QObject *ob, QEvent *ev){
   }
   break;
 
-  case Event_MouseMove:{
+  case QEvent::MouseMove:{
     menu_tool_tips_disabled = false;
     QMouseEvent* mev = (QMouseEvent*)ev;
 
@@ -721,7 +728,7 @@ bool kPanel::eventFilter(QObject *ob, QEvent *ev){
 	  - moving_button_offset.x();
 	int y = mapFromGlobal(QCursor::pos()).y()
 	  - moving_button_offset.y();
-	if (orientation == horizontal){
+	if (orientation == Horizontal){
 	  if (x<panel_button->x() + panel_button->width())
 	    x=panel_button->x() + panel_button->width();
 	  if (x + moving_button->width() > width())
@@ -740,7 +747,7 @@ bool kPanel::eventFilter(QObject *ob, QEvent *ev){
     }
   }
   break;
-  case Event_Close:
+  case QEvent::Close:
     // this never occurs ?!
     break;
   };
@@ -760,18 +767,18 @@ void kPanel::enterEvent( QEvent *){
   hideTimer->start(autoHideDelay, true);
 
   if (
-      (orientation == horizontal && position == top_left &&
+      (orientation == Horizontal && position == top_left &&
       taskbar_frame->autoHidden && taskbar_position == top)
       ||
-      (orientation == horizontal && position == bottom_right &&
+      (orientation == Horizontal && position == bottom_right &&
       taskbar_frame->autoHidden && taskbar_position == bottom)
       ){
-    QEvent ev(Event_Enter);
+    QEvent ev(QEvent::Enter);
     QApplication::sendEvent(taskbar_frame, &ev);
   }
   if (!autoHidden)
     return;
-  if (orientation == horizontal){
+  if (orientation == Horizontal){
     if (position == top_left)
       animateMove (this, 0,0,4*autoHideSpeed);
     else
@@ -825,7 +832,7 @@ void kPanel::hideTimerDone(){
     hideTimer->start(autoHideDelay, true);
   }
   else {
-    if (orientation == horizontal){
+    if (orientation == Horizontal){
 	if (position == top_left)
 	    animateMove (this, x(), y()-height()+4, -autoHideSpeed);
 	else
@@ -897,7 +904,7 @@ void kPanel::slotDropEvent( KDNDDropZone *_zone ){
 	if (pmi){
 	  int x = margin;
 	  int y = margin;
-	  if (orientation == vertical){
+	  if (orientation == Vertical){
 	    y = drop_zone->getMouseY()-box_height/2;
 	    if (y<margin) y=margin;
 	  }

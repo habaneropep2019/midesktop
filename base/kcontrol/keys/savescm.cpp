@@ -33,7 +33,7 @@ SaveScm::SaveScm( QWidget *parent, const char *name )
 					"to be added to your personal list.\n\n"\
 					"The keys currently used in the preview will\n"\
 					"be copied into this scheme to begin with." ), this );
-	tmpQLabel->setAlignment( AlignLeft | AlignBottom | ShowPrefix );
+	tmpQLabel->setAlignment( Qt::AlignLeft | Qt::AlignBottom | ShowPrefix );
 	tmpQLabel->setFixedHeight( tmpQLabel->sizeHint().height() );
 	tmpQLabel->setMinimumWidth( tmpQLabel->sizeHint().width() );
 	

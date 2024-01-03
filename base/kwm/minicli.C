@@ -7,7 +7,6 @@
 #include <qwindefs.h>
 #include <stdlib.h>
 #include <kapp.h>
-#include <X11/Xlib.h>
 #include <qlist.h>
 #include <qkeycode.h>
 #include <unistd.h>
@@ -21,6 +20,13 @@
 #include "main.h"
 
 #include "minicli.moc"
+
+//
+// Undefine X11 KeyPress macro as it conflicts with QEvent::KeyPress
+//
+#ifdef KeyPress
+#undef KeyPress
+#endif
 
 extern Manager* manager;
 extern bool do_not_draw;
@@ -272,9 +278,9 @@ void Minicli::resizeEvent(QResizeEvent *){
 			height()-10);
 }
 bool Minicli::eventFilter( QObject *ob, QEvent * e){
-  if (e->type() == Event_MouseMove)
+  if (e->type() == QEvent::MouseMove)
     return True;
-  if (e->type() == Event_MouseButtonPress){
+  if (e->type() == QEvent::MouseButtonPress){
     if (ob->isWidgetType() &&
 	!rect().contains(
 			 mapFromGlobal(
@@ -283,7 +289,7 @@ bool Minicli::eventFilter( QObject *ob, QEvent * e){
       cleanup();
     }
   }
-  if (e->type() == Event_KeyPress){
+  if (e->type() == QEvent::KeyPress){
     int a = ((QKeyEvent*)e)->ascii();
     if (a == 3 || a == 7 || a == 27)
       cleanup();

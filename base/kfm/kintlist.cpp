@@ -1,6 +1,6 @@
 #include "kintlist.h"
 
-int KIntList::compareItems( GCI item1, GCI item2 )
+int KIntList::compareItems( QCollection::Item item1, QCollection::Item item2 )
 {
   int* item1x = (int*)item1;
   int* item2x = (int*)item2;

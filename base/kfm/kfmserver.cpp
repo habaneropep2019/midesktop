@@ -149,7 +149,6 @@ void KFMServer::slotRefreshDesktop()
 void KFMServer::slotMoveClients( const char *_src_urls, const char *_dest_url )
 {
     QString s = _src_urls;
-    s.detach();
     QStrList urlList;
     
     QString dest = _dest_url;
@@ -176,7 +175,6 @@ void KFMServer::slotMoveClients( const char *_src_urls, const char *_dest_url )
 void KFMServer::slotCopyClients( const char *_src_urls, const char *_dest_url )
 {
     QString s = _src_urls;
-    s.detach();
     QStrList urlList;
     
     QString dest = _dest_url;
@@ -406,7 +404,6 @@ void KFMClient::slotAuth( const char *_password )
 void KFMClient::slotCopy( const char *_src_urls, const char * _dest_url )
 {
     QString s = _src_urls;
-    s.detach();
     QStrList urlList;
     
     QString dest = _dest_url;
@@ -434,7 +431,6 @@ void KFMClient::slotCopy( const char *_src_urls, const char * _dest_url )
 void KFMClient::slotMove( const char *_src_urls, const char *_dest_url )
 {
     QString s = _src_urls;
-    s.detach();
     QStrList urlList;
     
     QString dest = _dest_url;

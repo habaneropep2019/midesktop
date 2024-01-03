@@ -274,17 +274,17 @@ KfindTabDialog::~KfindTabDialog()
 void KfindTabDialog::loadHistory() {
   // load pattern history
   KConfig *conf = kapp->getConfig();
-  QStrList sl;
+  QStringList sl;
   conf->setGroup("History");
   if(conf->readListEntry("Patterns", sl))
-    nameBox->insertStrList(&sl);
+    nameBox->insertStringList(sl);
   else
     nameBox->insertItem("*");
 
   if(conf->readListEntry("Directories", sl))
     {
       dirBox ->insertItem( _searchPath.data() );
-      dirBox->insertStrList(&sl);
+      dirBox->insertStringList(sl);
     }
   else {
     dirBox ->insertItem( _searchPath.data() );
@@ -302,7 +302,7 @@ void KfindTabDialog::loadHistory() {
 
 void KfindTabDialog::saveHistory() {
   // save pattern history
-  QStrList sl;
+  QStringList sl;
   QDict<char> dict(17, FALSE);
   sl.append(nameBox->currentText());
   for(int i = 0; i < nameBox->count(); i++) {   

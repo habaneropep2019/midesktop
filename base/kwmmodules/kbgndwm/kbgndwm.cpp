@@ -74,7 +74,7 @@ KBGndManager::KBGndManager( KWMModuleApplication * )
 
   // setup icon
   QString pixdir = KApplication::kde_icondir();
-  pixmap = (pixdir + "/logo.xpm").data();
+  pixmap = (pixdir + "/logo.xpm");
 
   KDNDDropZone *myDropZone = new KDNDDropZone(this, DndURL);
   connect( myDropZone, SIGNAL( dropAction( KDNDDropZone *) ),

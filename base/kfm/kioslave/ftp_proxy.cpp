@@ -170,7 +170,7 @@ int KProtocolProxyFTP::OpenProxy(KURL *_url, int mode, bool _reload)
 	QString command(15              // for the constant characters
                         + strlen(_url->user())
                         + strlen(_url->host())
-                        + 20            // for the port number
+                        + "20"            // for the port number
                         );
 
 	if(do_proxy)

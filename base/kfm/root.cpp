@@ -32,6 +32,11 @@
 #include <klocale.h>
 #include <ksimpleconfig.h>
 
+#include <X11/Xlib.h>
+#include <X11/Xutil.h>
+#include <X11/Xos.h>
+#include <X11/extensions/shape.h>
+
 #define root KRootWidget::getKRootWidget()
 
 KRootWidget* KRootWidget::pKRootWidget = 0L;
@@ -1325,7 +1330,6 @@ void KRootWidget::slotPopupEmptyTrash()
 	    if ( strcmp( ep->d_name, "." ) != 0L && strcmp( ep->d_name, ".." ) != 0L && strcmp( ep->d_name, ".directory" ) != 0L )
 	    {
 		QString trashFile( ep->d_name );
-		trashFile.detach();
 		trashFile.prepend (d);
 		KURL::encodeURL ( trashFile );    // make proper URL (Hen)
 		trashFile.prepend ("file:");
@@ -1378,7 +1382,6 @@ KRootIcon::KRootIcon( const char *_url, int _x, int _y ) :
     popupMenu = new QPopupMenu();
 
     url = _url;
-    url.detach();
 
     KMimeType *typ = KMimeType::getMagicMimeType( url );
     pixmap = typ->getPixmap( url );
@@ -1416,7 +1419,6 @@ void KRootIcon::initToolTip()
     // Does not work due to a Qt bug.
     KMimeType *typ = KMimeType::getMagicMimeType( url.data() );
     QString com = typ->getComment( url.data() );
-    com.detach();
 
     if ( !com.isEmpty() )
 	QToolTip::add( this, com.data() );
@@ -1428,7 +1430,6 @@ void KRootIcon::initFilename()
     file = url.mid( url.findRev( "/" ) + 1, url.length() );
     if ( file.find( ".kdelnk" ) == ((int)file.length()) - 7 )
 	file = file.left( file.length() - 7 );
-    file.detach();
     KURL::decodeURL( file );
     // This changes "%2f" to "/"
     // Just for a nicer display
@@ -1839,7 +1840,6 @@ void KRootIcon::dropPopupMenu( KDNDDropZone *_zone, const char *_dest, const QPo
 printf("dropPopupMenu\n");
 
     dropDestination = _dest;
-    dropDestination.detach();
 
     dropZone = _zone;
 

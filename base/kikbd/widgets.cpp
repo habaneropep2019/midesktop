@@ -82,17 +82,17 @@ QPixmap mapLine(KiKbdMapConfig* map) {
   pm.fill((kapp->mainWidget())->colorGroup().base());
   pp.begin(&pm);
   pp.setPen(map->getColor());
-  pp.drawText(25, 1, width-25, 14, AlignLeft | AlignVCenter, text);
-  pp.fillRect(0, 0, 23, 16, gray);
+  pp.drawText(25, 1, width-25, 14, Qt::AlignLeft | Qt::AlignVCenter, text);
+  pp.fillRect(0, 0, 23, 16, Qt::gray);
   pp.drawPixmap(1, 1, map->getIcon());
   pp.end();
 
   // mask
-  bm.fill(color0);
+  bm.fill(Qt::color0);
   pb.begin(&bm);
-  pb.setPen(color1);
-  pb.fillRect(0, 0, 24, 16, color1);
-  pb.fillRect(1, 1, width-1, 14, color1);
+  pb.setPen(Qt::color1);
+  pb.fillRect(0, 0, 24, 16, Qt::color1);
+  pb.fillRect(1, 1, width-1, 14, Qt::color1);
   pb.end();
   
   return pm.setMask(bm), pm;
@@ -335,7 +335,7 @@ int KiKbdAddDialog::exec(const QStrList& toAdd, QStrList& mapStr)
   mapsToAdd = toAdd;
   //--- load list of maps
   // also look up prefered language
-  QStrList preferedLang;
+  QStringList preferedLang;
   int *prefIndex = new int[4];
   unsigned j;for(j = 0; j < 4; prefIndex[j++]=-1);
   preferedLang = kapp->getLocale()->languageList();
@@ -345,7 +345,7 @@ int KiKbdAddDialog::exec(const QStrList& toAdd, QStrList& mapStr)
     KiKbdMapConfig *map = kikbdConfig->getMap(mapsToAdd.at(i));
     maps->insertItem(mapLine(map));
     for(j = 0; j < 4; j++)
-      if((prefIndex[j] == -1) && preferedLang.at(j) == map->getLocale()) {
+      if((prefIndex[j] == -1) && ((*preferedLang.at(j)) == map->getLocale())) {
 	int k;for(k = mapStr.count(); k-- > 0;) {
 	  KiKbdMapConfig *map1 = kikbdConfig->getMap(mapStr.at(k));
 	  if(map->getLocale() == map1->getLocale()

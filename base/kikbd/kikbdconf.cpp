@@ -131,9 +131,9 @@ static const char* autoStartPlaceLabels[] = {
   gettext("Bottom Right")
 };
 
-const QColor mapNormalColor = black;
-const QColor mapUserColor   = darkBlue;
-const QColor mapNoFileColor = darkRed;
+const QColor mapNormalColor = Qt::black;
+const QColor mapUserColor   = Qt::darkBlue;
+const QColor mapNoFileColor = Qt::darkRed;
 
 //=========================================================
 //   special widget
@@ -302,14 +302,14 @@ QStrList KiKbdConfig::availableMaps(const char* subdir)
     {
       QDir dir(dirs.at(i));  
       if(!dir.exists()) continue;
-      QStrList entry = *dir.entryList("*.kimap",
+      QStringList entry = dir.entryList("*.kimap",
 				     QDir::Files | QDir::Readable,
 				     QDir::Name | QDir::IgnoreCase);
       unsigned j;for(j=0; j<entry.count(); j++)
 	{
-	  QString name = entry.at(j);
+	  QString name = *entry.at(j);
 	  if(*subdir) name = QString(subdir) + "/" + name;
-	  name.resize(name.find(".")+1);
+	  name.truncate(name.find(".")+1);
 	  if(list->find(name) == -1) list->inSort(name);
 	}
     }
@@ -503,7 +503,7 @@ const QPixmap KiKbdMapConfig::getIcon() const
   p.begin(&pm);
   p.fillRect(0, 0, 20, 13, gray);
   if(!flag.isNull()) p.drawPixmap(0, 0, flag);
-  p.setPen(black), p.drawText(0, 0, 20, 13, AlignCenter, label);
+  p.setPen(black), p.drawText(0, 0, 20, 13, Qt::AlignCenter, label);
   p.end();
 
   return pm;
@@ -516,7 +516,7 @@ const QPixmap KiKbdMapConfig::getIcon() const
 */
 void KiKbdMsgBox::error(const char* form, const char* s1, const char *s2)
 {
-  QString msg(128);
+  QString msg;
   msg.sprintf(i18n(form), i18n(s1), i18n(s2));
   KMsgBox::message(0, i18n("International keyboard ERROR"), msg,
 		   KMsgBox::EXCLAMATION);
@@ -527,7 +527,7 @@ void KiKbdMsgBox::error(const char* form, const char* s1, const char *s2)
 */
 QString setMsg(const char* form, const char* s1, const char *s2)
 {
-  QString msg(128);
+  QString msg;
   msg.sprintf(i18n(form), i18n(s1), i18n(s2));
   return msg;
 }

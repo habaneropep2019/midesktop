@@ -180,7 +180,7 @@ void KInfoListWidget::defaultSettings()
 	if (!NoInfoText)
 	    NoInfoText = new QLabel(i18n("No Information available\n or\nthis system is not yet supported :-("),this);
 	NoInfoText->setAutoResize(TRUE);
-	NoInfoText->setAlignment(AlignCenter | WordBreak);
+	NoInfoText->setAlignment(Qt::AlignCenter | WordBreak);
 	NoInfoText->move( width()/2-120,height()/2-30 );
     }
 }

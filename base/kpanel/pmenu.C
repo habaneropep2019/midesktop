@@ -671,7 +671,7 @@ void PMenu::create_pixmap( QPixmap &buf, PMenuItem *item, QPopupMenu *menu)
 	      */
   p.drawText( 2 + item->pixmap.width() + 4,        // center text in item
 	      0, w, h,
-	      AlignVCenter | ShowPrefix | DontClip | SingleLine,
+	      Qt::AlignVCenter | ShowPrefix | DontClip | SingleLine,
 	      item->text_name );
   p.end();
 }

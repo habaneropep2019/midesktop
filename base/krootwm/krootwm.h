@@ -13,11 +13,6 @@
 #include <qstring.h>
 #include <qintdict.h>
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <sys/time.h>
-#include <X11/X.h>
-#include <X11/Xlib.h>
 #include <qwidget.h>
 #include <qpopmenu.h>
 #include <qstrlist.h>
@@ -27,6 +22,12 @@
 #include <qpushbt.h>
 #include <klined.h>
 #include <qpixmap.h>
+
+#include <stdlib.h>
+#include <stdio.h>
+#include <sys/time.h>
+#include <X11/X.h>
+#include <X11/Xlib.h>
 
 // --------- Sven's changes for macmode begin
 class KMenuBar;

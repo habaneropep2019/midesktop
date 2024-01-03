@@ -343,7 +343,6 @@ void KFMDirTree::openDropMenu( const char *_dest, QStrList &_urls, const QPoint 
   // -----------------  Copied code ends (Dawit A.) ---------------------//
 
     dropDestination = _dest;
-    dropDestination.detach();
     dropSource.copy( _urls );
     
     popupMenu->clear();
@@ -488,7 +487,6 @@ void KFMDirTree::slotPopupEmptyTrashBin()
 	    if ( strcmp( ep->d_name, "." ) != 0L && strcmp( ep->d_name, ".." ) != 0L && strcmp( ep->d_name, ".directory" ) != 0L )
 	    {
 		QString trashFile( ep->d_name );
-		trashFile.detach();
 		trashFile.prepend (d);
 		KURL::encodeURL ( trashFile );   // make proper URL (Hen)
 		trashFile.prepend ("file:");

@@ -54,9 +54,9 @@ KDesktopsConfig::KDesktopsConfig( QWidget *parent, const char* name )
 	tmp.setNum(i+1);
 	tmp.prepend("&");
 	labels[i] = new QLabel(fields[i], tmp, this);
-	labels[i]->setAlignment( ShowPrefix | AlignCenter);
+	labels[i]->setAlignment( ShowPrefix | Qt::AlignCenter);
 	fields_layout->addWidget(fields[i], i % 4, i / 4 * 2 + 1);
-	fields_layout->addWidget(labels[i], i % 4, i / 4 * 2 , AlignCenter );
+	fields_layout->addWidget(labels[i], i % 4, i / 4 * 2 , Qt::AlignCenter );
     }
     fields_layout->setColStretch(0, 1);
     fields_layout->setColStretch(2, 1);
@@ -71,7 +71,7 @@ KDesktopsConfig::KDesktopsConfig( QWidget *parent, const char* name )
     visible = new QSlider(1, 4, 1, number_of_desktops/2, QSlider::Horizontal, this);
     visible->setMaximumSize(1000, visible->sizeHint().height());
     visible_label = new QLabel(visible, i18n("&Visible"), this);
-    visible_label->setAlignment(ShowPrefix | AlignRight | AlignVCenter);
+    visible_label->setAlignment(ShowPrefix | Qt::AlignRight | Qt::AlignVCenter);
     visible_label->adjustSize();
     visible_label->setMinimumSize(visible_label->sizeHint());
     slider_layout->addMultiCellWidget(visible, 0, 0, 2, 3);
@@ -80,7 +80,7 @@ KDesktopsConfig::KDesktopsConfig( QWidget *parent, const char* name )
 
     width = new QSlider(1, 6, 1, width_value, QSlider::Horizontal, this);
     width_label = new QLabel(width, i18n("&Width"), this);
-    width_label->setAlignment(ShowPrefix | AlignRight | AlignVCenter);
+    width_label->setAlignment(ShowPrefix | Qt::AlignRight | Qt::AlignVCenter);
     width_label->adjustSize();
     width_label->setMinimumSize(width_label->sizeHint());
     width->adjustSize();

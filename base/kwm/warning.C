@@ -21,6 +21,11 @@
 
 #include "manager.h"
 
+// TODO: See if you can remove this conflict from XLib.h
+#ifdef KeyPress
+#undef KeyPress
+#endif
+
 extern Manager* manager;
 
 extern bool do_not_draw;
@@ -40,7 +45,7 @@ KWarning::KWarning( QWidget *parent, const char *name, WFlags f)
     button->installEventFilter( this );
     connect(button, SIGNAL(clicked()), SLOT(ok()));
     label = new QLabel(this);
-    label->setAlignment(AlignCenter);
+    label->setAlignment(Qt::AlignCenter);
 }
 
 void KWarning::SetPointerGrab(QPoint pos){
@@ -59,7 +64,7 @@ void KWarning::SetPointerGrab(QPoint pos){
 }
 
 bool KWarning::eventFilter( QObject *ob, QEvent * e){
-  if (e->type() == Event_MouseButtonPress){
+  if (e->type() == QEvent::MouseButtonPress){
     if (ob->isWidgetType() &&
 	!rect().contains(
 			 mapFromGlobal(
@@ -68,12 +73,12 @@ bool KWarning::eventFilter( QObject *ob, QEvent * e){
       ok();
     }
   }
-  if (e->type() == Event_KeyPress){
+  if (e->type() == QEvent::KeyPress){
     int a = ((QKeyEvent*)e)->ascii();
     if (a == 3 || a == 7 || a == 27)
       ok();
   }
-  if (e->type() == Event_MouseMove){
+  if (e->type() == QEvent::MouseMove){
     QMouseEvent* mev = (QMouseEvent*) e;
     if (ob->isWidgetType()
 	&& !(mev->state() & LeftButton)

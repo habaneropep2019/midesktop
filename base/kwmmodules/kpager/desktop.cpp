@@ -30,7 +30,7 @@
 //#define DESKTOPDEBUG2
 //#define ALLOWSELFPICTURE
 
-Desktop::Desktop(int _id,int swidth, int sheight,QWidget *parent, char *_name)
+Desktop::Desktop(int _id,int swidth, int sheight,QWidget *parent, const char *_name)
     : QWidget(parent,_name) , QDropSite(this)
 {
     id=_id;
@@ -503,7 +503,7 @@ bool Desktop::contains(Window w)
     return (getIndexOfWindow(w)==-1)? false : true;
 }
 
-WindowProperties *Desktop::windowAtPosition(const QPoint *p,bool *ok,QPoint *pos=0L)
+WindowProperties *Desktop::windowAtPosition(const QPoint *p,bool *ok, QPoint *pos)
 {
     WindowProperties *wp=window_list->last();
     if (wp==0L) 
@@ -886,13 +886,13 @@ void Desktop::readBackgroundSettings(void)
        QString tmpd = config.readEntry( "Directory", KApplication::kde_wallpaperdir());
        QDir d( tmpd, "*", QDir::Name, QDir::Readable | QDir::Files );
 
-       QStrList *list = (QStrList *)d.entryList();
+       QStringList list = d.entryList();
        color1 = QColor(black);
        gfMode=Flat;
        orMode=Portrait;
        wpMode = Tiled;
        useWallpaper = true;
-       wallpaper = d.absPath() + "/" + list->at( randomid ); 	
+       wallpaper = d.absPath() + "/" + (*list.at( randomid )); 	
        loadWallpaper(wallpaper);
 
        return;
@@ -1408,3 +1408,5 @@ bool Desktop::showName=true;
 QPixmap *Desktop::commonbigBackgroundPixmap=0L;
 int Desktop::commonbackPixmapWidth=0;
 int Desktop::commonbackPixmapHeight=0;
+
+#include "desktop.moc"

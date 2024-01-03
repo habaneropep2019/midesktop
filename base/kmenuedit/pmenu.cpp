@@ -37,8 +37,6 @@
 #include "pmenu.h"
 #include "confmenu.h"
 
-#include "pmenu.moc"
-
 extern "C" {
 #include <stdlib.h>
 }
@@ -716,32 +714,34 @@ void PMenu::insert( PMenuItem *item, int index )
     list.insert(index, item);
 }
 
-short PMenu::parse( QDataStream &s )
+short PMenu::parse( QDataStream &stream )
 {
   QString buf;
   short pos;
   QString command;
   PMenuItem *new_item;
   PMenu *new_menu;
-  char c;
-  s >> c;
+  int c;
+  stream >> c;
+
   while ( c != '\n' )
-    {
-      buf += c; 
-      s >> c;
-    }
+  {
+    buf += c; 
+    stream >> c;
+  }
+
   buf.simplifyWhiteSpace();
 //  debug("%s", (const char *) buf);
   if( buf != "Begin_Menu" )
     return -1;
-  while( !s.eof() )
+  while( !stream.eof() )
     { 
       buf = "";
-      s >> c;
-      while ( c != '\n' && !s.eof() )
+      stream >> c;
+      while ( c != '\n' && !stream.eof() )
 	{
 	  buf += c; 
-	  s >> c;
+	  stream >> c;
 	}
       buf.simplifyWhiteSpace();
 //debug ( "line = '%s'", (const char *) buf);
@@ -760,7 +760,7 @@ short PMenu::parse( QDataStream &s )
 	  new_menu = new PMenu();
 	  new_item = new PMenuItem;
 	  new_item->parse(buf, new_menu);
-	  if( new_menu->parse(s) < 0) 
+	  if( new_menu->parse(stream) < 0) 
 	    {
 	      delete new_menu;
 	      delete new_item;
@@ -918,25 +918,23 @@ void PMenu::writeConfig( QDir base_dir, PMenuItem *parent_item)
       return;
     }
   QString name;
-  const QStrList *temp_list = base_dir.entryList("*", QDir::Files);
-  QStrList file_list;
-  file_list.setAutoDelete(TRUE);
-  QStrListIterator temp_it( *temp_list );
-  while( name = temp_it.current() )
-    {
-      file_list.append(name);
-      ++temp_it;
-    }
+  QStringList temp_list = base_dir.entryList("*", QDir::Files);
+  QStringList file_list;
+
+  for ( QStringList::ConstIterator i = temp_list.begin(); i != temp_list.end(); ++i ) {
+      file_list.append(*i);
+  }
+
   temp_list = base_dir.entryList("*", QDir::Dirs);
-  QStrList dir_list;
-  dir_list.setAutoDelete(TRUE);
-  temp_it.toFirst();
-  while( name = temp_it.current() )
+  QStringList dir_list;
+
+  for ( QStringList::ConstIterator i = temp_list.begin(); i != temp_list.end(); ++i ) {
+    if((*i) != "." && (*i) != "..")
     {
-      if(name != "." && name != "..")
-	dir_list.append(name);
-      ++temp_it;
+      dir_list.append(*i);
     }
+  }
+  
   QString sort_order;
   PMenuItem *item;
   for( item = list.first(); item != 0; item = list.next() )
@@ -977,28 +975,28 @@ void PMenu::writeConfig( QDir base_dir, PMenuItem *parent_item)
 	}
     }
   // remove files not in pmenu
-  for( name = file_list.first(); name != 0; name = file_list.next() )
+
+  for ( QStringList::ConstIterator i = file_list.begin(); i != file_list.end(); ++i ) {
+    if( isKdelnkFile(base_dir.absFilePath(*i)) )
     {
-      if( isKdelnkFile(base_dir.absFilePath(name)) )
-	{
-	  //debug("will remove file: %s", (const char *) name );
-	  base_dir.remove(name);
-	}
+      //debug("will remove file: %s", (const char *) name );
+      base_dir.remove(*i);
     }
+  }
+
   // remove dirs not in pmenu
-  for( name = dir_list.first(); name != 0; name = dir_list.next() )
+  for ( QStringList::ConstIterator i = dir_list.begin(); i != dir_list.end(); ++i ) {
+    QDir sub_dir(base_dir);
+    if(sub_dir.cd(*i))
     {
-      //debug("will remove dir: %s", (const char *) name );
-      QDir sub_dir(base_dir);
-      if(sub_dir.cd(name))
-	{
-	  PMenu *new_menu = new PMenu;
-	  new_menu->writeConfig(sub_dir);
-	  delete new_menu;
-	  sub_dir.remove(".directory");	  
-	}
-      base_dir.rmdir(name);
+      PMenu *new_menu = new PMenu;
+      new_menu->writeConfig(sub_dir);
+      delete new_menu;
+      sub_dir.remove(".directory");	  
     }
+    base_dir.rmdir(name);
+  }
+
   sort_order.truncate(sort_order.length()-1);
   QString file = base_dir.absPath();
   file += "/.directory";
@@ -1172,7 +1170,7 @@ void PMenu::create_pixmap( QPixmap &buf, PMenuItem *item, QPopupMenu *menu)
   p.setFont( menu->font() );
   p.drawText( 2 + item->pixmap.width() + 4,        // center text in item
 	      0, w, h,
-	      AlignVCenter | ShowPrefix | DontClip | SingleLine,
+	      Qt::AlignVCenter | ShowPrefix | DontClip | SingleLine,
 	      item->text_name );
   p.end();
 }
@@ -1293,3 +1291,5 @@ QString PMenu::uniqueFileName(QString name, bool is_dir)
     }
   return new_name;
 }
+
+#include "pmenu.moc"

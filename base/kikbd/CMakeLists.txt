@@ -11,8 +11,6 @@ set(KIKBD_SRCS kikbd.cpp keytrans.cpp keymap.cpp kikbdconf.cpp
 
 set(KIKBD_MOC kconfobjs.moc kobjconf.moc keymap.moc kikbd.moc kikbdconf.moc widgets.moc)
 
-QT1_WRAP_MOC(MOC_FILES ${KIKBD_MOC})
-
 add_executable(kikbd ${KIKBD_SRCS} ${MOC_FILES})
 target_link_libraries(kikbd
     ${QT_LIBRARIES}

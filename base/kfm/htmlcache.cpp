@@ -27,9 +27,7 @@ bool HTMLCache::bSaveCacheEnabled = true;
 HTMLCacheJob::HTMLCacheJob( const char *_url, const char *_dest ) : KIOJob()
 {
     url = _url;
-    url.detach();
     dest = _dest;
-    dest.detach();
     
     connect( this, SIGNAL( finished( int ) ), this, SLOT( slotJobFinished( int ) ) );
     connect( this, SIGNAL( error( int, const char* ) ), this, SLOT( slotError( int, const char* ) ) );

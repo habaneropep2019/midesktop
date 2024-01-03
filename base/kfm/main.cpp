@@ -321,7 +321,6 @@ int main( int argc, char ** argv )
     if ( KfmGui::rooticons == false )
     {
 	QString home = "file:";
-	home.detach();
 	home += QDir::homeDirPath().data();
 	KfmGui *m = new KfmGui( 0L, 0L, home.data() );
 	m->show();

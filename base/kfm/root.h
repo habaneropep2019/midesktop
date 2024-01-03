@@ -5,11 +5,6 @@
 #include <qbitmap.h>
 #include <qpopmenu.h>
 
-#include <X11/Xlib.h>
-#include <X11/Xutil.h>
-#include <X11/Xos.h>
-#include <X11/extensions/shape.h>
-
 #include "kbind.h"
 #include "html.h"
 #include "kfmgui.h"

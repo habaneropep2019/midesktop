@@ -225,9 +225,9 @@ KSoundWidget::KSoundWidget(QWidget *parent, const char *name):
 
   columns = new QHBoxLayout(10);
 
-  top_layout->addWidget(sounds_enabled,0,AlignLeft);
+  top_layout->addWidget(sounds_enabled,0,Qt::AlignLeft);
   top_layout->addLayout(columns,1);
-  top_layout->addWidget(statustext,0,AlignLeft);
+  top_layout->addWidget(statustext,0,Qt::AlignLeft);
 
   col1 = new QVBoxLayout();
   col2 = new QVBoxLayout();
@@ -237,10 +237,10 @@ KSoundWidget::KSoundWidget(QWidget *parent, const char *name):
   columns->addLayout(col2, 4);
   columns->addLayout(col3, 0); 
 
-  col1->addWidget(eventlabel,0,AlignLeft);
+  col1->addWidget(eventlabel,0,Qt::AlignLeft);
   col1->addWidget(eventlist,1);
 
-  col2->addWidget(soundlabel,0,AlignLeft);
+  col2->addWidget(soundlabel,0,Qt::AlignLeft);
   col2->addWidget(soundlist,1);
 
   col3->addSpacing(delta);

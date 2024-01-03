@@ -47,39 +47,29 @@ KIODirectoryEntry::KIODirectoryEntry( const char *_name, bool _isDir, int _size,
 				      const char * _access, const char * _owner, const char *_group )
 {
     name = _name;
-    name.detach();
     bDir = _isDir;
     size = _size;
     creationDate = _creationDate;
-    creationDate.detach();
     int i;
     if ( ( i = creationDate.find( ' ' ) ) != -1 )
 	creationDate.replace( i, 1, "&nbsp;" );
     access = _access;
-    access.detach();
     owner = _owner;
-    owner.detach();
     group = _group;
-    group.detach();
 }
 
 KIODirectoryEntry::KIODirectoryEntry( KIODirectoryEntry & _entry )
 {
     name = _entry.getName();
-    name.detach();
     bDir = _entry.isDir();
     size = _entry.getSize();
     creationDate = _entry.getCreationDate();
-    creationDate.detach();
     int i;
     if ( ( i = creationDate.find( ' ' ) ) != -1 )
 	creationDate.replace( i, 1, "&nbsp;" );
     access = _entry.getAccess();
-    access.detach();
     owner = _entry.getOwner();
-    owner.detach();
     group = _entry.getGroup();
-    group.detach();
 }
 
 bool KIODirectoryEntry::mayRead( const char *_user )
@@ -204,7 +194,6 @@ KIODirectoryEntry* KIOServer::getDirectoryEntry( const char *_url )
 {
     QString url = _url;
     // Delete a trailing '/'
-    url.detach();
     if ( url.right(1) == "/" )
       url.truncate( url.length() - 1 );
  
@@ -324,11 +313,9 @@ QString KIOServer::getDestNameForLink( const char *_url )
     else
     {
 	name = kurl.protocol();
-	name.detach();
 	name += ":";
 
 	QString tmp = kurl.path();
-	tmp.detach();
 	int i = 0;
 	while ( ( i = tmp.find( "/", i ) ) != -1 )
 	    tmp.replace( i++, 1, "%2F" );
@@ -337,7 +324,6 @@ QString KIOServer::getDestNameForLink( const char *_url )
     }
 #endif
 
-    name.detach();
     return name;
 }
 

@@ -10,8 +10,6 @@ kioslave_ipc.cpp kioslave_ipc2.cpp main.cpp xview.cpp
 
 set(KIOSLAVE_MOC kioslave_ipc.moc main.moc http.moc file.moc tar.moc ftp.moc protocol.moc subprotocol.moc cgi.moc gzip.moc icon.moc ftp_proxy.moc)
 
-QT1_WRAP_MOC(MOC_FILES ${KIOSLAVE_MOC})
-
 add_executable(kioslave ${KIOSLAVE_SRCS} ${MOC_FILES})
 target_link_libraries(kioslave
     ${QT_LIBRARIES}

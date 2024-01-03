@@ -60,7 +60,9 @@ void WidgetCanvas::drawSampleWidgets()
 	// lot of fiddly drawing later.
 
 	QScrollBar *vertScrollBar = new QScrollBar( QScrollBar::Vertical, this );
-	vertScrollBar->setStyle( MotifStyle );
+
+	QStyle* new_style = new QMotifStyle;
+	vertScrollBar->setStyle( new_style );
     vertScrollBar->setGeometry( 400, 400, SCROLLBAR_SIZE, height());
     vertScrollBar->setRange( 0,  0 );
     vertScrollBar->setPalette( QPalette(cg,cg,cg));

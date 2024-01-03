@@ -38,15 +38,15 @@
 #include <kconfigbase.h>
 #include <ksimpleconfig.h>
 
+#include "fontchooser.h"
+#include "fontchooser.moc"
+
 #include <X11/Xlib.h>
 #include <X11/X.h>
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
 #include <X11/Xutil.h>
 #include <X11/Xos.h>
-
-#include "fontchooser.h"
-#include "fontchooser.moc"
 
 KFontChooser::KFontChooser( QWidget *parent, const char *name )
 	: QWidget( parent, name )
@@ -69,13 +69,15 @@ KFontChooser::KFontChooser( QWidget *parent, const char *name )
 	getFontList( fixedList, true );
 	getFontList( fontList );
 	
-	cmbFont->insertStrList( &fontList );
-	QStrListIterator it( fontList );
-	for ( i = 0; it.current(); ++it, i++ ) {
-		if ( !strcmp( fnt.family(), it.current() ) )
-			cmbFont->setCurrentItem( i );
+	cmbFont->insertStringList( fontList );
+	{
+		int i = 0;
+		for (QStringList::ConstIterator itr = fontList.begin(); itr != fontList.end(); ++itr, i++ ) {
+			if ( !strcmp( fnt.family(), *itr ) )
+				cmbFont->setCurrentItem( i );
+		}
 	}
-	
+
 	connect( cmbFont, SIGNAL( activated( const char * ) ),
 		SLOT( slotSelectFont( const char * ) ) );
 		
@@ -161,14 +163,17 @@ void KFontChooser::setFont( QFont start_fnt, bool fixed )
 	
 	cmbFont->clear();
 	if( fixed )
-		cmbFont->insertStrList( &fixedList );
+		cmbFont->insertStringList( fixedList );
 	else 
-		cmbFont->insertStrList( &fontList );
-	
-	QStrListIterator it( fixed ? fixedList : fontList );
-	for ( int i = 0; it.current(); ++it, i++ ) {
-		if ( !strcmp( fnt.family(), it.current() ) )
-			cmbFont->setCurrentItem( i );
+		cmbFont->insertStringList( fontList );
+
+	{
+		const QStringList::ConstIterator itrEnd = fixed ? fixedList.end() : fontList.end();
+		int i = 0;
+		for (QStringList::ConstIterator itr = fixed ? fixedList.begin() : fontList.begin(); itr != itrEnd; ++itr, i++ ) {
+			if ( !strcmp( fnt.family(), *itr ) )
+				cmbFont->setCurrentItem( i );
+		}
 	}
 	
 	sbSize->setValue( fnt.pointSize() );
@@ -185,7 +190,7 @@ void KFontChooser::setFont( QFont start_fnt, bool fixed )
 	fillCharsetCombo();
 }
 
-void KFontChooser::getFontList( QStrList &list, const char *pattern )
+void KFontChooser::getFontList( QStringList &list, const char *pattern )
 {
 	int num;
 	char **xFonts = XListFonts( qt_xdisplay(), pattern, 2000, &num );
@@ -199,12 +204,12 @@ void KFontChooser::getFontList( QStrList &list, const char *pattern )
 }
 
 
-void KFontChooser::getFontList( QStrList &list, bool fixed )
+void KFontChooser::getFontList( QStringList &list, bool fixed )
 {
 	// Use KDE fonts if there is a KDE font list and check that the fonts
 	// exist on the server where the desktop is running.
 	
-	QStrList lstSys, lstKDE;
+	QStringList lstSys, lstKDE;
 	
 	if ( fixed ) {
 		getFontList( lstSys, "-*-*-*-*-*-*-*-*-*-*-m-*-*-*" );
@@ -212,19 +217,23 @@ void KFontChooser::getFontList( QStrList &list, bool fixed )
 	} else
 		getFontList( lstSys, "-*-*-*-*-*-*-*-*-*-*-p-*-*-*" );
 		
-	if ( !kapp->getKDEFonts( &lstKDE ) ) {
+	if ( !kapp->getKDEFonts( lstKDE ) ) {
 		list = lstSys;
 		return;
 	}
 	
 	for( int i = 0; i < (int) lstKDE.count(); i++ ) {
-		if ( lstSys.find( lstKDE.at( i ) ) != -1 ) {
-			list.append( lstKDE.at( i ) );
+		const QString& needle = *lstKDE.at( i );
+		for (QStringList::ConstIterator itr = lstSys.begin(); itr != lstSys.end(); ++itr ) {
+			if(needle == (*itr))
+			{
+				list.append(needle);
+			}
 		}
 	}
 }
 
-void KFontChooser::addFont( QStrList &list, const char *xfont )
+void KFontChooser::addFont( QStringList &list, const char *xfont )
 {
 	const char *ptr = strchr( xfont, '-' );
 	if ( !ptr )
@@ -244,13 +253,15 @@ void KFontChooser::addFont( QStrList &list, const char *xfont )
 		if ( font.find( "open look", 0, false ) >= 0 )
 			return;
 
-		QStrListIterator it( list );
-
-		for ( ; it.current(); ++it )
-			if ( it.current() == font )
+		for (QStringList::ConstIterator itr = list.begin(); itr != list.end(); ++itr ) {
+			if((*itr) == font)
+			{
 				return;
+			}
+		}
 
-		list.inSort( font );
+		list.append(font);
+		list.sort();
 	}
 }
 

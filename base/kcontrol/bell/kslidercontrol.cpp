@@ -50,7 +50,7 @@ KSliderControl::KSliderControl(const char *label,
   int major = (upper-lower)/10; // default to 10 major ticks
   slider->setSteps( major/2, major );
 
-  setLabelAlignment( AlignCenter );
+  setLabelAlignment( Qt::AlignCenter );
 
   setLabelSize(0.3); // this should be after value gets set (after connect)
 }
@@ -127,9 +127,9 @@ void KSliderControl::resizeEvent ( QResizeEvent * )
 
   // label gets placed according to alignment and label_frac
   int lx = 0;
-  if ( label_align == AlignLeft )
+  if ( label_align == Qt::AlignLeft )
     lx = 0;
-  else if (label_align == AlignRight)
+  else if (label_align == Qt::AlignRight)
     lx = left_frac - main_label->width() - h_spacing/2;
   else
     lx = ( left_frac - main_label->width() )/2;

@@ -72,8 +72,8 @@ EntryDialog::EntryDialog (QWidget* parent, const char* name)
   tmpQLabel->setText( klocale->translate("Type:") );
   tmpQLabel->setFixedWidth(tmpQLabel->sizeHint().width());
   
-  top_box->addWidget(tmpQLabel, 0, 0, AlignRight);
-  top_box->addWidget(c_type, 0, 1, AlignLeft);
+  top_box->addWidget(tmpQLabel, 0, 0, Qt::AlignRight);
+  top_box->addWidget(c_type, 0, 1, Qt::AlignLeft);
 
   tmpQLabel = new QLabel( this );
   tmpQLabel->setText( klocale->translate("File Name:") );
@@ -87,8 +87,8 @@ EntryDialog::EntryDialog (QWidget* parent, const char* name)
   i_fname->setFrame( TRUE );
   i_fname->setFixedSize( 208, widg_height);
 
-  top_box->addWidget(tmpQLabel, 1, 0, AlignRight);
-  top_box->addWidget(i_fname, 1, 1, AlignLeft);
+  top_box->addWidget(tmpQLabel, 1, 0, Qt::AlignRight);
+  top_box->addWidget(i_fname, 1, 1, Qt::AlignLeft);
 
   tmpQLabel = new QLabel( this, "Label_2" );
   tmpQLabel->setText( klocale->translate("Name:") );
@@ -102,8 +102,8 @@ EntryDialog::EntryDialog (QWidget* parent, const char* name)
   i_name->setFrame( TRUE );
   i_name->setFixedSize( 208, widg_height);
 
-  top_box->addWidget(tmpQLabel, 2, 0, AlignRight);
-  top_box->addWidget(i_name, 2, 1, AlignLeft);
+  top_box->addWidget(tmpQLabel, 2, 0, Qt::AlignRight);
+  top_box->addWidget(i_name, 2, 1, Qt::AlignLeft);
   
   tmpQLabel = new QLabel( this, "Label_3" );
   tmpQLabel->setText( klocale->translate("Icon:") );
@@ -121,9 +121,9 @@ EntryDialog::EntryDialog (QWidget* parent, const char* name)
   b_big_pixmap->setFixedSize( 54, 54 );
   b_big_pixmap->setText( "" );
 
-  top_box->addWidget(tmpQLabel, 3, 0, AlignRight);
-  top_box->addWidget(i_big_pixmap, 3, 1, AlignLeft);
-  top_box->addMultiCellWidget(b_big_pixmap, 2, 3, 2, 2, AlignVCenter|AlignLeft);
+  top_box->addWidget(tmpQLabel, 3, 0, Qt::AlignRight);
+  top_box->addWidget(i_big_pixmap, 3, 1, Qt::AlignLeft);
+  top_box->addMultiCellWidget(b_big_pixmap, 2, 3, 2, 2, Qt::AlignVCenter|Qt::AlignLeft);
   
   i_pixmap = new PLineEdit( this, "LineEdit_2" );
   i_pixmap->setGeometry( 72, 136, 208, 24 );
@@ -141,9 +141,9 @@ EntryDialog::EntryDialog (QWidget* parent, const char* name)
   tmpQLabel->setText( klocale->translate("Mini Icon:") );
   tmpQLabel->setFixedWidth(tmpQLabel->sizeHint().width());
 
-  top_box->addWidget(tmpQLabel, 4, 0, AlignRight);
-  top_box->addWidget(i_pixmap, 4, 1, AlignLeft);
-  top_box->addWidget(b_pixmap, 4, 2, AlignLeft);
+  top_box->addWidget(tmpQLabel, 4, 0, Qt::AlignRight);
+  top_box->addWidget(i_pixmap, 4, 1, Qt::AlignLeft);
+  top_box->addWidget(b_pixmap, 4, 2, Qt::AlignLeft);
   
   tmpQLabel = new QLabel( this, "Label_5" );
   tmpQLabel->setText( klocale->translate("Comment:") );
@@ -157,8 +157,8 @@ EntryDialog::EntryDialog (QWidget* parent, const char* name)
   i_comment->setFrame( TRUE );
   i_comment->setFixedSize( 208, widg_height);
 
-  top_box->addWidget(tmpQLabel, 5, 0, AlignRight);
-  top_box->addWidget(i_comment, 5, 1, AlignLeft);
+  top_box->addWidget(tmpQLabel, 5, 0, Qt::AlignRight);
+  top_box->addWidget(i_comment, 5, 1, Qt::AlignLeft);
 
   f_sub_diag = new QFrame( this, "Frame_1" );
   f_sub_diag->setMinimumSize(336, 216);
@@ -380,7 +380,7 @@ EntryDialog::EntryDialog (QWidget* parent, const char* name)
   i_device->setMaxLength( 32767 );
   i_device->setEchoMode( QLineEdit::Normal );
   i_device->setFrame( TRUE );
-  f5_layout->addWidget(i_device, 1, 1, AlignLeft);
+  f5_layout->addWidget(i_device, 1, 1, Qt::AlignLeft);
   
   i_mount = new QLineEdit( f_app_5, "LineEdit_6" );
   i_mount->setFixedSize(176, widg_height);
@@ -388,7 +388,7 @@ EntryDialog::EntryDialog (QWidget* parent, const char* name)
   i_mount->setMaxLength( 32767 );
   i_mount->setEchoMode( QLineEdit::Normal );
   i_mount->setFrame( TRUE );
-  f5_layout->addWidget(i_mount, 2, 1, AlignLeft);
+  f5_layout->addWidget(i_mount, 2, 1, Qt::AlignLeft);
   
   i_fstype = new QLineEdit( f_app_5, "LineEdit_7" );
   i_fstype->setFixedSize(176, widg_height);
@@ -396,7 +396,7 @@ EntryDialog::EntryDialog (QWidget* parent, const char* name)
   i_fstype->setMaxLength( 32767 );
   i_fstype->setEchoMode( QLineEdit::Normal );
   i_fstype->setFrame( TRUE );
-  f5_layout->addWidget(i_fstype, 3, 1, AlignLeft);
+  f5_layout->addWidget(i_fstype, 3, 1, Qt::AlignLeft);
   
   i_mount_pix = new PLineEdit( f_app_5, "LineEdit_8" );
   i_mount_pix->setFixedSize(176, widg_height);
@@ -404,37 +404,37 @@ EntryDialog::EntryDialog (QWidget* parent, const char* name)
   i_mount_pix->setMaxLength( 32767 );
   i_mount_pix->setEchoMode( QLineEdit::Normal );
   i_mount_pix->setFrame( TRUE );
-  f5_layout->addWidget(i_mount_pix, 4, 1, AlignLeft);
+  f5_layout->addWidget(i_mount_pix, 4, 1, Qt::AlignLeft);
   
   b_mount_pix = new QPushButton( f_app_5, "PushButton_3" );
   b_mount_pix->setFixedSize( 54, 54 );
   b_mount_pix->setText( "" );
-  f5_layout->addMultiCellWidget(b_mount_pix, 4, 5, 2, 2, AlignVCenter|AlignLeft);
+  f5_layout->addMultiCellWidget(b_mount_pix, 4, 5, 2, 2, Qt::AlignVCenter|Qt::AlignLeft);
 
   cb_read_only = new QCheckBox( f_app_5, "CheckBox_8" );
   cb_read_only->setText( klocale->translate("Read Only") );
   cb_read_only->setFixedSize(cb_read_only->sizeHint());
-  f5_layout->addWidget(cb_read_only, 5, 1, AlignLeft);
+  f5_layout->addWidget(cb_read_only, 5, 1, Qt::AlignLeft);
   
   tmpQLabel = new QLabel( f_app_5, "Label_5" );
   tmpQLabel->setText( klocale->translate("Device:") );
   tmpQLabel->setFixedWidth(tmpQLabel->sizeHint().width());
-  f5_layout->addWidget(tmpQLabel, 1, 0, AlignRight);
+  f5_layout->addWidget(tmpQLabel, 1, 0, Qt::AlignRight);
   
   tmpQLabel = new QLabel( f_app_5, "Label_6" );
   tmpQLabel->setText( klocale->translate("Mount Point:") );
   tmpQLabel->setFixedWidth(tmpQLabel->sizeHint().width());
-  f5_layout->addWidget(tmpQLabel, 2, 0, AlignRight);
+  f5_layout->addWidget(tmpQLabel, 2, 0, Qt::AlignRight);
   
   tmpQLabel = new QLabel( f_app_5, "Label_7" );
   tmpQLabel->setText( klocale->translate("FS Type:") );
   tmpQLabel->setFixedWidth(tmpQLabel->sizeHint().width());
-  f5_layout->addWidget(tmpQLabel, 3, 0, AlignRight);
+  f5_layout->addWidget(tmpQLabel, 3, 0, Qt::AlignRight);
   
   tmpQLabel = new QLabel( f_app_5, "Label_8" );
   tmpQLabel->setText( klocale->translate("Unmount Icon:") );
   tmpQLabel->setFixedWidth(tmpQLabel->sizeHint().width());
-  f5_layout->addWidget(tmpQLabel, 4, 0, AlignRight);
+  f5_layout->addWidget(tmpQLabel, 4, 0, Qt::AlignRight);
 
   f5_layout->addRowSpacing(6, 8);
   f5_layout->setRowStretch(6, 1);

@@ -10,7 +10,6 @@ set(SAMPLE_SRCS
 set(SAMPLE_MOC
     bell.moc kslidercontrol.moc
 )
-QT1_WRAP_MOC(MOC_FILES ${SAMPLE_MOC})
 
 add_executable(kcmbell ${SAMPLE_SRCS} ${MOC_FILES})
 target_link_libraries(kcmbell

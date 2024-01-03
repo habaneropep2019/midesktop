@@ -9,11 +9,6 @@
 
 #include "main.h"
 
-#include <X11/X.h>
-#include <X11/Xos.h>
-#include <X11/Xlib.h>
-#include <X11/Xutil.h>
-#include <X11/keysym.h>
 #include <qcursor.h>
 #include <sys/time.h>
 
@@ -22,6 +17,12 @@
 
 #include "manager.h"
 #include <kwm.h>
+
+#include <X11/X.h>
+#include <X11/Xos.h>
+#include <X11/Xlib.h>
+#include <X11/Xutil.h>
+#include <X11/keysym.h>
 
 #define ButtonMask  (ButtonPressMask|ButtonReleaseMask)
 

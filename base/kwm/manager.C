@@ -468,7 +468,7 @@ void Manager::unmapNotify(XUnmapEvent *e){
       }
       switch (c->state) {
       case IconicState:
-	// if we are in iconic state we will only withdraw if it큦 a
+	// if we are in iconic state we will only withdraw if it's a
 	// true send_event request.
   	if (e->send_event) {
 	  withdraw(c);
@@ -2227,7 +2227,7 @@ Client* Manager::current(){
   return (result && result->isActive()) ? result : (Client*)0;
 }
 
-// add a client into the manager큦 client lists
+// add a client into the manager's client lists
 void Manager::addClient(Client* c){
   clients.append(c);
   clients_sorted.append(c);
@@ -2277,7 +2277,7 @@ void Manager::activateClient(Client* c, bool set_revert){
   }
 }
 
-// remove a client from the manager큦 client list
+// remove a client from the manager's client list
 void Manager::removeClient(Client* c){
   if (c->trans)
     raiseSoundEvent("Window Trans Delete");
@@ -2372,7 +2372,7 @@ void Manager::raiseClient(Client* c){
   raiseElectricBorders();
 }
 
-// lower a client. Take care about modal dialogs and kfm큦 root icons
+// lower a client. Take care about modal dialogs and kfm's root icons
 void Manager::lowerClient(Client* c){
   QList <Client> tmp;
   clients_sorted.removeRef(c);
@@ -2453,7 +2453,7 @@ bool Manager::hasClient(Client* c)
 // user has chosen the brain dead classic focus follows mouse policy
 // and the mouse pointer has left the window. noFocus may give the
 // focus to a window which had the focus before, or put the focus to
-// a dummy window if there큦 no window left on this desktop or the
+// a dummy window if there's no window left on this desktop or the
 // user has chosen an archaic (=classic) desktop policy.
 void Manager::noFocus(){
   Client* c;
@@ -2635,7 +2635,7 @@ void Manager::updateMaximizedWindows()
 
 
 // Tells the XServer and the client itself to sync the X window with
-// the datas stored in kwm큦 client object. If emit_changed is true,
+// the datas stored in kwm's client object. If emit_changed is true,
 // then all kwm modules are informed about that change.
 void Manager::sendConfig(Client* c, bool emit_changed){
   XConfigureEvent ce;
@@ -2894,7 +2894,7 @@ void Manager::setShape(Client* c){
 }
 
 // auxiliary functions to travers all clients according the focus
-// order. Usefull for kwm큦 Alt-tab feature.
+// order. Usefull for kwm's Alt-tab feature.
 Client* Manager::nextClient(Client* c){
   Client* result;
   if (!c)
@@ -2909,7 +2909,7 @@ Client* Manager::nextClient(Client* c){
 }
 
 // auxiliary functions to travers all clients according the focus
-// order. Usefull for kwm큦 Alt-tab feature.
+// order. Usefull for kwm's Alt-tab feature.
 Client* Manager::previousClient(Client* c){
   Client* result;
   if (!c)
@@ -3030,7 +3030,7 @@ void Manager::getMwmHints(Client  *c){
 	{
 	  // Motif defines a lot of more or less useful properties. We
 	  // are only interested in suppressing decorations. This is
-	  // important for StarOffice-3.1큦 floating toolbars which
+	  // important for StarOffice-3.1's floating toolbars which
 	  // would be shown within a strange floatwinshell otherwise.
 	  c->decoration = mwm_hints->decorations?KWM::normalDecoration:0;
 	  KWM::setDecoration(c->window, c->getDecoration());
@@ -3294,7 +3294,7 @@ void Manager::darkenScreen(){
 
 // do the X11R4 session management: send a SAVE_YOURSELF message to
 // everybody who wants to know it and wait for the answers. Also
-// handles KDE큦 session management additions as well as pseudo
+// handles KDE's session management additions as well as pseudo
 // session management with the help of a build in proxy.  After
 // finishing this functions the manager will emit a showLogout()
 // signal.
@@ -3409,7 +3409,7 @@ void Manager::processSaveYourself(){
     }
   }
 
-  // Finally do poor man큦 session management with the help of kwm큦
+  // Finally do poor man's session management with the help of kwm's
   // session management proxy.  This is done after the ususal
   // saveYourself because some clients may have set XA_WM_COMMAND for
   // other windows, too

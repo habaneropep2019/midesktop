@@ -41,6 +41,11 @@
 #include "kfmw.h"
 #include "utils.h"
 
+#include <X11/Xlib.h>
+#include <X11/Xutil.h>
+#include <X11/Xos.h>
+#include <X11/extensions/shape.h>
+
 #define SEPARATION 10
 
 mode_t FilePermissionsPropsPage::fperm[3][4] = {
@@ -54,7 +59,6 @@ Properties::Properties( const char *_url ) : QObject()
     pageList.setAutoDelete( true );
   
     url = _url;
-    url.detach();
   
     kurl = new KURL( url );
     if ( kurl->isMalformed() )
@@ -99,7 +103,6 @@ void Properties::slotApply()
 	page->applyChanges();
 
     QString s = getURL();
-    s.detach();
 
     // Strip the filename
     if ( !KIOServer::isDir( s.data() ) )
@@ -238,22 +241,21 @@ FilePropsPage::FilePropsPage( Properties *_props ) : PropsPage( _props )
 
     l = new QLabel( klocale->translate("File Name"), this );
     l->setFixedSize(l->sizeHint());
-    layout->addWidget(l, 0, AlignLeft);
+    layout->addWidget(l, 0, Qt::AlignLeft);
     
     name = new QLineEdit( this );
     name->setMinimumSize(200, fontHeight);
     name->setMaximumSize(QLayout::unlimited, fontHeight);
-    layout->addWidget(name, 0, AlignLeft);
+    layout->addWidget(name, 0, Qt::AlignLeft);
     name->setText( filename );
     // Dont rename trash or root directory
     if ( isTrash || filename == "/" )
 	name->setEnabled( false );
     oldName = filename;
-    oldName.detach();
 
     l = new QLabel( klocale->translate("Full Name"), this );
     l->setFixedSize(l->sizeHint());
-    layout->addWidget(l, 0, AlignLeft);
+    layout->addWidget(l, 0, Qt::AlignLeft);
     
     QLabel *fname = new QLabel( this );
     fname->setText( path );
@@ -261,7 +263,7 @@ FilePropsPage::FilePropsPage( Properties *_props ) : PropsPage( _props )
     fname->setMaximumSize(QLayout::unlimited, fontHeight);
     fname->setLineWidth(1);
     fname->setFrameStyle(QFrame::Box | QFrame::Raised);
-    layout->addWidget(fname, 0, AlignLeft);
+    layout->addWidget(fname, 0, Qt::AlignLeft);
     
     // BL: layout mngt
     layout->addSpacing(SEPARATION);
@@ -271,21 +273,21 @@ FilePropsPage::FilePropsPage( Properties *_props ) : PropsPage( _props )
 	l = new QLabel( klocale->translate( "Is the Trash Bin"), this );
 	// BL: layout mngt
 	l->setFixedSize(l->sizeHint());
-	layout->addWidget(l, 0, AlignLeft);
+	layout->addWidget(l, 0, Qt::AlignLeft);
     }
     else if ( S_ISDIR( buff.st_mode ) )
     {
 	l = new QLabel( klocale->translate("Is a Directory"), this );
 	// BL: layout mngt
 	l->setFixedSize(l->sizeHint());
-	layout->addWidget(l, 0, AlignLeft);
+	layout->addWidget(l, 0, Qt::AlignLeft);
     }
     if ( S_ISLNK( lbuff.st_mode ) )
     {
 	l = new QLabel( klocale->translate( "Points to" ), this );
 	// BL: layout mngt
 	l->setFixedSize(l->sizeHint());
-	layout->addWidget(l, 0, AlignLeft);
+	layout->addWidget(l, 0, Qt::AlignLeft);
     
         QLabel *lname = new QLabel( this );
         lname->setText( path );
@@ -293,7 +295,7 @@ FilePropsPage::FilePropsPage( Properties *_props ) : PropsPage( _props )
         lname->setMaximumSize(QLayout::unlimited, fontHeight);
         lname->setLineWidth(1);
         lname->setFrameStyle(QFrame::Box | QFrame::Raised);
-        layout->addWidget(lname, 0, AlignLeft);
+        layout->addWidget(lname, 0, Qt::AlignLeft);
 
 	char buffer[1024];
 	int n = readlink( path.data(), buffer, 1022 );
@@ -311,7 +313,7 @@ FilePropsPage::FilePropsPage( Properties *_props ) : PropsPage( _props )
 	l = new QLabel( tempstr.data(), this );
 	// BL: layout mngt
 	l->setFixedSize(l->sizeHint());
-	layout->addWidget(l, 0, AlignLeft);
+	layout->addWidget(l, 0, Qt::AlignLeft);
     }
     
     char buffer[1024];
@@ -323,7 +325,7 @@ FilePropsPage::FilePropsPage( Properties *_props ) : PropsPage( _props )
     l = new QLabel( buffer, this );
     // BL: layout mngt
     l->setFixedSize(l->sizeHint());
-    layout->addWidget(l, 0, AlignLeft);
+    layout->addWidget(l, 0, Qt::AlignLeft);
 
     t = localtime( &lbuff.st_mtime );
     sprintf( buffer, "%s: %02i:%02i %02i.%02i.%04i", 
@@ -333,7 +335,7 @@ FilePropsPage::FilePropsPage( Properties *_props ) : PropsPage( _props )
     l = new QLabel( buffer, this );
     // BL: layout mngt
     l->setFixedSize(l->sizeHint());
-    layout->addWidget(l, 0, AlignLeft);
+    layout->addWidget(l, 0, Qt::AlignLeft);
 
     // BL: layout mngt
     layout->addStretch(10);
@@ -362,7 +364,6 @@ void FilePropsPage::applyChanges()
     if ( strcmp( oldName.data(), n.data() ) != 0 )
     {
 	QString s = path.data();
-	s.detach();
 	if ( s.right(1) == "/") 
 	  // It's a directory, so strip the trailing slash first
 	  s.truncate( s.length() - 1);
@@ -424,7 +425,6 @@ FilePermissionsPropsPage::FilePermissionsPropsPage( Properties *_props )
     if ( user != 0L )
     {
 	strOwner = user->pw_name;
-	strOwner.detach();
     }    
     if ( ge != 0L )
     {
@@ -726,7 +726,7 @@ not used */
     // and the icon button, on the right of this vertical layout
     iconBox = new KIconLoaderButton( pkfm->iconLoader(), this );
     iconBox->setFixedSize( 50, 50 );
-    hlayout->addWidget(iconBox, 0, AlignCenter);
+    hlayout->addWidget(iconBox, 0, Qt::AlignCenter);
 
     // The groupbox about swallowing
 
@@ -1026,7 +1026,7 @@ URLPropsPage::URLPropsPage( Properties *_props ) : PropsPage( _props )
     layout->addWidget(URLEdit);
     
     iconBox->setFixedSize( 50, 50 );
-    layout->addWidget(iconBox, 0, AlignLeft);
+    layout->addWidget(iconBox, 0, Qt::AlignLeft);
 
     QString path = _props->getKURL()->path();
 
@@ -1264,7 +1264,6 @@ void DirPropsPage::applyChanges()
     // icon may have changed
 
     tmp = properties->getKURL()->url();
-    tmp.detach();
     
     if ( tmp.right(1) == "/" )
 	tmp = tmp.left( tmp.length() - 1 );
@@ -1342,7 +1341,6 @@ void DirPropsPage::drawWallPaper()
     {
 	// debugT("Loading WallPaper '%s'\n",file.data());
 	wallFile = file.data();
-	wallFile.detach();	
 	wallPixmap.load( file.data() );
     }
     
@@ -1438,31 +1436,31 @@ ApplicationPropsPage::ApplicationPropsPage( Properties *_props ) : PropsPage( _p
     tmpQLabel = new QLabel( this, "Label_1" );
     tmpQLabel->setText(  klocale->translate("Binary Pattern (netscape;Netscape;)") );
     tmpQLabel->setFixedSize(tmpQLabel->sizeHint());
-    layout->addWidget(tmpQLabel, 0, AlignLeft);
+    layout->addWidget(tmpQLabel, 0, Qt::AlignLeft);
 
-    layout->addWidget(binaryPatternEdit, 0, AlignLeft);
+    layout->addWidget(binaryPatternEdit, 0, Qt::AlignLeft);
 
     tmpQLabel = new QLabel( this, "Label_3" );
     tmpQLabel->setText(  klocale->translate("Comment") );
     tmpQLabel->setFixedSize(tmpQLabel->sizeHint());
-    layout->addWidget(tmpQLabel, 0, AlignLeft);
+    layout->addWidget(tmpQLabel, 0, Qt::AlignLeft);
 
     commentEdit->raise();
     commentEdit->setMinimumSize(210, fontHeight);
     commentEdit->setMaximumSize(QLayout::unlimited, fontHeight);
     commentEdit->setMaxLength( 256 );
-    layout->addWidget(commentEdit, 0, AlignLeft);
+    layout->addWidget(commentEdit, 0, Qt::AlignLeft);
 
     tmpQLabel = new QLabel( this, "Label_4" );
     tmpQLabel->setText(  klocale->translate("Name ( in your language )") );
     tmpQLabel->setFixedSize(tmpQLabel->sizeHint());
-    layout->addWidget(tmpQLabel, 0, AlignLeft);
+    layout->addWidget(tmpQLabel, 0, Qt::AlignLeft);
 
     nameEdit->raise();
     nameEdit->setMaxLength( 256 );
     nameEdit->setMinimumSize(210, fontHeight);
     nameEdit->setMaximumSize(QLayout::unlimited, fontHeight);
-    layout->addWidget(nameEdit, 0, AlignLeft);
+    layout->addWidget(nameEdit, 0, Qt::AlignLeft);
 
     layoutH = new QBoxLayout(QBoxLayout::LeftToRight);
     layout->addLayout(layoutH, 10);

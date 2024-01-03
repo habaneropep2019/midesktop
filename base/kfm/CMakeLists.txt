@@ -32,9 +32,6 @@ set(KFM_MOC
 	kfmjob.h kfmexec.h kfinder.h
 	open-with.h finddlg.h kcookiewin.h popup.h)
 
-
-QT1_WRAP_HEADER(MOC_FILES ${KFM_MOC})
-
 add_executable(kfm ${KFM_SRCS} ${MOC_FILES})
 target_link_libraries(kfm
     ${QT_LIBRARIES}

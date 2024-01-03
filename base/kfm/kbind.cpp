@@ -81,10 +81,7 @@ KMimeType::KMimeType( const char *_mime_type, const char *_pixmap )
     bApplicationPattern = false;
     
     mimeType = _mime_type;
-    mimeType.detach();
-    
     pixmapName = _pixmap;
-    pixmapName.detach();
 
     pixmap = 0L;
 }
@@ -639,7 +636,6 @@ void KMimeType::getBindings( QStrList &_list, QList<QPixmap> &_pixlist, const ch
 			if ( stricmp( start, "Default" ) != 0 )
 			{
 			    QString s( i18n( "Mount" ) );
-			    s.detach();
 			    s += " ";
 			    s += (const char*)start;
 			    _list.append( s.data() );   
@@ -655,7 +651,6 @@ void KMimeType::getBindings( QStrList &_list, QList<QPixmap> &_pixlist, const ch
 		else
 		{
 		    QString s( i18n( "Unmount" ) );
-		    s.detach();
 		    _list.append( s.data() );
 		    _pixlist.append( emptyPixmap );
 		}
@@ -667,7 +662,6 @@ void KMimeType::getBindings( QStrList &_list, QList<QPixmap> &_pixlist, const ch
 	    if ( !url.isNull() )
 	    {
 		tmp = url.data();
-		tmp.detach();
 		_url = tmp.data();
 		KURL u2( _url );
 		u = u2;
@@ -1110,7 +1104,7 @@ void KMimeBind::initApplications( const char * _path )
 		  // termOptions will store both values (being 0L if Terminal=="0").
 		  QString term = config.readEntry( "Terminal", "0" );
 		  QString termOptions = config.readEntry( "TerminalOptions" );
-		  if (term=="0") termOptions = 0L;
+		  if (term=="0") termOptions = QString::null;
 		  
 		  // Define an icon for the program file perhaps ?
 		  if ( !app_icon.isEmpty() && !app_pattern.isEmpty() )
@@ -1262,7 +1256,6 @@ bool KMimeBind::runBinding( const char *_url )
     }
     
     QString cmd = getCmd();
-    cmd.detach();
 
     bool b_local_app = false;
     if ( cmd.find( "%u" ) == -1 )
@@ -1321,7 +1314,6 @@ bool KMimeBind::runBinding( const char *_url )
 	KConfig *config = KApplication::getKApplication()->getConfig();
 	config->setGroup( "KFM Misc Defaults" );
 	QString termCmd = config->readEntry( "Terminal", DEFAULT_TERMINAL);
-	termCmd.detach();
 	if ( termCmd.isNull() )
 	{
 	    warning(i18n("ERROR: No Terminal Setting"));
@@ -1840,7 +1832,6 @@ bool KDELnkMimeType::runAsApplication( const char *_url, QStrList *_arguments )
 	exec.replace( i, 2, _url );
     while ( ( i = exec.find( "%c" ) ) != -1 )
     {
-	exec.detach();
 
 	if ( !name.isEmpty() ) 
 	    exec.replace( i, 2, name.data() );
@@ -1858,17 +1849,14 @@ bool KDELnkMimeType::runAsApplication( const char *_url, QStrList *_arguments )
 	}
     }     
     if (!icon.isEmpty()) {
-      icon.detach();
       icon.prepend("-icon ");
     }
 
     while ( ( i = exec.find( "%i" ) ) != -1 ) {
-      exec.detach();
       exec.replace( i, 2, icon.data());
     }
 
     if (!miniicon.isEmpty()) {
-      miniicon.detach();
       miniicon.prepend("-miniicon ");
     } 
     while ( ( i = exec.find( "%m" ) ) != -1 )
@@ -1879,7 +1867,6 @@ bool KDELnkMimeType::runAsApplication( const char *_url, QStrList *_arguments )
 	KConfig *config = KApplication::getKApplication()->getConfig();
 	config->setGroup( "KFM Misc Defaults" );
 	QString cmd = config->readEntry( "Terminal", DEFAULT_TERMINAL);
-	cmd.detach();
 	if ( cmd.isNull() )
 	{
 	    warning(i18n("ERROR: No Terminal Setting"));

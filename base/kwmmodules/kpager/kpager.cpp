@@ -485,3 +485,5 @@ void KPager::toDesktop(int id)
 {
     KWM::moveToDesktop(selectedWindow,id+1);
 }
+
+#include "kpager.moc"

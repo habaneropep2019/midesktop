@@ -61,7 +61,7 @@ void KStart::initialized(){
 void KStart::windowAdd(Window w){
     if (window) {
 	QString t = KWM::title(w);
-	QRegExp r = window;
+	QRegExp r = QString(window);
 	if (r.match(t) != -1){
 	    applyStyle( w );
 	    ::exit(0);

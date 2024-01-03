@@ -21,7 +21,6 @@ backgnd.moc display.moc colorscm.moc savescm.moc
 		scrnsave.moc general.moc widgetcanvas.moc fontchooser.moc
 		kresourceman.moc
 )
-QT1_WRAP_MOC(MOC_FILES ${DISPLAY_MOC})
 
 add_executable(kcmdisplay ${DISPLAY_SRCS} ${MOC_FILES})
 target_link_libraries(kcmdisplay

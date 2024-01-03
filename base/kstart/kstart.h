@@ -10,11 +10,6 @@
 #include <qlist.h>
 #include <qstring.h>
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <sys/time.h>
-#include <X11/X.h>
-#include <X11/Xlib.h>
 #include <qwidget.h>
 #include <qpopmenu.h>
 #include <qstrlist.h>
@@ -23,6 +18,11 @@
 #include <qlabel.h>
 #include <qpushbt.h>
 
+#include <stdlib.h>
+#include <stdio.h>
+#include <sys/time.h>
+#include <X11/X.h>
+#include <X11/Xlib.h>
 
 class KStart: public QObject {
   Q_OBJECT

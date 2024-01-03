@@ -21,6 +21,13 @@
 
 #include "manager.h"
 
+//
+// Undefine X11 KeyPress macro so it doesn't conflict with Qt::KeyPress
+//
+#ifdef KeyPress
+#undef KeyPress
+#endif
+
 extern Manager* manager;
 
 extern bool do_not_draw;
@@ -46,13 +53,13 @@ Klogout::Klogout( QWidget *parent, const char *name, WFlags f)
     label = new QLabel(klocale->translate("Session prepared for logout"), this);
     label->installEventFilter( this );
     label->setMouseTracking(True);
-    label->setAlignment(AlignCenter);
+    label->setAlignment(Qt::AlignCenter);
 
     listboxlabel1 = 
       new QLabel(klocale->translate("The following applications contain unsaved data which\nwill be lost in your next session."), this);
     listboxlabel1->installEventFilter( this );
     listboxlabel1->setMouseTracking(True);
-    listboxlabel1->setAlignment(AlignLeft);
+    listboxlabel1->setAlignment(Qt::AlignLeft);
 
     listbox1 = new QListBox(this);
     listbox1->installEventFilter( this );
@@ -63,7 +70,7 @@ Klogout::Klogout( QWidget *parent, const char *name, WFlags f)
       new QLabel(klocale->translate("The following applications cannot be restored in your next session,\nonly restarted. Make sure they do not contain important unsaved data."), this);
     listboxlabel2->installEventFilter( this );
     listboxlabel2->setMouseTracking(True);
-    listboxlabel2->setAlignment(AlignLeft);
+    listboxlabel2->setAlignment(Qt::AlignLeft);
 
     listbox2 = new QListBox(this);
     listbox2->installEventFilter( this );
@@ -74,7 +81,7 @@ Klogout::Klogout( QWidget *parent, const char *name, WFlags f)
       new QLabel(klocale->translate("The following applications are not X11-aware and though cannot be restored\nin your next session. Make sure they do not contain important unsaved data."), this);
     listboxlabel3->installEventFilter( this );
     listboxlabel3->setMouseTracking(True);
-    listboxlabel3->setAlignment(AlignLeft);
+    listboxlabel3->setAlignment(Qt::AlignLeft);
 
     listbox3 = new QListBox(this);
     listbox3->installEventFilter( this );
@@ -212,7 +219,7 @@ void Klogout::SetPointerGrab(QPoint pos){
 }
 
 bool Klogout::eventFilter( QObject *ob, QEvent * e){
-  if (e->type() == Event_MouseButtonPress){
+  if (e->type() == QEvent::MouseButtonPress){
     if (ob->isWidgetType() && 
 	!rect().contains(
 			 mapFromGlobal(
@@ -221,12 +228,12 @@ bool Klogout::eventFilter( QObject *ob, QEvent * e){
       cleanup();
     }
   }
-  if (e->type() == Event_KeyPress){
+  if (e->type() == QEvent::KeyPress){
     int a = ((QKeyEvent*)e)->ascii();
     if (a == 3 || a == 7 || a == 27)
       cleanup();
   }
-  if (e->type() == Event_MouseMove){
+  if (e->type() == QEvent::MouseMove){
     QMouseEvent* mev = (QMouseEvent*) e;
     if (ob->isWidgetType()
 	&& !(mev->state() & LeftButton)

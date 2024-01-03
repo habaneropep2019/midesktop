@@ -13,8 +13,6 @@ set(KFIND_SRCS
 set(KFIND_MOC kfdird.moc kfwin.moc kfindtop.moc
     kftabdlg.moc kfoptions.moc kfind.moc)
 
-QT1_WRAP_MOC(MOC_FILES ${KFIND_MOC})
-
 add_executable(kfind ${KFIND_SRCS} ${MOC_FILES})
 target_link_libraries(kfind
     ${QT_LIBRARIES}

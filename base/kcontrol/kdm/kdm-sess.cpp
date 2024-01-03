@@ -147,11 +147,11 @@ void KDMSessionsWidget::setupPage(QWidget *)
       lgroup2sub->addLayout(lgroup2a, 2);
       lgroup2sub->addLayout(lgroup2b, 2);
       lgroup2sub->addLayout(lgroup2c);
-      lgroup2a->addWidget(type_label, 10, AlignLeft);
+      lgroup2a->addWidget(type_label, 10, Qt::AlignLeft);
       lgroup2a->addWidget(session_lined);
-      lgroup2a->addWidget(btnrm, 10, AlignRight);
-      lgroup2a->addWidget(btnadd, 10, AlignRight);
-      lgroup2b->addWidget(types_label, 10, AlignLeft);
+      lgroup2a->addWidget(btnrm, 10, Qt::AlignRight);
+      lgroup2a->addWidget(btnadd, 10, Qt::AlignRight);
+      lgroup2b->addWidget(types_label, 10, Qt::AlignLeft);
       lgroup2b->addWidget(sessionslb);
       lgroup2c->addStretch(1);
       lgroup2c->addWidget(btnup);
@@ -258,7 +258,7 @@ void KDMSessionsWidget::applySettings()
       sesstr.append(sessionslb->text(i));
       sesstr.append(";");
     }
-    c->writeEntry( "SessionTypes", sesstr.data() );
+    c->writeEntry( "SessionTypes", sesstr );
   }
 
   delete c;

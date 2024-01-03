@@ -45,24 +45,24 @@ Kfm::Kfm()
     pIconLoader = new KIconLoader();
 
     // We need this in KfmGui::KfmGui(), so moved it here. DF.
-    QStrList* list = pIconLoader->getDirList();
-    list->clear();
+    QStringList& list = pIconLoader->getDirList();
+    list.clear();
     QString tmp = kapp->kde_icondir().copy();
-    list->append( tmp.data() );
+    list.append( tmp.data() );
     tmp = KApplication::localkdedir();
     tmp += "/share/icons";
-    list->append( tmp.data() );
+    list.append( tmp.data() );
 
     KConfig *config = kapp->getConfig();
-    QStrList dirList;
+    QStringList dirList;
     config->setGroup("KDE Setup");
     config->readListEntry( "IconPath", dirList, ':' );
 
-    for (const char *it=dirList.first(); it; it = dirList.next()) {
-      QDir dir( it );
+    for ( QStringList::ConstIterator itr = dirList.begin(); itr != dirList.end(); ++itr ) {
+      QDir dir( *itr );
 
       if (dir.exists())
-        list->append( it );
+        list.append( *itr );
     }
 
     if ( KfmGui::rooticons )
@@ -81,13 +81,12 @@ Kfm::Kfm()
 	config->setGroup( "SM" );
 	bool flag = config->hasKey( "URLs" );
 	
-	QStrList urlList;
+	QStringList urlList;
 	int n = config->readListEntry( "URLs", urlList );
 
 	if ( !flag && KfmGui::rooticons == true )
 	{
 	    QString home = "file:";
-	    home.detach();
 	    home += QDir::homeDirPath().data();
 	    KfmGui *m = new KfmGui( 0L, 0L, home.data() );
 	    m->show();
@@ -98,7 +97,7 @@ Kfm::Kfm()
 	    int i;
 	    for ( i = 1; i <= n; i++ )
 	    {
-		KfmGui *m = new KfmGui( 0L, 0L, urlList.at( i - 1 ) );
+		KfmGui *m = new KfmGui( 0L, 0L, *urlList.at( i - 1 ) );
 		m->readProperties(i);
 		m->show();
 	    }
@@ -150,7 +149,7 @@ void Kfm::slotSave()
   
   KConfig *config = kapp->getConfig();
 
-  QStrList urlList;
+  QStringList urlList;
   
   KfmGui *gui;
   int i = 0;
@@ -348,7 +347,7 @@ void Kfm::setUpDest (QString *url)
     }
 
     // if it fails, kfmman will let us know
-    url->setStr(tryPath.data());
+    *url = tryPath;
   }                            // end if special case
   //-------- Sven's write to pseudo global mime/app dirs end ---
 }

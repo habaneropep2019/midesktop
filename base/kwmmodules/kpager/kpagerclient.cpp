@@ -48,7 +48,8 @@ KPagerClient::KPagerClient(KWMModuleApplication *_kwmmapp,QWidget *parent,const 
     screenheight=KWM::geometry( qt_xrootwin()).height();
     
     Desktop::kwmmapp=kwmmapp;
-    desktop[0]=new Desktop(0,screenwidth,screenheight,this,"Global Desktop");
+    desktop[0] = new Desktop(0, screenwidth, screenheight, this, "Global Desktop");
+
     connect(desktop[0],SIGNAL(moveWindow(Window,int,int,int,int)),this,SLOT(moveWindow(Window,int,int,int,int)));
     connect(desktop[0],SIGNAL(updateDesk(int)),this,SLOT(updateDesk(int)));
     connect(desktop[0],SIGNAL(showPopupMenu(Window,QPoint)),parent,SLOT(showPopupMenu(Window,QPoint)));
@@ -714,3 +715,5 @@ const char *KPagerClient::getDesktopName(int i)
     if (i>numberofDesktops) return 0L;
     return desktop[i]->name();
 }
+
+#include "kpagerclient.moc"

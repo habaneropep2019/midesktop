@@ -186,7 +186,7 @@ static void addToList(QListBox *list, QString name)
 void Installer::readThemesList(void)
 {
   QDir d(Theme::globalThemesDir(), 0, QDir::Name, QDir::Files|QDir::Dirs);
-  QStrList* entryList;
+
   QString name;
   QString sDefault = "Default ";
 
@@ -200,9 +200,11 @@ void Installer::readThemesList(void)
 
   // Read global themes
 //  d.setPath(Theme::globalThemesDir());
-  entryList = (QStrList*)d.entryList();
-  if (entryList) for(name=entryList->first(); name; name=entryList->next())
+  QStringList entryList = d.entryList();
+
+  for(QStringList::ConstIterator it = entryList.begin(); it != entryList.end(); it++)
   {
+    name = *it;
     if (name[0]=='.') continue;
     if (name=="CVS" || 
         name.right(8)==".themerc")
@@ -211,7 +213,7 @@ void Installer::readThemesList(void)
     {
       QString path = Theme::globalThemesDir()+"/"+name+"/"+name+".themerc";
       if (!d.exists(path))
-         continue;
+        continue;
     }
     if (name == "Default")
       continue;
@@ -222,18 +224,19 @@ void Installer::readThemesList(void)
 
   // Read local themes
   d.setPath(Theme::themesDir());
-  entryList = (QStrList*)d.entryList();
-  if (entryList) for(name=entryList->first(); name; name=entryList->next())
+  entryList = d.entryList();
+
+  for(QStringList::ConstIterator it = entryList.begin(); it != entryList.end(); it++)
   {
+    name = *it;
     if (name[0]=='.') continue;
-    if (name=="CVS" || 
-        name.right(8)==".themerc")
+    if (name=="CVS" || name.right(8) == ".themerc")
       continue;
     if (!pathToThemeName(name))
     {
-      QString path = Theme::themesDir()+"/"+name+"/"+name+".themerc";
+      QString path = Theme::themesDir()+ "/" + name + "/" + name + ".themerc";
       if (!d.exists(path))
-         continue;
+        continue;
     }
     if (name == "Default")
     {
@@ -330,7 +333,7 @@ void Installer::slotRemove()
        finfo.setFile(themeFile);
        if (!finfo.exists())
        {
-           themeFile = 0;
+           themeFile = QString::null;
            KMsgBox::message(this, kapp->name(), 
 	     i18n("The "),
 	     QMessageBox::Default | QMessageBox::Warning );
@@ -511,7 +514,6 @@ void Installer::slotSaveAs()
   if (cur < 0) return;
 
   themeFile = mThemesList->text(cur);
-  themeFile.detach();
   if (themeFile.isEmpty()) return;
 
   isGlobal = (themeFile[themeFile.length()-1]==' ');
@@ -547,7 +549,6 @@ void Installer::slotSave()
   if (cur < 0) return;
 
   name = mThemesList->text(cur);
-  name.detach();
   if (name.isEmpty()) return;
 
   isGlobal = (name[name.length()-1]==' ');

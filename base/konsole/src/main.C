@@ -644,7 +644,7 @@ void TEDemo::changeTitle(int, const char*s)
 void TEDemo::about()
 //FIXME: make this a little nicer
 {
-  QString title, msg(1000);
+  QString title, msg;
 
   title.sprintf(i18n("About %s"), PACKAGE);
   msg.sprintf(i18n(
@@ -655,7 +655,7 @@ void TEDemo::about()
     "This program is free software under the\n"
     "terms of the Artistic License and comes\n"
     "WITHOUT ANY WARRANTY.\n"
-    "See `LICENSE.readme´ for details."), PACKAGE, VERSION);
+    "See `LICENSE.readme for details."), PACKAGE, VERSION);
   KMsgBox::message( 0, title, msg );
 }
 

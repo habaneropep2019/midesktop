@@ -32,8 +32,6 @@ public:
   CPopupMenu( QWidget *parent=0, const char *name=0 );
   ~CPopupMenu() {}
 
-  int getRightHeight();
-  int getRightWidth();
   void hide();
   void setActItem( int it );
 

@@ -729,3 +729,5 @@ void KHelpMain::slotLocationEntered()
 {
   helpwin->openURL(location->getLinedText(QLINEDIT_ITEM), LeftButton);
 }
+
+#include "mainwidget.moc"

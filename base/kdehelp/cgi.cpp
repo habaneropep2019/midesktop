@@ -151,3 +151,4 @@ KCGI::~KCGI()
 		kill( scriptPID, SIGKILL );
 }
 
+#include "cgi.moc"

@@ -102,7 +102,7 @@ KObjectConfig::KObjectConfig(KConfigBase* config, bool autoDelete)
   init();
   deleteConfig = autoDelete;
   config       = config;
-  configFile   = 0L;
+  configFile   = QString::null;
   configType   = External;
   version      = -1;
   readOnly     = FALSE;
@@ -167,7 +167,7 @@ void KObjectConfig::initConfig()
 	    configFile = file;
 	    if(!readOnly) readOnly = ! info.isWritable();
 	  } else {
-	    configFile = 0L;
+	    configFile = QString::null;
 	    emit noSystemDataFile(file);
 	  }
 	}

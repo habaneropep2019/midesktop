@@ -8,9 +8,6 @@ set(MAUDIO_SRCS io_oss.cpp maudio.cpp sample.cpp)
 set(KAUDIO_MOC democlient.moc kplayaudio.moc)
 set(KPLAYAUDIO_SRCS kplayaudio.cpp)
 
-QT1_WRAP_MOC(MOC_FILES kplayaudio.moc)
-QT1_WRAP_MOC(DEMO_MOC_FILES democlient.moc)
-
 add_executable(kaudioserver ${KAUDIO_SRCS})
 target_link_libraries(kaudioserver
     ${QT_LIBRARIES}

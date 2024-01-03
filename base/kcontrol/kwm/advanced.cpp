@@ -56,7 +56,7 @@ KAdvancedConfig::KAdvancedConfig(QWidget * parent, const char *name)
   atLabel = new QLabel(klocale->translate("Alt-Tab mode:"),keyBox);
   atLabel->adjustSize();
   atLabel->setMinimumSize(atLabel->size());
-  atLabel->setAlignment(AlignHCenter | AlignVCenter);
+  atLabel->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
   chkLay->addWidget(atLabel,3,0);
 
   alttab = new QComboBox(FALSE, keyBox, "AltTab");

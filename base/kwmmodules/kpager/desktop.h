@@ -22,6 +22,9 @@
  *
  */
 
+#ifndef _DESKTOP_H
+#define _DESKTOP_H
+
 #include <qwidget.h>
 #include <qdropsite.h>
 #include <qlist.h>
@@ -72,7 +75,7 @@ private:
 
     WindowProperties *getWindowProperties(Window w);
     int getIndexOfWindow(Window w);
-    WindowProperties *windowAtPosition(const QPoint *p,bool *ok=0L,QPoint *pos=0L);
+    WindowProperties *windowAtPosition(const QPoint *p, bool *ok = NULL, QPoint *pos = NULL);
 
     void drawSunkRect(QPainter *p,int x,int y,int w,int h,bool highlighted);
 
@@ -131,7 +134,7 @@ protected:
     virtual void paintWindow(QPainter *painter,WindowProperties *wp, QRect &tmp);
 
 public:
-    Desktop(int id,int swidth,int sheight, QWidget *parent, char *name);
+    Desktop(int id,int swidth,int sheight, QWidget *parent, const char *name);
     virtual ~Desktop();
 
     bool contains(Window w);
@@ -182,3 +185,4 @@ signals:
 
 };
     
+#endif

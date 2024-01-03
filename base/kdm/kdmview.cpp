@@ -29,7 +29,7 @@
 #include <qwmatrix.h>
 #include <qkeycode.h>
 
-int KVItemList::compareItems( GCI i1, GCI i2)
+int KVItemList::compareItems( QCollection::Item i1, QCollection::Item i2)
 {
     KDMViewItem *lbi1 = (KDMViewItem *)i1;
     KDMViewItem *lbi2 = (KDMViewItem *)i2;

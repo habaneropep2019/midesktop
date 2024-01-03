@@ -201,7 +201,7 @@ bool KFMManager::eventFilter( QObject *ob, QEvent *ev )
 {
     // let the popup stay on the screen if the user
     // didn't move the mouse (Matthias)
-    if (ob == popupMenu && ev->type() == Event_MouseButtonRelease
+    if (ob == popupMenu && ev->type() == QEvent::MouseButtonRelease
 	&& QCursor::pos() == popupMenuPosition )
     {
 	popupMenuPosition = QPoint(-10,-10);
@@ -790,15 +790,12 @@ void KFMManager::writeEntry( KIODirectoryEntry *s )
     //-------- Sven's overlayed mime/app dirs end ---
     
     /* QString decoded = s->getName();
-    decoded.detach();
     KURL::decodeURL( decoded );   // decoded to pass to writeWrapped()
 
     QString filename( url );        // filename, Filename, useable to find file on Disk (Hen)
-    filename.detach();
     filename += s->getName();
 
-    QString encodedURL ( url );  
-    encodedURL.detach();            // encodedURL, URL,  encoded for <a href ..> (Hen)
+    QString encodedURL ( url );  // encodedURL, URL,  encoded for <a href ..> (Hen)
     encodedURL += s->getName(); */
 
     QString n( s->getName() );
@@ -1614,7 +1611,6 @@ void KFMManager::openPopupMenu( QStrList &_urls, const QPoint & _point, bool _cu
 void KFMManager::dropPopupMenu( KDNDDropZone *_zone, const char *_dest, const QPoint *_p, bool _nestedURLs )
 {
     dropDestination = _dest;
-    dropDestination.detach();
     
     dropZone = _zone;
     

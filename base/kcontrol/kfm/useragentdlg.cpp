@@ -43,7 +43,7 @@ UserAgentOptions::UserAgentOptions( QWidget * parent, const char * name ) :
   //CT
 
   onserverLA = new QLabel( i18n( "On server:" ), this );
-  onserverLA->setAlignment( AlignRight|AlignVCenter );
+  onserverLA->setAlignment( Qt::AlignRight|Qt::AlignVCenter );
   //CT 12Nov1998 layout management
   onserverLA->adjustSize();
   onserverLA->setMinimumSize(onserverLA->size());
@@ -65,7 +65,7 @@ UserAgentOptions::UserAgentOptions( QWidget * parent, const char * name ) :
   //		   SLOT( returnPressed() ) );
 
   loginasLA = new QLabel( i18n( "login as:" ), this );
-  loginasLA->setAlignment( AlignRight|AlignVCenter );
+  loginasLA->setAlignment( Qt::AlignRight|Qt::AlignVCenter );
   //CT 12Nov1998 layout management
   loginasLA->adjustSize();
   loginasLA->setMinimumSize(loginasLA->size());

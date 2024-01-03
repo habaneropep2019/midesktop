@@ -12,7 +12,6 @@ set(INFO_SRCS
 set(INFO_MOC
     memory.moc info.moc
 )
-QT1_WRAP_MOC(MOC_FILES ${INFO_MOC})
 
 add_executable(kcminfo ${INFO_SRCS} ${MOC_FILES})
 target_link_libraries(kcminfo

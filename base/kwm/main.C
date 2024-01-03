@@ -112,7 +112,7 @@ static void hideInfoBox(){
 static void createInfoBox(){
   if (!infoFrame){
     infoFrame = new QFrame(0, 0,
-			   WStyle_Customize | WStyle_NoBorder | WStyle_Tool);
+			   Qt::WStyle_Customize | Qt::WStyle_NoBorder | Qt::WStyle_Tool);
     infoFrame->setFrameStyle( QFrame::WinPanel | QFrame::Raised );
     infoFrameInner = new QFrame(infoFrame);
     infoFrameInner->setFrameStyle( QFrame::Panel | QFrame::Sunken );
@@ -150,10 +150,10 @@ static void setInfoBoxText(QString text, Window w){
   }
   if (w != None){
     d = 54;
-    infoLabel->setAlignment(AlignHCenter|AlignVCenter);
+    infoLabel->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
   }
   else {
-    infoLabel->setAlignment(AlignHCenter|AlignVCenter);
+    infoLabel->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
   }
   int nw = 0;
   if (infoBoxWindowsLabel)
@@ -167,7 +167,7 @@ static void setInfoBoxText(QString text, Window w){
 			   QApplication::desktop()->width(),
 			   w!=None?83:60);
     if (nw > QApplication::desktop()->width()-12-d)
-      infoLabel->setAlignment(AlignVCenter);
+      infoLabel->setAlignment(Qt::AlignVCenter);
   }
   else
     if (nw > QApplication::desktop()->width()/3-12-d){
@@ -177,7 +177,7 @@ static void setInfoBoxText(QString text, Window w){
 			     w!=None?83:60);
       if (infoLabel->fontMetrics().boundingRect(text).width() >
 	  QApplication::desktop()->width()-12-d)
-	infoLabel->setAlignment(AlignVCenter);
+	infoLabel->setAlignment(Qt::AlignVCenter);
     }
     else
       infoFrame->setGeometry(QApplication::desktop()->width()/3,
@@ -298,7 +298,7 @@ bool focus_grabbed(){
 
 void showMinicli(){
   if (!minicli){
-    minicli = new Minicli(0, 0, WStyle_Customize | WStyle_NoBorder | WStyle_Tool);
+    minicli = new Minicli(0, 0, Qt::WStyle_Customize | Qt::WStyle_NoBorder | Qt::WStyle_Tool);
   }
   while (!minicli->do_grabbing());
 }
@@ -306,7 +306,7 @@ void showMinicli(){
 void showWarning(const char* text, bool with_button = true){
   XEvent ev;
   if (!kwarning){
-    kwarning = new KWarning(0, 0, WStyle_Customize | WStyle_NoBorder | WStyle_Tool);
+    kwarning = new KWarning(0, 0, Qt::WStyle_Customize | Qt::WStyle_NoBorder | Qt::WStyle_Tool);
   }
   kwarning->setText(text, with_button);
   manager->timeStamp();
@@ -328,7 +328,7 @@ static void setStringProperty(const char* atomname, const char* value){
 static void showLogout(){
   manager->raiseSoundEvent("Logout Message");
   if (!klogout){
-    klogout = new Klogout(0, 0, WStyle_Customize | WStyle_NoBorder | WStyle_Tool);
+    klogout = new Klogout(0, 0, Qt::WStyle_Customize | Qt::WStyle_NoBorder | Qt::WStyle_Tool);
     // next is a dirty hack to fix a qt-1.2 bug
     // (should be unnecessary with 1.3)
      unsigned long data[2];
@@ -352,7 +352,7 @@ static void showLogout(){
 
 void showTask(){
   if (!ktask){
-    ktask = new Ktask(0, 0, WStyle_Customize | WStyle_NoBorder | WStyle_Tool);
+    ktask = new Ktask(0, 0, Qt::WStyle_Customize | Qt::WStyle_NoBorder | Qt::WStyle_Tool);
     // next is a dirty hack to fix a qt-1.2 bug
     // (should be unnecessary with 1.3)
      unsigned long data[2];
@@ -391,8 +391,6 @@ QRect &stringToRect(QString s, QRect *q){
   int y = 0;
   int w = 0;
   int h = 0;
-
-  s.detach(); // a copy for changing
 
   int a;
   a = s.find('+', 0);
@@ -1776,11 +1774,11 @@ void MyApp::slotSwitchDesktop8(){
 bool MyApp::eventFilter( QObject *obj, QEvent * ev){
 
     if (obj == operations || obj == desktopMenu){
-      if (ev->type() == Event_MouseButtonRelease){
+      if (ev->type() == QEvent::MouseButtonRelease){
 	// ignore the popup-close in some cases
 	if (ignore_release_on_this){
-	  QEvent ev(Event_Leave);
-	  QMouseEvent mev (Event_MouseButtonRelease,
+	  QEvent ev(QEvent::Leave);
+	  QMouseEvent mev (QEvent::MouseButtonRelease,
 			   QCursor::pos(), LeftButton, LeftButton);
 	  QApplication::sendEvent(ignore_release_on_this, &ev);
 	  QApplication::sendEvent(ignore_release_on_this, &mev);

@@ -12,7 +12,7 @@ class KIntList : public BaseIntList
     virtual ~KIntList() { }
 
   protected:
-    virtual int compareItems( GCI item1, GCI item2);
+    virtual int compareItems( QCollection::Item item1, QCollection::Item item2);
 };
 
 #endif //_kintlist_h

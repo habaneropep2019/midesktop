@@ -41,30 +41,6 @@ CPopupMenu::CPopupMenu( QWidget *parent, const char *name )
     setMouseTracking(TRUE);
 }
 
-int CPopupMenu::getRightHeight()
-{
-  int i, j = count();
-  int h = 0;
-  for( i = 0; i < j; i++)
-    {
-      h += cellHeight(i);
-    }
-  return h+4;
-}
-
-int CPopupMenu::getRightWidth()
-{
-  // doesn't work, because cellWidth() doesn't work
-  int i, j = count();
-  int w = 0;
-  for( i = 0; i < j; i++)
-    {
-      if( w < cellWidth(i) )
-	w = cellWidth(i);
-    }
-  return w+4;
-}
-
 void CPopupMenu::mousePressEvent( QMouseEvent *e )
 {
   if( !rect().contains( e->pos() ) )

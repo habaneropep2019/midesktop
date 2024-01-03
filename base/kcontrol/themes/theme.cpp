@@ -207,7 +207,7 @@ bool Theme::load(const QString aPath, QString aName)
     if (i >= 0) str = workDir() + aPath.mid(i, 1024);
     else str = workDir();
 
-    cmd.resize(80+aPath.length()+str.length());
+    cmd.truncate(80+aPath.length()+str.length());
     cmd.sprintf("cp -r \"%s\" \"%s\"", (const char*)aPath,
 		(const char*)str);
     debug(cmd);
@@ -222,7 +222,7 @@ bool Theme::load(const QString aPath, QString aName)
   else
   {
     // The theme given is a tar package. Unpack theme package.
-    cmd.resize(80+workDir().length()+aPath.length());
+    cmd.truncate(80+workDir().length()+aPath.length());
     cmd.sprintf("cd \"%s\"; gzip -c -d \"%s\" | tar xf -", 
 		(const char*)workDir(), (const char*)aPath);
     debug(cmd);
@@ -238,7 +238,7 @@ bool Theme::load(const QString aPath, QString aName)
 
   // Let's see if the theme is stored in a subdirectory.
   QDir dir(workDir(), 0, QDir::Name, QDir::Files|QDir::Dirs);
-  for (i=0, mThemePath=0, num=0; dir[i]!=0; i++)
+  for (i = 0, mThemePath = QString::null, num=0; dir[i]!=0; i++)
   {
     if (dir[i][0]=='.') continue;
     finfo.setFile(workDir() + dir[i]);
@@ -284,13 +284,13 @@ bool Theme::save(const QString aPath)
   if (stricmp(aPath.right(4), ".tgz") == 0 ||
       stricmp(aPath.right(7), ".tar.gz") == 0)
   {
-    cmd.resize(80+workDir().length()+aPath.length());
+    cmd.truncate(80+workDir().length()+aPath.length());
     cmd.sprintf("cd \"%s\";tar cf - *|gzip -c >\"%s\"",
 		(const char*)workDir(), (const char*)aPath);
   }
   else
   {
-    cmd.resize(80+workDir().length()+aPath.length()+aPath.length());
+    cmd.truncate(80+workDir().length()+aPath.length()+aPath.length());
     cmd.sprintf("cd \"%s\"; rm -rf \"%s\"; cp -r * \"%s\"",
 		(const char*)workDir(), (const char*)aPath,
 		(const char*)aPath);
@@ -442,7 +442,7 @@ int Theme::installGroup(const char* aGroupName)
     {
       appDir = value.copy();
       if (appDir[0] != '/') baseDir = kapp->localkdedir() + "/share/";
-      else baseDir = 0;
+      else baseDir = QString::null;
 
       mkdirhier(appDir, baseDir);
       appDir = baseDir + appDir;
@@ -517,7 +517,7 @@ int Theme::installGroup(const char* aGroupName)
       else 
       {
 	cfgKey = value;
-	cfgValue = 0;
+	cfgValue = QString::null;
       }
       if (cfgKey.isEmpty()) cfgKey = key;
 
@@ -525,9 +525,9 @@ int Theme::installGroup(const char* aGroupName)
       {
 	oldValue = cfg->readEntry(cfgKey);
 	if (!oldValue.isEmpty() && oldValue==emptyValue)
-	  oldValue = 0;
+	  oldValue = QString::null;
       }
-      else oldValue = 0;
+      else oldValue = QString::null;
 
       themeValue = mConfig->readEntry(key);
       if (cfgValue.isEmpty()) cfgValue = themeValue;
@@ -627,7 +627,7 @@ void Theme::installCmd(KSimpleConfig* aCfg, const QString& aCmd,
     } else if (aCfg->readEntry("TitlebarLook") == "pixmap") {
       value = "shadedHorizontal";
     } else {
-      value = 0;
+      value = QString::null;
     }
     if (!value.isEmpty()) {
       aCfg->writeEntry("TitlebarLook", value);
@@ -813,19 +813,19 @@ int Theme::installIcons(void)
 
     // test if there is a 1:1 mapping in the mappings file
     destName = mMappings->readEntry(key,0);
-    destNameMini = 0;
+    destNameMini = QString::null;
 
     // if not we have to search for the proper kdelnk file
     // and extract the icon name from there.
     if (destName.isEmpty())
     {
       fname = "/" + key + ".kdelnk";
-      for (fpath=0, path=pathList.first(); path; path=pathList.next())
+      for (fpath = QString::null, path=pathList.first(); path; path=pathList.next())
       {
 	fpath = path + fname;
 	finfo.setFile(fpath);
 	if (finfo.exists()) break;
-	fpath = 0;
+	fpath = QString::null;
       }
       if (!fpath.isEmpty())
       {
@@ -1151,7 +1151,7 @@ void Theme::writeConfig(void)
 void Theme::writeColorEntry(KConfigBase* cfg, const char* aKey, 
 			    const QColor& aColor)
 {
-  QString str(32);
+  QString str;
   str.sprintf("#%02x%02x%02x", aColor.red(), aColor.green(), aColor.blue());
   cfg->writeEntry(aKey, str);
 }
@@ -1191,7 +1191,6 @@ bool Theme::mkdirhier(const char* aDir, const char* aBaseDir)
 {
   QDir dir;
   QString dirStr = aDir;
-  dirStr.detach();
   const char* dirName;
   int oldMask = umask(077);
 

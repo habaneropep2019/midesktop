@@ -25,12 +25,11 @@
 #include <kapp.h>
 #include <kprocess.h>
 
+#include <qobject.h>
+#include <qdict.h>
+
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
-
-#include <qobject.h>
-
-#include <qdict.h>
 
 /** 
  * The KResourceMan class is used for reading and writing desktop resources

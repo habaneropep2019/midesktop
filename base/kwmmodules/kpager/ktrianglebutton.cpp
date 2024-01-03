@@ -159,3 +159,5 @@ void KTriangleButton::timerEvent(QTimerEvent *)
     emit clickedQuickly();
     
 }
+
+#include "ktrianglebutton.moc"

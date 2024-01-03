@@ -10,7 +10,6 @@ main.cpp mouse.cpp keyboard.cpp kslidercontrol.cpp
 set(INPUT_MOC
 mouse.moc keyboard.moc kslidercontrol.moc
 )
-QT1_WRAP_MOC(MOC_FILES ${INPUT_MOC})
 
 add_executable(kcminput ${INPUT_SRCS} ${MOC_FILES})
 target_link_libraries(kcminput

@@ -183,7 +183,7 @@ KDMShutdown::KDMShutdown( int mode, QWidget* _parent, const char* _name,
      h += label->height() + 10;
      w = label->width();
 
-     box->addWidget( label, 0, AlignCenter);
+     box->addWidget( label, 0, Qt::AlignCenter);
 
      QFrame* sepFrame = new QFrame( this);
      sepFrame->setFrameStyle( QFrame::HLine| QFrame::Sunken);

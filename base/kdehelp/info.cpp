@@ -1509,7 +1509,7 @@ void cInfo::Decompress(const char *theFilename, char *workFile)
 	char sysCmd[512];
 
 	sprintf(tmpFile, "%s/khelpXXXXXX", _PATH_TMP );
-	mktemp(tmpFile);
+	mkstemp(tmpFile);
   
 	int i=0;
 	for (; i<2; ++i)

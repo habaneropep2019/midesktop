@@ -10,8 +10,6 @@ set(KVT_SRCS command.c screen.c utmp.c
 
 set(KVT_MOC main.moc)
 
-QT1_WRAP_MOC(MOC_FILES ${KVT_MOC})
-
 add_executable(kvt ${KVT_SRCS} ${MOC_FILES})
 target_link_libraries(kvt
     ${QT_LIBRARIES}

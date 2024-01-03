@@ -119,9 +119,9 @@ void KBackground::readSettings( int num, bool one, int onedesk )
       QString tmpd = config.readEntry( "Directory", KApplication::kde_wallpaperdir());
       QDir d( tmpd, "*", QDir::Name, QDir::Readable | QDir::Files );
 
-      QStrList *list = (QStrList *)d.entryList();
+      QStringList list = d.entryList();
 
-      count = list->count();
+      count = list.count();
       if ( inorder ) {
         randomDesk = config.readNumEntry( "Item", DEFAULT_DESKTOP );
 	randomDesk++;
@@ -136,7 +136,7 @@ void KBackground::readSettings( int num, bool one, int onedesk )
       wpMode = DEFAULT_WALLPAPER_MODE;
       bUseWallpaper = true;
 
-      wallpaper = d.absPath() + "/" + list->at( randomDesk );
+      wallpaper = d.absPath() + "/" + (*list.at( randomDesk ));
       name.sprintf( "%s_%d_%d_%d#%02x%02x%02x#%02x%02x%02x#", wallpaper.data(),
                     wpMode, gfMode, orMode, color1.red(), color1.green(),
 		    color1.blue(), color2.red(), color2.green(), color2.blue());
@@ -234,7 +234,6 @@ void KBackground::readSettings( int num, bool one, int onedesk )
   if ( bUseWallpaper )
     wallpaper = config.readEntry( "Wallpaper", DEFAULT_WALLPAPER );
 
-  name.detach();
   name.sprintf( "%s_%d_%d_%d#%02x%02x%02x#%02x%02x%02x#", wallpaper.data(),
 		wpMode, gfMode, orMode, color1.red(), color1.green(),
 		color1.blue(), color2.red(), color2.green(), color2.blue());
