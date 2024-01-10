@@ -773,17 +773,17 @@ const KCharsetEntry *KCharsetsData::conversionHint(const KCharsetEntry *charset)
   return defaultCh;  
 }
 
-bool KCharsetsData::getFontList(QStrList*lst,QString xcharsetname){
-char **fontNames;
-int numFonts;
-QString mask("-*-*-*-*-*-*-*-*-*-*-*-*-");
-QString qfontname;
-Display *kde_display;
+bool KCharsetsData::getFontList(QStrList* lst, QString xcharsetname){
+  char **fontNames;
+  int numFonts;
+  QString mask("-*-*-*-*-*-*-*-*-*-*-*-*-");
+  QString qfontname;
+  Display *kde_display;
   
-  if (!lst) return FALSE;
+  if (!lst) return false;
   
   kde_display = XOpenDisplay( 0L );
-  mask+=xcharsetname;
+  mask += xcharsetname;
   fontNames = XListFonts(kde_display, mask, 32767, &numFonts);
 
   for(int i = 0; i < numFonts; i++){
@@ -810,6 +810,8 @@ Display *kde_display;
 	lst->append(face);
   }
   XFreeFontNames(fontNames);
+
+  return true;
 }
 
 bool KCharsetsData::isDisplayableHack(KCharsetEntry *charset){
