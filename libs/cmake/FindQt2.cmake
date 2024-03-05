@@ -24,7 +24,7 @@ if(UNIX)
     ${QT2_INCLUDE_DIR}
     )
 
-  find_library(QT_LIBRARIES libqt
+  find_library(QT_LIBRARIES osiris
     /opt/osiris/lib64
     /opt/osiris/lib
     ${QT2_LIBRARY_DIR}
