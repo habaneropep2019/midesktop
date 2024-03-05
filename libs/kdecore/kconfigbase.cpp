@@ -903,6 +903,12 @@ QString KConfigBase::writeEntry( const QString pKey, const QString pValue,
   return aValue;
 }
 
+QString KConfigBase::writeEntry( const QString pKey, const char* pValue,
+				bool bPersistent, bool bGlobal,
+				bool bNLS)
+{
+	return writeEntry(pKey, QString(pValue), bPersistent, bGlobal, bNLS);
+}
 
 void KConfigBase::writeEntry ( const QString pKey, QStringList &list, 
 							   char sep , bool bPersistent, 

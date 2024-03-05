@@ -422,6 +422,27 @@ public:
 						  bool bPersistent = true, bool bGlobal = false,
 						  bool bNLS = false );
 
+  /** Write the key/value pair.
+	*
+	* This is stored to the most specific config file when destroying the
+	* config object or when calling sync().
+	*
+	*  @param pKey		The key to write.
+	*  @param pValue	The value to write.
+	*  @param bPersistent	If bPersistent is false, the entry's dirty
+	*			flag will not be set and thus the entry will
+	*			not be written to disk at deletion time.
+	*  @param bGlobal	If bGlobal is true, the pair is not saved to the
+	*   application specific config file, but to the global ~/.kderc
+	*  @param bNLS	If bNLS is true, the locale tag is added to the key
+	*   when writing it back.
+	*  @return The old value for this key. If this key did not
+	*   exist, a null string is returned.
+*/
+	QString writeEntry( const QString pKey, const char* pValue,
+					bool bPersistent = true, bool bGlobal = false,
+					bool bNLS = false );
+
   /**
 	* writeEntry() overriden to accept a list of strings.
 	*
