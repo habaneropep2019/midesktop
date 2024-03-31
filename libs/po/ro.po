@@ -3,6 +3,7 @@ msgstr ""
 "Project-Id-Version: kdelibs\n"
 "POT-Creation-Date: 1999-04-24 01:02+0200\n"
 "Last-Translator: Paul Ionescu <omy@main.romsoft.ro>\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
 
 #: kab/AssertDialog.cpp:29
 #, fuzzy

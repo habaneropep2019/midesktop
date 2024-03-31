@@ -7,6 +7,7 @@ msgstr ""
 "PO-Revision-Date: 1999-04-26 22:01-0500\n"
 "Last-Translator: Logi Ragnarsson <logir@imf.au.dk>\n"
 "Language-Team: is\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
 
 # kab/AssertDialog.cpp:29
 #: kab/AssertDialog.cpp:29
