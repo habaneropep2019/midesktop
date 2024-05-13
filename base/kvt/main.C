@@ -99,7 +99,7 @@ extern void kvt_set_scrollbar(int);
 extern void kvt_set_size_increment(int, int);
 
 extern void kvt_set_selection(char* s);
-extern char* kvt_get_selection();
+extern const char* kvt_get_selection();
 
 }
 
@@ -203,8 +203,8 @@ void kvt_set_selection(char* s){
   QApplication::clipboard()->setText(s);
 }
 
-char* kvt_get_selection(){
-  return (char*) QApplication::clipboard()->text();
+const char* kvt_get_selection(){
+  return QApplication::clipboard()->text().data();
 }
 
 int kvt_find_font(const char *name, int ptsz, char *ret)
@@ -216,7 +216,7 @@ int kvt_find_font(const char *name, int ptsz, char *ret)
 	 */
 	QString data;
 
-	fontNames = XListFonts(QPaintDevice::x__Display(), (char*)name,
+	fontNames = XListFonts(qt_xdisplay(), (char*)name,
 		1024, &count);
 // printf("Query for [%s] size %d returned %d fonts\n", name, ptsz, count);
 	score = 99999; ptscore = 0;
@@ -743,7 +743,7 @@ kVt::kVt( KConfig* sessionconfig,  const QStrList& args,
 
     keyboard_secured = FALSE;
 
-    setAcceptFocus( TRUE );
+    setFocusPolicy(StrongFocus);
 
     KApplication::getKApplication()->setTopWidget(this);
     KApplication::getKApplication()->enableSessionManagement();
@@ -1174,6 +1174,13 @@ void kVt::file_menu_activated(int item){
   }
 }
 
+#ifdef KeyPress
+#undef KeyPress
+#endif
+
+#ifdef KeyRelease
+#undef KeyRelease
+#endif
 
 bool kVt::eventFilter( QObject *obj, QEvent * ev){
   static QPoint tmp_point(-10,-10);

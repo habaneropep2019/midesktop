@@ -41,7 +41,7 @@ static Pixmap stipple_data_pixmap;
 
 /* needed for the qclipboard port (Matthias) */
 extern void kvt_set_selection(char* s);
-extern char* kvt_get_selection();
+extern const char* kvt_get_selection();
 
 
 /* A few windows and GC's, etc */
@@ -1701,18 +1701,30 @@ void scr_make_selection(int time)
 void scr_paste_selection()
 {
   int i = 0;
-  char* s = kvt_get_selection();
+  const char* s = kvt_get_selection();
   if (!s)
     return;
 
-  /* this is a hack for stupid clients like pine who seem to prefer \r over \n grrr...(Matthias) */
-  for (;s[i];i++){
-    if (s[i]=='\n')
-      s[i]='\r';
+  char small_buffer[256];
+  const size_t string_len = strnlen(s, 4096);
+
+  if (string_len <= 255)
+  {
+    strncpy(small_buffer, s, string_len);
+    small_buffer[string_len] = '\0';
+    send_string(small_buffer, string_len);
   }
-
-  send_string(s,strlen(s));
-
+  else
+  {
+    char *buffer = malloc(string_len + 1);
+    if (buffer)
+    {
+      strncpy(buffer, s, string_len);
+      buffer[string_len] = '\0';
+      send_string(buffer, string_len);
+      free(buffer);
+    }
+  }
 }
 
 
