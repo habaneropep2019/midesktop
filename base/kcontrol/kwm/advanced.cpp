@@ -300,8 +300,8 @@ myListBrowser::myListBrowser(const char *title, QWidget *parent, const char *nam
   bEdit->setMinimumSize(bEdit->size());
   lay->addWidget(bEdit,1,0);
 
-  connect(bEdit, SIGNAL(textChanged(const char *)),
-	  this, SLOT(bEditChanged(const char *)));
+  connect(bEdit, SIGNAL(textChanged(const QString&)),
+	  this, SLOT(bEditChanged(const QString&)));
 
   bAdd = new QPushButton("+",browserBox);
   bAdd->adjustSize();

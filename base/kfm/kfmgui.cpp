@@ -589,10 +589,10 @@ void KfmGui::initToolBar()
 	      completion, SLOT (make_completion()));
     connect ( lined, SIGNAL (rotation()),
 	      completion, SLOT (make_rotation()));
-    connect ( lined, SIGNAL (textChanged(const char *)),
-	      completion, SLOT (edited(const char *)));
-    connect ( completion, SIGNAL (setText (const char *)),
-	      lined, SLOT (setText (const char *)));
+    connect ( lined, SIGNAL (textChanged(const QString&)),
+	      completion, SLOT (edited(const QString&)));
+    connect ( completion, SIGNAL (setText (const QString&)),
+	      lined, SLOT (setText (const QString&)));
     addToolBar( toolbarURL );
     toolbarURL->setFullWidth( TRUE );
     toolbarURL->setItemAutoSized( TOOLBAR_URL_ID, TRUE );

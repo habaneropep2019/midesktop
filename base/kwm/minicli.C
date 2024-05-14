@@ -260,10 +260,10 @@ Minicli::Minicli( QWidget *parent, const char *name, WFlags f)
     lineedit->installEventFilter( this );
     connect(lineedit, SIGNAL(returnPressed()), SLOT(return_pressed()));
     // Torben
-    connect( &kurlcompletion, SIGNAL (setText (const char *)),
-	     lineedit, SLOT (setText (const char *)));
-    connect ( lineedit, SIGNAL (textChanged(const char *)),
-	      &kurlcompletion, SLOT (edited(const char *)));
+    connect( &kurlcompletion, SIGNAL (setText (const QString&)),
+	     lineedit, SLOT (setText (const QString&)));
+    connect ( lineedit, SIGNAL (textChanged(const QString&)),
+	      &kurlcompletion, SLOT (edited(const QString&)));
     label = new QLabel(klocale->translate("Command:"), this);
     label->adjustSize();
     setGeometry(QApplication::desktop()->width()/2 - 200,

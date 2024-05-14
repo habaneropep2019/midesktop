@@ -30,10 +30,10 @@ DlgLineEntry::DlgLineEntry( const char *_text, const char* _value, QWidget *pare
 		  completion, SLOT (make_completion()));
 	connect ( edit, SIGNAL (rotation()),
 		  completion, SLOT (make_rotation()));
-	connect ( edit, SIGNAL (textChanged(const char *)),
-		  completion, SLOT (edited(const char *)));
-	connect ( completion, SIGNAL (setText (const char *)),
-		  edit, SLOT (setText (const char *)));
+	connect ( edit, SIGNAL (textChanged(const QString&)),
+		  completion, SLOT (edited(const QString&)));
+	connect ( completion, SIGNAL (setText (const QString&)),
+		  edit, SLOT (setText (const QString&)));
     }
     else
 	    completion = 0L;
@@ -99,10 +99,10 @@ OpenWithDlg::OpenWithDlg( const char *_text, const char* _value, QWidget *parent
 	      completion, SLOT (make_completion()));
     connect ( edit, SIGNAL (rotation()),
 	      completion, SLOT (make_rotation()));
-    connect ( edit, SIGNAL (textChanged(const char *)),
-	      completion, SLOT (edited(const char *)));
-    connect ( completion, SIGNAL (setText (const char *)),
-	      edit, SLOT (setText (const char *)));
+    connect ( edit, SIGNAL (textChanged(const QString&)),
+	      completion, SLOT (edited(const QString&)));
+    connect ( completion, SIGNAL (setText (const QString&)),
+	      edit, SLOT (setText (const QString&)));
   }
   else
     completion = 0L;

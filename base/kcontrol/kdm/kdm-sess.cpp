@@ -81,8 +81,8 @@ void KDMSessionsWidget::setupPage(QWidget *)
 
       session_lined = new QLineEdit(group2);
       session_lined->setFixedHeight(session_lined->sizeHint().height());
-      connect(session_lined, SIGNAL(textChanged(const char*)),
-              SLOT(slotCheckNewSession(const char*)));
+      connect(session_lined, SIGNAL(textChanged(const QString&)),
+              SLOT(slotCheckNewSession(const QString&)));
       connect(session_lined, SIGNAL(returnPressed()),
               SLOT(slotAddSessionType()));
 

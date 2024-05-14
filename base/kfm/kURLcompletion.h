@@ -22,10 +22,10 @@ class KURLCompletion : public QObject
 public slots:
     void make_completion ();
     void make_rotation ();
-    void edited (const char *);
-    
+    void edited (const QString& text);
+
 signals:
-    void setText (const char *);
+    void setText (const QString& text);
 	
 public:
     KURLCompletion( const char *dir = "");
