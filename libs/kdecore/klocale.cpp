@@ -263,7 +263,7 @@ KLocale::KLocale( const QString& catalogueOpt )
         const char* envVarStr = stmp.latin1();
         const std::size_t envVarStrLen = strlen(envVarStr);
 
-        char* envVarStrCopy = reinterpret_cast<char*>(envVarStrLen + 1);
+        char* envVarStrCopy = reinterpret_cast<char*>(malloc(envVarStrLen + 1));
         if (envVarStrCopy)
         {
             strncpy(envVarStrCopy, envVarStr, envVarStrLen);

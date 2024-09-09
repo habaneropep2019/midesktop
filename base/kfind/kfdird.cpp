@@ -116,7 +116,7 @@ QString KfDirDialog::selectedDir() const
 
     if (dirs->currentItem()!=-1)
         {
-          tmp.sprintf("%s/%s",d.path(),dirs->text((dirs->currentItem())));
+          tmp.sprintf("%s/%s",d.path().latin1(), dirs->text((dirs->currentItem())).latin1());
           tmp= d.cleanDirPath(tmp); 
         }
       else
@@ -294,7 +294,10 @@ void KfDirDialog::updatePathBox( const char *s )
     QString safe = s;
 
     l.insert( 0, "/" );
-    tmp = strtok( safe.data(), "/" );
+    //
+    // const_cast is fine as `safe` is our own copy
+    //
+    tmp = strtok(const_cast<char*>(safe.data()), "/" );
     while ( TRUE ) {
 	if ( tmp.isNull() )
 	    break;

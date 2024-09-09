@@ -107,6 +107,8 @@
 #include <string.h>
 #include <stdio.h>
 #include <memory.h>
+#include <stdlib.h>
+#include <time.h>
 
 #if !defined(HAVE_SETEUID)
 #define seteuid(_eu) setresuid(-1, _eu, -1)
@@ -143,7 +145,10 @@ void clean_exit(int r)
 #endif
   if(madeutent)
     cleanutent();
-  if (r >= 0) exit(r);
+  if (r >= 0) 
+  {
+    exit(r);
+  }
 }
 
 #ifndef UTMP_SUPPORT

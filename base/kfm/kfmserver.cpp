@@ -49,7 +49,7 @@ KFMServer::KFMServer() : KfmIpcServer()
 	}
 	
 	QString pass;
-	time_t seed = time( ( time_t ) 0 );
+	time_t seed = time(nullptr);
 	DIR *dp = opendir("/tmp");
 	struct dirent *ep;
 	int num = 1, i; 

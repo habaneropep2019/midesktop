@@ -48,6 +48,9 @@ KConfigObject::KConfigObject(void* pData, bool pDeleteData, const char* key)
 }
 KConfigObject::~KConfigObject()
 {
+  //
+  // TODO: It's not valid to use the delete operator on a void pointer
+  //
   if(deleteData) delete data;
   if(widgets) delete widgets;
 }
@@ -235,7 +238,7 @@ void KObjectConfig::saveConfig()
   }
   if(version >= 0) {
     QString str;
-    str.sprintf("%2.1f", version);
+    str.sprintf("%2.1f", static_cast<double>(version));
     config->setGroup(configGroup);
     config->writeEntry(configVersion, str);
   }

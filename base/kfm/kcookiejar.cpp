@@ -413,8 +413,8 @@ static time_t parseExpire(const char *expireDate)
          monthStr[i] = tolower(*expireDate++);
      }
      monthStr[3] = '\0';
-     
-     newPosStr = strstr(haystack, monthStr);
+
+     newPosStr = const_cast<char*>(strstr(haystack, monthStr));
 
      if (!newPosStr)
      	return result;  // Invalid expire date

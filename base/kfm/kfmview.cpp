@@ -994,9 +994,13 @@ void KfmView::slotForward()
     {
 	if ( strcmp( v->getFrameName(), s->frameName ) == 0 ) 
 	    if( top != v->findView( "_top" ) )
-		continue;
-	    else
-		break;
+        {
+            continue;
+        }
+        else
+        {
+            break;
+        }
     }
     if( !v ) v = top;
 
@@ -1032,9 +1036,13 @@ void KfmView::slotBack()
     {
 	if ( strcmp( v->getFrameName(), s->frameName ) == 0 ) 
 	    if( top != v->findView( "_top" ) )
-		continue;
+        {
+            continue;
+        }
 	    else
-		break;
+        {
+            break;
+        }
     }
     if( !v ) v = top;
 

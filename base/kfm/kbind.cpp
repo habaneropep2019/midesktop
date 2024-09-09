@@ -1397,8 +1397,8 @@ void KMimeBind::runCmd( const char *_exec, QStrList &_args, const char *_workdir
 	// Run this program if something went wrong
 	char* a[ 3 ];
 	a[ 0 ] = "kfmwarn";
-	a[ 1 ] = txt.data();
-	a[ 2 ] = 0L;
+	a[ 1 ] = strdup(txt.data());
+	a[ 2 ] = nullptr;
 	execvp( "kfmwarn", a );
 
 	exit( 1 );

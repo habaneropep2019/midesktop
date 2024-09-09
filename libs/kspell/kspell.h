@@ -307,7 +307,7 @@ protected:
   inline char *replacement (void)
   { 
       //
-      // TODO: Either verify it's safe to mutate `dlgreplacement.data()`
+      // TODO: Verify it's safe to mutate `dlgreplacement.data()`
       //
       return const_cast<char*>(dlgreplacement.data());
   }

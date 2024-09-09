@@ -650,13 +650,13 @@ void FilePermissionsPropsPage::applyChanges()
 	
 	if ( pw == 0L )
 	{
-	    warning(klocale->translate(" ERROR: No user %s"),owner->text() );
+	    warning(klocale->translate(" ERROR: No user %s"),owner->text().latin1() );
 	    return;
 	}
 	if ( g == 0L )
 	{
 	    warning(klocale->translate(" ERROR: No group %s"),
-		    grp->text(grp->currentItem()) ); // should never happen
+		    grp->text(grp->currentItem()).latin1() ); // should never happen
 	    return;
 	}
 	if ( chown( path, pw->pw_uid, g->gr_gid ) != 0 )

@@ -4,7 +4,7 @@
  *
  **********************************************************************/
 
-#ifndef KFWITGETS_H
+#ifndef KFWIDGETS_H
 #define KFWIDGETS_H
 
 #include <klocale.h>

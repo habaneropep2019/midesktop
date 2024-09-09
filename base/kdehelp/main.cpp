@@ -65,7 +65,10 @@ void Timer::timerEvent( QTimerEvent * )
 
 	QString tmp = buf.getMsg();
 
-	QString url = strtok( tmp.data(), " " );
+	//
+	// const_cast is safe as `tmp` is our own local copy
+	//
+	QString url = strtok(const_cast<char*>(tmp.data()), " " );
 	QString props = strtok( NULL, " " );
 
 	if ( !strchr( url, ':' ) )

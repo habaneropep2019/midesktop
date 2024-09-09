@@ -381,7 +381,14 @@ KiKbdMapConfig::KiKbdMapConfig(const char* nm):name(nm)
   if(language.isNull()) language = gettext("unknown");
   //if(charset.isEmpty()) charset  = "unknown";
   if(label.isNull() || label == "")
-    if(!locale.isNull()) label = locale; else label = name;
+    if(!locale.isNull()) 
+    {
+      label = locale;
+    }
+    else
+    {
+      label = name;
+    }
   if(locale.isNull() || locale == "") locale = i18n("default");
   for(g=0; g<4; g++) {
     /*--- parsing ---*/

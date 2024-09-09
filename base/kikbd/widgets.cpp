@@ -339,7 +339,10 @@ int KiKbdAddDialog::exec(const QStrList& toAdd, QStrList& mapStr)
   int *prefIndex = new int[4];
   unsigned j;for(j = 0; j < 4; prefIndex[j++]=-1);
   preferedLang = kapp->getLocale()->languageList();
-  if(preferedLang.find("en") == -1) preferedLang.insert(0, "en");
+  if(preferedLang.find("en") == preferedLang.end())
+  {
+    preferedLang.insert(0, "en");
+  }
   // add
   unsigned i;for(i = 0; i < mapsToAdd.count(); i++) {
     KiKbdMapConfig *map = kikbdConfig->getMap(mapsToAdd.at(i));
@@ -357,7 +360,7 @@ int KiKbdAddDialog::exec(const QStrList& toAdd, QStrList& mapStr)
   int prefIndex0;
   for(j=0; j<4 && (prefIndex0=prefIndex[j],prefIndex0 == -1);
       prefIndex0=0, j++);
-  delete prefIndex;
+  delete []prefIndex;
   maps->setCurrentItem(prefIndex0);
   QListBox *box = maps->listBox();
   if(box) {
