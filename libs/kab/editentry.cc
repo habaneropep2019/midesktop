@@ -26,7 +26,7 @@
 EditEntryDialog::EditEntryDialog(QWidget* parent, const char* name)
   : QTabDialog(parent, name, true)
 {
-  register bool GUARD; GUARD=false;
+  bool GUARD; GUARD=false;
   // ############################################################################
   LG(GUARD, "EditEntryDialog constructor: creating dialog.\n");
   setCancelButton();
@@ -43,7 +43,7 @@ EditEntryDialog::EditEntryDialog(QWidget* parent, const char* name)
 
 void EditEntryDialog::createTabs()
 {
-  register bool GUARD; GUARD=true;
+  bool GUARD; GUARD=true;
   // ############################################################################
   LG(GUARD, "EditEntryDialog::createTabs: creating tabbed dialog.\n");
   QLabel* label=0;
@@ -392,7 +392,7 @@ void EditEntryDialog::setEntry(const AddressBook::Entry& data)
 
 void EditEntryDialog::editTalkAddresses()
 {
-  register bool GUARD; GUARD=false;
+  bool GUARD; GUARD=false;
   LG(GUARD, "EditEntryDialog::editTalkAddresses: called.\n");
   // ############################################################################
   StringListEditDialog dialog(this);
@@ -410,7 +410,7 @@ void EditEntryDialog::editTalkAddresses()
 
 void EditEntryDialog::editEmailAddresses()
 {
-  register bool GUARD; GUARD=false;
+  bool GUARD; GUARD=false;
   LG(GUARD, "EditEntryDialog::editEmailAddresses: called.\n");
   // ############################################################################
   StringListEditDialog dialog(this);

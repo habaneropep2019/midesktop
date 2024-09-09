@@ -311,17 +311,48 @@ const KFileInfoList *KDir::entryInfoList(int filterSpec,
 
 bool KDir::match(const char *filter, const char *name)
 {
-    // Split on white space
-    QString s = filter;
-    char *g = strtok(s.data(), " ");
+    const std::size_t tempStrBufferSize = 256;
+    char tempStrBuffer[tempStrBufferSize];
+
+    char* tempStr = nullptr;
+
+    const std::size_t filterLen = strlen(filter);
+
+    const bool isLargeString = (filterLen >= tempStrBufferSize);
+
+    if (isLargeString)
+    {
+        tempStr = reinterpret_cast<char*>(malloc(filterLen + 1));
+        if (!tempStr)
+        {
+            qDebug("KDir::match failed to allocate temp string of file %zu", filterLen + 1);
+            return false;
+        }
+        strncpy(tempStr, filter, filterLen);
+        tempStr[filterLen] = '\0';
+    }
+    else
+    {
+        strncpy(tempStrBuffer, filter, filterLen);
+        tempStrBuffer[filterLen] = '\0';
+
+        tempStr = tempStrBuffer;
+    }
+
+    char *g = strtok(tempStr, " ");
     
     bool matched = false;
     while (g) {
-	if (QDir::match(QString(g), name)) {
-	    matched = true;
-	    break;
-	}
-	g = strtok(0, " ");
+        if (QDir::match(QString(g), name)) {
+            matched = true;
+            break;
+        }
+        g = strtok(nullptr, " ");
+    }
+
+    if (isLargeString)
+    {
+        free(tempStr);
     }
     
     return matched;

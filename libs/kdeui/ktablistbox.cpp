@@ -928,7 +928,6 @@ void KTabListBox::appendStrList( QStrList const *strLst )
 //-----------------------------------------------------------------------------
 void KTabListBox::changeItem(const char* aStr, int row)
 {
-  QString str;
   char  sepStr[2];
   char* pos;
   int   i;
@@ -936,21 +935,54 @@ void KTabListBox::changeItem(const char* aStr, int row)
 
   if (row < 0 || row >= numRows()) return;
 
-  str = aStr;
+  const std::size_t aStrLen = strlen(aStr);
+
+  const std::size_t tempStrBufferSize = 256;
+  char tempStrBuffer[tempStrBufferSize];
+
+  char* tempStrPtr = nullptr;
+
+  const bool isLargeStr = (aStrLen >= tempStrBufferSize);
+
+  if(isLargeStr)
+  {
+    tempStrPtr = reinterpret_cast<char*>(malloc(aStrLen + 1));
+
+    if (!tempStrPtr)
+    {
+      qDebug("Failed to allocate temp string in KTabListBox::changeItem");
+      return;
+    }
+
+    strncpy(tempStrPtr, aStr, aStrLen);
+    tempStrPtr[aStrLen] = '\0';
+  }
+  else
+  {
+      strncpy(tempStrBuffer, aStr, aStrLen);
+      tempStrBuffer[aStrLen] = '\0';
+
+      tempStrPtr = tempStrBuffer;
+  }
 
   sepStr[0] = sepChar;
   sepStr[1] = '\0';
 
   item = itemList[row];
-  pos = strtok(str.data(), sepStr);
+  pos = strtok(tempStrPtr, sepStr);
   for (i=0; pos && *pos && i<numCols(); i++)
   {
     item->setText(i, pos);
-    pos = strtok(0L, sepStr);
+    pos = strtok(nullptr, sepStr);
   }
   item->setForeground(black);
 
   if (needsUpdate(row)) lbox.repaint();
+
+  if (isLargeStr)
+  {
+    free(tempStrPtr);
+  }
 }
 
 
@@ -1302,7 +1334,7 @@ void KTabListBox::paintEvent(QPaintEvent*)
 //-----------------------------------------------------------------------------
 void KTabListBox::mouseMoveEvent(QMouseEvent* e)
 {
-  register int i, x, ex, ey;
+  int i, x, ex, ey;
   bool mayResize = FALSE;
 
   ex = e->pos().x();

@@ -1118,7 +1118,7 @@ bool KApplication::x11EventFilter( XEvent *_event )
   return FALSE;
 }
 
-void KApplication::applyGUIStyle(const QStyle* newstyle) {
+void KApplication::applyGUIStyle(QStyle* newstyle) {
   QApplication::setStyle( applicationStyle );
 
   // get list of toplevels

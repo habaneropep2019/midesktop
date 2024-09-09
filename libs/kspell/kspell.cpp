@@ -350,7 +350,10 @@ void KSpell::checkWord3 (void)
 {
   disconnect (this, SIGNAL (dialog3()), this, SLOT (checkWord3()));
 
-  emit corrected (cwword.data(), replacement(), 0L);
+  //
+  // TODO: Either verify it's safe to mutate `cwword.data()` or copy it and track it's lifetime
+  //
+  emit corrected (const_cast<char*>(cwword.data()), replacement(), 0L);
 }
 
 char * KSpell::funnyWord (char *word)
@@ -561,7 +564,10 @@ void KSpell::checkList3 ()
 
 		if (e==REPLACE)
 		  {
-		    emit corrected (orig.data(), replacement(), lastpos);
+        //
+        // TODO: Verify it's safe to mutate `orig.data()`
+        //
+		    emit corrected (const_cast<char*>(orig.data()), replacement(), lastpos);
 		    //  newbuffer.replace (lastpos,orig.length(),word);
 		  }
 		else 
@@ -677,7 +683,10 @@ void KSpell::check2 (KProcIO *)
 	      if (e==REPLACE)
 		{
 		  dlgreplacement=word;
-		  emit corrected (orig.data(), replacement(), lastpos);
+      //
+      // TODO: Verify it's safe to mutate `orig.data()`
+      //
+		  emit corrected (const_cast<char*>(orig.data()), replacement(), lastpos);
 		  offset+=strlen(replacement())-orig.length();
 		  newbuffer.replace (lastpos,orig.length(),word);
 		}
@@ -825,7 +834,10 @@ void KSpell::dialog2 (int result)
       break;
     }
 
-  emit corrected (dlgorigword.data(), replacement (), lastpos);
+  //
+  // TODO: Verify it's safe to mutate `dlgorigword.data()`
+  //
+  emit corrected (const_cast<char*>(dlgorigword.data()), replacement (), lastpos);
   connect (this, SIGNAL (dialog3()), this, dialog3slot.data());
   emit dialog3();
 }

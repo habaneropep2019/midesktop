@@ -2,6 +2,7 @@
 #include "kfilefilter.h"
 #include <qstrlist.h>
 #include <kapp.h>
+#include <cstdlib>
 
 KFileFilter::KFileFilter( QWidget *parent, const char *name)
     : QComboBox(true, parent, name), filters(0)
@@ -26,7 +27,11 @@ void KFileFilter::setFilter(const char *filter)
     filters = new QStrList( true );
     if (filter) {
 	QString tmp = filter; // deep copy
-	char *g = strtok(tmp.data(), "\n");
+
+    //
+    // const_cast is safe since this is our own local copy
+    //
+	char *g = strtok(const_cast<char*>(tmp.data()), "\n");
 	while (g) {
 	    filters->append(g);
 	    g = strtok(0, "\n");

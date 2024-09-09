@@ -592,8 +592,8 @@ const char* KURL::filename()
     if ( path_part.isEmpty() )
 	return "";
     
-    if ( path_part.data() == "/")
-	return "";
+    if (strncmp(path_part.data(), "/", 2) == 0)
+	    return "";
     
     if (path_part_decoded.isNull()) {
 	path_part_decoded = path_part.copy();

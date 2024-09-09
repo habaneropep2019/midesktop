@@ -7,7 +7,7 @@
 #include "version.h"
 
 KSpellDlg::KSpellDlg (QWidget *, const char *name,
-		      char *ID):
+		      const char *ID):
   QWidget (0, name, WStyle_DialogBorder)
 {
 

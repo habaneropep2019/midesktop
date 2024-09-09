@@ -145,7 +145,7 @@ const char *KFileBookmarkManager::parse( BookmarkTokenizer *ht, KFileBookmark *p
 {
 	KFileBookmark *bm = parent;
 	QString text;
-	const char *str;
+	char *str;
 
 	parent->setType( KFileBookmark::Folder );
 
@@ -172,7 +172,7 @@ const char *KFileBookmarkManager::parse( BookmarkTokenizer *ht, KFileBookmark *p
 			}
 			else if ( strncasecmp( str, "<a ", 3 ) == 0 )
 			{
-				const char *p = str + 3;
+				char *p = str + 3;
 
 				while ( *p != '>' )
 				{

@@ -62,7 +62,7 @@ const char* AddressBook::Defaults[]= {
 AddressBook::AddressBook(bool readonly_)
   : ConfigDB()
 {
-  register bool GUARD; GUARD=true;
+  bool GUARD; GUARD=true;
   REQUIRE(DBFileName!=0);
   // ############################################################################
   /* The constructor is written to be save. It does NOT 
@@ -299,7 +299,7 @@ void AddressBook::restoreDefaults()
 
 bool AddressBook::invariant()
 {
-  register bool GUARD; GUARD=false;
+  bool GUARD; GUARD=false;
   LG(GUARD, "AddressBook::invariant: checking invariants for"
      " this AddressBook object.\n");
   // ############################################################################
@@ -317,7 +317,7 @@ bool AddressBook::invariant()
 }
 void AddressBook::changed()
 {
-  register bool GUARD; GUARD=true;
+  bool GUARD; GUARD=true;
   LG(GUARD, "AddressBook::changed: Database has changed its contents.\n");
   // ############################################################################
   // You should not use REQUIRE here because - as the DB 
@@ -337,7 +337,7 @@ void AddressBook::changed()
 void AddressBook::updateEntriesMap(string theOne)
 {
   // no REQUIRE !! it is impossible to be true!
-  register bool GUARD; GUARD=false;
+  bool GUARD; GUARD=false;
   // ############################################################################
   LG(GUARD, "AddressBook::updateEntriesMap: updating mirror map.\n");
   Section::StringSectionMap::iterator pos;
@@ -436,7 +436,7 @@ Section* AddressBook::entrySection()
 
 bool AddressBook::makeEntryFromSection(Section& section, Entry& entry)
 {
-  register bool GUARD; GUARD=false;
+  bool GUARD; GUARD=false;
   LG(GUARD, "AddressBook::makeEntryFromSection: parsing section.\n");
   // ############################################################################
   KeyValueMap* map;
@@ -626,7 +626,7 @@ bool AddressBook::last()
 
 void AddressBook::currentChanged()
 {
-  register bool GUARD; GUARD=false;
+  bool GUARD; GUARD=false;
   // ############################################################################
   LG(GUARD, "AddressBook::currentChanged: current entry changed.\n");
   // ############################################################################
@@ -648,7 +648,7 @@ unsigned int AddressBook::noOfEntries()
 
 bool AddressBook::add(const Entry& entry, string& key)
 {
-  register bool GUARD; GUARD=false;
+  bool GUARD; GUARD=false;
   LG(!key.empty(), "AddressBook::add: reference <key> is not empty!.\n");
   // ############################################################################
   LG(GUARD, "AddressBook::add[entry]: adding entry.\n");
@@ -732,7 +732,7 @@ bool AddressBook::change(const Entry& contents)
 
 bool AddressBook::change(const string& key, const Entry& contents)
 {
-  register bool GUARD; GUARD=true;
+  bool GUARD; GUARD=true;
   LG(GUARD, "AddressBook::change: changing entry.\n");
   // ############################################################################
   const char* StringKeys[]= { // all keys with data type string
@@ -952,7 +952,7 @@ bool AddressBook::isLastEntry()
 
 string AddressBook::getName(const string& key)
 {
-  register bool GUARD; GUARD=false;
+  bool GUARD; GUARD=false;
   // ############################################################################
   string result;
   Entry entry;
@@ -1001,7 +1001,7 @@ string AddressBook::getName(const string& key)
 
 bool AddressBook::createNew(string filename)
 {
-  register bool GUARD; GUARD=true;
+  bool GUARD; GUARD=true;
   LG(GUARD, "AddressBook::createNew: creating new database.\n");
   // ############################################################################
   KeyValueMap* section;
@@ -1049,7 +1049,7 @@ bool AddressBook::createNew(string filename)
 
 string AddressBook::currentEntry()
 {
-  register bool GUARD; GUARD=false;
+  bool GUARD; GUARD=false;
   // ############################################################################
   if(noOfEntries()==0)
     {
@@ -1064,7 +1064,7 @@ string AddressBook::currentEntry()
 
 bool AddressBook::getEntries(list<AddressBook::Entry>& entries)
 {
-  register bool GUARD; GUARD=false;
+  bool GUARD; GUARD=false;
   REQUIRE(entries.empty());
   LG(GUARD, "AddressBook::getEntries: called.\n");
   // ############################################################################  
@@ -1099,7 +1099,7 @@ bool AddressBook::getEntries(list<AddressBook::Entry>& entries)
 
 bool AddressBook::nameOfField(const string& field, string& name)
 {
-  register bool GUARD; GUARD=true;
+  bool GUARD; GUARD=true;
   LG(GUARD, "AddressBook::nameOfField: called.\n");
   // ############################################################################  
   // this is only initialized once:
@@ -1243,12 +1243,12 @@ bool AddressBook::nameOfField(const string& field, string& name)
 bool AddressBook::literalName(const string& key, string& text, bool reverse,
 			      bool initials)
 {
-  register bool GUARD; GUARD=false;
+  bool GUARD; GUARD=false;
   LG(GUARD, "AddressBook::literalName: called.\n");
   // ############################################################################  
   // ----- this method will return either (in this order)
-  //       ° the formatted name, if it is set,
-  //       ° a combination (see header) of the name fields
+  //       1. the formatted name, if it is set,
+  //       2. a combination (see header) of the name fields
   //       for purposes where an entry should be displayed
   //       identified by its name.
   Entry entry;
@@ -1349,7 +1349,7 @@ bool AddressBook::literalName(const string& key, string& text, bool reverse,
 bool AddressBook::description(const string& key, string& text, bool reverse,
 			      bool initials)
 {
-  register bool GUARD; GUARD=true;
+  bool GUARD; GUARD=true;
   LG(GUARD, "AddressBook::description: called.\n");
   // ############################################################################  
   string temp;
@@ -1393,7 +1393,7 @@ bool AddressBook::description(const string& key, string& text, bool reverse,
 
 bool AddressBook::birthDay(const string& key, QDate& date)
 {
-  register bool GUARD; GUARD=true;
+  bool GUARD; GUARD=true;
   LG(GUARD, "AddressBook::birthDay: called.\n");
   // ############################################################################  
   Entry entry;
@@ -1417,7 +1417,7 @@ bool AddressBook::birthDay(const string& key, QDate& date)
 
 bool AddressBook::getEntry(const string& key, Section*& data)
 {
-  register bool GUARD; GUARD=false;
+  bool GUARD; GUARD=false;
   LG(GUARD, "AddressBook::getEntry[as a map]: called.\n");
   // ############################################################################
   Section* entries;
@@ -1446,7 +1446,7 @@ bool AddressBook::getEntry(const string& key, Section*& data)
 
 bool AddressBook::getEntry(const string& key, Entry& ref)
 {
-  register bool GUARD; GUARD=false;
+  bool GUARD; GUARD=false;
   LG(GUARD, "AddressBook::getEntry: called.\n");
   // ############################################################################
   Section* section;

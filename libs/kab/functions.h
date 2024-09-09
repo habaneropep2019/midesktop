@@ -11,7 +11,7 @@
  * $Revision: 1.4 $
  */
 
-#ifndef MS_FUNCTIONS_H_INCLUDED
+#ifndef MS_FUNCTIONS_INCLUDED
 #define MS_FUNCTIONS_INCLUDED
 
 #pragma interface
@@ -37,4 +37,4 @@ bool htmlizeString(const string& orig, string& target);
  *  the last designator end the string end. */
 void tokenize(list<string>& res, const string& text, char tr, bool strikt=false);
 
-#endif // MS_FUNCTIONS_H_INCLUDED
+#endif // MS_FUNCTIONS_INCLUDED

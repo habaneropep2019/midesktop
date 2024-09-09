@@ -395,7 +395,10 @@ const char * KCharsetConverterData::convert(const char * str
 	   else{
              ptr=(*convToUniDict)[index];
  	     if (ptr) unicode=*ptr;
-	     else unicode=0;
+	     else 
+       {
+        unicode=0;
+       }
 	   }  
 //         kchdebug("Converted to unicode: %4x\n",index);
 	 if (unicode){
@@ -725,7 +728,7 @@ const KCharsetEntry* KCharsetsData::charsetOfFace(const QString &face){
     }
     kchdebug("testing if it is %s (%s)...",(const char *)it->currentKey(),faceStr);
     QRegExp rexp(faceStr,FALSE,TRUE);
-    kchdebug("regexp: %s face: %s\n",rexp.pattern(),(const char *)face);
+    kchdebug("regexp: %s face: %s\n",rexp.pattern().latin1(), face.latin1());
     if (face.contains(rexp)){
       kchdebug("Yes, it is\n");
       delete it;
@@ -766,7 +769,7 @@ const KCharsetEntry *KCharsetsData::conversionHint(const KCharsetEntry *charset)
   int n = config->readListEntry(charset->name, list);
   kchdebug("%i entries found\n",n);
   for (QStringList::ConstIterator itr = list.begin(); itr != list.end(); ++itr ) {
-    kchdebug("Found: %s\n", *itr);
+    kchdebug("Found: %s\n", (*itr).latin1());
     KCharsetEntry *ce = varCharsetEntry(*itr);
     if (isDisplayable(ce)) return ce;    
   }    
@@ -824,7 +827,7 @@ QFont::CharSet qcharset=charset->qtCharset;
     f.setCharSet(qcharset);
     f.setFamily(face);
     QFontInfo fi(f);
-    kchdebug("fi.charset()=%i fi.family()=%s\n",fi.charSet(),fi.family());
+    kchdebug("fi.charset()=%i fi.family()=%s\n",fi.charSet(), fi.family().latin1());
     if (fi.family()!=face ) return FALSE;
     /* This face will work for this charset, remember it */
     if (!charset->good_family) charset->good_family=new QString;

@@ -275,9 +275,9 @@ void KFileBaseDialog::init()
        pathChanged();
 
     if (!filename_.isNull()) {
-	debugC("edit %s", locationEdit->text(0));
-	checkPath(filename_);
-	locationEdit->setText(filename_);
+        debugC("edit %s", locationEdit->text(0).latin1());
+        checkPath(filename_);
+        locationEdit->setText(filename_);
     }
     adjustSize();
     int w1 = minimumSize().width();
@@ -590,8 +590,37 @@ void KFileBaseDialog::pathChanged()
     // Not forgetting of course the path combo box
     toolbar->clearCombo(PATH_COMBO);
 
+    const std::size_t tempPathBufferSize = 1024;
+    char tempPathBuffer[tempPathBufferSize];
+
+    char* tempPathStr = nullptr;
+
+    const char* pathStr = dir->path();
+    const std::size_t pathStrLen = strlen(pathStr);
+
+    const bool isLargeString = (pathStrLen >= tempPathBufferSize);
+
+    if (isLargeString)
+    {
+        tempPathStr = reinterpret_cast<char*>(malloc(pathStrLen + 1));
+        if (!tempPathStr)
+        {
+            qDebug("KFileBaseDialog::pathChanged: Failed to allocate temp string");
+            return;
+        }
+        strncpy(tempPathStr, pathStr, pathStrLen);
+        tempPathStr[pathStrLen] = '\0';
+    }
+    else
+    {
+        strncpy(tempPathBuffer, pathStr, pathStrLen);
+        tempPathBuffer[pathStrLen] = '\0';
+
+        tempPathStr = tempPathBuffer;
+    }
+
     QString path= dir->path();
-    QString pos= strtok(path.data(), "/");
+    QString pos= strtok(tempPathStr, "/");
     QStrList list;
 
     list.insert(0, i18n("Root Directory"));
@@ -652,6 +681,11 @@ void KFileBaseDialog::pathChanged()
 	    locationEdit->setText(url + selection);
 
 	insertNewFiles(il);
+    }
+
+    if(isLargeString)
+    {
+        free(tempPathStr);
     }
 }
 

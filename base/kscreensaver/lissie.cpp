@@ -142,7 +142,7 @@ void
 draw_lissie(Window win)
 {
 	lissstruct *gp = &lisss[screen];
-	register unsigned char ball;
+	unsigned char ball;
 
 	if (++loopcount > cycles)
 		init_lissie(win);
