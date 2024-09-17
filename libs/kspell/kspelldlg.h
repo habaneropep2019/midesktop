@@ -71,7 +71,7 @@ protected slots:
   void stop();
   void help();
 
-  void textChanged (const char *);
+  void textChanged (const QString&);
 
   void selected (int i);
   void highlighted (int i);

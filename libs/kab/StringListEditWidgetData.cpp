@@ -63,7 +63,7 @@ StringListEditWidgetData::StringListEditWidgetData
 	leLine->setGeometry( 10, 10, 230, 30 );
 	leLine->setMinimumSize( 10, 10 );
 	leLine->setMaximumSize( 32767, 32767 );
-	connect( leLine, SIGNAL(textChanged(const char*)), SLOT(itemChanged(const char*)) );
+	connect( leLine, SIGNAL(textChanged(const QString& )), SLOT(itemChanged(const QString& )) );
 	leLine->setText( "" );
 	leLine->setMaxLength( 32767 );
 	leLine->setEchoMode( QLineEdit::Normal );
@@ -99,7 +99,7 @@ void StringListEditWidgetData::downPressed()
 void StringListEditWidgetData::deletePressed()
 {
 }
-void StringListEditWidgetData::itemChanged(const char*)
+void StringListEditWidgetData::itemChanged(const QString&)
 {
 }
 void StringListEditWidgetData::newItem()

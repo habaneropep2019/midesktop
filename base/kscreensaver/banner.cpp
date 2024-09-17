@@ -116,8 +116,8 @@ KBannerSetup::KBannerSetup( QWidget *parent, const char *name )
 	min_width(combo);
 	fixed_height(combo);
 	gl->addWidget(combo, 0, 1);
-	connect( combo, SIGNAL( activated( const char * ) ),
-			SLOT( slotFamily( const char * ) ) );
+	connect( combo, SIGNAL( activated( const QString& ) ),
+			SLOT( slotFamily( const QString& ) ) );
 
 	label = new QLabel( glocale->translate("Size:"), group->inner() );
 	min_size(label);
@@ -202,8 +202,8 @@ KBannerSetup::KBannerSetup( QWidget *parent, const char *name )
 	fixed_height(ed);
 	tl2->addWidget(ed);
 	ed->setText( message );
-	connect( ed, SIGNAL( textChanged( const char * ) ), 
-			SLOT( slotMessage( const char * ) ) );
+	connect( ed, SIGNAL( textChanged( const QString& ) ),
+			SLOT( slotMessage( const QString& ) ) );
 
 	KButtonBox *bbox = new KButtonBox(this);	
 	button = bbox->addButton( glocale->translate("About"));
@@ -274,7 +274,7 @@ void KBannerSetup::readSettings()
 		italic = FALSE;
 }
 
-void KBannerSetup::slotFamily( const char *fam )
+void KBannerSetup::slotFamily( const QString& fam )
 {
 	fontFamily = fam;
 	if ( saver )
@@ -322,7 +322,7 @@ void KBannerSetup::slotSpeed( int num )
 		saver->setSpeed( speed );
 }
 
-void KBannerSetup::slotMessage( const char *msg )
+void KBannerSetup::slotMessage( const QString& msg )
 {
 	message = msg;
 	if ( saver )

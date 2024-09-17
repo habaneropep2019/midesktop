@@ -647,8 +647,8 @@ HTMLTextInput::HTMLTextInput( QWidget *parent, const char *n, const char *v,
 	ascent = size.height() - descent;
 	width = size.width();
 
-	connect( widget, SIGNAL( textChanged( const char * ) ),
-			SLOT( slotTextChanged( const char * ) ) );
+	connect( widget, SIGNAL( textChanged( const QString& ) ),
+			SLOT( slotTextChanged( const QString& ) ) );
 	connect( widget, SIGNAL( returnPressed() ),
 			SLOT( slotReturnPressed() ) );
 }
@@ -672,7 +672,7 @@ void HTMLTextInput::resetElement()
 	((QLineEdit *)widget)->setText( _defText );
 }
 
-void HTMLTextInput::slotTextChanged( const char *t )
+void HTMLTextInput::slotTextChanged( const QString& t )
 {
 	setValue( t );
 }

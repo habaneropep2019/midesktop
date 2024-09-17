@@ -186,6 +186,8 @@ public:
 		{	return _value; }
 	void setValue( const char *v )
 		{	_value = v; }
+	void setValue( const QString& v )
+		{	_value = v; }
 
 private:
 	QString   _value;
@@ -298,7 +300,7 @@ public:
 	virtual void resetElement();
 
 protected slots:
-	void slotTextChanged( const char * );
+	void slotTextChanged( const QString& );
 	void slotReturnPressed();
 
 signals:

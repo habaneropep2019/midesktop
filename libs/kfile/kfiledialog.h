@@ -344,7 +344,7 @@ protected slots:
     void fileHighlighted(KFileInfo*);
     void updateHistory(bool, bool);
     void filterChanged();
-    void locationChanged(const char*);
+    void locationChanged(const QString&);
 
     void setHiddenToggle(bool);
     void slotDirEntry(KFileInfo *);

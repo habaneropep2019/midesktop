@@ -418,6 +418,9 @@ KiKbdGeneralWidget::KiKbdGeneralWidget(QWidget* parent)
 		  createWidget(&kikbdConfig->getSwitchRef(), group, 0L,
 			       gettext("Key(s) for switching between "
 				       "keyboard maps")));
+  //
+  // TODO: I don't see an `activated` signal in QWidget or derived classes
+  //
   connect(wid, SIGNAL(activated(const char*)),  SLOT(newSwitch(const char*)));
 
   hbox->addWidget(wid=kikbdConfig->

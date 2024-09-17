@@ -57,8 +57,8 @@ UserAgentOptions::UserAgentOptions( QWidget * parent, const char * name ) :
   lay->addWidget(onserverED,1,2);
   //CT
 
-  connect( onserverED, SIGNAL( textChanged( const char* ) ),
-		   SLOT( textChanged( const char* ) ) );
+  connect( onserverED, SIGNAL( textChanged( const QString& ) ),
+		   SLOT( textChanged( const QString& ) ) );
   // Commented out because in a kcontrol module  Return => OK
   // One can use 'Alt+A' instead (English version at least)
   //connect( onserverED, SIGNAL( returnPressed() ),
@@ -79,8 +79,8 @@ UserAgentOptions::UserAgentOptions( QWidget * parent, const char * name ) :
   lay->addWidget(loginasED,2,2);
   //CT
 
-  connect( loginasED, SIGNAL( textChanged( const char* ) ),
-		   SLOT( textChanged( const char* ) ) );
+  connect( loginasED, SIGNAL( textChanged( const QString&  ) ),
+		   SLOT( textChanged( const QString&  ) ) );
   // connect( loginasED, SIGNAL( returnPressed() ),
   //  SLOT( returnPressed() ) );
 
@@ -122,8 +122,8 @@ UserAgentOptions::UserAgentOptions( QWidget * parent, const char * name ) :
 
   bindingsLB->setMultiSelection( false );
   bindingsLB->setScrollBar( true );
-  connect( bindingsLB, SIGNAL( highlighted( const char* ) ),
-		   SLOT( listboxHighlighted( const char* ) ) );
+  connect( bindingsLB, SIGNAL( highlighted( const QString& ) ),
+		   SLOT( listboxHighlighted( const QString& ) ) );
 
   loadSettings();
   setMinimumSize(480,300);
@@ -186,7 +186,7 @@ void UserAgentOptions::saveSettings()
     g_pConfig->sync();
 }
 
-void UserAgentOptions::textChanged( const char* )
+void UserAgentOptions::textChanged( const QString& )
 {
   const char *login = loginasED->text();
   const char *server = onserverED->text();
@@ -223,9 +223,8 @@ void UserAgentOptions::deleteClicked()
 }
 
 
-void UserAgentOptions::listboxHighlighted( const char* _itemtext )
+void UserAgentOptions::listboxHighlighted( const QString& itemtext )
 {
-  QString itemtext( _itemtext );
   int colonpos = itemtext.find( ':' );
   onserverED->setText( itemtext.left( colonpos ) );
   loginasED->setText( itemtext.right( itemtext.length() - colonpos - 1) );

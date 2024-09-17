@@ -475,7 +475,7 @@ public:
 *		' - pixmap.width() / 2 ' and ' - pixmap.height() / 2 '.
 *		This is just provided for look and feel.
 */
-    virtual void startDrag( KDNDIcon *_icon, char *_data, int _size,
+    virtual void startDrag( KDNDIcon *_icon, const char *_data, int _size,
     			int _type, int _dx, int _dy );
 
 protected:

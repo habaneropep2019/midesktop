@@ -39,7 +39,7 @@ public:
   void  setGreyed( bool b ) { greyed = b; }
   QSize sizeHint();
 
-  virtual void startDrag( KDNDIcon *_icon, char *_data, int _size, int _type, int _dx, int _dy );
+  virtual void startDrag( KDNDIcon *_icon, const char *_data, int _size, int _type, int _dx, int _dy );
 
 public slots:
   void slotPressed();

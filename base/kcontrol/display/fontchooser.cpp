@@ -78,8 +78,8 @@ KFontChooser::KFontChooser( QWidget *parent, const char *name )
 		}
 	}
 
-	connect( cmbFont, SIGNAL( activated( const char * ) ),
-		SLOT( slotSelectFont( const char * ) ) );
+	connect( cmbFont, SIGNAL( activated( const QString& ) ),
+		SLOT( slotSelectFont( const QString& ) ) );
 		
 	QLabel *label = new QLabel( cmbFont, i18n("&Typeface"), this );
 	label->adjustSize();
@@ -131,8 +131,8 @@ KFontChooser::KFontChooser( QWidget *parent, const char *name )
 	
 	cmbCharset->adjustSize();
 	cmbCharset->setInsertionPolicy( QComboBox::NoInsertion );
-	connect( cmbCharset, SIGNAL( activated( const char * ) ),
-		 SLOT( slotCharset( const char * ) ) );
+	connect( cmbCharset, SIGNAL( activated( const QString& ) ),
+		 SLOT( slotCharset( const QString& ) ) );
 	
 	sbSize->setFixedHeight( cmbCharset->height() );
 	sbSize->setMinimumWidth(sbSize->width());
@@ -284,11 +284,11 @@ int i;
 	}
 }
 
-void KFontChooser::slotCharset(const char *name)
+void KFontChooser::slotCharset(const QString& name)
 {
 
   KCharsets *charsets=kapp->getCharsets();
-  if (strcmp(name,"default")==0){
+  if (name == "default"){
      charsets->setQFont(fnt,klocale->charset());
      defaultCharset=TRUE;
   }   
@@ -301,7 +301,7 @@ void KFontChooser::slotCharset(const char *name)
   changed=TRUE;
 }
 
-void KFontChooser::slotSelectFont( const char *fname )
+void KFontChooser::slotSelectFont( const QString& fname )
 {
 //	if( lbFonts->currentItem() == 0 )
 	fnt.setFamily( fname );

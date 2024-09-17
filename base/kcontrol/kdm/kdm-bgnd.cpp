@@ -149,8 +149,8 @@ void KDMBackgroundWidget::setupPage(QWidget *)
 	wpCombo->insertItem( wallpaper );
 	wpCombo->setCurrentItem( wpCombo->count()-1 );
       }
-      connect( wpCombo, SIGNAL( activated( const char * ) ),
-		SLOT( slotWallpaper( const char * )  )  );
+      connect( wpCombo, SIGNAL( activated( const QString& ) ),
+		SLOT( slotWallpaper( const QString& )  )  );
       wpCombo->setFixedHeight(wpCombo->sizeHint().height());
 
       button = new QPushButton( klocale->translate("Browse..."), rGroup );
@@ -345,12 +345,12 @@ void KDMBackgroundWidget::setMonitor()
   QApplication::restoreOverrideCursor();
 }
 
-void KDMBackgroundWidget::slotWallpaper( const char *filename )
+void KDMBackgroundWidget::slotWallpaper( const QString& filename )
 {
-  if ( filename )
+  if ( !filename.isEmpty() )
   {
     if ( loadWallpaper( filename ) == TRUE )
-	setMonitor();
+	    setMonitor();
   }
 }
 
@@ -391,7 +391,7 @@ void KDMBackgroundWidget::slotColorMode( int m )
 // Note that centred pixmaps are placed on a full screen image of background
 // color1, so if you want to save memory use a small tiled pixmap.
 //
-int KDMBackgroundWidget::loadWallpaper( const char *name, bool useContext )
+int KDMBackgroundWidget::loadWallpaper( const QString& name, bool useContext )
 {
   static int context = 0;
   QString filename;

@@ -142,7 +142,7 @@ public:
 
 protected slots:
   void filterChanged();
-  void dirChanged(const char *);
+  void dirChanged(const QString&);
   void reject();
   void needReload();
   

@@ -277,7 +277,7 @@ void KIconLoaderDialog::init()
   connect( canvas, SIGNAL(doubleClicked()), this, SLOT(accept()) );
   connect( canvas, SIGNAL(interrupted()), this, SLOT(needReload()) );
   connect( i_filter, SIGNAL(returnPressed()), this, SLOT(filterChanged()) );
-  connect( cb_dirs, SIGNAL(activated(const char *)), this, SLOT(dirChanged(const char*)) );
+  connect( cb_dirs, SIGNAL(activated(const QString&)), this, SLOT(dirChanged(const QString&)) );
   setDir(icon_loader->getDirList());
   resize( 470, 350 );
   setMinimumSize( 470, 250 );
@@ -346,7 +346,7 @@ void KIconLoaderDialog::filterChanged()
   canvas->loadDir( cb_dirs->currentText(), i_filter->text() );
 }
 
-void KIconLoaderDialog::dirChanged(const char * dir)
+void KIconLoaderDialog::dirChanged(const QString& dir)
 {
   canvas->loadDir( dir, i_filter->text() );
 }

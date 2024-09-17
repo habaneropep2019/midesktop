@@ -91,8 +91,8 @@ KFontOptions::KFontOptions( QWidget *parent, const char *name )
 
     getFontList( standardFonts, "-*-*-*-*-*-*-*-*-*-*-p-*-*-*" );
     m_pStandard->insertStrList( &standardFonts );
-    connect( m_pStandard, SIGNAL( activated( const char * ) ),
-             SLOT( slotStandardFont( const char * ) ) );
+    connect( m_pStandard, SIGNAL( activated( const QString& ) ),
+             SLOT( slotStandardFont( const QString& ) ) );
   
     label = new QLabel( i18n( "Fixed Font"), this );
     label->adjustSize();
@@ -107,8 +107,8 @@ KFontOptions::KFontOptions( QWidget *parent, const char *name )
     getFontList( fixedFonts, "-*-*-*-*-*-*-*-*-*-*-m-*-*-*" );
     m_pFixed->insertStrList( &fixedFonts );
   
-    connect( m_pFixed, SIGNAL( activated( const char * ) ),
-             SLOT( slotFixedFont( const char * ) ) );
+    connect( m_pFixed, SIGNAL( activated( const QString& ) ),
+             SLOT( slotFixedFont( const QString& ) ) );
   
     // default charset Lars Knoll 17Nov98 (moved by David)
     label = new QLabel( i18n( "Default Charset"), this );
@@ -125,8 +125,8 @@ KFontOptions::KFontOptions( QWidget *parent, const char *name )
     m_pCharset->adjustSize();
     m_pCharset->setMinimumSize(m_pCharset->size());
     lay->addWidget(m_pCharset,5,2);
-    connect( m_pCharset, SIGNAL( activated( const char * ) ),
-             SLOT( slotCharset( const char * ) ) );
+    connect( m_pCharset, SIGNAL( activated( const QString&  ) ),
+             SLOT( slotCharset( const QString& ) ) );
 
     connect( bg, SIGNAL( clicked( int ) ), SLOT( slotFontSize( int ) ) );
 
@@ -184,17 +184,17 @@ void KFontOptions::slotFontSize( int i )
     fSize = i+3;
 }
 
-void KFontOptions::slotStandardFont( const char *n )
+void KFontOptions::slotStandardFont( const QString& n )
 {
     stdName = n;
 }
 
-void KFontOptions::slotFixedFont( const char *n )
+void KFontOptions::slotFixedFont( const QString& n )
 {
     fixedName = n;
 }
 
-void KFontOptions::slotCharset( const char *n )
+void KFontOptions::slotCharset( const QString&n )
 {
     charsetName = n;
 }
