@@ -305,7 +305,12 @@ protected:
   char *funnyWord (char *word);
   void dialog (char *word, QStrList *sugg, char *_slot);
   inline char *replacement (void)
-    { return dlgreplacement.data(); }
+  { 
+      //
+      // TODO: Verify it's safe to mutate `dlgreplacement.data()`
+      //
+      return const_cast<char*>(dlgreplacement.data());
+  }
 
   void emitProgress (void);
   bool cleanFputs (const char *s, bool appendCR=TRUE);

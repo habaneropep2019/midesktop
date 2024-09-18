@@ -69,6 +69,7 @@
 #include <kwm.h>
 #include <sys/wait.h>
 #include <assert.h>
+#include <stdint.h>
 
 #include <locale.h>
 
@@ -506,7 +507,13 @@ void TEDemo::font_menu_activated(int item)
 {
   assert(se);
   se->setFontNo(item);
-  activateSession((int)session2no.find(se)); // for attribute change
+  //
+  // TODO: How is this a valid conversion? `session2no.find(se)` seems to be
+  //       genuinely returning a pointer
+  //
+  const void* item_ptr = session2no.find(se);
+  const uintptr_t item_addr = (uintptr_t) item_ptr;
+  activateSession((int)item_addr); // for attribute change
   // setFont(item) is probably enough
 }
 
@@ -515,7 +522,15 @@ void TEDemo::schema_menu_activated(int item)
   assert(se);
   //FIXME: save schema name
   se->setSchemaNo(item);
-  activateSession((int)session2no.find(se)); // for attribute change
+
+  //
+  // TODO: How is this a valid conversion? `session2no.find(se)` seems to be
+  //       genuinely returning a pointer
+  //
+  const void* item_ptr = session2no.find(se);
+  const uintptr_t item_addr = (uintptr_t) item_ptr;
+  activateSession((int)item_addr); // for attribute change
+
   // setSchema(item) is probably enough
 }
 
@@ -686,8 +701,15 @@ void TEDemo::activateSession(int sn)
   if (se)
   {
     se->setConnect(FALSE);
-    int no = (int)session2no.find(se);
-    m_sessions->setItemChecked(no,FALSE);
+    //
+    // TODO: How is this a valid conversion? `session2no.find(se)` seems to be
+    //       genuinely returning a pointer
+    //
+    const void* item_ptr = session2no.find(se);
+    const uintptr_t item_addr = (uintptr_t) item_ptr;
+    const int session_id = (int)item_addr;
+
+    m_sessions->setItemChecked(session_id,FALSE);
   }
   se = s;
   if (!s) { fprintf(stderr,"session not found\n"); return; } // oops
@@ -707,8 +729,15 @@ void TEDemo::activateSession(int sn)
 
 void TEDemo::runSession(TESession* s)
 {
-  int session_no = (int)session2no.find(s);
-  activateSession(session_no);
+  //
+  // TODO: How is this a valid conversion? `session2no.find(s)` seems to be
+  //       genuinely returning a pointer
+  //
+  const void* item_ptr = session2no.find(s);
+  const uintptr_t item_addr = (uintptr_t) item_ptr;
+  const int session_id = (int)item_addr;
+
+  activateSession(session_id);
 
   // give some time to get through the
   // resize events before starting up.
@@ -786,11 +815,23 @@ void TEDemo::doneSession(TESession* s, int status)
     KMsgBox::message( this, i18n("Error"), str, KMsgBox::EXCLAMATION );
   }
 #endif
-  int no = (int)session2no.find(s);
-  if (!no) return; // oops
-  no2session.remove(no);
+
+  //
+  // TODO: How is this a valid conversion? `session2no.find(s)` seems to be
+  //       genuinely returning a pointer
+  //
+  const void* item_ptr = session2no.find(s);
+  const uintptr_t item_addr = (uintptr_t) item_ptr;
+  const int session_id = (int)item_addr;
+
+  if (!session_id)
+  {
+    return; // oops
+  }
+
+  no2session.remove(session_id);
   session2no.remove(s);
-  m_sessions->removeItem(no);
+  m_sessions->removeItem(session_id);
 
   s->setConnect(FALSE);
 
@@ -956,8 +997,12 @@ int main(int argc, char* argv[])
   putenv("COLORTERM="); //FIXME: for mc, which cannot detect color terminals
 
   int c = 0, l = 0;
-  if ( (strcmp("", sz) != 0) )
-  { char *ls = strchr( sz, 'x' );
+  if (sz != "")
+  { 
+    //
+    // const_cast should be safe as `sz` is a local copy
+    //
+    char *ls = strchr( const_cast<char*>(sz.data()), 'x' );
     if ( ls != NULL )
     { *ls='\0'; ls++; c=atoi(sz); l=atoi(ls); }
     else
@@ -968,7 +1013,10 @@ int main(int argc, char* argv[])
     KConfig * sessionconfig = a.getSessionConfig();
     sessionconfig->setGroup("options");
     sessionconfig->readListEntry("konsolearguments", eargs);
-    wname = sessionconfig->readEntry("class",wname).data();
+    //
+    // TODO: This may not be a safe const_cast
+    //
+    wname = const_cast<char*>(sessionconfig->readEntry("class",wname).data());
     RESTORE( TEDemo(wname,eargs,login_shell) )
   }
   else

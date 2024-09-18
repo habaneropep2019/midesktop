@@ -298,7 +298,7 @@ HCNT("setImage");
   setUpdatesEnabled(TRUE);
   if ( hasBlinker && !blinkT->isActive()) blinkT->start(1000); // 1000 ms
   if (!hasBlinker &&  blinkT->isActive()) { blinkT->stop(); blinking = FALSE; }
-  delete disstr;
+  delete []disstr;
 }
 
 // paint Event ////////////////////////////////////////////////////
@@ -362,7 +362,7 @@ HCNT("paintEvent");
                 QRect(blX+tLx+font_w*x,bY+tLy+font_h*y,font_w*len,font_h),
                 disstr, len, image[loc(x,y)], pm != NULL);
     x += len - 1;
-    delete disstr;
+    delete []disstr;
   }
   drawFrame( &paint );
   paint.end();
@@ -715,7 +715,12 @@ void TEWidget::emitSelection()
 // Paste Clipboard by simulating keypress events
 { const char *text = QApplication::clipboard()->text();
   if ( text ) while (*text)
-  { QKeyEvent e(0,0,(int)(unsigned char)*text++,0);
+  {
+    //
+    // We want to use QKeyEvent::Type::None here, but unfortunetely it's conflicing with
+    // the X11 None macro defined in X.h
+    //
+    QKeyEvent e(static_cast<QKeyEvent::Type>(0), 0, (int)(unsigned char)*text++, 0);
     emit keyPressedSignal(&e); // expose as keypress event
   }
 }

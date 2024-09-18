@@ -1299,7 +1299,7 @@ set_multiple(void)
 		/* child process.  Used to read in password file.  Also checks to
 		 * see if the uid is zero.  If so, then writes that to the pipe.
 		 */
-		register int sbuf = 0;
+		int sbuf = 0;
 		char       *cbuf, *pbuf;
 
 		close(pipefd[0]);
@@ -1357,7 +1357,7 @@ set_multiple(void)
 		 * It assumes that everything coming through the pipe are password
 		 * entries that are authorized to unlock the screen.
 		 */
-		register int bufsize = BUFMAX, done = 0, sbuf = BUFMAX,
+		int bufsize = BUFMAX, done = 0, sbuf = BUFMAX,
 		            i;
 		char       *cbuf, *pbuf;
 		pwlptr      pwll;

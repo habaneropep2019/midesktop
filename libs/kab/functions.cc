@@ -20,7 +20,7 @@ string AuthorEmailAddress;
 
 string ReadLineFromStream(ifstream& stream)
 {
-  register bool GUARD; GUARD=false;
+  bool GUARD; GUARD=false;
   REQUIRE(stream.good());
   // ############################################################################
   string line;
@@ -68,7 +68,7 @@ bool isComment(string line)
   
 bool getHomeDirectory(string& ref)
 {
-  register bool GUARD; GUARD=false;
+  bool GUARD; GUARD=false;
   // ############################################################################  
   char* temp=getenv("HOME");
   // -----
@@ -88,7 +88,7 @@ bool getHomeDirectory(string& ref)
 
 bool htmlizeString(const string& orig, string& target)
 {
-  register bool GUARD; GUARD=true;
+  bool GUARD; GUARD=true;
   LG(GUARD, "htmlizeString: called.\n");
   // ############################################################################
   string temp;
@@ -103,7 +103,6 @@ bool htmlizeString(const string& orig, string& target)
       current=orig[index];
       switch(current)
 	{
-	case 'ä':
 	default: temp+=current;
 	}
     }
@@ -115,7 +114,7 @@ bool htmlizeString(const string& orig, string& target)
 
 void tokenize(list<string>& resultat, const string& text, char tr, bool strikt)
 {
-  register bool GUARD; GUARD=false;
+  bool GUARD; GUARD=false;
   // ############################################################################
   LG(GUARD, "tokenize: called.\n");
   string::size_type eins=0, zwei=0;

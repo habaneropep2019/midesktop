@@ -821,13 +821,13 @@ getvalue(struct magic *m, char **p)
  * *slen. Return updated scan pointer as function result.
  */
 static char *
-getstr(register char *s, register char *p, int plen, int *slen)
+getstr(char *s, char *p, int plen, int *slen)
 {
 	char *origs = s,
 	*origp = p;
 	char *pmax = p + plen - 1;
-	register int c;
-	register int val;
+	int c;
+	int val;
 
 	while ((c = *s++) != '\0') {
 		if (isspace((unsigned char) c))
@@ -1041,8 +1041,8 @@ mget(union VALUETYPE *p, unsigned char *s, struct magic *m,
 static int
 mcheck(union VALUETYPE *p, struct magic *m)
 {
-	register unsigned long l = m->value.l;
-	register unsigned long v;
+	unsigned long l = m->value.l;
+	unsigned long v;
 	int matched;
 
 	if ((m->value.s[0] == 'x') && (m->value.s[1] == '\0')) {
@@ -1078,9 +1078,9 @@ mcheck(union VALUETYPE *p, struct magic *m)
 			 */
 			v = 0;
 			{
-				register unsigned char *a = (unsigned char *) m->value.s;
-				register unsigned char *b = (unsigned char *) p->s;
-				register int len = m->vallen;
+				unsigned char *a = (unsigned char *) m->value.s;
+				unsigned char *b = (unsigned char *) p->s;
+				int len = m->vallen;
 
 				while (--len >= 0)
 					if ((v = *b++ - *a++) != 0)
@@ -1382,7 +1382,7 @@ KMimeMagic::fsmagic(const char *fn, struct stat *sb)
 		case S_IFLNK:
 			{
 				char buf[BUFSIZ + BUFSIZ + 4];
-				register int nch;
+				int nch;
 				struct stat tstatbuf;
 
 				if ((nch = readlink(fn, buf, BUFSIZ - 1)) <= 0) {
@@ -1703,7 +1703,7 @@ KMimeMagic::ascmagic(unsigned char *buf, int nbytes)
 	unsigned char *s;
 	char nbuf[HOWMANY + 1]; /* one extra for terminating '\0' */
 	char *token;
-	register struct names *p;
+	struct names *p;
 	int typecount[NTYPES];
 
 	/* these are easy, do them first */
@@ -1891,11 +1891,11 @@ KMimeMagic::ascmagic(unsigned char *buf, int nbytes)
 static int
 is_tar(unsigned char *buf, int nbytes)
 {
-	register union record *header = (union record *) buf;
-	register int i;
-	register long sum,
+	union record *header = (union record *) buf;
+	int i;
+	long sum,
 	 recsum;
-	register char *p;
+	char *p;
 
 	if (nbytes < (int)sizeof(union record))
 		 return 0;
@@ -1935,7 +1935,7 @@ is_tar(unsigned char *buf, int nbytes)
 static long
 from_oct(int digs, char *where)
 {
-	register long value;
+	long value;
 
 	while (isspace(*where)) {	/* Skip spaces */
 		where++;

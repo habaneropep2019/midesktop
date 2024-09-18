@@ -1136,25 +1136,25 @@ void KFMManager::slotCookie( const char *_url, const char *_cookie_str )
 void KFMManager::slotMimeType( const char *_type )
 {
 
-    char *typestr=0;
-    const char *aType=0;
-    const char *aCharset=0;
+    char *typestr=nullptr;
+    const char *aType=nullptr;
+    char *aCharset=nullptr;
     if (_type)
     {
         typestr=new char[strlen(_type)+1];
         strcpy(typestr,_type);
 	aType=strtok(typestr," ;\t\n");
 	char *tmp;
-	while( ( tmp = strtok( 0, " ;\t\n" ) ) )
+	while( ( tmp = strtok(nullptr, " ;\t\n" ) ) )
 	{
 	  if ( strncmp( tmp, "charset=", 8 ) == 0 )
 	    aCharset = tmp + 8;
 	}    
-	if ( aCharset != 0 )
+	if ( aCharset != nullptr )
 	{
 	    tmp = strpbrk( aCharset, " ;\t\n" );
-	    if ( tmp != 0 )
-	      *tmp = 0;
+	    if ( tmp != nullptr )
+	      *tmp = '\0';
 	}    
     }  
  

@@ -56,7 +56,7 @@ extern void *safemalloc(int, const char *identifier);
 extern void get_token();
 extern int handle_X_event(XEvent event, unsigned char);
 extern void screen_refresh();
-extern void extract_colors( char *fg_string, char *bg_string);
+extern void extract_colors(const char *fg_string, const char *bg_string);
 extern void clean_exit(int);
 
 void rxvt_main(int argc,char **argv);
@@ -93,13 +93,15 @@ extern int mouse_block;			/* block mouse input while popup */
 extern int BackspaceSendsControlH;
 extern int KeySetSend;
 
-extern void kvt_set_fontnum(char *);
-extern void kvt_set_menubar(int);
-extern void kvt_set_scrollbar(int);
-extern void kvt_set_size_increment(int, int);
+void kvt_set_fontnum(const char *);
+void kvt_set_menubar(int);
+void kvt_set_scrollbar(int);
+void kvt_set_size_increment(int, int);
 
-extern void kvt_set_selection(char* s);
-extern const char* kvt_get_selection();
+void kvt_set_selection(char* s);
+const char* kvt_get_selection();
+
+void kvt_set_dimension(const char *s_arg);
 
 }
 
@@ -108,7 +110,9 @@ extern Display* display;
 extern int comm_fd;
 extern Window		main_win;
 extern Window		vt_win;
-extern char *fg_string_tmp, *bg_string_tmp;
+
+extern const char *fg_string_tmp;
+extern const char *bg_string_tmp;
 
 kVt* kvt = 0;
 OptionDialog *m_optiondialog = 0;
@@ -164,7 +168,7 @@ static const char* backspace_name[] = {
 int o_argc;
 char ** o_argv;
 
-void kvt_set_fontnum(char *s_arg){
+void kvt_set_fontnum(const char *s_arg){
   int i;
   QString s = s_arg;
   for (i=kvt_normal; i<=kvt_huge; i++){
@@ -173,7 +177,7 @@ void kvt_set_fontnum(char *s_arg){
   }
 }
 
-void kvt_set_dimension(char *s_arg){
+void kvt_set_dimension(const char *s_arg){
   int i;
   QString s = s_arg;
   for (i=0; kvt_dimens[i].text; i++){

@@ -251,9 +251,31 @@ KLocale::KLocale( const QString& catalogueOpt )
         // set environment variables for all categories
 	// maybe we should treat LC_NUMERIC differently (netscape problem)
 	QString stmp;
-        for(int i=0;_categories[i]!=0;i++) {
-	  stmp = QString(_categories[i])+ "=" + getLocale(_categories[i]);
- 	  putenv( stmp.data() );
+    for(int i=0;_categories[i]!=0;i++) {
+        stmp = QString(_categories[i])+ "=" + getLocale(_categories[i]);
+
+    //
+    // Unfortunately we have to make a deep copy of this string as putenv takes
+    // a mutable string that it will keep a reference to for an unknown amount
+    // of time. This will leak `envVarStrCopy`
+    //
+    {
+        const char* envVarStr = stmp.latin1();
+        const std::size_t envVarStrLen = strlen(envVarStr);
+
+        char* envVarStrCopy = reinterpret_cast<char*>(malloc(envVarStrLen + 1));
+        if (envVarStrCopy)
+        {
+            strncpy(envVarStrCopy, envVarStr, envVarStrLen);
+            envVarStrCopy[envVarStrLen] = '\0';
+            putenv(envVarStrCopy);
+        }
+        else
+        {
+            qDebug("Error: Failed to create temp copy of string while setting locale. String: %s", envVarStr);
+        }
+    }
+
 	}
     }
     // we should use LC_CTYPE, not LC_MESSAGES for charset

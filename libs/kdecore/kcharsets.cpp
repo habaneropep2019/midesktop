@@ -82,7 +82,7 @@ KCharset::KCharset(QFont::CharSet qtCharset){
 KCharset::KCharset( const KCharset& kc){
 
   if (!data || !charsets){
-     fatal("KCharset copy constructor called when no KCharsets object created (???)");
+     fatal("KCharset copy constructor called when no KCharsets object created (?)");
      return;
   }   
   entry=kc.entry;
@@ -236,7 +236,7 @@ QFont &KCharset::setQFont(QFont &fnt){
   }
   else{
     kchdebug("setQFont: trying to set charset to %i (family = %s\n", 
-	     (int)qtCharset(), fnt.family());
+	     (int)qtCharset(), fnt.family().latin1());
     fnt.setCharSet(qtCharset());
     QFontInfo fi(fnt);
     int ch = fi.charSet();
@@ -549,7 +549,7 @@ QFont &KCharsets::setQFont(QFont &fnt){
 
 KCharset KCharsets::charset(const QFont& font){
 
-  kchdebug("Testing charset of font: %s, qtcharset=%i\n",font.family(),(int)font.charSet());
+  kchdebug("Testing charset of font: %s, qtcharset=%i\n",font.family().latin1(), (int)font.charSet());
   if (font.charSet()!=QFont::AnyCharSet) return charset(font.charSet());
   const KCharsetEntry * ce=data->charsetOfFace(font.family());
   kchdebug("ce=%p ce->name=%s\n",ce,ce?ce->name:0);

@@ -41,10 +41,12 @@ class KSpellDlg : public QWidget
 
 public:
   KSpellDlg (QWidget *parent, const char *name,
-			char *ID);
+			const char *ID);
 
-  inline char *replacement (void)
-    { return newword.data(); }
+  inline const char *replacement (void)
+    {
+      return newword.data();
+    }
 
   void init (char *_word, QStrList *_sugg);
   void standby (void);

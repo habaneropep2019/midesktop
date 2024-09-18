@@ -160,7 +160,7 @@ void StringListEditWidget::getStrings(QStrList& result)
 
 void StringListEditWidget::upPressed()
 {
-  register bool GUARD; GUARD=false;
+  bool GUARD; GUARD=false;
   // ############################################################################
   int index=lbStrings->currentItem();
   string text;
@@ -188,7 +188,7 @@ void StringListEditWidget::upPressed()
 
 void StringListEditWidget::downPressed()
 {
-  register bool GUARD; GUARD=false;
+  bool GUARD; GUARD=false;
   // ############################################################################
   int index=lbStrings->currentItem();
   string text;

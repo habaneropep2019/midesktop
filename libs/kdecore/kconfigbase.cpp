@@ -655,8 +655,11 @@ QFont KConfigBase::readFontEntry( const QString& pKey,
 	 else if (kapp){
            if (chStr=="default")
               if( kapp->localeConstructed() ) 
-	          chStr=klocale->charset();
-	      else chStr="iso-8859-1"; 
+	          	chStr=klocale->charset();
+	      else 
+		  {
+			chStr="iso-8859-1";
+		  }
 	   kapp->getCharsets()->setQFont(aRetFont,chStr);   
 	 }
 
@@ -1065,8 +1068,8 @@ QString KConfigBase::writeEntry( const QString pKey, const QFont& rFont,
     aCharset=kapp->getCharsets()->name(rFont);
   }
   else aCharset="default";
-  aValue.sprintf( "%s,%d,%d,%s,%d,%d", rFont.family(), rFont.pointSize(),
-				  rFont.styleHint(), aCharset,
+  aValue.sprintf( "%s,%d,%d,%s,%d,%d", rFont.family().latin1(), rFont.pointSize(),
+				  rFont.styleHint(), aCharset.latin1(),
 				  rFont.weight(), nFontBits );
 
   return writeEntry( pKey, aValue.latin1(), bPersistent, bGlobal, bNLS );

@@ -28,11 +28,11 @@ void kimgio_png_read( QImageIO *io )
 	// open png file
 
 	QImage image;
-	FILE *fp = fopen ( io->fileName(), "r" );
+	FILE *fp = fopen ( io->fileName().latin1(), "r" );
 	int passes = 0;
 
 	if( fp == 0 ) {
-		debug( "Couldn't open %s for reading.", io->fileName() );
+		debug( "Couldn't open %s for reading.", io->fileName().latin1() );
 		return;
 	}
 

@@ -296,11 +296,11 @@ void KIOSlave::mount( bool _ro, const char *_fstype, const char* _dev, const cha
     
     // Look in /etc/fstab ?
     if ( _fstype == 0L || _point == 0L || _fstype[0] == 0 || _point[0] == 0 )
-	sprintf( buffer, "mount %s 2>"_PATH_TMP"/mnt%i",_dev, t );
+	sprintf( buffer, "mount %s 2>" _PATH_TMP "/mnt%i",_dev, t );
     else if ( _ro )
-	sprintf( buffer, "mount -rt %s %s %s 2>"_PATH_TMP"/mnt%i",_fstype, _dev, _point, t );
+	sprintf( buffer, "mount -rt %s %s %s 2>" _PATH_TMP "/mnt%i",_fstype, _dev, _point, t );
     else
-	sprintf( buffer, "mount -t %s %s %s 2>"_PATH_TMP"/mnt%i",_fstype, _dev, _point, t );
+	sprintf( buffer, "mount -t %s %s %s 2>" _PATH_TMP "/mnt%i",_fstype, _dev, _point, t );
 		
     retvalue = system( buffer );
     // test logfile here to remove it if it exists
@@ -352,12 +352,12 @@ void KIOSlave::unmount( const char *_point )
  	err = QString( "Volume Management is not running." );
     }
 #else
-    sprintf( buffer, "umount %s 2>"_PATH_TMP"mnt%i", _point, t );
+    sprintf( buffer, "umount %s 2>" _PATH_TMP "mnt%i", _point, t );
     retvalue = system( buffer );
     
     // test logfile here to remove it if it exists
     // (if there is a warning, it can exist even if revalue==0)
-    sprintf( buffer, _PATH_TMP"/mnt%i", t );
+    sprintf( buffer, _PATH_TMP "/mnt%i", t );
     err = testLogFile( buffer );
 #endif /* HAVE_VOLMGT */
 
@@ -413,7 +413,7 @@ void KIOSlave::del( const char *_url )
 	}
 
 	QString logFile;
-	logFile.sprintf( _PATH_TMP"/tarlog%i", time( 0L ) );
+	logFile.sprintf( _PATH_TMP "/tarlog%i", time( 0L ) );
 
 	QString cmd;
 	cmd.sprintf( "tar --delete %s -f %s 2>%s", su.reference(), tar.data(), logFile.data() );

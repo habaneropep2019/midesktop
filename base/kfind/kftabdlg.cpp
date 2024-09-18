@@ -660,7 +660,7 @@ QString KfindTabDialog::createQuery()
               };
 
             if (prevDay == TRUE)
-                str.append(pom.sprintf(" -daystart -mtime -%s",le[3]->text()));
+                str.append(pom.sprintf(" -daystart -mtime -%s",le[3]->text().latin1()));
           };
 
         if (sizeBox->currentItem() !=  0)
@@ -671,7 +671,7 @@ QString KfindTabDialog::createQuery()
 	        case 2: {type=(char *)(atoi(sizeEdit->text())==0?"":"-"); break;}
 	        default: {type=(char *)(atoi(sizeEdit->text())==0?"":" ");} 
               };
-            str.append(pom.sprintf(" -size  %s%sk ",type,sizeEdit->text()));
+            str.append(pom.sprintf(" -size  %s%sk ",type,sizeEdit->text().latin1()));
           };
       };
 

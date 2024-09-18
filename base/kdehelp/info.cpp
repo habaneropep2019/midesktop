@@ -324,7 +324,8 @@ void cTagTable::CreateTable(const char *filename)
 
 	while (FindMarker(stream))
 	{
-		offset = stream.tellg() - 2;
+		const std::size_t currentPosition = stream.tellg();
+		offset = currentPosition - 2;
 		file = 0;
         node = 0;
 		stream.getline(buffer, 255);
@@ -608,20 +609,31 @@ void cNodeLineList::AddMenu(const char *buffer)
 	char *ptr1, *ptr2;
 	cNodeMenu *nodeMenu = new cNodeMenu;
 
-	ptr1 = strstr(buffer, "::");
+	//
+	// TODO: This is left to leak. I can't safely deallocate it at the end
+	//       of the function without investigating it's lifetime/owership
+	//
+	char* bufferCopy = StrDup(buffer);
+	if (!bufferCopy)
+	{
+		qDebug("cNodeLineList::AddMenu: Failed to copy buffer");
+		return;
+	}
+
+	ptr1 = strstr(bufferCopy, "::");
 
 	if ( ptr1 && (*(ptr1+2) == ' ' || *(ptr1+2) == '\t' || *(ptr1+2) == '\0') )
 	{
 		*ptr1 = '\0';
-		nodeMenu->name = StrDup(buffer);
-		nodeMenu->node = StrDup(buffer);
+		nodeMenu->name = StrDup(bufferCopy);
+		nodeMenu->node = StrDup(bufferCopy);
 		ptr1 += 2;
 	}
-	else if ( (ptr1 = strchr(buffer, ':')) )
+	else if ( (ptr1 = strchr(bufferCopy, ':')) )
 	{
 		char *nodePtr;
 		*ptr1 = '\0';
-		nodeMenu->name = StrDup(buffer);
+		nodeMenu->name = StrDup(bufferCopy);
 		ptr1++;
 		EATSPACE(ptr1);
 		nodePtr = ptr2 = ptr1;

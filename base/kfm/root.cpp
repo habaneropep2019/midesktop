@@ -880,7 +880,7 @@ void KRootWidget::update()
 	    fgets( buffer, 1024, f );
 	    if ( buffer[ 0 ] != 0 )
 	    {
-		const char *p = buffer;
+		char *p = buffer;
 		char *p2 = strchr( p, ';' );
 		*p2++ = 0;
 		QString u = p;

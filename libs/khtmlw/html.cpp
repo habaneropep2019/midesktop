@@ -2335,7 +2335,10 @@ const char* KHTMLWidget::parseBody( HTMLClueV *_clue, const char *_end[], bool t
 		title += " ";
 	    else if ( flow != 0)
 	    {
-	    	insertText( " ", currentFont());
+			//
+			// TODO: This should be a mutable string
+			//
+	    	insertText(" ", currentFont());
 	    }
 	}
 	else if ( *str != TAG_ESCAPE )
@@ -5547,13 +5550,13 @@ bool KHTMLWidget::setCharset(const char *name){
         if (currentFont()!=0){	
           HTMLFont f( *font_stack.top());
 	  debugM("Original font: face: %s qtCharset: %i\n"
-	                              ,QFont(f).family(),(int)QFont(f).charSet());
+	                              ,QFont(f).family().latin1(),(int)QFont(f).charSet());
 	  f.setCharset(charset);
 	  debugM("Changed font: face: %s qtCharset: %i\n"
-	                              ,QFont(f).family(),(int)QFont(f).charSet());
+	                              ,QFont(f).family().latin1(),(int)QFont(f).charSet());
           const HTMLFont *fp = pFontManager->getFont( f );
 	  debugM("Got font: %p\n",fp);
-	  debugM("Got font: face: %s qtCharset: %i\n",QFont(*fp).family(),(int)QFont(*fp).charSet());
+	  debugM("Got font: face: %s qtCharset: %i\n",QFont(*fp).family().latin1(),(int)QFont(*fp).charSet());
           font_stack.push( fp );
 	  debugM("painter: %p\n",painter);
 	  debugM("Font stack top: %p\n",font_stack.top());

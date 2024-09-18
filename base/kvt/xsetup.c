@@ -68,7 +68,7 @@ extern WindowInfo MyWinInfo;
 
 /* some functions for further options. Matthias */ 
 /* needed for vt_size option */ 
-extern void kvt_set_fontnum(char *);
+extern void kvt_set_fontnum(const char *);
 /* needed for no_menubar option */ 
 extern void kvt_set_menubar(int);
 /* needed for no_scrollbar option */ 
@@ -130,8 +130,8 @@ XColor		background_color;
 XColor		foreground_color;
 extern unsigned long pixel_colors[10];
 
-char *fg_string_tmp = NULL;
-char *bg_string_tmp = NULL;
+const char *fg_string_tmp = NULL;
+const char *bg_string_tmp = NULL;
 
 
 extern KeySym SecureKeysym;
@@ -204,7 +204,7 @@ int map_alert = 0 ;
 
 static void create_xwindow(int,char **);
 static void extract_fonts_and_geometry(char *,int,char *);
-void extract_colors(char *, char *);
+void extract_colors(const char *, const char *);
 void extract_resources(void);
 
 XErrorHandler RxvtErrorHandler(Display *, XErrorEvent *);
@@ -382,7 +382,7 @@ void adjust_cursor(int mode)
  */
 
 /* new functions since this stuff must be setable from Qt. (Matthias) */ 
-void extract_colors( char *fg_string, char *bg_string){
+void extract_colors( const char *fg_string, const char *bg_string){
   /*  Do the foreground, and background colors.
    */
   XGCValues gcv;

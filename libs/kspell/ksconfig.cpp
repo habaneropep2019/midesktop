@@ -353,10 +353,10 @@ void KSpellConfig::fillInDialog (void)
       if (!dir.exists() || !dir.isDir())
 	return;
 
-      kdebug(KDEBUG_INFO, 750, "KSpellConfig::fillInDialog %s %s", dir.filePath(), dir.dirPath().data());
+      kdebug(KDEBUG_INFO, 750, "KSpellConfig::fillInDialog %s %s", dir.filePath().latin1(), dir.dirPath().latin1());
 
       QDir thedir (dir.filePath(),"*.aff");
-      kdebug(KDEBUG_INFO, 750, "KSpellConfig%s\n",thedir.path());
+      kdebug(KDEBUG_INFO, 750, "KSpellConfig%s\n", thedir.path().latin1());
 
       kdebug(KDEBUG_INFO, 750, "entryList().count()=%d", thedir.entryList().count());
 
@@ -371,7 +371,7 @@ void KSpellConfig::fillInDialog (void)
 	    { // This one is the KDE default language
 	      // so place it first in the lists (overwrite "Default")
 
-	      kdebug (KDEBUG_INFO, 750, "default is [%s][%s]",hname.data(),fname.data());
+	      kdebug (KDEBUG_INFO, 750, "default is [%s][%s]",hname.latin1(),fname.latin1());
 	      langfnames->removeFirst();
 	      langfnames->insert (0,fname);
 
@@ -387,7 +387,7 @@ void KSpellConfig::fillInDialog (void)
 	      hname=hname+" ("+fname+")";
 	      //	      langnames->append (hname);
 	      
-	      dictcombo->insertItem (hname.data());
+	      dictcombo->insertItem (hname.latin1());
 	    }
 	}
 
@@ -482,7 +482,10 @@ bool KSpellConfig::runTogether(void) const
 
 char *KSpellConfig::dictionary (void) const
 {
-  return qsdict.data();
+  //
+  // TODO: Verify it's safe to cast away const here
+  //
+  return const_cast<char*>(qsdict.data());
 }
 
 /*

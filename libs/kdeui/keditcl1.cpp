@@ -227,7 +227,7 @@ int KEdit::loadFile(QString name, int mode){
 
     if(mode & OPEN_INSERT) {
 
-      register long int  i;
+      long int  i;
       char *beginning_of_line;
       beginning_of_line = addr;
       int line, col;
@@ -294,7 +294,7 @@ int KEdit::loadFile(QString name, int mode){
     }
     else{ // Not inserting but loading a completely new file.
 
-      register long int  i;
+      long int  i;
       char *beginning_of_line;
       beginning_of_line = addr;
 

@@ -52,7 +52,7 @@ void KDirectionButton::drawButton( QPainter *p)
 {
   // I abandoned qDrawArrow(...) 'cause the result was totally unpredictable :-(
 
-  int style = kapp->applicationStyle;
+  const Qt::GUIStyle style = kapp->applicationStyle->guiStyle();
   int wm = width()/2, hm = height()/2;
   QColorGroup g = QWidget::colorGroup();
   QPen lightPen, darkPen;

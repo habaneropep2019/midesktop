@@ -54,27 +54,12 @@
 bool KfmGui::sumode = false;
 bool KfmGui::rooticons = true;
 
-char* kfm_getrev();
+const char* kfm_getrev();
 
-char* kfm_getrev()
+const char* kfm_getrev()
 {
-    static char *revision = "$Revision: 1.167.2.21 $";
-    static char *rev;
-    static char *p;
-
-    static bool flag = false;
-    if ( flag )
-	return rev;
-    flag = true;
-
-    char *dummy = strdup( revision );
-    if ((p = strchr(dummy, ':'))) {
-	rev = p + 2;
-	p = strchr(rev, '$');
-	*--p = 0;
-    } else
-	rev = "???";
-    return rev;
+    // static char *revision = "$Revision: 1.167.2.21 $";
+    return "1.167.2.21";
 }
 
 KBookmarkManager *KfmGui::bookmarkManager;
@@ -823,7 +808,7 @@ void KfmGui::openFilteredURL ( const char * _url )
         view->openURL( u.url().data() );
         view->getActiveView()->setFocus();
         //  update tree view Sep 5 rjakob
-        if ( u.protocol() == "file" )
+        if ( strncmp(u.protocol(), "file", 5) == 0 )
             if (bTreeView && pkfm->isTreeViewFollowMode())
                 treeView->slotshowDirectory(url.data()+5);
     }
@@ -1718,7 +1703,7 @@ void KfmGui::showSource ( const char * url )
 void KfmGui::slotSetCharset( int id )
 {
     uint i;
-    printf("chose charset %d,%s\n",id,mcharset->text(id));
+    printf("chose charset %d,%s\n",id,mcharset->text(id).latin1());
 
     if( id == 0)
 	view->setOverrideCharset();

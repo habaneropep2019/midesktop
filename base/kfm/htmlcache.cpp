@@ -202,7 +202,7 @@ bool HTMLCache::waitsForURL( const char *_url )
 void HTMLCache::slotCheckinURL( const char* _url, const char *_data )
 {
     QString tmp;
-    tmp.sprintf( "%s/%i.%i", KFMPaths::CachePath().data(), time( 0L ), fileId++ );
+    tmp.sprintf( "%s/%lld.%i", KFMPaths::CachePath().data(), static_cast<long long>(time(nullptr)), fileId++ );
     FILE *f = fopen( tmp.data(), "wb" );
     if ( f == 0 )
     {
@@ -280,10 +280,10 @@ void HTMLCache::save()
 	if ( it.current()->length() < 1024 )
 	{
 	    fprintf( f, "<tr><td><a href=\"%s\"><img border=0 src=\"%s\"></a></td> ",
-		     it.current()->data(), KMimeType::getPixmapFileStatic( it.current()->data(), TRUE ) );
-	    fprintf( f, "<td><a href=\"%s\">\n%s\n</a></td>", it.currentKey(), it.currentKey() );
+		     it.current()->data(), KMimeType::getPixmapFileStatic( it.current()->latin1(), TRUE ) );
+	    fprintf( f, "<td><a href=\"%s\">\n%s\n</a></td>", it.currentKey().latin1(), it.currentKey().latin1() );
 	    QFileInfo finfo( it.current()->data() );
-	    fprintf( f, "<td>%s</td></tr>\n", finfo.lastModified().toString().data() );
+	    fprintf( f, "<td>%s</td></tr>\n", finfo.lastModified().toString().latin1() );
 	}
     
     fprintf( f, "</table></BODY></HTML>\n" );
@@ -300,7 +300,7 @@ void HTMLCache::save()
 
     QDictIterator<QString> it2( *urlDict );
     for ( ; it2.current(); ++it2 )
-      fprintf( f, "%s\n%s\n" , it2.currentKey(), it2.current()->data() );
+      fprintf( f, "%s\n%s\n" , it2.currentKey().latin1(), it2.current()->latin1() );
     
     fclose( f );
 }

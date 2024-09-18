@@ -22,7 +22,7 @@ KabAPI::KabAPI(QWidget* parent)
   : QDialog(parent, 0, true),
     widget(0)
 {
-  register bool GUARD; GUARD=true;
+  bool GUARD; GUARD=true;
   LG(GUARD, "KabAPI constructor: called.\n");
   // ############################################################################
   /* NOTE: the AddressWidget-object is NOT created here, the
@@ -48,7 +48,7 @@ KabAPI::KabAPI(QWidget* parent)
 void KabAPI::initializeGeometry()
 {
   REQUIRE(widget!=0);
-  register bool GUARD; GUARD=true;
+  bool GUARD; GUARD=true;
   LG(GUARD, "KabAPI::initializeGeometry: called.\n");
   // ############################################################################
   const int Grid=3;
@@ -115,7 +115,7 @@ KabAPI::ErrorCode KabAPI::add(const AddressBook::Entry& entry, string& key,
 			      bool edit_)
 {
   REQUIRE(widget!=0);
-  register bool GUARD; GUARD=true;
+  bool GUARD; GUARD=true;
   // ############################################################################  
   string dummy;
   AddressBook::Entry changed=entry;
@@ -149,7 +149,7 @@ KabAPI::ErrorCode KabAPI::add(const AddressBook::Entry& entry, string& key,
 KabAPI::ErrorCode KabAPI::edit(AddressBook::Entry& entry)
 {
   REQUIRE(widget!=0);
-  register bool GUARD; GUARD=true;
+  bool GUARD; GUARD=true;
   LG(GUARD, "KabAPI::edit[foreign entry]: called.\n");
   // ############################################################################  
   EditEntryDialog dialog(this);
@@ -171,7 +171,7 @@ KabAPI::ErrorCode KabAPI::edit(AddressBook::Entry& entry)
 KabAPI::ErrorCode KabAPI::edit(const string& key)
 {
   REQUIRE(widget!=0);
-  register bool GUARD; GUARD=true;
+  bool GUARD; GUARD=true;
   LG(GUARD, "KabAPI::edit: called.\n");
   // ############################################################################  
   AddressBook::Entry entry;
@@ -206,7 +206,7 @@ KabAPI::ErrorCode KabAPI::edit(const string& key)
 KabAPI::ErrorCode KabAPI::remove(const string& key)
 {
   REQUIRE(widget!=0);
-  register bool GUARD; GUARD=true;
+  bool GUARD; GUARD=true;
   LG(GUARD, "KabAPI::remove: called.\n");
   // ############################################################################  
   if(widget->isRO())
@@ -240,7 +240,7 @@ KabAPI::ErrorCode KabAPI::getEntryByName(const AddressBook::Entry&,
 
 KabAPI::ErrorCode KabAPI::getEntries(list<AddressBook::Entry>& entries)
 {
-  register bool GUARD; GUARD=true;
+  bool GUARD; GUARD=true;
   REQUIRE(entries.empty());
   REQUIRE(widget!=0);
   LG(GUARD, "KabAPI::getEntries: called.\n");

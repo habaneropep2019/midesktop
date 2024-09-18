@@ -264,7 +264,13 @@ bool KProcess::start(RunMode runmode, Communication comm)
 
 	  // Its possible that the child's exit was caught by the SIGCHLD handler
 	  // which will have set status for us.
-	  if (waitpid(pid, &status, 0) != -1) this->status = status;
+	  if (waitpid(pid, &status, 0) != -1)
+    {
+      //
+      // TODO: Audit, why is this self-assigning?
+      //
+      this->status = status;
+    }
 
 	  runs = FALSE;
 	  emit processExited(this);
@@ -607,9 +613,6 @@ void KProcess::commClose()
   }
 }
 
-
-
-
 ///////////////////////////
 // CC: Class KShellProcess
 ///////////////////////////
@@ -656,7 +659,10 @@ bool KShellProcess::start(RunMode runmode, Communication comm)
   // CC: <shell> -c <command>
 
   arglist[0] = shell;
-  arglist[1] = "-c";
+  //
+  // TODO:
+  //
+  arglist[1] = const_cast<char*>("-c");
 
   for (i=0; i < n; i++) {
     cmd += arguments.at(i);
@@ -667,8 +673,11 @@ bool KShellProcess::start(RunMode runmode, Communication comm)
 //   cmd.stripWhiteSpace();
 //   if (cmd[cmd.length()-1] != '&')
 //       cmd += '&';
-  arglist[2] = cmd.data();
-  arglist[3] = 0;
+  //
+  // TODO:
+  //
+  arglist[2] = const_cast<char*>(cmd.data());
+  arglist[3] = nullptr;
 
   if (!setupCommunication(comm))
     debug("Could not setup Communication!");
@@ -717,7 +726,13 @@ bool KShellProcess::start(RunMode runmode, Communication comm)
 
 	  // Its possible that the child's exit was caught by the SIGCHLD handler
 	  // which will have set status for us.
-	  if (waitpid(pid, &status, 0) != -1) this->status = status;
+	  if (waitpid(pid, &status, 0) != -1)
+    {
+      //
+      // TODO: Audit, why is this self-assigning?
+      //
+      this->status = status;
+    }
 
 	  runs = FALSE;
 	  emit processExited(this);

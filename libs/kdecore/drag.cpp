@@ -236,7 +236,7 @@ KDNDDropZone::~KDNDDropZone()
 }
 
 
-void KDNDWidget::startDrag( KDNDIcon *_icon, char *_data, int _size, int _type, int _dx, int _dy )
+void KDNDWidget::startDrag( KDNDIcon *_icon, const char *_data, int _size, int _type, int _dx, int _dy )
 {
   if ( dndData != 0 )
      delete [] dndData ;

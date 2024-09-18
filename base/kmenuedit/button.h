@@ -39,7 +39,7 @@ public:
   void  setGreyed( bool b ) { greyed = b; }
   QSize sizeHint();
 
-  virtual void startDrag( KDNDIcon *_icon, char *_data, int _size, int _type, int _dx, int _dy );
+  virtual void startDrag( KDNDIcon *_icon, const char *_data, int _size, int _type, int _dx, int _dy );
 
 public slots:
   void slotPressed();
@@ -53,7 +53,7 @@ protected:
   bool    greyed;
 
   // drag and drop stuff
-  virtual Window EditButton::findRootWindow( QPoint & p );
+  virtual Window findRootWindow( QPoint & p );
   virtual void mouseMoveEvent( QMouseEvent * );
   virtual void mouseReleaseEvent( QMouseEvent * );
   virtual void rootDropEvent( int _x, int _y );

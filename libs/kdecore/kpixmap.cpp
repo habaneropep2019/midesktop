@@ -33,7 +33,7 @@
 // Based on Qt's image conversion functions
 static bool kdither_32_to_8( const QImage *src, QImage *dst )
 {
-    register QRgb *p;
+    QRgb *p;
     uchar  *b;
     int	    y;
 	

@@ -1198,7 +1198,10 @@ bool Theme::mkdirhier(const char* aDir, const char* aBaseDir)
   else if (aDir[0]!='/') dir.cd(kapp->localkdedir());
   else dir.cd("/");
 
-  for (dirName=strtok(dirStr.data(),"/"); dirName; dirName=strtok(0, "/"))
+  //
+  // const_cast is safe because `dirStr` is our own local copy
+  //
+  for (dirName=strtok(const_cast<char*>(dirStr.data()), "/"); dirName; dirName=strtok(0, "/"))
   {
     if (dirName[0]=='\0') continue;
     if (!dir.exists(dirName))

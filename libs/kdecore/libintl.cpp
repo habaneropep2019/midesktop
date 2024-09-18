@@ -827,7 +827,9 @@ _nl_explode_name (char * name, const char **language,
   if (*language == cp)
     /* This does not make sense: language has to be specified.  Use
        this entry as it is without exploding.  Perhaps it is an alias.  */
-    cp = strchr (*language, '\0');
+      // The const_cast here is fine because the data is coming from the `name` parameter
+      // which is mutable
+    cp = const_cast<char*>(strchr (*language, '\0'));
   else if (cp[0] == '_')
     {
       /* Next is the territory.  */

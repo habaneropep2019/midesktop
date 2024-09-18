@@ -265,7 +265,7 @@ void KfindWindow::saveResults()
 	    while(item!=items)
 	      {
 		fprintf(results,"<DT><A HREF=\"file:%s\">file:%s</A>\n",
-			lbx->text(item),lbx->text(item));
+			lbx->text(item).latin1(),lbx->text(item).latin1());
 		item++;
 	      };
 	    fprintf(results,"</DL><P></BODY></HTML>\n");
@@ -275,7 +275,7 @@ void KfindWindow::saveResults()
 	    item=0;  
 	    while(item!=items)
 	      {
-		fprintf(results,"%s\n", lbx->text(item));
+		fprintf(results,"%s\n", lbx->text(item).latin1());
 		item++;
 	      };
 	    
@@ -299,7 +299,7 @@ void KfindWindow::deleteFiles()
     QString tmp;
 
     tmp.sprintf(i18n("Do you really want to delete file:\n%s"),
-                lbx->text(lbx->currentItem()));
+                lbx->text(lbx->currentItem()).latin1());
     if(KMsgBox::yesNo(parentWidget(),i18n("Delete File"),
                       tmp, KMsgBox::QUESTION | KMsgBox::DB_SECOND) == 1)
       {
@@ -388,12 +388,12 @@ void KfindWindow::openFolder()
 
     QFileInfo *fileInfo = new QFileInfo(lbx->text(lbx->currentItem()));
     if (fileInfo->isDir())
-        tmp.sprintf("file:%s",fileInfo->filePath());
+        tmp.sprintf("file:%s",fileInfo->filePath().latin1());
       else
-	tmp.sprintf("file:%s",(fileInfo->dirPath()).data());
+	tmp.sprintf("file:%s",(fileInfo->dirPath()).latin1());
 
 
-    kfm->openURL(tmp.data());
+    kfm->openURL(tmp.latin1());
     delete kfm;
   };
 

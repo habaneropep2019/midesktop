@@ -314,10 +314,10 @@ shootup(Window win, pyrostruct *pp, rocket *rp)
 static void
 burst(Window win, pyrostruct *pp, rocket *rp)
 {
-    register int starn;
-    register int nstars, stype;
-    register float rx, ry, sd;	/* Help compiler optimize :-) */
-    register float sx, sy;
+    int starn;
+    int nstars, stype;
+    float rx, ry, sd;	/* Help compiler optimize :-) */
+    float sx, sy;
 
     nstars = rp->nstars;
     stype = rp->shelltype;

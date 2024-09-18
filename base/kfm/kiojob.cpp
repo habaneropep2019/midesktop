@@ -472,7 +472,7 @@ void KIOJob::copy()
     for ( ; it3.current(); ++it3 )
     {
         char *p;
-	char *p2;
+	const char *p2;
 	p = it3.current();
 	p2 = it4.current();
 	QString tmp;
@@ -752,7 +752,7 @@ void KIOJob::move()
     QListIterator<char> itSrc( tmpSrcURLList );
     QListIterator<char> itDest( tmpDestURLList );    
     char *p;
-    char *p2 = tmpDestURLList.first();
+    const char *p2 = tmpDestURLList.first();
     for ( ; itSrc.current(); ++itSrc )
     {
 	p = itSrc.current();

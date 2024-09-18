@@ -608,7 +608,7 @@ private:
   virtual void kdisplaySetStyleAndFont();
   virtual void readSettings();
   void resizeAll();
-  virtual void applyGUIStyle(const QStyle* newstyle);
+  virtual void applyGUIStyle(QStyle* newstyle);
 
 public:
 

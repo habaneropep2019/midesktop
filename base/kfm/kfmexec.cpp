@@ -230,9 +230,9 @@ void KFMExec::slotNewDirEntry( KIODirectoryEntry * _entry )
 void KFMExec::slotMimeType( const char *_type )
 {
     // A dirty hack for passing the character set
-    char *typestr=0;
-    const char *aType=0;
-    const char *aCharset=0;
+    char *typestr=nullptr;
+    const char *aType=nullptr;
+    char *aCharset=nullptr;
     if ( _type )
     {
         typestr=new char[strlen(_type)+1];
@@ -245,7 +245,7 @@ void KFMExec::slotMimeType( const char *_type )
 	if ( aCharset != 0 )
 	{
 	    tmp=strpbrk(aCharset," ;\t\n");
-	    if ( tmp != 0 ) *tmp=0;
+	    if ( tmp != 0 ) *tmp='\0';
 	}    
     }  
     
