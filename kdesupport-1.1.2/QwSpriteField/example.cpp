@@ -83,10 +83,10 @@ void MySpriteField::drawForeground(QPainter& painter, const QRect& r)
 	textarea.moveBy(1,1);
 	painter.setFont(QFont("Courier",12));
 	painter.setPen(white);
-	painter.drawText(textarea,AlignVCenter|WordBreak,text);
+	painter.drawText(textarea,Qt::AlignVCenter|WordBreak,text);
 	textarea.moveBy(-1,-1);
 	painter.setPen(black);
-	painter.drawText(textarea,AlignVCenter|WordBreak,text);
+	painter.drawText(textarea,Qt::AlignVCenter|WordBreak,text);
     }
 }
 
@@ -120,7 +120,7 @@ Example::Example(bool scrbars, MySpriteField& sfield, QWidget* parent,
 	p.drawLine(rand()%62,rand()%62,rand()%62,rand()%62);
     }
     p.setPen(white);
-    p.drawText(0,0,63,63,AlignCenter,"DRAWN\nSPRITE");
+    p.drawText(0,0,63,63,Qt::AlignCenter,"DRAWN\nSPRITE");
     pm.setMask(pm.createHeuristicMask());
     p.end();
 

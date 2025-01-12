@@ -1,5 +1,0 @@
-DefaultName localtoast
-
-Server {
-	Port 8080
-}
