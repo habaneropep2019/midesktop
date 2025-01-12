@@ -44,8 +44,8 @@ KFindTextDialog::KFindTextDialog( QWidget *parent, const char *name )
     edit = new QLineEdit( this );
     edit->setFixedHeight( edit->sizeHint().height() );
     edit->setFocus();
-    connect( edit, SIGNAL( textChanged( const char * ) ),
-		    SLOT( slotTextChanged( const char * ) ) );
+    connect( edit, SIGNAL( textChanged( const QString& ) ),
+		    SLOT( slotTextChanged( const QString& ) ) );
 
     hl->addWidget( label );
     hl->addWidget( edit );
@@ -81,7 +81,7 @@ KFindTextDialog::KFindTextDialog( QWidget *parent, const char *name )
     rExp.setCaseSensitive( false );
 }
 
-void KFindTextDialog::slotTextChanged( const char *t )
+void KFindTextDialog::slotTextChanged( const QString& t )
 {
     rExp = t;
 }

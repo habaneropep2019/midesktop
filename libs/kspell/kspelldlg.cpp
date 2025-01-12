@@ -203,8 +203,8 @@ KSpellDlg::KSpellDlg (QWidget *, const char *name,
 
 	
 
-	connect (editbox,SIGNAL (textChanged (const char *)),
-		  this, SLOT (textChanged (const char *)));
+	connect (editbox,SIGNAL (textChanged (const QString&)),
+		  this, SLOT (textChanged (const QString&)));
 	connect (editbox,SIGNAL (returnPressed ()),
 		  this, SLOT (replace ()));
 	
@@ -272,7 +272,7 @@ void KSpellDlg::standby (void)
   qpbrepa->setEnabled (FALSE);
 }
 
-void KSpellDlg::textChanged (const char *)
+void KSpellDlg::textChanged (const QString&)
 {
   qpbrep->setEnabled (TRUE);
   qpbrepa->setEnabled (TRUE);

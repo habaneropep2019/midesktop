@@ -355,8 +355,8 @@ KBackground::KBackground( QWidget *parent, int mode, int desktop )
   wpCombo->setFixedHeight(wpCombo->height());
   //CT  wpCombo->setMinimumWidth(wpCombo->width());
 
-  connect( wpCombo, SIGNAL( activated( const char * ) ),
-	   SLOT( slotWallpaper( const char * )  )  );
+  connect( wpCombo, SIGNAL( activated( const QString& ) ),
+	   SLOT( slotWallpaper( const QString& )  )  );
 		
   /*CT 30Nov1998
   QBoxLayout *pushLayout = new QHBoxLayout( 5 ); 
@@ -901,7 +901,7 @@ void KBackground::setMonitor()
 // Note that centred pixmaps are placed on a full screen image of background
 // color1, so if you want to save memory use a small tiled pixmap.
 //
-bool KBackground::loadWallpaper( const char *name, bool useContext )
+bool KBackground::loadWallpaper( const QString& name, bool useContext )
 {
   static int context = 0;
   QString filename;
@@ -1199,11 +1199,11 @@ void KBackground::slotBrowse()
     }
 }
 
-void KBackground::slotWallpaper( const char *filename )
+void KBackground::slotWallpaper( const QString& filename )
 {
-  if ( filename )
+  if ( !filename.isEmpty() )
     {
-      if ( !strcmp(filename, i18n("No wallpaper") ) )
+      if ( filename != i18n("No wallpaper"))
 	{
 	  wpPixmap.resize(0, 0); // make NULL pixmap
 	  currentItem.wallpaper = filename;
@@ -1519,8 +1519,8 @@ KBPatternDlg::KBPatternDlg( QColor col1, QColor col2, uint *p, int *orient,
   grid->addWidget( lName, 0, 2 );
 	
   listBox = new QListBox( this );
-  connect(listBox, SIGNAL(highlighted(const char*)), 
-	  SLOT(selected(const char*)));
+  connect(listBox, SIGNAL(highlighted(const QString&)),
+	  SLOT(selected(const QString&)));
     
   grid->addWidget( listBox, 1, 1);
 	
@@ -1647,7 +1647,7 @@ int KBPatternDlg::savePatterns() {
   return 6;
 }
 
-void KBPatternDlg::selected( const char *selected )
+void KBPatternDlg::selected( const QString& selected )
 {
   for ( PatternEntry *item=list.first(); item != 0; item=list.next() )
     if (*item == selected) {

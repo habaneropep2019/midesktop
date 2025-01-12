@@ -62,13 +62,13 @@ protected:
 	void readSettings();
 
 private slots:
-	void slotFamily( const char * );
+	void slotFamily( const QString& );
 	void slotSize( int );
 	void slotColor();
 	void slotBold( bool );
 	void slotItalic( bool );
 	void slotSpeed( int );
-	void slotMessage( const char * );
+	void slotMessage( const QString& );
 	void slotOkPressed();
 	void slotAbout();
 

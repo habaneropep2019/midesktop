@@ -212,8 +212,8 @@ KFontExplorer::KFontExplorer( QWidget *parent, const char *name,
 
   family_combo->setGeometry(6*XOFFSET + LABLE_LENGTH
 			    ,8*YOFFSET - COMBO_ADJUST -5 ,4* LABLE_LENGTH,COMBO_BOX_HEIGHT);
-  connect( family_combo, SIGNAL(activated(const char *)),
-	   SLOT(family_chosen_slot(const char *)) );
+  connect( family_combo, SIGNAL(activated(const QString& )),
+	   SLOT(family_chosen_slot(const QString& )) );
   //   QToolTip::add( family_combo, "Select Font Family" );
 
   if (fontlist != 0L){
@@ -278,8 +278,8 @@ KFontExplorer::KFontExplorer( QWidget *parent, const char *name,
   size_combo->setGeometry(10*XOFFSET + 6*LABLE_LENGTH
 			    ,8*YOFFSET - COMBO_ADJUST -5
 			  ,2*LABLE_LENGTH + 20,COMBO_BOX_HEIGHT);
-  connect( size_combo, SIGNAL(activated(const char *)),
-	   SLOT(size_chosen_slot(const char *)) );
+  connect( size_combo, SIGNAL(activated(const QString&)),
+	   SLOT(size_chosen_slot(const QString&)) );
   //  QToolTip::add( size_combo, "Select Font Size in Points" );
 
 
@@ -290,8 +290,8 @@ KFontExplorer::KFontExplorer( QWidget *parent, const char *name,
 			    ,19*YOFFSET - COMBO_ADJUST -20
 			    ,4*LABLE_LENGTH,COMBO_BOX_HEIGHT);
   weight_combo->setInsertionPolicy(QComboBox::NoInsertion);
-  connect( weight_combo, SIGNAL(activated(const char *)),
-	   SLOT(weight_chosen_slot(const char *)) );
+  connect( weight_combo, SIGNAL(activated(const QString&)),
+	   SLOT(weight_chosen_slot(const QString& )) );
   // QToolTip::add( weight_combo, "Select Font Weight" );
 
   style_combo = new QComboBox( TRUE, this, klocale->translate("Style") );
@@ -301,8 +301,8 @@ KFontExplorer::KFontExplorer( QWidget *parent, const char *name,
 			    ,19*YOFFSET- COMBO_ADJUST - 20
 			   ,2*LABLE_LENGTH + 20,COMBO_BOX_HEIGHT);
   style_combo->setInsertionPolicy(QComboBox::NoInsertion);
-  connect( style_combo, SIGNAL(activated(const char *)),
-	   SLOT(style_chosen_slot(const char *)) );
+  connect( style_combo, SIGNAL(activated(const QString&)),
+	   SLOT(style_chosen_slot(const QString&)) );
   //QToolTip::add( style_combo, "Select Font Style" );
   
   /*
@@ -369,47 +369,35 @@ void KFontExplorer::setFont( const QFont& aFont){
   selFont = aFont;
   setCombos();
   display_example(selFont);
-}  
+}
 
-
-void KFontExplorer::family_chosen_slot(const char* family){
+void KFontExplorer::family_chosen_slot(const QString& family){
 
   selFont.setFamily(family);
-  //display_example();
   emit fontSelected(selFont);
 }
 
-void KFontExplorer::size_chosen_slot(const char* size){
+void KFontExplorer::size_chosen_slot(const QString& size){
   
-  QString size_string = size;
-
-  selFont.setPointSize(size_string.toInt());
-  //display_example();
+  selFont.setPointSize(size.toInt());
   emit fontSelected(selFont);
 }
 
-void KFontExplorer::weight_chosen_slot(const char* weight){
+void KFontExplorer::weight_chosen_slot(const QString& weight){
 
-  QString weight_string = weight;
-
-  if ( weight_string == QString(klocale->translate("normal")))
+  if ( weight == QString(klocale->translate("normal")))
     selFont.setBold(false);
-  if ( weight_string == QString(klocale->translate("bold")))
+  if ( weight == QString(klocale->translate("bold")))
        selFont.setBold(true);
-  // display_example();
   emit fontSelected(selFont);
 }
 
-void KFontExplorer::style_chosen_slot(const char* style){
+void KFontExplorer::style_chosen_slot(const QString& style){
 
-
-  QString style_string = style;
-
-  if ( style_string == QString(klocale->translate("roman")))
+  if ( style == QString(klocale->translate("roman")))
     selFont.setItalic(false);
-  if ( style_string == QString(klocale->translate("italic")))
+  if ( style == QString(klocale->translate("italic")))
     selFont.setItalic(true);
-  //  display_example();
   emit fontSelected(selFont);
 }
        

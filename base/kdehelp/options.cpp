@@ -62,8 +62,8 @@ KFontOptions::KFontOptions( QWidget *parent, const char *name )
 		if ( !strcmp( stdName, sit.current() ) )
 			cb->setCurrentItem( i );
 	}
-	connect( cb, SIGNAL( activated( const char * ) ),
-		SLOT( slotStandardFont( const char * ) ) );
+	connect( cb, SIGNAL( activated( const QString& ) ),
+		SLOT( slotStandardFont( const QString& ) ) );
 
 	label = new QLabel( klocale->translate( "Fixed Font"), this );
 	label->setGeometry( 15, 130, 100, 20 );
@@ -79,8 +79,8 @@ KFontOptions::KFontOptions( QWidget *parent, const char *name )
 		if ( !strcmp( fixedName, fit.current() ) )
 			cb->setCurrentItem( i );
 	}
-	connect( cb, SIGNAL( activated( const char * ) ),
-		SLOT( slotFixedFont( const char * ) ) );
+	connect( cb, SIGNAL( activated( const QString& ) ),
+		SLOT( slotFixedFont( const QString& ) ) );
 
 	connect( bg, SIGNAL( clicked( int ) ), SLOT( slotFontSize( int ) ) );
 }
@@ -184,12 +184,12 @@ void KFontOptions::slotFontSize( int i )
 	fSize = i+3;
 }
 
-void KFontOptions::slotStandardFont( const char *n )
+void KFontOptions::slotStandardFont( const QString& n )
 {
 	stdName = n;
 }
 
-void KFontOptions::slotFixedFont( const char *n )
+void KFontOptions::slotFixedFont( const QString& n )
 {
 	fixedName = n;
 }

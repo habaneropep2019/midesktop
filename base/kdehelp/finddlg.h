@@ -39,7 +39,7 @@ signals:
     void find( const QRegExp &re );
 
 public slots:
-    void slotTextChanged( const char *t );
+    void slotTextChanged( const QString& t );
     void slotCase( bool c );
     void slotClose();
     void slotFind();

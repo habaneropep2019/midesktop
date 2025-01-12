@@ -39,7 +39,7 @@ protected slots:
 
     virtual void downPressed();
     virtual void itemSelected(int);
-    virtual void itemChanged(const char*);
+    virtual void itemChanged(const QString&);
     virtual void newItem();
     virtual void deletePressed();
     virtual void upPressed();

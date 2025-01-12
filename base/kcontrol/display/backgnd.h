@@ -146,7 +146,7 @@ protected:
   int savePatterns();
    
 protected slots:
-  void selected(const char *item);
+  void selected(const QString& item);
   virtual void done ( int r );
   void slotMode( int );
     
@@ -256,7 +256,7 @@ protected slots:
   void slotSelectColor1( const QColor &col );
   void slotSelectColor2( const QColor &col );
   void slotBrowse();
-  void slotWallpaper( const char * );
+  void slotWallpaper( const QString& );
   void slotWallpaperMode( int );
   void slotColorMode( int );
   void slotStyleMode( int );
@@ -278,7 +278,7 @@ protected:
   void showSettings();
   void writeSettings( int deskNum );
   void setMonitor();
-  bool loadWallpaper( const char *filename, bool useContext = TRUE );
+  bool loadWallpaper( const QString& filename, bool useContext = TRUE );
   void retainResources();
   void setDefaults();
 
