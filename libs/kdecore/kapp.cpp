@@ -1753,7 +1753,7 @@ bool checkAccess(const char *pathname, int mode)
 
   unsigned long slashPosition = ULONG_MAX;
   {
-    std::size_t i = len;
+    int i = static_cast<int>(len);
     while(i >= 0)
     {
       if(pathname[i] == '/')
