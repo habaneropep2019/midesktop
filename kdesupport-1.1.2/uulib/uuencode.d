@@ -1,1 +1,0 @@
-uuencode.o: uuencode.c

@@ -1,1 +1,0 @@
-uuscan.o: uuscan.c

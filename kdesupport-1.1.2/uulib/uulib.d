@@ -1,1 +1,0 @@
-uulib.o: uulib.c
