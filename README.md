@@ -1,7 +1,10 @@
-# MiDE
-MiDE - Desktop Environment Fork of KDE1
+# MiDesktop
+MiDesktop is classical computing at its best - no frills, plain but useable.
 
-!! WARNING: This software is experimental. It may be unstable or contain severe security issues. DO NOT USE on a production system. YOU HAVE BEEN WARNED !!
+## About MiDesktop
 
-MiDE is a fork of KDE version 1. KDE1 was developed using the Qt toolkit, version 1. Due to licensing issues, Qt1 cannot be maintained. Originally, it was planned to port to Qt 2. However, I've been maintaining a fork of Qt2 called Osiris. It brings a few bug fixes and functionality improvements, thus MiDE will be ported to Osiris. It doesn't really change much as the work is nearly identical to porting to Qt2.
+MiDesktop (formerly MiDE) is a fork of KDE version 1.1.2, the last release of the 1.x series. Since then, it's been ported to the Osiris toolkit (which is a fork of Qt 2.3.2).
 
+The goal is to modernize MiDesktop without filling it with a bunch of features and bloat, retaining the essence of 90's and early 2000's computing without the pain points.
+
+**Important:** MiDesktop is still in the early stages and as such should be considered **experimental software**, in that it could have serious bugs or security flaws that have not been discovered yet. Use at your own risk!
