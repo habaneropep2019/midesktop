@@ -1,5 +1,5 @@
 include_directories(
-    ${QT_INCLUDE_DIR}
+    ${OSIRIS_INCLUDE_DIR}
     ${KDELIBS_SOURCE_DIR}/kdecore
     ${KDELIBS_SOURCE_DIR}/kfile
     )
@@ -30,11 +30,11 @@ set(KDEUI_MOC
 	ktablistbox.h ktmainwindow.h ktoolbar.h ktoolboxmgr.h
 	ktopwidget.h ktreelist.h kurllabel.h kwizard.h kwmmapp.h)
 
-QT2_WRAP_HEADER(MOC_FILES ${KDEUI_MOC})
+OSIRIS_WRAP_HEADER(MOC_FILES ${KDEUI_MOC})
 
 add_library(kdeui SHARED ${KDEUI_SRCS} ${MOC_FILES})
 set_target_properties(kdeui PROPERTIES VERSION 2.0.0 SOVERSION 2)
-target_link_libraries(kdeui kdecore ${QT_LIBRARIES} ${X11_LIBRARIES})
+target_link_libraries(kdeui kdecore ${OSIRIS_LIBRARIES} ${X11_LIBRARIES})
 install(TARGETS kdeui LIBRARY DESTINATION ${KDE1_LIBRARIES})
 
 install(FILES
