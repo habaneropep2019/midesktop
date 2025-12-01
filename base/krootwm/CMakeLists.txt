@@ -7,6 +7,8 @@ set(KROOTWM_SRCS krootwm.C)
 
 set(KROOTWM_MOC krootwm.moc)
 
+OSIRIS_WRAP_HEADER(MOC_FILES ${KROOTWM_MOC})
+
 add_executable(krootwm ${KROOTWM_SRCS} ${MOC_FILES})
 target_link_libraries(krootwm
     ${OSIRIS_LIBRARIES}

@@ -7,6 +7,8 @@ set(KBGNWM_SRCS main.cpp kbgndwm.cpp bg.cpp)
 
 set(KBGNWM_MOC kbgndwm.moc bg.moc)
 
+OSIRIS_WRAP_HEADER(MOC_FILES ${KBGNWM_MOC})
+
 add_executable(kbgndwm ${KBGNWM_SRCS} ${MOC_FILES})
 target_link_libraries(kbgndwm
     ${OSIRIS_LIBRARIES}

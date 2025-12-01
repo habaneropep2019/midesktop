@@ -11,6 +11,8 @@ set(KFM_MOC
 htmlopts.moc miscopts.moc  kproxydlg.moc khttpoptdlg.moc useragentdlg.moc kcookiesdlg.moc rootopts.moc
 )
 
+OSIRIS_WRAP_HEADER(MOC_FILES ${KFM_MOC})
+
 add_executable(kcmkfm ${KFM_SRCS} ${MOC_FILES})
 target_link_libraries(kcmkfm
     ${OSIRIS_LIBRARIES}

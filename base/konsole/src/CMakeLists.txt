@@ -17,6 +17,8 @@ set(KONSOLE_MOC
     TEmulation.moc
     TEShell.moc)
 
+OSIRIS_WRAP_HEADER(MOC_FILES ${KONSOLE_MOC})
+
 set(LIBKONSOLE_SRCS TEWidget.C TEmuVt102.C TEScreen.C TEmulation.C TEShell.C)
 add_library(libkonsole STATIC ${LIBKONSOLE_SRCS} ${MOC_FILES})
 set_target_properties(libkonsole PROPERTIES CMAKE_EXE_LINKER_FLAGS "-version-info 9:1.9")

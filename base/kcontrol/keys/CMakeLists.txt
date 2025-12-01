@@ -11,6 +11,8 @@ set(KEYS_MOC
 keyconfig.moc savescm.moc  
 )
 
+OSIRIS_WRAP_HEADER(MOC_FILES ${KEYS_MOC})
+
 add_executable(kcmkeys ${KEYS_SRCS} ${MOC_FILES})
 target_link_libraries(kcmkeys
     ${OSIRIS_LIBRARIES}

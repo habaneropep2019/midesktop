@@ -11,6 +11,8 @@ set(KPAGER_MOC
 desktop.h kpager.h kpagerclient.h ktrianglebutton.h version.h windowdrag.h
 )
 
+OSIRIS_WRAP_HEADER(MOC_FILES ${KPAGER_MOC})
+
 add_executable(kpager ${KPAGER_SRCS} ${MOC_FILES})
 target_link_libraries(kpager
     ${OSIRIS_LIBRARIES}

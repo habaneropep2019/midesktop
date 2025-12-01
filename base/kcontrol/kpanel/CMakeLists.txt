@@ -11,6 +11,8 @@ set(KPANEL_MOC
 panel.moc desktops.moc options.moc disknav.moc
 )
 
+OSIRIS_WRAP_HEADER(MOC_FILES ${KPANEL_MOC})
+
 add_executable(kcmkpanel ${KPANEL_SRCS} ${MOC_FILES})
 target_link_libraries(kcmkpanel
     ${OSIRIS_LIBRARIES}

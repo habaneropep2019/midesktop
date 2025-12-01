@@ -11,6 +11,8 @@ set(BELL_MOC
     bell.moc kslidercontrol.moc
 )
 
+OSIRIS_WRAP_HEADER(MOC_FILES ${BELL_MOC})
+
 add_executable(kcmbell ${BELL_SRCS} ${MOC_FILES})
 target_link_libraries(kcmbell
     ${OSIRIS_LIBRARIES}

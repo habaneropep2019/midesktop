@@ -8,6 +8,8 @@ set(MAUDIO_SRCS io_oss.cpp maudio.cpp sample.cpp)
 set(KAUDIO_MOC democlient.moc kplayaudio.moc)
 set(KPLAYAUDIO_SRCS kplayaudio.cpp)
 
+OSIRIS_WRAP_HEADER(MOC_FILES ${KAUDIO_MOC})
+
 add_executable(kaudioserver ${KAUDIO_SRCS})
 target_link_libraries(kaudioserver
     ${OSIRIS_LIBRARIES}

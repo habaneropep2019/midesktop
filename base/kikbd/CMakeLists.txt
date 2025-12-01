@@ -11,6 +11,8 @@ set(KIKBD_SRCS kikbd.cpp keytrans.cpp keymap.cpp kikbdconf.cpp
 
 set(KIKBD_MOC kconfobjs.moc kobjconf.moc keymap.moc kikbd.moc kikbdconf.moc widgets.moc)
 
+OSIRIS_WRAP_HEADER(MOC_FILES ${KIKBD_MOC})
+
 add_executable(kikbd ${KIKBD_SRCS} ${MOC_FILES})
 target_link_libraries(kikbd
     ${OSIRIS_LIBRARIES}

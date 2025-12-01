@@ -13,6 +13,8 @@ set(INFO_MOC
     memory.moc info.moc
 )
 
+OSIRIS_WRAP_HEADER(MOC_FILES ${INFO_MOC})
+
 add_executable(kcminfo ${INFO_SRCS} ${MOC_FILES})
 target_link_libraries(kcminfo
     ${OSIRIS_LIBRARIES}

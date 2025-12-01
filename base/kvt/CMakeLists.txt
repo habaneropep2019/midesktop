@@ -10,6 +10,8 @@ set(KVT_SRCS command.c screen.c utmp.c
 
 set(KVT_MOC main.moc)
 
+OSIRIS_WRAP_HEADER(MOC_FILES ${KVT_MOC})
+
 add_executable(kvt ${KVT_SRCS} ${MOC_FILES})
 target_link_libraries(kvt
     ${OSIRIS_LIBRARIES}

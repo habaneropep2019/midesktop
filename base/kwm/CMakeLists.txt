@@ -8,8 +8,10 @@ include_directories(
 set(KWM_SRCS client.C manager.C main.C minicli.C warning.C drag.C
     logout.C taskmgr.C kURLcompletion.cpp gradientFill.C )
 
-set( METASOURCES client.moc manager.moc main.moc minicli.moc
+set(KWMMETA_MOC client.moc manager.moc main.moc minicli.moc
     warning.moc logout.moc taskmgr.moc kURLcompletion.moc )
+
+OSIRIS_WRAP_MOC(MOC_SRCS ${KWMMETA_MOC})
 
 add_executable(kwm ${KWM_SRCS} ${MOC_SRCS})
 target_link_libraries(kwm 

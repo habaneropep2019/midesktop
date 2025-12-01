@@ -11,6 +11,8 @@ set(INPUT_MOC
 mouse.moc keyboard.moc kslidercontrol.moc
 )
 
+OSIRIS_WRAP_HEADER(MOC_FILES ${INPUT_MOC})
+
 add_executable(kcminput ${INPUT_SRCS} ${MOC_FILES})
 target_link_libraries(kcminput
     ${OSIRIS_LIBRARIES}

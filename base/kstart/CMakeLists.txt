@@ -7,6 +7,8 @@ set(KSTART_SRCS kstart.C)
 
 set(KSTART_MOC kstart.moc)
 
+OSIRIS_WRAP_HEADER(MOC_FILES ${KSTART_MOC})
+
 add_executable(kstart ${KSTART_SRCS} ${MOC_FILES})
 target_link_libraries(kstart
     ${OSIRIS_LIBRARIES}

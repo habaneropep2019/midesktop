@@ -13,6 +13,8 @@ set(THEMES_MOC
 theme.moc installer.moc colors.moc widgetcanvas.moc options.moc about.moc groupdetails.moc themecreator.moc
 )
 
+OSIRIS_WRAP_HEADER(MOC_FILES ${THEMES_MOC})
+
 add_executable(kthememgr ${THEMES_SRCS} ${MOC_FILES})
 target_link_libraries(kthememgr
     ${OSIRIS_LIBRARIES}

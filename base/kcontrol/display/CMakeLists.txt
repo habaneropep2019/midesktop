@@ -22,6 +22,8 @@ backgnd.moc display.moc colorscm.moc savescm.moc
 		kresourceman.moc
 )
 
+OSIRIS_WRAP_HEADER(MOC_FILES ${DISPLAY_MOC})
+
 add_executable(kcmdisplay ${DISPLAY_SRCS} ${MOC_FILES})
 target_link_libraries(kcmdisplay
     ${OSIRIS_LIBRARIES}
