@@ -1,7 +1,7 @@
 add_subdirectory(icons)
 
 include_directories(
-    ${QT_INCLUDE_DIR}
+    ${OSIRIS_INCLUDE_DIR}
     ${KDE1_INCLUDE_DIR}
     )
 
@@ -20,7 +20,7 @@ kmenuedit.moc pmenu.moc cpopmenu.moc confmenu.moc
 
 add_executable(kmenuedit ${KMENUEDIT_SRCS} ${MOC_FILES})
 target_link_libraries(kmenuedit
-    ${QT_LIBRARIES}
+    ${OSIRIS_LIBRARIES}
     ${X11_LIBRARIES}
     ${KDE1_KDECORE}
     ${KDE1_KDEUI}

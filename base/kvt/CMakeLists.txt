@@ -1,5 +1,5 @@
 include_directories(
-    ${QT_INCLUDE_DIR}
+    ${OSIRIS_INCLUDE_DIR}
     ${KDE1_INCLUDE_DIR}
     ${CURSES_INCLUDE_DIRS}
     )
@@ -12,7 +12,7 @@ set(KVT_MOC main.moc)
 
 add_executable(kvt ${KVT_SRCS} ${MOC_FILES})
 target_link_libraries(kvt
-    ${QT_LIBRARIES}
+    ${OSIRIS_LIBRARIES}
     ${X11_LIBRARIES}
     ${KDE1_KDECORE}
     ${KDE1_KDEUI}

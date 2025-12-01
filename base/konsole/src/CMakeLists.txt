@@ -1,6 +1,6 @@
 include_directories(
     ${CMAKE_CURRENT_BINARY_DIR}
-    ${QT_INCLUDE_DIR}
+    ${OSIRIS_INCLUDE_DIR}
     ${KDE1_INCLUDE_DIR}
     )
 
@@ -23,7 +23,7 @@ set_target_properties(libkonsole PROPERTIES CMAKE_EXE_LINKER_FLAGS "-version-inf
 #set_target_properties(konsole PROPERTIES VERSION 0.1.9 SOVERSION 9)
 
 add_executable(konsole ${KONSOLE_SRCS})
-target_link_libraries(konsole libkonsole ${QT_LIBRARIES} ${X11_LIBRARIES} ${KDE1_KDECORE} ${KDE1_KIMGIO} ${KDE1_KDEUI})
+target_link_libraries(konsole libkonsole ${OSIRIS_LIBRARIES} ${X11_LIBRARIES} ${KDE1_KDECORE} ${KDE1_KIMGIO} ${KDE1_KDEUI})
 install(TARGETS konsole RUNTIME DESTINATION ${KDE1_BINDIR})
 
 

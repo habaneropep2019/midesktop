@@ -2,7 +2,7 @@ add_subdirectory(doc)
 add_subdirectory(pics)
 
 include_directories(
-    ${QT_INCLUDE_DIR}
+    ${OSIRIS_INCLUDE_DIR}
     ${KDE1_INCLUDE_DIR}
     )
 
@@ -18,7 +18,7 @@ kdm-appear.moc kdm-font.moc kdm-bgnd.moc kdm-users.moc kdm-sess.moc
 
 add_executable(kdmconfig ${KDM_SRCS} ${MOC_FILES})
 target_link_libraries(kdmconfig
-    ${QT_LIBRARIES}
+    ${OSIRIS_LIBRARIES}
     ${X11_LIBRARIES}
     ${KDE1_KDECORE}
     ${KDE1_KDEUI}

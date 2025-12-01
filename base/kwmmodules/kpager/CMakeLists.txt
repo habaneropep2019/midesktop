@@ -1,5 +1,5 @@
 include_directories(
-    ${QT_INCLUDE_DIR}
+    ${OSIRIS_INCLUDE_DIR}
     ${KDE1_INCLUDE_DIR}
     )
 
@@ -13,7 +13,7 @@ desktop.h kpager.h kpagerclient.h ktrianglebutton.h version.h windowdrag.h
 
 add_executable(kpager ${KPAGER_SRCS} ${MOC_FILES})
 target_link_libraries(kpager
-    ${QT_LIBRARIES}
+    ${OSIRIS_LIBRARIES}
     ${X11_LIBRARIES}
     ${KDE1_KDECORE}
     ${KDE1_KDEUI}

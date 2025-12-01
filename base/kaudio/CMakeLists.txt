@@ -1,5 +1,5 @@
 include_directories(
-    ${QT_INCLUDE_DIR}
+    ${OSIRIS_INCLUDE_DIR}
     ${KDE1_INCLUDE_DIR}
     )
 
@@ -10,7 +10,7 @@ set(KPLAYAUDIO_SRCS kplayaudio.cpp)
 
 add_executable(kaudioserver ${KAUDIO_SRCS})
 target_link_libraries(kaudioserver
-    ${QT_LIBRARIES}
+    ${OSIRIS_LIBRARIES}
     ${X11_LIBRARIES}
     ${KDE1_KDECORE}
     ${KDE1_MEDIATOOL}
@@ -18,7 +18,7 @@ target_link_libraries(kaudioserver
 
 add_executable(kplayaudio ${KPLAYAUDIO_SRCS} ${MOC_FILES})
 target_link_libraries(kplayaudio
-    ${QT_LIBRARIES}
+    ${OSIRIS_LIBRARIES}
     ${X11_LIBRARIES}
     ${KDE1_KDECORE}
     ${KDE1_KDEUI}

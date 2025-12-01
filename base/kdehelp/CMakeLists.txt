@@ -1,5 +1,5 @@
 include_directories(
-    ${QT_INCLUDE_DIR}
+    ${OSIRIS_INCLUDE_DIR}
     ${KDE1_INCLUDE_DIR}
     )
 
@@ -11,7 +11,7 @@ set(KDEHELP_MOC bookmark.moc cgi.moc finddlg.moc.moc helpwin.moc mainwidget.moc 
 
 add_executable(kdehelp ${KDEHELP_SRCS} ${MOC_FILES})
 target_link_libraries(kdehelp
-    ${QT_LIBRARIES}
+    ${OSIRIS_LIBRARIES}
     ${X11_LIBRARIES}
     ${KDE1_KDECORE}
     ${KDE1_KHTMLW}

@@ -1,7 +1,7 @@
 add_subdirectory(pics)
 
 include_directories(
-    ${QT_INCLUDE_DIR}
+    ${OSIRIS_INCLUDE_DIR}
     ${KDE1_INCLUDE_DIR}
     )
 
@@ -13,7 +13,7 @@ set( METASOURCES client.moc manager.moc main.moc minicli.moc
 
 add_executable(kwm ${KWM_SRCS} ${MOC_SRCS})
 target_link_libraries(kwm 
-    ${QT_LIBRARIES} 
+    ${OSIRIS_LIBRARIES}
     ${X11_LIBRARIES}
     ${KDE1_KDECORE}
     ${KDE1_KHTMLW}

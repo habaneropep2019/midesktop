@@ -1,7 +1,7 @@
 add_subdirectory(pics)
 
 include_directories(
-    ${QT_INCLUDE_DIR}
+    ${OSIRIS_INCLUDE_DIR}
     ${KDE1_INCLUDE_DIR}
     )
 
@@ -15,7 +15,7 @@ set(KFIND_MOC kfdird.moc kfwin.moc kfindtop.moc
 
 add_executable(kfind ${KFIND_SRCS} ${MOC_FILES})
 target_link_libraries(kfind
-    ${QT_LIBRARIES}
+    ${OSIRIS_LIBRARIES}
     ${X11_LIBRARIES}
     ${KDE1_KDECORE}
     ${KDE1_KDEUI}

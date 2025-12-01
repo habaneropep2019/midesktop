@@ -2,7 +2,7 @@ add_subdirectory(doc)
 add_subdirectory(maps)
 
 include_directories(
-    ${QT_INCLUDE_DIR}
+    ${OSIRIS_INCLUDE_DIR}
     ${KDE1_INCLUDE_DIR}
     )
 
@@ -13,7 +13,7 @@ set(KIKBD_MOC kconfobjs.moc kobjconf.moc keymap.moc kikbd.moc kikbdconf.moc widg
 
 add_executable(kikbd ${KIKBD_SRCS} ${MOC_FILES})
 target_link_libraries(kikbd
-    ${QT_LIBRARIES}
+    ${OSIRIS_LIBRARIES}
     ${X11_LIBRARIES}
     ${KDE1_KDECORE}
     ${KDE1_KDEUI}
@@ -25,7 +25,7 @@ set(KCMIKBD_SRCS widgets.cpp kcmikbd.cpp kikbdconf.cpp kobjconf.cpp kconfobjs.cp
 
 add_executable(kcmikbd ${KCMIKBD_SRCS})
 target_link_libraries(kcmikbd
-    ${QT_LIBRARIES}
+    ${OSIRIS_LIBRARIES}
     ${X11_LIBRARIES}
     ${KDE1_KDECORE}
     ${KDE1_KDEUI}

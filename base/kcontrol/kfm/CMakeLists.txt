@@ -1,5 +1,5 @@
 include_directories(
-    ${QT_INCLUDE_DIR}
+    ${OSIRIS_INCLUDE_DIR}
     ${KDE1_INCLUDE_DIR}
     )
 
@@ -13,7 +13,7 @@ htmlopts.moc miscopts.moc  kproxydlg.moc khttpoptdlg.moc useragentdlg.moc kcooki
 
 add_executable(kcmkfm ${KFM_SRCS} ${MOC_FILES})
 target_link_libraries(kcmkfm
-    ${QT_LIBRARIES}
+    ${OSIRIS_LIBRARIES}
     ${X11_LIBRARIES}
     ${KDE1_KDECORE}
     ${KDE1_KDEUI}

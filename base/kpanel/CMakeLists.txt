@@ -1,7 +1,7 @@
 add_subdirectory(pics)
 
 include_directories(
-    ${QT_INCLUDE_DIR}
+    ${OSIRIS_INCLUDE_DIR}
     ${KDE1_INCLUDE_DIR}
     )
 
@@ -11,7 +11,7 @@ set(KPANEL_MOC kpanel.moc pmenu.moc)
 
 add_executable(kpanel ${KPANEL_SRCS} ${MOC_FILES})
 target_link_libraries(kpanel
-    ${QT_LIBRARIES}
+    ${OSIRIS_LIBRARIES}
     ${X11_LIBRARIES}
     ${KDE1_KDECORE}
     ${KDE1_KDEUI}

@@ -5,7 +5,7 @@ endif()
 add_subdirectory(pics)
 
 include_directories(
-    ${QT_INCLUDE_DIR}
+    ${OSIRIS_INCLUDE_DIR}
     ${KDE1_INCLUDE_DIR}
     )
 
@@ -24,7 +24,7 @@ backgnd.moc display.moc colorscm.moc savescm.moc
 
 add_executable(kcmdisplay ${DISPLAY_SRCS} ${MOC_FILES})
 target_link_libraries(kcmdisplay
-    ${QT_LIBRARIES}
+    ${OSIRIS_LIBRARIES}
     ${X11_LIBRARIES}
     ${KDE1_KDECORE}
     ${KDE1_KDEUI}

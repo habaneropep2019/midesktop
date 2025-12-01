@@ -1,7 +1,7 @@
 add_subdirectory(Themes)
 
 include_directories(
-    ${QT_INCLUDE_DIR}
+    ${OSIRIS_INCLUDE_DIR}
     ${KDE1_INCLUDE_DIR}
     )
 
@@ -15,7 +15,7 @@ theme.moc installer.moc colors.moc widgetcanvas.moc options.moc about.moc groupd
 
 add_executable(kthememgr ${THEMES_SRCS} ${MOC_FILES})
 target_link_libraries(kthememgr
-    ${QT_LIBRARIES}
+    ${OSIRIS_LIBRARIES}
     ${X11_LIBRARIES}
     ${KDE1_KDECORE}
     ${KDE1_KDEUI}

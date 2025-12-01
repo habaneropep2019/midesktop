@@ -1,6 +1,6 @@
 include_directories(
     ${CMAKE_CURRENT_BINARY_DIR}
-    ${QT_INCLUDE_DIR}
+    ${OSIRIS_INCLUDE_DIR}
     ${KDE1_INCLUDE_DIR}
     )
 
@@ -11,7 +11,7 @@ set(KCONTROL_MOC toplevel.moc kdelnk.moc mainwidget.moc configlist.moc kswallow.
 
 add_executable(kcontrol ${KCONTROL_SRCS} ${MOC_FILES})
 target_link_libraries(kcontrol
-    ${QT_LIBRARIES}
+    ${OSIRIS_LIBRARIES}
     ${X11_LIBRARIES}
     ${KDE1_KDECORE}
     ${KDE1_KDEUI}

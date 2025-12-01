@@ -1,6 +1,6 @@
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}
-    ${QT_INCLUDE_DIR}
+    ${OSIRIS_INCLUDE_DIR}
     ${KDE1_INCLUDE_DIR}
     )
 
@@ -34,7 +34,7 @@ set(KFM_MOC
 
 add_executable(kfm ${KFM_SRCS} ${MOC_FILES})
 target_link_libraries(kfm
-    ${QT_LIBRARIES}
+    ${OSIRIS_LIBRARIES}
     ${X11_LIBRARIES}
     ${KDE1_KDECORE}
     ${KDE1_KDEUI}
