@@ -21,6 +21,8 @@ sleep 1 ; kaudioserver
 (sleep 1 && exec kpanel) &
 (sleep 3 && exec kbgndwm) &
 
+(sleep 1 && exec miwelcome) &
+
 # finally, give the session control to the window manager
 
 sleep 2 ; exec kwm
