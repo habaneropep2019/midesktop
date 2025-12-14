@@ -26,7 +26,7 @@ if(UNIX)
     ${OSIRIS_INCLUDE_DIR}
     )
 
-  find_library(OSIRIS_LIBRARIES osiris
+  find_library(OSIRIS_LIBRARIES osiris-mt
     /opt/osiris/lib64
     /opt/osiris/lib
     ${OSIRIS_LIBRARY_DIR}
