@@ -1,0 +1,6 @@
+midesktoplibs (1.2-pre2-1) UNRELEASED; urgency=medium
+
+  * midesktoplibs - MiDesktop core libraries
+  * No bug fixes, just an initial package.
+
+ -- Alec Bloss <abloss@libranext.com>  Sun, 14 Dec 2025 14:27:24 -0600

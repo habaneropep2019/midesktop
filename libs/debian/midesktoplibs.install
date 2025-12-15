@@ -1,0 +1,5 @@
+/opt/kde1/lib64/*
+/opt/kde1/share/apps/*
+/opt/kde1/share/config/*
+/opt/kde1/share/locale/*
+/opt/kde1/share/toolbar/*
