@@ -37,6 +37,21 @@ if(CMAKE_COMPILER_IS_GNUCXX)
     set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,--no-undefined")
 endif()
 
+# Generate ldconfig file
+include(GNUInstallDirs)
+
+if(CMAKE_SYSTEM_NAME MATCHES "Linux" AND (NOT DEFINED LIB_SUFFIX) AND (NOT CMAKE_CROSSCOMPILING) AND (CMAKE_SIZEOF_VOID_P EQUAL "8") AND (CMAKE_INSTALL_PREFIX MATCHES "/opt/kde1" OR (CMAKE_INSTALL_PREFIX MATCHES "/opt/midesktop")))
+    SET(LIB_SUFFIX "64")
+endif()
+
+set(LDCONF_TEMPLATE_FILE "${CMAKE_CURRENT_SOURCE_DIR}/cmake/midesktop.conf.in")
+
+configure_file("${LDCONF_TEMPLATE_FILE}" "${CMAKE_CURRENT_BINARY_DIR}/midesktop.conf" @ONLY)
+
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/midesktop.conf" DESTINATION "/etc/ld.so.conf.d/")
+
+#
+
 install(FILES
     cmake/FindKDE1.cmake
     cmake/FindOsiris.cmake
