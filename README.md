@@ -71,12 +71,6 @@ echo 'export PATH=$PATH:/opt/kde1/bin'
 chmod +x /etc/profile.d/midesktop.sh
 ```
 
-Next, we need to let the linker know where to find the libraries:
-
-```
-echo "/opt/kde1/lib64" > /etc/ld.so.conf.d/midesktop.conf
-```
-You may need to substitute `lib` for `lib64`, depending on your system configuration.
 
 Finally, in order for you to be able to login with a MiDesktop session from your display manager, create the file `/usr/share/xsessions/midesktop.desktop` with the following contents:
 
