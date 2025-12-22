@@ -6,7 +6,9 @@ Rules-Requires-Root: no
 Build-Depends:
  debhelper-compat (= 13),
  ninja-build,
- cmake
+ cmake,
+ osiris (>= 2.4.4),
+ osiris (<< 2.5)
 Standards-Version: 4.7.2
 Homepage: https://centre.libranext.com/libranext/mide
 #Vcs-Browser: https://salsa.debian.org/debian/midesktoplibs
@@ -17,6 +19,8 @@ Architecture: any
 Depends:
  ${shlibs:Depends},
  ${misc:Depends},
+ osiris (>= 2.4.4),
+ osiris (<< 2.5)
 Replaces: kdelibs2g (<< 1.1.99)
 Breaks: kdelibs2g (<< 1.1.99)
 Description: MiDesktop core libraries (runtime files)
