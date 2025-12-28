@@ -58,36 +58,7 @@ cd ../..
 
 ### Post-install configuration
 
-A few things need to be done to ensure that MiDesktop is usable.
-
-First, you need to update the `PREFIX` environment variable.
-
-Easiest way is to create a script in `/etc/profile.d/` as root:
-
-```
-touch /etc/profile.d/midesktop.sh
-echo '#!/bin/bash' > /etc/profile.d/midesktop.sh
-echo 'export PATH=$PATH:/opt/kde1/bin'
-chmod +x /etc/profile.d/midesktop.sh
-```
-
-
-Finally, in order for you to be able to login with a MiDesktop session from your display manager, create the file `/usr/share/xsessions/midesktop.desktop` with the following contents:
-
-```
-[Desktop Entry]
-Name=MiDesktop
-Comment=MiDesktop
-Exec=/opt/kde1/bin/startkde
-TryExec=/opt/kde1/bin/startkde
-Type=Application
-X-LightDM-DesktopName=MiDesktop
-DesktopNames=MiDesktop
-```
-
-**Most importantly** logout *and* reboot. This will ensure that all environment variables are updated next time you log in. Users have reported issues when they have not rebooted and only logged out and back in again. This is not a MiDesktop bug, rather, how some distributions/software work.
-
-Congratulations, you should now have a working MiDesktop install!
+Generally, no post-install configuration is required now. There may be cases where the build system (CMake) generates an incorrect configuration file: please file a bug report if you run across this.
 
 ## Testing and bugs
 
