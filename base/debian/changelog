@@ -1,0 +1,5 @@
+midesktopbase (1.2-pre2-1) UNRELEASED; urgency=low
+
+  * Initial release of the Debian package
+
+ -- Alec Bloss <abloss@libranext.com>  Sun, 21 Dec 2025 18:33:40 -0600
