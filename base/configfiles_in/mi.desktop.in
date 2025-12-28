@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=MiDesktop
+Comment=MiDesktop
+Exec=@CMAKE_INSTALL_PREFIX@/bin/startkde
+TryExec=@CMAKE_INSTALL_PREFIX@/bin/startkde
+Type=Application
+X-LightDM-DesktopName=MiDesktop
+DesktopNames=MiDesktop

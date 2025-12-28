@@ -5,3 +5,5 @@
 /opt/kde1/share/config/*
 /opt/kde1/share/icons/*
 /opt/kde1/share/mimelnk/*
+/etc/profile.d/midesktop.sh
+/usr/share/xsessions/mi.desktop

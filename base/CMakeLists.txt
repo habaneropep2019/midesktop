@@ -59,3 +59,21 @@ add_subdirectory(kikbd)
 add_subdirectory(konsole)
 #add_subdirectory(po)
 add_subdirectory(miwelcome)
+
+# Generate and install system config files
+
+## profile.d - set PATH and KDEDIR
+
+set(PROFILE_TEMPLATE_FILE "${CMAKE_CURRENT_SOURCE_DIR}/configfiles_in/midesktop.sh.in")
+
+configure_file("${PROFILE_TEMPLATE_FILE}" "${CMAKE_CURRENT_BINARY_DIR}/midesktop.sh" @ONLY)
+
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/midesktop.sh" DESTINATION "/etc/profile.d/" PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
+
+## XSession .desktop so MiDesktop shows up in display managers
+
+set(XSESSION_TEMPLATE_FILE "${CMAKE_CURRENT_SOURCE_DIR}/configfiles_in/mi.desktop.in")
+
+configure_file("${XSESSION_TEMPLATE_FILE}" "${CMAKE_CURRENT_BINARY_DIR}/mi.desktop" @ONLY)
+
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/mi.desktop" DESTINATION "/usr/share/xsessions/" PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ)
