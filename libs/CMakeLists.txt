@@ -5,11 +5,11 @@ project (kdelibs)
 set(CMAKE_CXX_STANDARD 11)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
-set(CMAKE_BUILD_WITH_INSTALL_RPATH ON)
+#set(CMAKE_BUILD_WITH_INSTALL_RPATH ON)
 
-if (NOT CMAKE_BUILD_TYPE)
+#if (NOT CMAKE_BUILD_TYPE)
     #        set(CMAKE_BUILD_TYPE Release)
-endif()
+#endif()
 
 # additional cmake files
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
@@ -38,9 +38,10 @@ if(CMAKE_COMPILER_IS_GNUCXX)
 endif()
 
 # Generate ldconfig file
+## Did I mention just how much I hate CMake? Proof is in the pudding with this dumb workaround because CMake is incapable of figuring out directories in non-standard locations. what's a build system anyways?
 include(GNUInstallDirs)
 
-if(CMAKE_SYSTEM_NAME MATCHES "Linux" AND (NOT DEFINED LIB_SUFFIX) AND (NOT CMAKE_CROSSCOMPILING) AND (CMAKE_SIZEOF_VOID_P EQUAL "8") AND (CMAKE_INSTALL_PREFIX MATCHES "/opt/kde1" OR (CMAKE_INSTALL_PREFIX MATCHES "/opt/midesktop")))
+if(${CMAKE_SYSTEM_NAME} MATCHES "Linux" AND (NOT DEFINED LIB_SUFFIX) AND (NOT ${CMAKE_CROSSCOMPILING}) AND (${CMAKE_SIZEOF_VOID_P} EQUAL "8") AND (${CMAKE_INSTALL_PREFIX} MATCHES "/opt/kde1" OR (${CMAKE_INSTALL_PREFIX} MATCHES "/opt/midesktop")))
     SET(LIB_SUFFIX "64")
 endif()
 

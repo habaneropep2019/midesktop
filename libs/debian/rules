@@ -25,3 +25,5 @@ override_dh_auto_configure:
 		-DCMAKE_BUILD_TYPE=Debug \
 		-DCMAKE_INSTALL_PREFIX=/opt/kde1
 
+override_dh_shlibdeps:
+	dh_shlibdeps -l/opt/kde1/lib64
