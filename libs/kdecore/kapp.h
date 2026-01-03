@@ -23,10 +23,16 @@
 #define _KAPP_H
 
 // Version macros. Never put this further down.
-#define KDE_VERSION_STRING "1.1.2"
+#define KDE_VERSION_STRING "1.2.0"
 #define KDE_VERSION_MAJOR 1
-#define KDE_VERSION_MINOR 1
-#define KDE_VERSION_RELEASE 5
+#define KDE_VERSION_MINOR 2
+#define KDE_VERSION_RELEASE 0
+
+// Version macros. Same as above but these are the new MiDesktop references to move to.
+#define MIDESKTOP_VERSION_STRING "1.2.0"
+#define MIDESKTOP_VERSION_MAJOR 1
+#define MIDESKTOP_VERSION_MINOR 2
+#define MIDESKTOP_VERSION_RELEASE 0
 
 #include <kconfig.h>
 
