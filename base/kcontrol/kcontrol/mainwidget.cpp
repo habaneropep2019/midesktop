@@ -20,7 +20,7 @@ mainWidget::mainWidget(QWidget *parent , const char *name)
 {
   KIconLoader iconLoader;
 
-  QLabel *heading = new QLabel(klocale->translate("KDE Control Center"),this);
+  QLabel *heading = new QLabel(klocale->translate("MiDesktop Control Center"),this);
   QFont font("times",18,QFont::Bold);
   KApplication::getKApplication()->getCharsets()->setQFont(font);
   pmap = iconLoader.loadIcon("kdekcc.xpm");
@@ -45,10 +45,10 @@ void mainWidget::paintEvent(QPaintEvent *)
 
   // center the pixmap horizontally
   p.drawPixmap( (width() - pmap.width())/2, 250, pmap);
-  str = i18n("KDE Version: ");
+  str = i18n("MiDesktop Version: ");
   p.setFont(boldFont);
   p.drawText(60,70,str);
-  str.sprintf("%s",KDE_VERSION_STRING);
+  str.sprintf("%s",MIDESKTOP_VERSION_STRING);
   p.setFont(normalFont);
   p.drawText(180,70,str);
 
