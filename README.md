@@ -78,6 +78,18 @@ Generally, no post-install configuration is required now. There may be cases whe
 
 Well, it's known that MiDesktop has a lot of bugs and quirks. Bug reports are very welcome at https://centre.libranext.com/libranext/mide/-/issues
 
+### Workarounds for some known issues
+
+Some known bugs can be worked around without too much difficulty.
+
+#### Firefox (and Firefox ESR)
+
+**The issue:** Firefox expands to infinity off the edge of the screen.
+
+**The fix:** In the Firefox window, go to Main menu -> More Tools -> Customize Toolbar
+
+In the lower left-hand corner, check the box for Title Bar. You may need to do this from a different desktop environment first, but the setting is retained.
+
 ### Known issues
 
 - Some menus on the lower taskbar do not remain open when clicked, i.e. opens and closes immediately
