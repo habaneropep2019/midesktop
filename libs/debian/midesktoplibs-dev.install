@@ -1,2 +1,2 @@
 /opt/kde1/include/*
-/usr/share/cmake-3.31/Modules/*
+/usr/share/cmake-*/Modules/*
