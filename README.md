@@ -46,13 +46,27 @@ ninja install # May need to be run with sudo or as root
 cd ../..
 ```
 
-base:
+**Building the base section for Debian:**
+
 ```
 cd base
 mkdir build && cd build
 cmake -G "Ninja" -DCMAKE_INSTALL_PREFIX=/opt/kde1 -DCMAKE_BUILD_TYPE=Debug ..
 ninja
 ninja install # May need to be run with sudo or as root
+cd ../..
+```
+
+**Building the base section for Ubuntu:**
+
+Ubuntu `noble` (this may affect other Ubuntu releases, but has not been tested on anything other than `noble`) ships a version combination of CMake and Ninja that exhibits a weird bug preventing all MOCs from generating on the first try: You can either use Ninja and just run it more than once after the missing MOCs, or, more preferably, you can change the build generator as below. While Ninja is the preferred build generator, there is generally no technical reason to not use a different generator, other than Ninja being faster with cleaner output in most cases.
+
+```
+cd base
+mkdir build && cd build
+cmake -DCMAKE_INSTALL_PREFIX=/opt/kde1 -DCMAKE_BUILD_TYPE=Debug ..
+make
+make install # May need to be run with sudo or as root
 cd ../..
 ```
 
