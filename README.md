@@ -90,6 +90,16 @@ Some known bugs can be worked around without too much difficulty.
 
 In the lower left-hand corner, check the box for Title Bar. You may need to do this from a different desktop environment first, but the setting is retained.
 
+#### GDM3 fails to log in to MiDesktop session or logs in and logs back out with "Authentication Error" message and partially frozen afterwards
+
+This appears to be related to GDM3 running in Wayland mode and expecting the session to register, which MiDesktop does not. There is not actually an authentication error as far as I can tell.
+
+The temporary workaround is to disable the Wayland backend.
+
+Edit the file /etc/gdm3/daemon.conf and uncomment the line `WaylandEnable=false`
+
+You may need to restart the GDM service and/or reboot your system for this to take affect.
+
 ### Known issues
 
 - Some menus on the lower taskbar do not remain open when clicked, i.e. opens and closes immediately
