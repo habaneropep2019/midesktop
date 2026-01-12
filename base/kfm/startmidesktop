@@ -1,0 +1,136 @@
+#!/bin/bash
+
+# New startup script for MiDesktop
+
+# (C) 2026 Alec Bloss. Released under the MIT license.
+# Based on the original startkde script
+
+# SPDX-License-Identifier: MIT
+
+# For now, we have to manually update this. Eventually the C re-write will make this built-in.
+
+MIDESKTOP_VERSION="1.2"
+
+# You can set certain environment variables to influence the behavior of this script.
+## MIDESKTOP_FASTSTART : set to true to reduce/eliminate sleep values for each command.
+## MIDESKTOP_DEBUG     : set to enable some extra output/steps
+
+echo "MiDesktop version $MIDESKTOP_VERSION starting..."
+
+# The original startkde script included some sleep commands to presumably prevent disk thrashing.
+## Have to remember that KDE was a heavyweight when it was released in the 90s. I personally
+## remember my disk working overtime to load it on a ThinkPad 760XL.
+##
+## So, we do a quick and dirty check of bogomips to determine whether faststart should be enabled
+## automatically or not. Faststart is automatically enabled when bogomips is greater than 12.
+## Note that you can override that on slower machines and still enable faststart, though it's not
+## recommended for performance reasons in most cases.
+
+if [ "$(cat /proc/cpuinfo | grep -m 1 bogomips | awk '{print $3}' | awk -F. '{print $1}')" -gt 12 ]
+then
+    if [ -z "$MIDESKTOP_FASTSTART" ]
+    then
+        echo "MiDesktop: fast startup automatically enabled. Set MIDESKTOP_FASTSTART to false if you run into issues."
+        MIDESKTOP_FASTSTART=true
+    elif [ "$MIDESKTOP_FASTSTART" ==  false ]
+        then
+            echo "MiDesktop: fast startup explicitly disabled by user. Fast startup is recommended on this system."
+    fi
+else
+    if [ -z "$MIDESKTOP_FASTSTART" ]
+    then
+        echo "MiDesktop: fast startup automatically disabled. Bogomips were not greater than 12."
+        echo "MiDesktop: you can try enabling fast startup by setting MIDESKTOP_FASTSTART to true if you believe your system performance is good enough"
+        MIDESKTOP_FASTSTART=false
+    elif [ "$MIDESKTOP_FASTSTART" ==  true ]
+        then
+            echo "MiDesktop: fast startup explicitly enabled by user. Fast startup is not recommended on this system."
+            echo "MiDesktop: If you run into performance issues, disable fast startup by setting MIDESKTOP_FASTSTART to false"
+    fi
+fi
+
+
+# Check if GDM is in use and enable session registration if so
+
+if [ -n "$GDMSESSION" ]
+then
+    MIDESKTOP_ENABLE_GDM_SUPPORT=true
+    echo "MiDesktop: detected start from GDM, enabling session registration"
+fi
+
+# Initialize configuration
+
+kcontrol -init
+
+# Start the audio system
+## kaudioserver will background itself automatically
+
+echo "MiDesktop: starting the audio system"
+
+if [ "$MIDESKTOP_FASTSTART" ==  true ]
+then
+    kaudioserver
+    (exec kwmsound) &
+else
+    sleep 1 ; kaudioserver
+    (sleep 1 && exec kwmsound) &
+fi
+
+# Start KFM - this manages the icons and some other stuff
+
+echo "MiDesktop: starting KFM"
+
+if [ "$MIDESKTOP_FASTSTART" ==  true ]
+then
+    (exec kfm) &
+else
+    (sleep 1 && exec kfm) &
+fi
+
+# Start the root window manager, panel, and background window manager
+
+echo "MiDesktop: starting krootwm, kpanel, and kbgndwm"
+
+if [ "$MIDESKTOP_FASTSTART" ==  true ]
+then
+    kaudioserver
+    (exec krootwm) &
+    (exec kpanel) &
+    (exec kbgndwm) &
+else
+    (sleep 1 && exec krootwm) &
+    (sleep 1 && exec kpanel) &
+    (sleep 3 && exec kbgndwm) &
+fi
+
+# If GDM support is enabled, register the session
+
+if [ "$MIDESKTOP_ENABLE_GDM_SUPPORT" == true ]
+then
+    echo "MiDesktop: registering session with GDM"
+    gdbus call --system --dest org.gnome.DisplayManager --object-path /org/gnome/DisplayManager/Manager --method org.gnome.DisplayManager.Manager.RegisterSession "{}"
+fi
+
+# Run the greeter
+
+echo "MiDesktop: running greeter"
+
+if [ "$MIDESKTOP_FASTSTART" ==  true ]
+then
+    (exec miwelcome) &
+else
+    (sleep 1 && exec miwelcome) &
+fi
+
+# Run the greeter
+
+echo "MiDesktop: Handing session control to window manager"
+
+if [ "$MIDESKTOP_FASTSTART" ==  true ]
+then
+    exec kwm
+else
+    sleep 2 ; exec kwm
+fi
+
+
