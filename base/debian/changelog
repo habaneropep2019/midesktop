@@ -1,4 +1,4 @@
-midesktopbase (1.2.0~pre3) UNRELEASED; urgency=low
+midesktopbase (1.2.0~pre3-1) UNRELEASED; urgency=low
 
   * Updated XSession .desktop
   * New session start script
