@@ -94,11 +94,13 @@ In the lower left-hand corner, check the box for Title Bar. You may need to do t
 
 This appears to be related to GDM3 running in Wayland mode and expecting the session to register, which MiDesktop does not. There is not actually an authentication error as far as I can tell.
 
-The temporary workaround is to disable the Wayland backend.
+~~The temporary workaround is to disable the Wayland backend.~~
 
-Edit the file /etc/gdm3/daemon.conf and uncomment the line `WaylandEnable=false`
+~~Edit the file /etc/gdm3/daemon.conf and uncomment the line `WaylandEnable=false`~~
 
-You may need to restart the GDM service and/or reboot your system for this to take affect.
+~~You may need to restart the GDM service and/or reboot your system for this to take affect.~~
+
+Should be at least partially fixed in 1.2-pre2fix1 or later.
 
 ### Known issues
 
