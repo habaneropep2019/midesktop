@@ -824,3 +824,4 @@ midesktopbase: dir-or-file-in-opt [opt/kde1/share/mimelnk/video/quicktime.kdelnk
 midesktopbase: dir-or-file-in-opt [opt/kde1/share/mimelnk/video/x-flic.kdelnk]
 midesktopbase: dir-or-file-in-opt [opt/kde1/share/mimelnk/video/x-msvideo.kdelnk]
 midesktopbase: copyright-file-contains-full-gpl-license
+midesktopbase: dir-or-file-in-opt [opt/kde1/bin/startmidesktop]
