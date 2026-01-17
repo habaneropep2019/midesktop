@@ -100,7 +100,7 @@ This appears to be related to GDM3 running in Wayland mode and expecting the ses
 
 ~~You may need to restart the GDM service and/or reboot your system for this to take affect.~~
 
-Should be at least partially fixed in 1.2-pre2fix1 or later.
+Should be at least partially fixed in 1.2.0~pre3 or later.
 
 ### Known issues
 
