@@ -1,5 +1,8 @@
-midesktopbase (1.2-pre2-1) UNRELEASED; urgency=low
+midesktopbase (1.2.0~pre3) UNRELEASED; urgency=low
 
-  * Initial release of the Debian package
+  * Updated XSession .desktop
+  * New session start script
+  * Workaround for GDM3 issues
+  * Bumped MiDesktop version to 1.2
 
- -- Alec Bloss <abloss@libranext.com>  Sun, 21 Dec 2025 18:33:40 -0600
+ -- Alec Bloss <abloss@libranext.com>  Sat, 17 Jan 2026 13:24:04 -0600
