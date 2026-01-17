@@ -8,7 +8,8 @@ Build-Depends:
  ninja-build,
  osiris (>= 2.4.4),
  osiris (<< 2.5),
- midesktoplibs (>=1.1.99)
+ midesktoplibs (>=1.1.99),
+ pkg-config
 Standards-Version: 4.7.0
 Homepage: https://centre.libranext.com/libranext/mide
 Rules-Requires-Root: no
@@ -26,7 +27,7 @@ Depends:
  midesktoplibs (>=1.1.99)
 Replaces: kdebase (<< 1.1.99)
 Breaks: kdebase (<< 1.1.99)
-Suggests: midesktopwallpapers, midesktopadmin, midesktopgames, midestkopgraphics, midesktopmultimedia, midesktopnetwork, midesktoptoys, midesktoputils, miorganizer, midesktopbase-doc, midesktopbase-i18n, xbase-clients
+Suggests: midesktopwallpapers, midesktopadmin, midesktopgames, midestkopgraphics, midesktopmultimedia, midesktopnetwork, midesktoptoys, midesktoputils, miorganizer, midesktopbase-doc, midesktopbase-i18n
 Description: MiDesktop core applications
  This is a suite of all core MiDesktop applications :
  file manager kfm, window manager kwm

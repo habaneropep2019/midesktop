@@ -8,7 +8,14 @@ Build-Depends:
  ninja-build,
  cmake,
  osiris (>= 2.4.4),
- osiris (<< 2.5)
+ osiris (<< 2.5),
+ osiris-dev-tools (>= 2.4.4),
+ osiris-dev-tools (<< 2.5),
+ zlib1g,
+ libjpeg,
+ libtiff,
+ libx11,
+ libxext
 Standards-Version: 4.7.2
 Homepage: https://centre.libranext.com/libranext/mide
 #Vcs-Browser: https://salsa.debian.org/debian/midesktoplibs
