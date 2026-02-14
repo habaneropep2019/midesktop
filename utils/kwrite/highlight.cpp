@@ -15,6 +15,8 @@
 #include "kwdoc.h"
 #include "kmimemagic.h"
 
+#include "highlight.moc"
+
 char *cKeywords[] = {
   "break", "case", "continue", "default", "do", "else", "enum", "extern",
   "for", "goto", "if", "interrupt", "register", "return", "struct", "switch",
@@ -566,7 +568,7 @@ const char *HlAdaChar::checkHgl(const char *s) {
 }
 
 //--------
-ItemStyle::ItemStyle() : selCol(white), bold(false), italic(false) {
+ItemStyle::ItemStyle() : selCol(Qt::white), bold(false), italic(false) {
 }
 
 ItemStyle::ItemStyle(const QColor &col, const QColor &selCol,
@@ -826,7 +828,7 @@ void CHighlight::createItemData(ItemDataList &list) {
   list.append(new ItemData("String Char",dsChar));
   list.append(new ItemData("Comment",dsComment));
   list.append(new ItemData("Preprocessor",dsOthers));
-  list.append(new ItemData("Prep. Lib",dsOthers,darkYellow,yellow,false,false));
+  list.append(new ItemData("Prep. Lib",dsOthers,Qt::darkYellow,Qt::yellow,false,false));
 }
 
 void CHighlight::makeContextList() {
@@ -916,11 +918,11 @@ HtmlHighlight::~HtmlHighlight() {
 void HtmlHighlight::createItemData(ItemDataList &list) {
 
   list.append(new ItemData("Normal Text",dsNormal));
-  list.append(new ItemData("Char",dsChar,darkGreen,green,false,false));
+  list.append(new ItemData("Char",dsChar,Qt::darkGreen,Qt::green,false,false));
   list.append(new ItemData("Comment",dsComment));
-  list.append(new ItemData("Tag Text",dsOthers,black,white,true,false));
-  list.append(new ItemData("Tag",dsKeyword,darkMagenta,magenta,true,false));
-  list.append(new ItemData("Tag Value",dsDecVal,darkCyan,cyan,false,false));
+  list.append(new ItemData("Tag Text",dsOthers,Qt::black,Qt::white,true,false));
+  list.append(new ItemData("Tag",dsKeyword,Qt::darkMagenta,Qt::magenta,true,false));
+  list.append(new ItemData("Tag Value",dsDecVal,Qt::darkCyan,Qt::cyan,false,false));
 }
 
 void HtmlHighlight::makeContextList() {

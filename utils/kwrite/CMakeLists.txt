@@ -12,19 +12,15 @@ set(KWRITE_SRCS
 	highlight.cpp kwdoc.cpp kwview.cpp
 	kwdialog.cpp toplevel.cpp kmimemagic.cpp)
 
-set(KWRITE_MOC
-	kfmgui.h kfmview.h kbind.h
-	kfmdlg.h bookmark.h kfmprops.h kfmserver_ipc.h
-	kfmserver.h kioserver.h kioserver_ipc.h
-	root.h kfmman.h kiojob.h
-	htmlcache.h kfmtree.h
-	krenamewin.h passworddialog.h kURLcompletion.h kfmw.h
-	kfmjob.h kfmexec.h kfinder.h
-	open-with.h finddlg.h kcookiewin.h popup.h)
+set(KWRITE_HEADERS
+	highlight.h kwdoc.h kwview.h kwdialog.h toplevel.h kmimemagic.h)
 
-OSIRIS_WRAP_HEADER(MOC_FILES ${KWRITE_MOC})
+OSIRIS_WRAP_HEADER(MOC_FILES ${KWRITE_HEADERS})
 
-add_executable(kwrite ${KWRITE_SRCS} ${KWRITE_FILES})
+set(KWRITE_MOC_FILES
+	highlight.moc kwdoc.moc kwview.moc kwdialog.moc toplevel.moc kmimemagic.moc)
+
+add_executable(kwrite ${KWRITE_SRCS} ${MOC_FILES})
 target_link_libraries(kwrite
     ${OSIRIS_LIBRARIES}
     ${X11_LIBRARIES}

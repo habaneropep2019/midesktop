@@ -23,6 +23,8 @@
 #include "kwview.h"
 #include "kwdoc.h"
 
+#include "kwview.moc"
+
 #ifdef HAVE_PATHS_H
 #include <paths.h>
 #endif
@@ -31,7 +33,7 @@
 #define _PATH_TMP "/tmp/"
 #endif
 
-int keys[] = {Key_1,Key_2,Key_3,Key_4,Key_5,Key_6,Key_7,Key_8,Key_9};
+int keys[] = {Qt::Key_1,Qt::Key_2,Qt::Key_3,Qt::Key_4,Qt::Key_5,Qt::Key_6,Qt::Key_7,Qt::Key_8,Qt::Key_9};
 
 struct BufferInfo {
   void *user;

@@ -36,7 +36,7 @@ MiDesktop is built in two steps. First, the libraries are built, then the base.
 
 MiDesktop should **always** be installed in the `/opt` prefix. It cannot be installed alongside any other KDE version unless it is installed in `/opt` - this will be fixed in a future release.
 
-libs:
+**libs:**
 ```
 cd libs
 mkdir build && cd build
@@ -67,6 +67,16 @@ mkdir build && cd build
 cmake -DCMAKE_INSTALL_PREFIX=/opt/kde1 -DCMAKE_BUILD_TYPE=Debug ..
 make
 make install # May need to be run with sudo or as root
+cd ../..
+```
+
+**utils:**
+```
+cd utils
+mkdir build && cd build
+cmake -G "Ninja" -DCMAKE_INSTALL_PREFIX=/opt/kde1 -DCMAKE_BUILD_TYPE=Debug ..
+ninja
+ninja install # May need to be run with sudo or as root
 cd ../..
 ```
 

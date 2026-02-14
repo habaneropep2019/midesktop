@@ -10,6 +10,8 @@
 #include "kwview.h"
 #include "kwdoc.h"
 
+#include "kwdoc.moc"
+
 //text attribute constants
 const int taSelected = 0x40;
 const int taFound = 0x80;
@@ -1384,7 +1386,7 @@ QString KWriteDoc::text() {
     textLine = contents.at(z);
     len += textLine->length() + 1;
   }
-  QString s(len);
+  QCString s(len);
   len = 0;
   for (z = 0; z <= last; z++) {
     textLine = contents.at(z);
@@ -1408,7 +1410,7 @@ QString KWriteDoc::currentWord(PointStruc &cursor) {
   while (start > 0 && highlight->isInWord(textLine->getChar(start - 1))) start--;
   while (end < len && highlight->isInWord(textLine->getChar(end))) end++;
   len = end - start;
-  QString s(len +1);
+  QCString s(len +1);
   for (z = 0; z < len; z++) s[z] = textLine->getChar(start + z);
   s[len] = '\0';
   return s;
@@ -1444,7 +1446,7 @@ QString KWriteDoc::markedText(int flags) {
       len += textLine->numSelected();
       if (textLine->isSelected()) len++;
     }
-    QString s(len);
+    QCString s(len);
     len = 0;
     for (z = selectStart; z <= selectEnd; z++) {
       textLine = contents.at(z);
@@ -1469,7 +1471,7 @@ QString KWriteDoc::markedText(int flags) {
       textLine = contents.at(z);
       len += textLine->numSelected() + 1;
     }
-    QString s(len);
+    QCString s(len);
     len = 0;
     for (z = selectStart; z <= selectEnd; z++) {
       textLine = contents.at(z);

@@ -21,19 +21,13 @@
 #include <qregexp.h>
 #include "kmimemagic.h"
 
+#include "kmimemagic.moc"
+
 /*
  * data structures and related constants
  */
-// Stephan: the CC doesn't support such macros
-/*
+
 #define MIME_MAGIC_DEBUG  0
-#if MIME_MAGIC_DEBUG
-#define debug(fmt, args...)  debugT(fmt "\n" , ## args)
-#else
-#define debug(fmt, args...)
-#endif
-*/
-#define debug debugT
 
 #define DECLINED 999
 #define ERROR    998
@@ -77,8 +71,8 @@ struct magic {
 	int lineno;             /* line number from magic file */
 
 	short flag;
-#define INDIR    1              /* if '>(...)' appears,  */
-#define UNSIGNED 2              /* comparison is unsigned */
+	#define INDIR    1              /* if '>(...)' appears,  */
+	#define UNSIGNED 2              /* comparison is unsigned */
 	short cont_level;       /* level of ">" */
 	struct {
 		char type;      /* byte short long */
@@ -88,17 +82,17 @@ struct magic {
 	unsigned char reln;     /* relation (0=eq, '>'=gt, etc) */
 	char type;              /* int, short, long or string. */
 	char vallen;            /* length of string value, if any */
-#define BYTE       1
-#define SHORT      2
-#define LONG       4
-#define STRING     5
-#define DATE       6
-#define BESHORT    7
-#define BELONG     8
-#define BEDATE     9
-#define LESHORT   10
-#define LELONG    11
-#define LEDATE    12
+	#define BYTE       1
+	#define SHORT      2
+	#define LONG       4
+	#define STRING     5
+	#define DATE       6
+	#define BESHORT    7
+	#define BELONG     8
+	#define BEDATE     9
+	#define LESHORT   10
+	#define LELONG    11
+	#define LEDATE    12
 	VALUETYPE value;        /* either number or string */
 	unsigned long mask;     /* mask before comparison with value */
 	char nospflag;          /* supress space character */
@@ -207,7 +201,7 @@ typedef struct asc_type {
 } asc_type;
 
 static asc_type types[] = {
-	{ "text/html",         10, 1.2 },
+	{ "text/html",          6, 2 }, // 10 items but 6 different words only
 	{ "text/x-c",           9, 1.3 },
 	{ "text/x-makefile",    4, 1.9 },
 	{ "text/x-pli",         1, 3 },
@@ -229,6 +223,8 @@ static struct names {
 
 	/* These must be sorted by eye for optimal hit rate */
 	/* Add to this list only after substantial meditation */
+	// ?? Order doesn't count, as we do 'best accurate' matching ! (David)
+
 	{
 		"<html>", L_HTML
 	},
@@ -398,14 +394,14 @@ config_rec *conf;
 
 void  error( const char *msg, ... )
 {
-    va_list ap;
-    va_start( ap, msg );  
-    // use variable arg list
-    QString tmp = msg;
-    tmp += "\n";
-    vfprintf( stderr, tmp.data() , ap );
-    va_end( ap );
-    accuracy = 0;
+	va_list ap;
+	va_start( ap, msg );
+	// use variable arg list
+	QString tmp = msg;
+	tmp += "\n";
+	vfprintf( stderr, tmp.data() , ap );
+	va_end( ap );
+	accuracy = 0;
 }
 
 #if (MIME_MAGIC_DEBUG > 1)
@@ -418,31 +414,31 @@ test_table()
 	// debug("%s: started", __FUNCTION__);
 	for (m = conf->magic; m; m = m->next) {
 		if (isprint((((unsigned long) m) >> 24) & 255) &&
-		    isprint((((unsigned long) m) >> 16) & 255) &&
-		    isprint((((unsigned long) m) >> 8) & 255) &&
-		    isprint(((unsigned long) m) & 255)) {
-		    //debug("%s: POINTER CLOBBERED! "
-		    //"m=\"%c%c%c%c\" line=%d", __FUNCTION__,
-			      (((unsigned long) m) >> 24) & 255,
-			      (((unsigned long) m) >> 16) & 255,
-			      (((unsigned long) m) >> 8) & 255,
-			      ((unsigned long) m) & 255,
-			      prevm ? prevm->lineno : -1);
-			break;
-		}
-		prevm = m;
+			isprint((((unsigned long) m) >> 16) & 255) &&
+			isprint((((unsigned long) m) >> 8) & 255) &&
+			isprint(((unsigned long) m) & 255)) {
+			//debug("%s: POINTER CLOBBERED! "
+			//"m=\"%c%c%c%c\" line=%d", __FUNCTION__,
+			(((unsigned long) m) >> 24) & 255,
+			(((unsigned long) m) >> 16) & 255,
+			(((unsigned long) m) >> 8) & 255,
+			((unsigned long) m) & 255,
+			prevm ? prevm->lineno : -1);
+		break;
+			}
+			prevm = m;
 	}
 }
 #endif
 
 #define    EATAB {while (isascii((unsigned char) *l) && \
-	      isspace((unsigned char) *l))  ++l;}
+isspace((unsigned char) *l))  ++l;}
 
 static int
 parse_line(char *line, int *rule, int lineno)
 {
 	int ws_offset;
-	
+
 	/* delete newline */
 	if (line[0]) {
 		line[strlen(line) - 1] = '\0';
@@ -452,7 +448,7 @@ parse_line(char *line, int *rule, int lineno)
 	while (line[ws_offset] && isspace(line[ws_offset])) {
 		ws_offset++;
 	}
-	
+
 	/* skip blank lines */
 	if (line[ws_offset] == 0) {
 		return 0;
@@ -460,7 +456,7 @@ parse_line(char *line, int *rule, int lineno)
 	/* comment, do not parse */
 	if (line[ws_offset] == '#')
 		return 0;
-	
+
 	/* if we get here, we're going to use it so count it */
 	(*rule)++;
 
@@ -487,7 +483,7 @@ apprentice()
 	f = fopen(fname, "r");
 	if (f == NULL) {
 		error("kmimelib: can't read magic file %s: %s",
-		      fname, strerror(errno));
+			  fname, strerror(errno));
 		return -1;
 	}
 
@@ -498,18 +494,18 @@ apprentice()
 
 	fclose(f);
 
-#if (MIME_MAGIC_DEBUG > 1)
+	#if (MIME_MAGIC_DEBUG > 1)
 	debug("%s: conf=%p file=%s m=%s m->next=%s last=%s",
-	      __FUNCTION__, conf,
-	      conf->magicfile ? conf->magicfile : "NULL",
-	      conf->magic ? "set" : "NULL",
-	      (conf->magic && conf->magic->next) ? "set" : "NULL",
-	      conf->last ? "set" : "NULL");
+		  __FUNCTION__, conf,
+	   conf->magicfile ? conf->magicfile : "NULL",
+	   conf->magic ? "set" : "NULL",
+	   (conf->magic && conf->magic->next) ? "set" : "NULL",
+		  conf->last ? "set" : "NULL");
 	debug("%s: read %d lines, %d rules, %d errors",
-	      __FUNCTION__, lineno, rule, errs);
+		  __FUNCTION__, lineno, rule, errs);
 
 	test_table();
-#endif
+	#endif
 
 	return (errs ? -1 : 0);
 }
@@ -535,7 +531,7 @@ buff_apprentice(char *buff)
 			*(++end) = '\0';
 			count = strlen(line);
 		} else
-		  strcat(line, "\n");
+			strcat(line, "\n");
 		start += count;
 		len -= count;
 		if (parse_line(line, &rule, lineno))
@@ -543,17 +539,17 @@ buff_apprentice(char *buff)
 		lineno++;
 	} while (len > 0);
 
-#if (MIME_MAGIC_DEBUG > 1)
+	#if (MIME_MAGIC_DEBUG > 1)
 	debug("%s: conf=%p m=%s m->next=%s last=%s",
-	      __FUNCTION__, conf,
-	      conf->magic ? "set" : "NULL",
-	      (conf->magic && conf->magic->next) ? "set" : "NULL",
-	      conf->last ? "set" : "NULL");
+		  __FUNCTION__, conf,
+	   conf->magic ? "set" : "NULL",
+	   (conf->magic && conf->magic->next) ? "set" : "NULL",
+		  conf->last ? "set" : "NULL");
 	debug("%s: read %d lines, %d rules, %d errors",
-	      __FUNCTION__, lineno, rule, errs);
+		  __FUNCTION__, lineno, rule, errs);
 
 	test_table();
-#endif
+	#endif
 
 	return (errs ? -1 : 0);
 }
@@ -566,11 +562,11 @@ signextend(struct magic *m, unsigned long v)
 {
 	if (!(m->flag & UNSIGNED))
 		switch (m->type) {
-				/*
-				 * Do not remove the casts below.  They are vital.
-				 * When later compared with the data, the sign
-				 * extension must have happened.
-				 */
+			/*
+			 * Do not remove the casts below.  They are vital.
+			 * When later compared with the data, the sign
+			 * extension must have happened.
+			 */
 			case BYTE:
 				v = (char) v;
 				break;
@@ -591,10 +587,10 @@ signextend(struct magic *m, unsigned long v)
 				break;
 			default:
 				error("%s: can't happen: m->type=%d",
-				      "signextend", m->type);
+					  "signextend", m->type);
 				return ERROR;
 		}
-	return v;
+		return v;
 }
 
 /*
@@ -683,17 +679,17 @@ parse(char *l, int lineno)
 		++l;
 	EATAB;
 
-#define NBYTE       4
-#define NSHORT      5
-#define NLONG       4
-#define NSTRING     6
-#define NDATE       4
-#define NBESHORT    7
-#define NBELONG     6
-#define NBEDATE     6
-#define NLESHORT    7
-#define NLELONG     6
-#define NLEDATE     6
+	#define NBYTE       4
+	#define NSHORT      5
+	#define NLONG       4
+	#define NSTRING     6
+	#define NDATE       4
+	#define NBESHORT    7
+	#define NBELONG     6
+	#define NBEDATE     6
+	#define NLESHORT    7
+	#define NLELONG     6
+	#define NLEDATE     6
 
 	if (*l == 'u') {
 		++l;
@@ -749,28 +745,28 @@ parse(char *l, int lineno)
 		case '>':
 		case '<':
 			/* Old-style anding: "0 byte &0x80 dynamically linked" */
-		case '&':
-		case '^':
-		case '=':
-			m->reln = *l;
-			++l;
-			break;
-		case '!':
-			if (m->type != STRING) {
+			case '&':
+			case '^':
+			case '=':
 				m->reln = *l;
 				++l;
 				break;
-			}
-			/* FALL THROUGH */
-		default:
-			if (*l == 'x' && isascii((unsigned char) l[1]) &&
-			    isspace((unsigned char) l[1])) {
-				m->reln = *l;
-				++l;
-				goto GetDesc;	/* Bill The Cat */
-			}
-			m->reln = '=';
-			break;
+			case '!':
+				if (m->type != STRING) {
+					m->reln = *l;
+					++l;
+					break;
+				}
+				/* FALL THROUGH */
+				default:
+					if (*l == 'x' && isascii((unsigned char) l[1]) &&
+						isspace((unsigned char) l[1])) {
+						m->reln = *l;
+					++l;
+					goto GetDesc;	/* Bill The Cat */
+						}
+						m->reln = '=';
+						break;
 	}
 	EATAB;
 
@@ -779,7 +775,7 @@ parse(char *l, int lineno)
 	/*
 	 * now get last part - the description
 	 */
-      GetDesc:
+	GetDesc:
 	EATAB;
 	if (l[0] == '\b') {
 		++l;
@@ -793,11 +789,11 @@ parse(char *l, int lineno)
 	while ((m->desc[i++] = *l++) != '\0' && i < MAXDESC)
 		/* NULLBODY */ ;
 
-#if (MIME_MAGIC_DEBUG > 1)
+	#if (MIME_MAGIC_DEBUG > 1)
 	debug("%s: line=%d m=%p next=%p cont=%d desc=%s",
-	      __FUNCTION__, lineno, m, m->next, m->cont_level,
-	      m->desc ? m->desc : "NULL");
-#endif                          /* MIME_MAGIC_DEBUG */
+		  __FUNCTION__, lineno, m, m->next, m->cont_level,
+	   m->desc ? m->desc : "NULL");
+	#endif                          /* MIME_MAGIC_DEBUG */
 
 	return 0;
 }
@@ -826,13 +822,13 @@ getvalue(struct magic *m, char **p)
  * *slen. Return updated scan pointer as function result.
  */
 static char *
-getstr(register char *s, register char *p, int plen, int *slen)
+getstr(char *s, char *p, int plen, int *slen)
 {
 	char *origs = s,
 	*origp = p;
 	char *pmax = p + plen - 1;
-	register int c;
-	register int val;
+	int c;
+	int val;
 
 	while ((c = *s++) != '\0') {
 		if (isspace((unsigned char) c))
@@ -876,29 +872,29 @@ getstr(register char *s, register char *p, int plen, int *slen)
 					break;
 
 					/* \ and up to 3 octal digits */
-				case '0':
-				case '1':
-				case '2':
-				case '3':
-				case '4':
-				case '5':
-				case '6':
-				case '7':
-					val = c - '0';
-					c = *s++;	/* try for 2 */
-					if (c >= '0' && c <= '7') {
-						val = (val << 3) | (c - '0');
-						c = *s++;	/* try for 3 */
-						if (c >= '0' && c <= '7')
+					case '0':
+					case '1':
+					case '2':
+					case '3':
+					case '4':
+					case '5':
+					case '6':
+					case '7':
+						val = c - '0';
+						c = *s++;	/* try for 2 */
+						if (c >= '0' && c <= '7') {
 							val = (val << 3) | (c - '0');
-						else
+							c = *s++;	/* try for 3 */
+							if (c >= '0' && c <= '7')
+								val = (val << 3) | (c - '0');
+							else
+								--s;
+						} else
 							--s;
-					} else
-						--s;
-					*p++ = (char) val;
-					break;
+				*p++ = (char) val;
+				break;
 
-					/* \x and up to 3 hex digits */
+				/* \x and up to 3 hex digits */
 				case 'x':
 					val = 'x';	/* Default if no digits */
 					c = hextoint(*s++);	/* Get next char */
@@ -916,13 +912,13 @@ getstr(register char *s, register char *p, int plen, int *slen)
 							--s;
 					} else
 						--s;
-					*p++ = (char) val;
-					break;
+				*p++ = (char) val;
+				break;
 			}
 		} else
 			*p++ = (char) c;
 	}
-      out:
+	out:
 	*p = '\0';
 	*slen = p - origp;
 	return s;
@@ -960,36 +956,36 @@ mconvert(union VALUETYPE *p, struct magic *m)
 			p->s[sizeof(p->s) - 1] = '\0';
 			if ((rt = strchr(p->s, '\n')) != NULL)
 				*rt = '\0';
-			return 1;
-#ifndef WORDS_BIGENDIAN
+		return 1;
+		#ifndef WORDS_BIGENDIAN
 		case SHORT:
-#endif
+			#endif
 		case BESHORT:
 			p->h = (short) ((p->hs[0] << 8) | (p->hs[1]));
 			return 1;
-#ifndef WORDS_BIGENDIAN
+			#ifndef WORDS_BIGENDIAN
 		case LONG:
 		case DATE:
-#endif
+			#endif
 		case BELONG:
 		case BEDATE:
 			p->l = (long)
-			    ((p->hl[0] << 24) | (p->hl[1] << 16) | (p->hl[2] << 8) | (p->hl[3]));
+			((p->hl[0] << 24) | (p->hl[1] << 16) | (p->hl[2] << 8) | (p->hl[3]));
 			return 1;
-#ifdef WORDS_BIGENDIAN
+			#ifdef WORDS_BIGENDIAN
 		case SHORT:
-#endif
+			#endif
 		case LESHORT:
 			p->h = (short) ((p->hs[1] << 8) | (p->hs[0]));
 			return 1;
-#ifdef WORDS_BIGENDIAN
+			#ifdef WORDS_BIGENDIAN
 		case LONG:
 		case DATE:
-#endif
+			#endif
 		case LELONG:
 		case LEDATE:
 			p->l = (long)
-			    ((p->hl[3] << 24) | (p->hl[2] << 16) | (p->hl[1] << 8) | (p->hl[0]));
+			((p->hl[3] << 24) | (p->hl[2] << 16) | (p->hl[1] << 8) | (p->hl[0]));
 			return 1;
 		default:
 			error("mconvert: invalid type %d", m->type);
@@ -1000,14 +996,20 @@ mconvert(union VALUETYPE *p, struct magic *m)
 
 static int
 mget(union VALUETYPE *p, unsigned char *s, struct magic *m,
-     int nbytes)
+	 int nbytes)
 {
 	long offset = m->offset;
+	// The file length might be < sizeof(union VALUETYPE) (David)
+	// -> pad with zeros (the 'file' command does it this way)
+	// Thanks to Stan Covington <stan@calderasystems.com> for detailed report
 	if (offset + (int)sizeof(union VALUETYPE) > nbytes)
-		 return 0;
-
-
-	memcpy(p, s + offset, sizeof(union VALUETYPE));
+	{
+		int have = nbytes - offset;
+		memset(p, 0, sizeof(union VALUETYPE));
+		if (have > 0)
+			memcpy(p, s + offset, have);
+	} else
+		memcpy(p, s + offset, sizeof(union VALUETYPE));
 
 	if (!mconvert(p, m))
 		return 0;
@@ -1027,7 +1029,7 @@ mget(union VALUETYPE *p, unsigned char *s, struct magic *m,
 		}
 
 		if (offset + (int)sizeof(union VALUETYPE) > nbytes)
-			 return 0;
+			return 0;
 
 		memcpy(p, s + offset, sizeof(union VALUETYPE));
 
@@ -1040,8 +1042,8 @@ mget(union VALUETYPE *p, unsigned char *s, struct magic *m,
 static int
 mcheck(union VALUETYPE *p, struct magic *m)
 {
-	register unsigned long l = m->value.l;
-	register unsigned long v;
+	unsigned long l = m->value.l;
+	unsigned long v;
 	int matched;
 
 	if ((m->value.s[0] == 'x') && (m->value.s[1] == '\0')) {
@@ -1077,9 +1079,9 @@ mcheck(union VALUETYPE *p, struct magic *m)
 			 */
 			v = 0;
 			{
-				register unsigned char *a = (unsigned char *) m->value.s;
-				register unsigned char *b = (unsigned char *) p->s;
-				register int len = m->vallen;
+				unsigned char *a = (unsigned char *) m->value.s;
+				unsigned char *b = (unsigned char *) p->s;
+				int len = m->vallen;
 
 				while (--len >= 0)
 					if ((v = *b++ - *a++) != 0)
@@ -1090,13 +1092,13 @@ mcheck(union VALUETYPE *p, struct magic *m)
 			error("mcheck: invalid type %d", m->type);
 			return 0;	/* NOTREACHED */
 	}
-#if 0
+	#if 0
 	debug("Before signextend %08x", v);
-#endif
+	#endif
 	v = signextend(m, v) & m->mask;
-#if 0
+	#if 0
 	debug("After signextend %08x", v);
-#endif
+	#endif
 
 	switch (m->reln) {
 		case 'x':
@@ -1114,16 +1116,16 @@ mcheck(union VALUETYPE *p, struct magic *m)
 		case '>':
 			if (m->flag & UNSIGNED)
 				matched = v > l;
-			else
-				matched = (long) v > (long) l;
-			break;
+		else
+			matched = (long) v > (long) l;
+		break;
 
 		case '<':
 			if (m->flag & UNSIGNED)
 				matched = v < l;
-			else
-				matched = (long) v < (long) l;
-			break;
+		else
+			matched = (long) v < (long) l;
+		break;
 
 		case '&':
 			matched = (v & l) == l;
@@ -1169,10 +1171,10 @@ int
 KMimeMagic::finishResult()
 {
 	int cur_pos,            /* current position within result */
-	 type_pos,              /* content type starting point: position */
-	 type_len,              /* content type length */
-	 encoding_pos,          /* content encoding starting point: position */
-	 encoding_len;          /* content encoding length */
+	type_pos,              /* content type starting point: position */
+	type_len,              /* content type length */
+	encoding_pos,          /* content encoding starting point: position */
+	encoding_len;          /* content encoding length */
 
 	int state;
 	/* start searching for the type and encoding */
@@ -1181,7 +1183,7 @@ KMimeMagic::finishResult()
 	encoding_pos = encoding_len = 0;
 	/* loop through the characters in the result */
 	for (cur_pos = 0; cur_pos < (int)resultBuf.length(); cur_pos++) {
-		if (isspace(resultBuf.at(cur_pos))) {
+		if (resultBuf.at(cur_pos).isSpace()) {
 			/* process whitespace actions for each state */
 			if (state == rsl_leading_space) {
 				/* eat whitespace in this state */
@@ -1208,65 +1210,65 @@ KMimeMagic::finishResult()
 			}
 			/* NOTREACHED */
 		} else if (state == rsl_type &&
-			   resultBuf.at(cur_pos) == '/') {
+			resultBuf.at(cur_pos) == '/') {
 			/* copy the char and go to rsl_subtype state */
 			type_len++;
-			state++;
-		} else {
-			/* process non-space actions for each state */
-			if (state == rsl_leading_space) {
-				/* non-space: begin MIME type */
-				state++;
-				type_pos = cur_pos;
-				type_len = 1;
-				continue;
-			} else if (state == rsl_type ||
-				   state == rsl_subtype) {
-				/* non-space: adds to type */
-				type_len++;
-				continue;
-			} else if (state == rsl_separator) {
-				/* non-space: begin MIME encoding */
-				state++;
-				encoding_pos = cur_pos;
-				encoding_len = 1;
-				continue;
-			} else if (state == rsl_encoding) {
-				/* non-space: adds to encoding */
-				encoding_len++;
-				continue;
+		state++;
 			} else {
-				/* should not be possible */
-				/* abandon malfunctioning module */
-				error(" KMimeMagic::finishResult: bad state %d (ns)", state);
-				return DECLINED;
+				/* process non-space actions for each state */
+				if (state == rsl_leading_space) {
+					/* non-space: begin MIME type */
+					state++;
+					type_pos = cur_pos;
+					type_len = 1;
+					continue;
+				} else if (state == rsl_type ||
+					state == rsl_subtype) {
+					/* non-space: adds to type */
+					type_len++;
+				continue;
+					} else if (state == rsl_separator) {
+						/* non-space: begin MIME encoding */
+						state++;
+						encoding_pos = cur_pos;
+						encoding_len = 1;
+						continue;
+					} else if (state == rsl_encoding) {
+						/* non-space: adds to encoding */
+						encoding_len++;
+						continue;
+					} else {
+						/* should not be possible */
+						/* abandon malfunctioning module */
+						error(" KMimeMagic::finishResult: bad state %d (ns)", state);
+						return DECLINED;
+					}
+					/* NOTREACHED */
 			}
 			/* NOTREACHED */
-		}
-		/* NOTREACHED */
 	}
 
 	/* if we ended prior to state rsl_subtype, we had incomplete info */
 	if (state != rsl_subtype && state != rsl_separator &&
-	    state != rsl_encoding) {
+		state != rsl_encoding) {
 		/* defer to other modules */
 		return DECLINED;
-	}
-	/* save the info in the request record */
-	if (state == rsl_subtype || state == rsl_encoding ||
-	    state == rsl_encoding || state == rsl_separator) {
-		magicResult->setContent(resultBuf.mid(type_pos, type_len));
-	}
-	if (state == rsl_encoding)
-		magicResult->setEncoding(resultBuf.mid(encoding_pos,
-						       encoding_len));
-	/* detect memory allocation errors */
-	if (!magicResult->getContent() ||
-	    (state == rsl_encoding && !magicResult->getEncoding())) {
-		return -1;
-	}
-	/* success! */
-	return OK;
+		}
+		/* save the info in the request record */
+		if (state == rsl_subtype || state == rsl_encoding ||
+			state == rsl_encoding || state == rsl_separator) {
+			magicResult->setContent(resultBuf.mid(type_pos, type_len));
+			}
+			if (state == rsl_encoding)
+				magicResult->setEncoding(resultBuf.mid(encoding_pos,
+													   encoding_len));
+				/* detect memory allocation errors */
+				if (!magicResult->getContent() ||
+					(state == rsl_encoding && !magicResult->getEncoding())) {
+					return -1;
+					}
+					/* success! */
+					return OK;
 }
 
 /*
@@ -1278,7 +1280,6 @@ KMimeMagic::process(const char * fn)
 {
 	int fd = 0;
 	unsigned char buf[HOWMANY + 1];	/* one extra for terminating '\0' */
-	struct utimbuf utbuf;
 	struct stat sb;
 	int nbytes = 0;         /* number of bytes read from a datafile */
 
@@ -1311,16 +1312,10 @@ KMimeMagic::process(const char * fn)
 	if (nbytes == 0) {
 		resultBuf += MIME_BINARY_ZEROSIZE;
 	} else {
-		buf[nbytes++] = '\0';	/* null-terminate it */
+		buf[nbytes] = '\0';	/* null-terminate it */
 		tryit(buf, nbytes);
 	}
 
-	/*
-	 * Try to restore access, modification times if read it.
-	 */
-	utbuf.actime = sb.st_atime;
-	utbuf.modtime = sb.st_mtime;
-	(void) utime(fn, &utbuf);	/* don't care if loses */
 	(void) close(fd);
 	resultBuf += "\n";
 }
@@ -1379,66 +1374,66 @@ KMimeMagic::fsmagic(const char *fn, struct stat *sb)
 			resultBuf += MIME_INODE_BDEV;
 			return 1;
 			/* TODO add code to handle V7 MUX and Blit MUX files */
-#ifdef    S_IFIFO
+			#ifdef    S_IFIFO
 		case S_IFIFO:
 			resultBuf += MIME_INODE_FIFO;;
 			return 1;
-#endif
-#ifdef    S_IFLNK
+			#endif
+			#ifdef    S_IFLNK
 		case S_IFLNK:
-			{
-				char buf[BUFSIZ + BUFSIZ + 4];
-				register int nch;
-				struct stat tstatbuf;
+		{
+			char buf[BUFSIZ + BUFSIZ + 4];
+			int nch;
+			struct stat tstatbuf;
 
-				if ((nch = readlink(fn, buf, BUFSIZ - 1)) <= 0) {
-					resultBuf += MIME_INODE_LINK;
-					resultBuf += "\nunreadable";
-					return 1;
-				}
-				buf[nch] = '\0'; /* readlink(2) forgets this */
-				/* If broken symlink, say so and quit early. */
-				if (*buf == '/') {
-					if (stat(buf, &tstatbuf) < 0) {
-						resultBuf += MIME_INODE_LINK;
-						resultBuf += "\nbroken";
-						return 1;
-					}
-				} else {
-					char *tmp;
-					char buf2[BUFSIZ + BUFSIZ + 4];
-					
-					strcpy(buf2, fn);
-					if ((tmp = strrchr(buf2, '/')) == NULL) {
-						tmp = buf; /* in current dir */
-					} else {
-						/* dir part plus (rel.) link */
-						*++tmp = '\0';
-						strcat(buf2, buf);
-						tmp = buf2;
-					}
-					if (stat(tmp, &tstatbuf) < 0) {
-						resultBuf += MIME_INODE_LINK;
-						resultBuf += "\nbroken";
-						return 1;
-					} else
-						strcpy(buf, tmp);
-				}
-				if (followLinks)
-					process(buf);
-				else
-					resultBuf += MIME_INODE_LINK;
+			if ((nch = readlink(fn, buf, BUFSIZ - 1)) <= 0) {
+				resultBuf += MIME_INODE_LINK;
+				resultBuf += "\nunreadable";
 				return 1;
 			}
+			buf[nch] = '\0'; /* readlink(2) forgets this */
+			/* If broken symlink, say so and quit early. */
+			if (*buf == '/') {
+				if (stat(buf, &tstatbuf) < 0) {
+					resultBuf += MIME_INODE_LINK;
+					resultBuf += "\nbroken";
+					return 1;
+				}
+			} else {
+				char *tmp;
+				char buf2[BUFSIZ + BUFSIZ + 4];
+
+				strcpy(buf2, fn);
+				if ((tmp = strrchr(buf2, '/')) == NULL) {
+					tmp = buf; /* in current dir */
+				} else {
+					/* dir part plus (rel.) link */
+					*++tmp = '\0';
+					strcat(buf2, buf);
+					tmp = buf2;
+				}
+				if (stat(tmp, &tstatbuf) < 0) {
+					resultBuf += MIME_INODE_LINK;
+					resultBuf += "\nbroken";
+					return 1;
+				} else
+					strcpy(buf, tmp);
+			}
+			if (followLinks)
+				process(buf);
+			else
+				resultBuf += MIME_INODE_LINK;
 			return 1;
-#endif
-#ifdef    S_IFSOCK
-#ifndef __COHERENT__
+		}
+		return 1;
+		#endif
+		#ifdef    S_IFSOCK
+		#ifndef __COHERENT__
 		case S_IFSOCK:
 			resultBuf += MIME_INODE_SOCK;
 			return 1;
-#endif
-#endif
+			#endif
+			#endif
 		case S_IFREG:
 			break;
 		default:
@@ -1498,91 +1493,91 @@ KMimeMagic::softmagic(unsigned char *buf, int nbytes)
 int
 KMimeMagic::match(unsigned char *s, int nbytes)
 {
-#if (MIME_MAGIC_DEBUG > 1)
+	#if (MIME_MAGIC_DEBUG > 1)
 	int rule_counter = 0;
-#endif
+	#endif
 	int cont_level = 0;
 	int need_separator = 0;
 	union VALUETYPE p;
 	struct magic *m;
 
-#if (MIME_MAGIC_DEBUG > 1)
+	#if (MIME_MAGIC_DEBUG > 1)
 	debug("%s: conf=%p file=%s m=%s m->next=%s last=%s",
-	      __FUNCTION__, conf,
-	      conf->magicfile ? conf->magicfile : "NULL",
-	      conf->magic ? "set" : "NULL",
-	      (conf->magic && conf->magic->next) ? "set" : "NULL",
-	      conf->last ? "set" : "NULL");
+		  __FUNCTION__, conf,
+	   conf->magicfile ? conf->magicfile : "NULL",
+	   conf->magic ? "set" : "NULL",
+	   (conf->magic && conf->magic->next) ? "set" : "NULL",
+		  conf->last ? "set" : "NULL");
 	for (m = conf->magic; m; m = m->next) {
 		if (isprint((((unsigned long) m) >> 24) & 255) &&
-		    isprint((((unsigned long) m) >> 16) & 255) &&
-		    isprint((((unsigned long) m) >> 8) & 255) &&
-		    isprint(((unsigned long) m) & 255)) {
+			isprint((((unsigned long) m) >> 16) & 255) &&
+			isprint((((unsigned long) m) >> 8) & 255) &&
+			isprint(((unsigned long) m) & 255)) {
 			debug("%s: POINTER CLOBBERED! "
-			      "m=\"%c%c%c%c\"", __FUNCTION__,
-			      (((unsigned long) m) >> 24) & 255,
-			      (((unsigned long) m) >> 16) & 255,
-			      (((unsigned long) m) >> 8) & 255,
-			      ((unsigned long) m) & 255);
+			"m=\"%c%c%c%c\"", __FUNCTION__,
+		 (((unsigned long) m) >> 24) & 255,
+				  (((unsigned long) m) >> 16) & 255,
+				  (((unsigned long) m) >> 8) & 255,
+				  ((unsigned long) m) & 255);
 			break;
-		}
+			}
 	}
-#endif
+	#endif
 
 	for (m = conf->magic; m; m = m->next) {
-#if (MIME_MAGIC_DEBUG > 1)
+		#if (MIME_MAGIC_DEBUG > 1)
 		rule_counter++;
 		debug("%s: line=%d desc=%s", __FUNCTION__,
-		      m->lineno, m->desc);
-#endif
+			  m->lineno, m->desc);
+		#endif
 
 		/* check if main entry matches */
 		if (!mget(&p, s, m, nbytes) ||
-		    !mcheck(&p, m)) {
+			!mcheck(&p, m)) {
 			struct magic *m_cont;
 
-			/*
-			 * main entry didn't match, flush its continuations
-			 */
-			if (!m->next || (m->next->cont_level == 0)) {
-				continue;
-			}
-			m_cont = m->next;
-			while (m_cont && (m_cont->cont_level != 0)) {
-#if (MIME_MAGIC_DEBUG > 1)
-				rule_counter++;
-				debug("%s: line=%d mc=%p mc->next=%p "
-				      "cont=%d desc=%s",
-				      __FUNCTION__, m_cont->lineno, m_cont,
-				      m_cont->next, m_cont->cont_level,
-				   m_cont->desc ? m_cont->desc : "NULL");
-#endif
-				/*
-				 * this trick allows us to keep *m in sync
-				 * when the continue advances the pointer
-				 */
-				m = m_cont;
-				m_cont = m_cont->next;
-			}
+		/*
+		 * main entry didn't match, flush its continuations
+		 */
+		if (!m->next || (m->next->cont_level == 0)) {
 			continue;
 		}
-		/* if we get here, the main entry rule was a match */
-		/* this will be the last run through the loop */
-#if (MIME_MAGIC_DEBUG > 1)
-		debug("%s: rule matched, line=%d type=%d %s",
-		      __FUNCTION__, m->lineno, m->type,
-		      (m->type == STRING) ? m->value.s : "");
-#endif
+		m_cont = m->next;
+		while (m_cont && (m_cont->cont_level != 0)) {
+			#if (MIME_MAGIC_DEBUG > 1)
+			rule_counter++;
+			debug("%s: line=%d mc=%p mc->next=%p "
+			"cont=%d desc=%s",
+		 __FUNCTION__, m_cont->lineno, m_cont,
+		 m_cont->next, m_cont->cont_level,
+		 m_cont->desc ? m_cont->desc : "NULL");
+			#endif
+			/*
+			 * this trick allows us to keep *m in sync
+			 * when the continue advances the pointer
+			 */
+			m = m_cont;
+			m_cont = m_cont->next;
+		}
+		continue;
+			}
+			/* if we get here, the main entry rule was a match */
+			/* this will be the last run through the loop */
+			#if (MIME_MAGIC_DEBUG > 1)
+			debug("%s: rule matched, line=%d type=%d %s",
+				  __FUNCTION__, m->lineno, m->type,
+		 (m->type == STRING) ? m->value.s : "");
+			#endif
 
-		/* print the match */
-		mprint(&p, m);
+			/* print the match */
+			mprint(&p, m);
 
-		/*
-		 * If we printed something, we'll need to print a blank
-		 * before we print something else.
-		 */
-		if (m->desc[0])
-			need_separator = 1;
+			/*
+			 * If we printed something, we'll need to print a blank
+			 * before we print something else.
+			 */
+			if (m->desc[0])
+				need_separator = 1;
 		/* and any continuations that match */
 		cont_level++;
 		/*
@@ -1591,11 +1586,11 @@ KMimeMagic::match(unsigned char *s, int nbytes)
 		 */
 		m = m->next;
 		while (m && (m->cont_level != 0)) {
-#if (MIME_MAGIC_DEBUG > 1)
+			#if (MIME_MAGIC_DEBUG > 1)
 			debug("%s: line=%d cont=%d type=%d %s",
-			      __FUNCTION__, m->lineno, m->cont_level, m->type,
-			      (m->type == STRING) ? m->value.s : "");
-#endif
+				  __FUNCTION__, m->lineno, m->cont_level, m->type,
+		 (m->type == STRING) ? m->value.s : "");
+			#endif
 			if (cont_level >= m->cont_level) {
 				if (cont_level > m->cont_level) {
 					/*
@@ -1605,7 +1600,7 @@ KMimeMagic::match(unsigned char *s, int nbytes)
 					cont_level = m->cont_level;
 				}
 				if (mget(&p, s, m, nbytes) &&
-				    mcheck(&p, m)) {
+					mcheck(&p, m)) {
 					/*
 					 * This continuation matched. Print
 					 * its message, with a blank before
@@ -1614,9 +1609,9 @@ KMimeMagic::match(unsigned char *s, int nbytes)
 					 */
 					/* space if previous printed */
 					if (need_separator
-					    && (m->nospflag == 0)
-					    && (m->desc[0] != '\0')
-					    ) {
+						&& (m->nospflag == 0)
+						&& (m->desc[0] != '\0')
+					) {
 						resultBuf += " ";
 						need_separator = 0;
 					}
@@ -1629,19 +1624,19 @@ KMimeMagic::match(unsigned char *s, int nbytes)
 					 * higher level, process them.
 					 */
 					cont_level++;
-				}
+					}
 			}
 			/* move to next continuation record */
 			m = m->next;
 		}
-#if (MIME_MAGIC_DEBUG > 1)
+		#if (MIME_MAGIC_DEBUG > 1)
 		debug("%s: matched after %d rules", __FUNCTION__, rule_counter);
-#endif
+		#endif
 		return 1;       /* all through */
 	}
-#if (MIME_MAGIC_DEBUG > 1)
+	#if (MIME_MAGIC_DEBUG > 1)
 	debug("%s: failed after %d rules", __FUNCTION__, rule_counter);
-#endif
+	#endif
 	return 0;               /* no match at all */
 }
 
@@ -1683,8 +1678,8 @@ KMimeMagic::mprint(union VALUETYPE *p, struct magic *m)
 			pp = ctime((time_t *) & p->l);
 			if ((rt = strchr(pp, '\n')) != NULL)
 				*rt = '\0';
-			resultBufPrintf(m->desc, pp);
-			return;
+		resultBufPrintf(m->desc, pp);
+		return;
 		default:
 			error("KMimeMagic::mprint: invalid m->type (%d)", m->type);
 			return;
@@ -1709,7 +1704,7 @@ KMimeMagic::ascmagic(unsigned char *buf, int nbytes)
 	unsigned char *s;
 	char nbuf[HOWMANY + 1]; /* one extra for terminating '\0' */
 	char *token;
-	register struct names *p;
+	struct names *p;
 	int typecount[NTYPES];
 
 	/* these are easy, do them first */
@@ -1725,150 +1720,153 @@ KMimeMagic::ascmagic(unsigned char *buf, int nbytes)
 
 		while (isascii(*tp) && isspace(*tp))
 			++tp;   /* skip leading whitespace */
-		if ((isascii(*tp) && (isalnum(*tp) || *tp == '\\') &&
-		     isascii(*(tp + 1)) && (isalnum(*(tp + 1)) || *tp == '"'))) {
-			resultBuf += MIME_APPL_TROFF;
+			if ((isascii(*tp) && (isalnum(*tp) || *tp == '\\') &&
+				isascii(*(tp + 1)) && (isalnum(*(tp + 1)) || *tp == '"'))) {
+				resultBuf += MIME_APPL_TROFF;
 			return 1;
-		}
+				}
 	}
 	if ((*buf == 'c' || *buf == 'C') &&
-	    isascii(*(buf + 1)) && isspace(*(buf + 1))) {
+		isascii(*(buf + 1)) && isspace(*(buf + 1))) {
 		/* Fortran */
 		resultBuf += MIME_TEXT_FORTRAN;
-		return 1;
-	}
-	/* look for tokens - this is expensive! */
-	/* make a copy of the buffer here because strtok() will destroy it */
-	s = (unsigned char *) memcpy(nbuf, buf, nbytes);
-	s[nbytes] = '\0';
-	has_escapes = (memchr(s, '\033', nbytes) != NULL);
-/*
- * Fritz:
- * Try a little harder on C/C++/Java.
- */
-	memset(&typecount, 0, sizeof(typecount));
-	typeset = 0;
-	jonly = 0;
-	conly = 0;
-	jconly = 0;
-	cppcomm = 0;
-	ccomm = 0;
-	tokencount = 0;
-	// first collect all possible types and count matches
-	while ((token = strtok((char *) s, " \t\n\r\f,;")) != NULL) {
-		s = NULL;       /* make strtok() keep on tokin' */
-		for (p = names; p->name ; p++) {
-			if (STREQ(p->name, token)) {
-			        tokencount++;
-				typeset |= p->type;
-				if (p->type == L_JAVA)
-					jonly++;
-				if ((p->type & (L_C|L_CPP|L_JAVA))
-				    == (L_CPP|L_JAVA))
-					jconly++;
-				if ((p->type & (L_C|L_CPP|L_JAVA))
-				    == (L_C|L_CPP))
-					conly++;
-				if (STREQ(token, "//"))
-					cppcomm++;
-				if (STREQ(token, "/*"))
-					ccomm++;
-				for (i = 0; i < (int)NTYPES; i++)
-					if ((1 << i) & p->type)
-						typecount[i]++;
+	return 1;
+		}
+		/* look for tokens - this is expensive! */
+		/* make a copy of the buffer here because strtok() will destroy it */
+		s = (unsigned char *) memcpy(nbuf, buf, nbytes);
+		s[nbytes] = '\0';
+		has_escapes = (memchr(s, '\033', nbytes) != NULL);
+		/*
+		 * Fritz:
+		 * Try a little harder on C/C++/Java.
+		 */
+		memset(&typecount, 0, sizeof(typecount));
+		typeset = 0;
+		jonly = 0;
+		conly = 0;
+		jconly = 0;
+		cppcomm = 0;
+		ccomm = 0;
+		tokencount = 0;
+		// first collect all possible types and count matches
+		while ((token = strtok((char *) s, " \t\n\r\f,;")) != NULL) {
+			s = NULL;       /* make strtok() keep on tokin' */
+			for (p = names; p->name ; p++) {
+				if (STREQ(p->name, token)) {
+					tokencount++;
+					typeset |= p->type;
+					//debug("Adding type %d as token %s was found", p->type, token);
+					if (p->type == L_JAVA)
+						jonly++;
+					if ((p->type & (L_C|L_CPP|L_JAVA))
+						== (L_CPP|L_JAVA))
+						jconly++;
+					if ((p->type & (L_C|L_CPP|L_JAVA))
+						== (L_C|L_CPP))
+						conly++;
+					if (STREQ(token, "//"))
+						cppcomm++;
+					if (STREQ(token, "/*"))
+						ccomm++;
+					for (i = 0; i < (int)NTYPES; i++)
+						if ((1 << i) & p->type)
+							typecount[i]++;
+				}
 			}
 		}
-	}
 
-	if (typeset & (L_C|L_CPP|L_JAVA)) {
-		accuracy = 40;
-	        if (!(typeset & ~(L_C|L_CPP|L_JAVA))) {
-			if (jonly && conly)
-			  error("Oops, jonly && conly?!");
-			if (jonly) {
-				// A java-only token has matched
-				resultBuf += QString(types[P_JAVA].type);
-				return 1;
+		if (typeset & (L_C|L_CPP|L_JAVA)) {
+			accuracy = 40;
+			if (!(typeset & ~(L_C|L_CPP|L_JAVA))) {
+				if (jonly && conly)
+					error("Oops, jonly && conly?!");
+				if (jonly) {
+					// A java-only token has matched
+					resultBuf += QString(types[P_JAVA].type);
+					return 1;
+				}
+				if (jconly) {
+					// A non-C (only C++ or Java) token has matched.
+					if (typecount[P_JAVA] > typecount[P_CPP])
+						resultBuf += QString(types[P_JAVA].type);
+					else
+						resultBuf += QString(types[P_CPP].type);
+					return 1;
+				}
+				if (conly) {
+					// Either C or C++, rely on comments.
+					if (cppcomm)
+						resultBuf += QString(types[P_CPP].type);
+					else
+						resultBuf += QString(types[P_C].type);
+					return 1;
+				}
+				if (ccomm) {
+					resultBuf += QString(types[P_C].type);
+					return 1;
+				}
 			}
-			if (jconly) {
-				// A non-C (only C++ or Java) token has matched.
-				if (typecount[P_JAVA] > typecount[P_CPP])
-				  resultBuf += QString(types[P_JAVA].type);
-				else
-				  resultBuf += QString(types[P_CPP].type);
-				return 1;
-			}
-			if (conly) {
-				// Either C or C++, rely on comments.
-				if (cppcomm)
-				  resultBuf += QString(types[P_CPP].type);
-				else
-				  resultBuf += QString(types[P_C].type);
-				return 1;
-			}
-			if (ccomm) {
-				resultBuf += QString(types[P_C].type);
-				return 1;
-			}
-	      }
-	}
+		}
 
-	/* Neither C, C++ or Java (or all of them without able to distinguish):
-	 * Simply take the token-class with the highest
-	 * matchcount > 0
-	 */
-	mostaccurate = -1;
-	maxpct = pctsum = 0.0;
-	for (i = 0; i < (int)NTYPES; i++) {
-	 	pct = (double)typecount[i] / (double)types[i].kwords *
-		    (double)types[i].weight;
-		pcts[i] = pct;
-		pctsum += pct;
-		if (pct > maxpct) {
-		    maxpct = pct;
-		    mostaccurate = i;
-		  }
-#if MIME_MAGIC_DEBUG
-		  printf("%s has %d hits, %d kw, %f -> max = %f\n",
-			 types[i].type, typecount[i], types[i].kwords,
-			 pct, maxpct);
-#endif
-	}
-	if (mostaccurate >= 0.0) {
-		accuracy = (int)(pcts[mostaccurate] / pctsum * 60);
-		resultBuf += QString(types[mostaccurate].type);
+		/* Neither C, C++ or Java (or all of them without able to distinguish):
+		 * Simply take the token-class with the highest
+		 * matchcount > 0
+		 */
+		mostaccurate = -1;
+		maxpct = pctsum = 0.0;
+		for (i = 0; i < (int)NTYPES; i++) {
+			if (typecount[i]) {
+				pct = (double)typecount[i] / (double)types[i].kwords *
+				(double)types[i].weight;
+				pcts[i] = pct;
+				pctsum += pct;
+				if (pct > maxpct) {
+					maxpct = pct;
+					mostaccurate = i;
+				}
+				#if MIME_MAGIC_DEBUG
+				printf("%s has %d hits, %d kw, weight %f, %f -> max = %f\n",
+					   types[i].type, typecount[i], types[i].kwords, types[i].weight,
+		   pct, maxpct);
+				#endif
+			}
+		}
+		if (mostaccurate >= 0.0) {
+			accuracy = (int)(pcts[mostaccurate] / pctsum * 60);
+			resultBuf += QString(types[mostaccurate].type);
+			return 1;
+		}
+
+		switch (is_tar(buf, nbytes)) {
+			case 1:
+				/* V7 tar archive */
+				resultBuf += MIME_APPL_TAR;
+				accuracy = 90;
+				return 1;
+			case 2:
+				/* POSIX tar archive */
+				resultBuf += MIME_APPL_TAR;
+				accuracy = 90;
+				return 1;
+		}
+
+		for (i = 0; i < nbytes; i++) {
+			if (!isascii(*(buf + i)))
+				return 0;	/* not all ascii */
+		}
+
+		/* all else fails, but it is ascii... */
+		accuracy = 90;
+		if (has_escapes) {
+			/* text with escape sequences */
+			/* we leave this open for further differentiation later */
+			resultBuf += MIME_TEXT_UNKNOWN;
+		} else {
+			/* plain text */
+			resultBuf += MIME_TEXT_UNKNOWN;
+		}
 		return 1;
-	}
-
-	switch (is_tar(buf, nbytes)) {
-		case 1:
-			/* V7 tar archive */
-			resultBuf += MIME_APPL_TAR;
-			accuracy = 90;
-			return 1;
-		case 2:
-			/* POSIX tar archive */
-			resultBuf += MIME_APPL_TAR;
-			accuracy = 90;
-			return 1;
-	}
-
-	for (i = 0; i < nbytes; i++) {
-		if (!isascii(*(buf + i)))
-			return 0;	/* not all ascii */
-	}
-
-	/* all else fails, but it is ascii... */
-	accuracy = 90;
-	if (has_escapes) {
-		/* text with escape sequences */
-		/* we leave this open for further differentiation later */
-		resultBuf += MIME_TEXT_UNKNOWN;
-	} else {
-		/* plain text */
-		resultBuf += MIME_TEXT_UNKNOWN;
-	}
-	return 1;
 }
 
 /*
@@ -1894,14 +1892,14 @@ KMimeMagic::ascmagic(unsigned char *buf, int nbytes)
 static int
 is_tar(unsigned char *buf, int nbytes)
 {
-	register union record *header = (union record *) buf;
-	register int i;
-	register long sum,
-	 recsum;
-	register char *p;
+	union record *header = (union record *) buf;
+	int i;
+	long sum,
+	recsum;
+	char *p;
 
 	if (nbytes < (int)sizeof(union record))
-		 return 0;
+		return 0;
 
 	recsum = from_oct(8, header->header.chksum);
 
@@ -1923,10 +1921,10 @@ is_tar(unsigned char *buf, int nbytes)
 	if (sum != recsum)
 		return 0;       /* Not a tar archive */
 
-	if (0 == strcmp(header->header.magic, TMAGIC))
-		return 2;       /* Unix Standard tar archive */
+		if (0 == strcmp(header->header.magic, TMAGIC))
+			return 2;       /* Unix Standard tar archive */
 
-	return 1;               /* Old fashioned tar archive */
+			return 1;               /* Old fashioned tar archive */
 }
 
 
@@ -1938,7 +1936,7 @@ is_tar(unsigned char *buf, int nbytes)
 static long
 from_oct(int digs, char *where)
 {
-	register long value;
+	long value;
 
 	while (isspace(*where)) {	/* Skip spaces */
 		where++;
@@ -1954,7 +1952,7 @@ from_oct(int digs, char *where)
 	if (digs > 0 && *where && !isspace(*where))
 		return -1;      /* Ended on non-space/nul */
 
-	return value;
+		return value;
 }
 
 /*
@@ -1978,14 +1976,14 @@ KMimeMagic::revision_suffix(const char * fn)
 	int suffix_pos;
 	QString newfn = QString(fn);
 
-#if (MIME_MAGIC_DEBUG > 2)
+	#if (MIME_MAGIC_DEBUG > 2)
 	debug("%s: checking %s", __FUNCTION__, fn);
-#endif
+	#endif
 	/* check for recognized revision suffix */
 	suffix_pos = newfn.findRev(QRegExp("@[0-9]*$"));
-#if (MIME_MAGIC_DEBUG > 2)
+	#if (MIME_MAGIC_DEBUG > 2)
 	debug("%s: suffix_pos=%d", __FUNCTION__, suffix_pos);
-#endif
+	#endif
 	if (suffix_pos == -1)
 		return NULL;
 	return findFileType((const char *)newfn.left(suffix_pos));
@@ -2010,9 +2008,9 @@ KMimeMagic::KMimeMagic(const char * _configfile)
 	result = apprentice();
 	if (result == -1)
 		return;
-#if (MIME_MAGIC_DEBUG > 1)
+	#if (MIME_MAGIC_DEBUG > 1)
 	test_table();
-#endif
+	#endif
 }
 
 /*
@@ -2052,9 +2050,9 @@ KMimeMagic::mergeConfig(const char * _configfile)
 			conf->magicfile = old_magicfile;
 			return false;
 		}
-#if (MIME_MAGIC_DEBUG > 1)
+		#if (MIME_MAGIC_DEBUG > 1)
 		test_table();
-#endif
+		#endif
 		return true;
 	}
 	return false;
@@ -2069,9 +2067,9 @@ KMimeMagic::mergeBufConfig(char * _configbuf)
 		result = buff_apprentice(_configbuf);
 		if (result == -1)
 			return false;
-#if (MIME_MAGIC_DEBUG > 1)
+		#if (MIME_MAGIC_DEBUG > 1)
 		test_table();
-#endif
+		#endif
 		return true;
 	}
 	return false;
@@ -2088,28 +2086,28 @@ KMimeMagic::findBufferType(const char * buffer, int nbytes)
 {
 	unsigned char buf[HOWMANY + 1];	/* one extra for terminating '\0' */
 
-	resultBuf.resize(0);
+	resultBuf.truncate(0);
 	if (magicResult) {
 		magicResult->setContent(QString());
 		magicResult->setEncoding(QString());
 	} else
-	  magicResult = new KMimeMagicResult();
+		magicResult = new KMimeMagicResult();
 	accuracy = 100;
-	
-        if (nbytes > HOWMANY)
-                nbytes = HOWMANY;
-        memcpy(buf, buffer, nbytes);
-        if (nbytes == 0) {
-                resultBuf += MIME_BINARY_ZEROSIZE;
-        } else {
-                buf[nbytes++] = '\0';   /* null-terminate it */
-                tryit(buf, nbytes);
-        }
-        resultBuf += "\n";
-        /* if we have any results, put them in the request structure */
-        finishResult();
+
+	if (nbytes > HOWMANY)
+		nbytes = HOWMANY;
+	memcpy(buf, buffer, nbytes);
+	if (nbytes == 0) {
+		resultBuf += MIME_BINARY_ZEROSIZE;
+	} else {
+		buf[nbytes++] = '\0';   /* null-terminate it */
+		tryit(buf, nbytes);
+	}
+	resultBuf += "\n";
+	/* if we have any results, put them in the request structure */
+	finishResult();
 	magicResult->setAccuracy(accuracy);
-        return magicResult;
+	return magicResult;
 }
 
 static void
@@ -2119,47 +2117,47 @@ refineResult(KMimeMagicResult *r, const char * _filename)
 	if (tmp.isEmpty())
 		return;
 	if ((strcmp(tmp, "text/x-c") == 0) ||
-	    (strcmp(tmp, "text/x-c++") == 0)   )
+		(strcmp(tmp, "text/x-c++") == 0)   )
 	{
 		if ( QString(_filename).right(2) == ".h" )
-			tmp += "-hdr";
+			tmp += "hdr";
 		else
-			tmp += "-src";
+			tmp += "src";
 		r->setContent(tmp);
 	}
 }
 
 KMimeMagicResult *
 KMimeMagic::findBufferFileType( const char * buffer, int nbytes,
-				const char * fn)
+								const char * fn)
 {
 	KMimeMagicResult * r = findBufferType( buffer, nbytes );
 	refineResult(r, fn);
-        return r;
+	return r;
 }
- 
+
 /*
  * Find the content-type of the given file.
  */
 KMimeMagicResult *
 KMimeMagic::findFileType(const char *fn)
 {
-        resultBuf.resize(0);
-        if (magicResult) {
-                magicResult->setContent(QString());
-                magicResult->setEncoding(QString());
-        } else
-                magicResult = new KMimeMagicResult();
+	resultBuf.truncate(0);
+	if (magicResult) {
+		magicResult->setContent(QString());
+		magicResult->setEncoding(QString());
+	} else
+		magicResult = new KMimeMagicResult();
 	accuracy = 100;
 
-        /* try excluding file-revision suffixes */
-        if (!revision_suffix(fn)) {
-                /* process it based on the file contents */
-                process(fn);
-        }
-        /* if we have any results, put them in the request structure */
-        finishResult();
+	/* try excluding file-revision suffixes */
+	if (!revision_suffix(fn)) {
+		/* process it based on the file contents */
+		process(fn);
+	}
+	/* if we have any results, put them in the request structure */
+	finishResult();
 	magicResult->setAccuracy(accuracy);
 	refineResult(magicResult, fn);
-        return magicResult;
+	return magicResult;
 }

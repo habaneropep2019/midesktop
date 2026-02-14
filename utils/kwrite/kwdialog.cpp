@@ -12,6 +12,8 @@
 #include "kwdialog.h"
 #include "kwdoc.h"
 
+#include "kwdialog.moc"
+
 SearchDialog::SearchDialog(const char *searchFor, const char *replaceWith,
   int flags, QWidget *parent, const char *name)
   : QDialog(parent,name,true) {

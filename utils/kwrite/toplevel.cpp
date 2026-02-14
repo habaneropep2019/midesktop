@@ -28,6 +28,8 @@
 #include "toplevel.h"
 #include "highlight.h"
 
+#include "toplevel.moc"
+
 // StatusBar field IDs
 #define ID_LINE_COLUMN 1
 #define ID_INS_OVR 2
