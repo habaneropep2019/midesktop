@@ -1,0 +1,57 @@
+Source: midesktoplibs
+Section: contrib/libs
+Priority: extra
+Maintainer: Alec Bloss <abloss@libranext.com>
+Rules-Requires-Root: no
+Build-Depends:
+ debhelper-compat (= 13),
+ ninja-build,
+ cmake,
+ osiris (>= 2.4.4),
+ osiris (<< 2.5),
+ osiris-dev-tools (>= 2.4.4),
+ osiris-dev-tools (<< 2.5),
+ zlib1g,
+ libjpeg,
+ libtiff,
+ libx11,
+ libxext
+Standards-Version: 4.7.2
+Homepage: https://centre.libranext.com/libranext/mide
+#Vcs-Browser: https://salsa.debian.org/debian/midesktoplibs
+#Vcs-Git: https://salsa.debian.org/debian/midesktoplibs.git
+
+Package: midesktoplibs
+Architecture: any
+Depends:
+ ${shlibs:Depends},
+ ${misc:Depends},
+ osiris (>= 2.4.4),
+ osiris (<< 2.5)
+Replaces: kdelibs2g (<< 1.1.99)
+Breaks: kdelibs2g (<< 1.1.99)
+Description: MiDesktop core libraries (runtime files)
+ MiDesktop core libraries.
+ You need these files to run MiDesktop applications.
+
+Package: midesktoplibs-dev
+Architecture: any
+Depends:
+ ${shlibs:Depends},
+ ${misc:Depends},
+ osiris-dev
+Replaces: kdelibs2g-dev (<< 1.1.99)
+Breaks: kdelibs2g-dev (<< 1.1.99)
+Description: MiDesktop core libraries (development files)
+ MiDesktop core libraries.
+ You need these files to compile MiDesktop applications.
+
+Package: midesktoplibs-doc
+Architecture: all
+Depends: osiris-doc
+Replaces: kdelibs-doc (<< 1.1.99)
+Breaks: kdelibs-doc (<< 1.1.99)
+Description: MiDesktop core libraries - documentation
+ MiDesktop core libraries (kdoc documentation)
+ .
+ For use in MiDesktop development

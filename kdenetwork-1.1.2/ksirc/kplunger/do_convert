@@ -1,3 +1,0 @@
-#!/bin/bash
-
-perl -n -i conv-new `find -name '*.cpp' -or -name '*.cc' -or -name '*.C'`

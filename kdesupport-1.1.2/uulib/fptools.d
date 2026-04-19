@@ -1,1 +1,0 @@
-fptools.o: fptools.c

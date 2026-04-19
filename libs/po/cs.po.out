@@ -1,0 +1,18 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: kdelibs\n"
+"POT-Creation-Date: 1999-04-24 01:02+0200\n"
+"PO-Revision-Date: 1999-07-03 14:22+02:00\n"
+"Last-Translator: Miroslav Flídr <flidr@kky.zcu.cz>\n"
+"Language-Team: Czech <flidr@kky.cu.cz>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-2\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: kab/AssertDialog.cpp:29
+msgid "(unknown file)"
+msgstr "(neznámý soubor)"
+
+#: kab/AssertDialog.cpp:30
+msgid "(unknown line number)"
+msgstr "(neznámé 

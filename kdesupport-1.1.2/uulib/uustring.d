@@ -1,1 +1,0 @@
-uustring.o: uustring.c
