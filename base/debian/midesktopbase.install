@@ -1,9 +1,0 @@
-/opt/kde1/bin/*
-/opt/kde1/share/applnk/*
-/opt/kde1/share/applnk/.directory
-/opt/kde1/share/apps/*
-/opt/kde1/share/config/*
-/opt/kde1/share/icons/*
-/opt/kde1/share/mimelnk/*
-/etc/profile.d/midesktop.sh
-/usr/share/xsessions/mi.desktop

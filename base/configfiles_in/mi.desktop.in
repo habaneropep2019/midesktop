@@ -1,9 +1,0 @@
-[Desktop Entry]
-Name=MiDesktop
-Comment=MiDesktop
-Exec=@CMAKE_INSTALL_PREFIX@/bin/startmidesktop
-TryExec=@CMAKE_INSTALL_PREFIX@/bin/startmidesktop
-Type=XSession
-X-LightDM-DesktopName=MiDesktop
-DesktopNames=MiDesktop
-X-GDM-SessionRegisters=true

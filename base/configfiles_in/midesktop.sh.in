@@ -1,4 +1,0 @@
-#!/bin/bash
-export PATH=$PATH:@CMAKE_INSTALL_PREFIX@/bin
-
-export KDEDIR=@CMAKE_INSTALL_PREFIX@
