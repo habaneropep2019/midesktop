@@ -1,0 +1,15 @@
+/* -*- C++ -*-
+ * MiDesktop tries not to use config.h, so this is here
+ * as a compatability shim for some of the older apps
+ * that use config.h
+ *
+ * MiDesktop config.h
+ * copyright:  (C) Alec Bloss, 2026
+ * license:    GNU Public License, Version 2 or MIT
+ * mail to:    Alec Bloss <abloss@libranext.com>
+ */
+
+// Define HAVE_SGI_STL because no modern Linux system uses HP STL anymore that I know of
+// If for some reason you are using HP STL then uhh, write me?
+
+#define HAVE_SGI_STL

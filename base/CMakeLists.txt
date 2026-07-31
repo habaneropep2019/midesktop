@@ -77,3 +77,11 @@ set(XSESSION_TEMPLATE_FILE "${CMAKE_CURRENT_SOURCE_DIR}/configfiles_in/mi.deskto
 configure_file("${XSESSION_TEMPLATE_FILE}" "${CMAKE_CURRENT_BINARY_DIR}/mi.desktop" @ONLY)
 
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/mi.desktop" DESTINATION "/usr/share/xsessions/" PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ)
+
+## Install compatibility header since we only use SGI STL in modern times and some old applications expect which STL to be defined (i.e. SGI vs HP STL). If for some reason you are still using HP STL, uhh
+
+set(SGI_STL_COMPAT_HEADER_TEMPLATE_FILE "${CMAKE_CURRENT_SOURCE_DIR}/configfiles_in/midesktop_config.h.in")
+
+configure_file("${SGI_STL_COMPAT_HEADER_TEMPLATE_FILE}" "${CMAKE_CURRENT_BINARY_DIR}/midesktop_config.h" @ONLY)
+
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/midesktop_config.h" DESTINATION "${CMAKE_INSTALL_PREFIX}/include/" PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ)
