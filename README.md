@@ -80,6 +80,17 @@ ninja install # May need to be run with sudo or as root
 cd ../..
 ```
 
+
+**graphics:**
+```
+cd graphics
+mkdir build && cd build
+cmake -G "Ninja" -DCMAKE_INSTALL_PREFIX=/opt/kde1 -DCMAKE_BUILD_TYPE=Debug ..
+ninja
+ninja install # May need to be run with sudo or as root
+cd ../..
+```
+
 ### Post-install configuration
 
 Generally, no post-install configuration is required now. There may be cases where the build system (CMake) generates an incorrect configuration file: please file a bug report if you run across this.
