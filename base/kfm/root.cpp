@@ -1384,7 +1384,9 @@ KRootIcon::KRootIcon( const char *_url, int _x, int _y ) :
     url = _url;
 
     KMimeType *typ = KMimeType::getMagicMimeType( url );
-    pixmap = typ->getPixmap( url );
+    QPixmap *cachedPixmap = typ->getPixmap( url );
+    if ( cachedPixmap )
+	pixmap = *cachedPixmap;
     init();
     initToolTip();
     dropZone = new KDNDDropZone( this , DndURL);
@@ -1486,9 +1488,9 @@ void KRootIcon::init()
     int width = p.fontMetrics().width( file.data() );
 
     int w = width;
-    if ( pixmap->width() > w )
+    if ( pixmap.width() > w )
     {
-	w = pixmap->width() + 8;
+	w = pixmap.width() + 8;
 	textXOffset = ( w - width ) / 2;
 	pixmapXOffset = 4;
     }
@@ -1496,15 +1498,15 @@ void KRootIcon::init()
     {
 	w += 8;
 	textXOffset = 4;
-	pixmapXOffset = ( w - pixmap->width() ) / 2;
+	pixmapXOffset = ( w - pixmap.width() ) / 2;
     }
 
     pixmapYOffset = 2;
-    textYOffset = pixmap->height() + 5 + ascent + 2;
+    textYOffset = pixmap.height() + 5 + ascent + 2;
 
     p.end();
 
-    mask.resize( w, pixmap->height() + 5 + ascent + descent + 4 );
+    mask.resize( w, pixmap.height() + 5 + ascent + descent + 4 );
     mask.fill( color0 );
     QPainter p2;
     p2.begin( &mask );
@@ -1517,10 +1519,10 @@ void KRootIcon::init()
     else
       p2.fillRect( textXOffset-1, textYOffset-ascent-1, width+2, ascent+descent+2, color1 );
 
-    if ( pixmap->mask() == 0L )
-	p2.fillRect( pixmapXOffset, pixmapYOffset, pixmap->width(), pixmap->height(), color1 );
+    if ( pixmap.mask() == 0L )
+	p2.fillRect( pixmapXOffset, pixmapYOffset, pixmap.width(), pixmap.height(), color1 );
     else
-	p2.drawPixmap( pixmapXOffset, pixmapYOffset, *pixmap->mask() );
+	p2.drawPixmap( pixmapXOffset, pixmapYOffset, *pixmap.mask() );
 
     if ( bIsLink && link_pixmap && link_pixmap->mask() != 0 )
     {
@@ -1536,7 +1538,7 @@ void KRootIcon::init()
       setBackgroundColor( root->iconBackground() );
 
     this->width = w;
-    this->height = pixmap->height() + 5 + ascent + descent + 4;
+    this->height = pixmap.height() + 5 + ascent + descent + 4;
 }
 
 void KRootIcon::slotDropEvent( KDNDDropZone *_zone )
@@ -1578,7 +1580,7 @@ void KRootIcon::resizeEvent( QResizeEvent * )
 
 void KRootIcon::paintEvent( QPaintEvent * )
 {
-    bitBlt( this, pixmapXOffset, pixmapYOffset, pixmap );
+    bitBlt( this, pixmapXOffset, pixmapYOffset, &pixmap );
 
     if ( bIsLink && link_pixmap )
 	bitBlt( this, pixmapXOffset, pixmapYOffset, link_pixmap );
@@ -1616,9 +1618,9 @@ void KRootIcon::paintEvent( QPaintEvent * )
     if ( bSelected )
     {
 //      p.setRasterOp( NotEraseROP );
-//      p.fillRect( pixmapXOffset, pixmapYOffset, pixmap->width(), pixmap->height(), blue );
+//      p.fillRect( pixmapXOffset, pixmapYOffset, pixmap.width(), pixmap.height(), blue );
 	QBrush b( kapp->selectColor, Dense4Pattern );
-        p.fillRect( pixmapXOffset, pixmapYOffset, pixmap->width(), pixmap->height(), b );
+        p.fillRect( pixmapXOffset, pixmapYOffset, pixmap.width(), pixmap.height(), b );
     }
 
     p.end();
@@ -1777,19 +1779,18 @@ void KRootIcon::dndMouseMoveEvent( QMouseEvent *_mouse )
 	    // Multiple URLs slected.
 	    startDrag( new KDNDIcon( pixmap2, p.x() + dx, p.y() + dy ), data.data(), data.length(), DndURL, dx, dy );
 	} else
-	    startDrag( new KDNDIcon( *pixmap, p.x() + dx, p.y() + dy ), data.data(), data.length(), DndURL, dx, dy );
+	    startDrag( new KDNDIcon( pixmap, p.x() + dx, p.y() + dy ), data.data(), data.length(), DndURL, dx, dy );
     }
 }
 
 void KRootIcon::updatePixmap()
 {
-    QPixmap *tmp = pixmap;
-
     KMimeType *typ = KMimeType::getMagicMimeType( url.data() );
-    pixmap = typ->getPixmap( url );
-
-    if ( pixmap == tmp )
-	return;
+    QPixmap *cachedPixmap = typ->getPixmap( url.data() );
+    if ( cachedPixmap )
+	pixmap = *cachedPixmap;
+    else
+	pixmap = QPixmap();
 
     QToolTip::remove( this );
     initToolTip();
