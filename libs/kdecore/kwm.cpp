@@ -645,6 +645,73 @@ QString KWM::titleWithState(Window w){
   return result;
 }
 
+static bool copyIconPixmap(Pixmap src_pixmap, Pixmap src_mask,
+			   int width, int height, QPixmap& result)
+{
+  if (src_pixmap == None)
+    return false;
+
+  Window root;
+  int x, y;
+  unsigned int w = 0;
+  unsigned int h = 0;
+  unsigned int border_w = 0;
+  unsigned int depth = 0;
+
+  if (!XGetGeometry(qt_xdisplay(), src_pixmap,
+		    &root,
+		    &x, &y, &w, &h, &border_w, &depth))
+    return false;
+
+  // Broken clients can hand us stale or nonsensical pixmaps. Skip them
+  // instead of crashing the window manager during startup.
+  if (w == 0 || h == 0 || w > 1024 || h > 1024 || depth == 0 || depth > 32)
+    return false;
+
+  QPixmap pm(w, h, depth);
+  if (pm.isNull())
+    return false;
+
+  XCopyArea(qt_xdisplay(), src_pixmap, pm.handle(),
+	    qt_xget_temp_gc(depth == 1),
+	    0, 0, w, h, 0, 0);
+
+  if (src_mask != None){
+    Window mask_root;
+    int mask_x, mask_y;
+    unsigned int mask_w = 0;
+    unsigned int mask_h = 0;
+    unsigned int mask_border_w = 0;
+    unsigned int mask_depth = 0;
+
+    if (XGetGeometry(qt_xdisplay(), src_mask,
+		     &mask_root,
+		     &mask_x, &mask_y,
+		     &mask_w, &mask_h,
+		     &mask_border_w, &mask_depth)
+	&& mask_w == w && mask_h == h && mask_depth == 1){
+      QBitmap bm(mask_w, mask_h);
+      if (!bm.isNull()){
+	XCopyArea(qt_xdisplay(), src_mask, bm.handle(),
+		  qt_xget_temp_gc(TRUE),
+		  0, 0, mask_w, mask_h, 0, 0);
+	pm.setMask(bm);
+      }
+    }
+  }
+
+  if (width > 0 && height > 0
+      && (w > (unsigned int)width || h > (unsigned int) height)){
+    QWMatrix m;
+    m.scale(width/(float)w, height/(float)h);
+    result = pm.xForm(m);
+  }
+  else
+    result = pm;
+
+  return !result.isNull();
+}
+
 QPixmap KWM::miniIcon(Window w, int width, int height){
   static Atom a = 0;
   if (!a)
@@ -670,39 +737,7 @@ QPixmap KWM::miniIcon(Window w, int width, int height){
     p_mask = (Pixmap) tmp[1];
   }
 
-  if (p != None){
-    Window root;
-    int x, y;
-    unsigned int w = 0;
-    unsigned int h = 0;
-    unsigned int border_w, depth;
-    XGetGeometry(qt_xdisplay(), p,
-		 &root,
-		 &x, &y, &w, &h, &border_w, &depth);
-    if (w > 0 && h > 0){
-      QPixmap pm(w, h, depth);
-      XCopyArea(qt_xdisplay(), p, pm.handle(),
-		qt_xget_temp_gc(depth==1),
-		0, 0, w, h, 0, 0);
-      if (p_mask != None){
-	QBitmap bm(w, h);
-	XCopyArea(qt_xdisplay(), p_mask, bm.handle(),
-		  qt_xget_temp_gc(TRUE),
-		  0, 0, w, h, 0, 0);
-	pm.setMask(bm);
-      }
-      if (width > 0 && height > 0 && (w > (unsigned int)width
-				      || h > (unsigned int) height)){
-	// scale
-	QWMatrix m;
-	m.scale(width/(float)w, height/(float)h);
-	result = pm.xForm(m);
-      }
-      else
-	result = pm;
-    }
-  }
-  else {
+  if (!copyIconPixmap(p, p_mask, width, height, result)) {
     XWMHints *hints = XGetWMHints(qt_xdisplay(),  w);
     if (hints &&
 	(hints->flags & WindowGroupHint)
@@ -738,46 +773,15 @@ QPixmap KWM::icon(Window w, int width, int height){
   if (hints)
     XFree((char*)hints);
 
-  if (p != None){
-    Window root;
-    int x, y;
-    unsigned int w = 0;
-    unsigned int h = 0;
-    unsigned int border_w, depth;
-    XGetGeometry(qt_xdisplay(), p,
-		 &root,
-		 &x, &y, &w, &h, &border_w, &depth);
-    if (w > 0 && h > 0){
-      QPixmap pm(w, h, depth);
-      XCopyArea(qt_xdisplay(), p, pm.handle(),
-		qt_xget_temp_gc(depth==1),
-		0, 0, w, h, 0, 0);
-      if (p_mask != None){
-	QBitmap bm(w, h);
-	XCopyArea(qt_xdisplay(), p_mask, bm.handle(),
-		  qt_xget_temp_gc(TRUE),
-		  0, 0, w, h, 0, 0);
-	pm.setMask(bm);
-      }
-      if (width > 0 && height > 0 && (w > (unsigned int)width
-				      || h > (unsigned int) height)){
-	// scale
-	QWMatrix m;
-	m.scale(width/(float)w, height/(float)h);
-	result = pm.xForm(m);
-      }
-      else
-	result = pm;
-    }
-  }
-  else {
+  if (!copyIconPixmap(p, p_mask, width, height, result)) {
     XWMHints *hints = XGetWMHints(qt_xdisplay(),  w);
     if (hints &&
 	(hints->flags & WindowGroupHint)
 	&& hints->window_group != None
 	&& hints->window_group != w){
+      Window wg = hints->window_group;
       XFree((char*)hints);
-      return icon(hints->window_group, width, height);
+      return icon(wg, width, height);
     }
     if (hints)
       XFree((char*)hints);
@@ -1212,5 +1216,3 @@ int KWM::getWindowState(Window w){
   getSimpleProperty(w, a, result);
   return (int) result;
 }
-
-
