@@ -123,9 +123,10 @@ protected:
       */
     void initFilename();
     /**
-     * Dont delete this pixmap. It is cached in @ref KMimeType::pixmapCache
+     * Keep a private copy so global QPixmapCache churn cannot leave us with a
+     * dangling icon pointer during repaint.
      */
-    QPixmap *pixmap;
+    QPixmap pixmap;
     QBitmap mask;
 
     int pixmapXOffset;
@@ -450,7 +451,6 @@ protected:
 };
 
 #endif
-
 
 
 
