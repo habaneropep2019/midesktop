@@ -330,10 +330,12 @@
 #include <qobjcoll.h>
 #include <qstrlist.h>
 #include <qfile.h>
+#include <qguardedptr.h>
 #include <qmessagebox.h>
 #include <qtextstream.h>
 #include <qregexp.h>
 #include <qkeycode.h>
+#include <qvaluelist.h>
 #ifdef HAVE_SYS_STAT_H
 #include <sys/stat.h>
 #endif
@@ -1119,32 +1121,28 @@ bool KApplication::x11EventFilter( XEvent *_event )
 }
 
 void KApplication::applyGUIStyle(QStyle* newstyle) {
-  QApplication::setStyle( applicationStyle );
-
-  // get list of toplevels
-  QWidgetList *wl = QApplication::topLevelWidgets();
+  // Snapshot the widgets before changing styles. Some widgets (notably popup
+  // menus and combo helpers) may disappear while styles are being reapplied.
+  QValueList< QGuardedPtr<QWidget> > widgets;
+  QWidgetList *wl = QApplication::allWidgets();
   QWidgetListIt wl_it( *wl );
 
-  // foreach toplevel ...
-  while(wl_it.current()) {
-    QWidget *w = wl_it.current();
-
-    // set new style
-    w->setStyle(newstyle);
-    QObjectList *ol = w->queryList("QWidget", 0, 0, TRUE);
-    QObjectListIt ol_it( *ol );
-
-    // set style to child widgets
-    while ( ol_it.current() ) {
-      QWidget *child = (QWidget *)(ol_it.current());
-      child->setStyle(newstyle);
-      ++ol_it;
-    }
-    delete ol;
+  while ( wl_it.current() ) {
+    widgets.append( QGuardedPtr<QWidget>( wl_it.current() ) );
     ++wl_it;
   }
-
   delete wl;
+
+  QValueList< QGuardedPtr<QWidget> >::Iterator it = widgets.begin();
+  while ( it != widgets.end() ) {
+    QWidget *w = *it;
+    if ( w != 0L && &w->style() != newstyle )
+      w->setStyle(newstyle);
+    ++it;
+  }
+
+  if ( &QApplication::style() != newstyle )
+    QApplication::setStyle( newstyle );
 }
 
 QString KApplication::findFile( const char *file )
