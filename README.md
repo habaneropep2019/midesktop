@@ -95,6 +95,12 @@ cd ../..
 
 Generally, no post-install configuration is required now. There may be cases where the build system (CMake) generates an incorrect configuration file: please file a bug report if you run across this.
 
+#### Panel selection
+
+In recent builds, a new panel is default - MiPanel. MiPanel is based on Corel's modified KPanel that was included with Corel Linux, and combines both taskbars.
+
+You can revert to the old KPanel by editing `midesktopstart.conf` in your `$HOME/.config/midesktop/` folder. Simply change the line `MIDESKTOP_PANEL=mipanel` to `MIDESKTOP_PANEL=kpanel`
+
 ## Testing and bugs
 
 Well, it's known that MiDesktop has a lot of bugs and quirks. Bug reports are very welcome at https://centre.libranext.com/libranext/mide/-/issues

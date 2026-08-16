@@ -30,6 +30,23 @@ midesktop_message() {
 
 midesktop_message "MiDesktop version $MIDESKTOP_VERSION starting..."
 
+# Check for existence of configuration file, create if it does not exist.
+
+if [ ! -d "$HOME/.config/midesktop" ]
+then
+    midesktop_message "MiDesktop: No configuration directory found. Creating..."
+    mkdir "$HOME/.config/midesktop"
+fi
+
+if [ ! -f "$HOME/.config/midesktop/startmidesktop.conf" ]
+then
+    midesktop_message "MiDesktop: No configuration found. Creating..."
+    touch "$HOME/.config/midesktop/startmidesktop.conf"
+    echo "MIDESKTOP_PANEL=mipanel" >> "$HOME/.config/midesktop/startmidesktop.conf"
+fi
+
+source "$HOME/.config/midesktop/startmidesktop.conf"
+
 # The original startkde script included some sleep commands to presumably prevent disk thrashing.
 ## Have to remember that KDE was a heavyweight when it was released in the 90s. I personally
 ## remember my disk working overtime to load it on a ThinkPad 760XL.
@@ -122,11 +139,21 @@ if [ "$MIDESKTOP_FASTSTART" ==  true ]
 then
     kaudioserver
     (exec krootwm) &
-    (exec kpanel) &
+    if [ "$MIDESKTOP_PANEL" == "kpanel" ]
+    then
+        (exec kpanel) &
+    else
+        (exec mipanel) &
+    fi
     (exec kbgndwm) &
 else
     (sleep 1 && exec krootwm) &
-    (sleep 1 && exec kpanel) &
+    if [ "$MIDESKTOP_PANEL" == "kpanel" ]
+    then
+        (sleep 1s && exec kpanel) &
+    else
+        (sleep 1s && exec mipanel) &
+    fi
     (sleep 3 && exec kbgndwm) &
 fi
 
