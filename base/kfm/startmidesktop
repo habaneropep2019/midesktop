@@ -11,6 +11,10 @@
 
 MIDESKTOP_VERSION="1.2"
 
+# GTK applications using CSD don't work properly under KWM. Disable CSD
+
+export GTK_CSD=0
+
 # You can set certain environment variables to influence the behavior of this script.
 ## MIDESKTOP_FASTSTART : set to true to reduce/eliminate sleep values for each command.
 ## MIDESKTOP_DEBUG     : set to enable some extra output/steps
