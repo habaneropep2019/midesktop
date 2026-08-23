@@ -468,23 +468,28 @@ static void extract_fonts_and_geometry(char *font_string, int font_id,
   int x, y, width, height;
   int flags;
 
-  /*  First get the font since we need it to set the size.
-   */
-  if (font_id) {
-	mainfont = XQueryFont(display, font_id);
-	mainfontfid = 1;
-  } else {
-	if ((mainfont = XLoadQueryFont(display,font_string)) == NULL) 
-	    {
-	      error("can't access font %s\n",font_string);
-              
-              if ((mainfont = XLoadQueryFont(display,"fixed")) == NULL) 
-	          error("can't access fixed font\n");
-              
-              clean_exit(1);
-             }
+  /* First get the font since we need it to set the size. */
+  mainfont = NULL;
 
-	mainfontfid = 0;
+  if (font_id) {
+    mainfont = XQueryFont(display, font_id);
+    if (mainfont != NULL) {
+      mainfontfid = 1;
+    }
+  }
+
+  /* Fall back to font_string or "fixed" if font_id was invalid or XQueryFont failed */
+  if (mainfont == NULL) {
+    if ((mainfont = XLoadQueryFont(display, font_string)) == NULL)
+    {
+      error("can't access font %s\n", font_string);
+
+      if ((mainfont = XLoadQueryFont(display, "fixed")) == NULL) {
+        error("can't access fixed font\n");
+        clean_exit(1);
+      }
+    }
+    mainfontfid = 0;
   }
 
 
