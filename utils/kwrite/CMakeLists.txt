@@ -35,11 +35,12 @@ target_link_libraries(kwrite
 
 install(TARGETS kwrite RUNTIME DESTINATION ${KDE1_BINDIR})
 
-#install(FILES directory.trash directory.autostart directory.templates directory.desktop DESTINATION ${KDE1_DATADIR}/kfm)
 
 
-#install(FILES config/kfmrc config/desktop DESTINATION ${KDE1_CONFDIR})
-#install(FILES magic DESTINATION ${KDE1_MIMEDIR})
+install(FILES kwrite.xpm undo.xpm redo.xpm DESTINATION ${KDE1_ICONDIR})
 
-#install_icon(kfm.xpm "")
-#install_icon(link.xpm "")
+install(FILES mini-kwrite.xpm DESTINATION ${KDE1_ICONDIR}/mini)
+
+install(FILES kwrite.kdelnk DESTINATION ${KDE1_APPSDIR}/Applications)
+
+install_icon(kwrite.xpm "")
