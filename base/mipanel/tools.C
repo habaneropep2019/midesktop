@@ -1072,7 +1072,7 @@ QString kPanel::findMenuEditor( const QString& folder)
     QFileInfoListIterator it( *list );
     QFileInfo *fi;
     if( it.count() < 3 )
-	return -1;
+	return result;
     while ( (fi=it.current()) && result.isEmpty() )
 	{
 	    if( fi->fileName() == "." || fi->fileName() == ".." )
