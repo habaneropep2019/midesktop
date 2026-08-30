@@ -29,3 +29,7 @@ if(CMAKE_COMPILER_IS_GNUCXX)
 endif()
 
 add_subdirectory(kwrite)
+add_subdirectory(kcalc)
+add_subdirectory(knotes)
+add_subdirectory(khexdit)
+add_subdirectory(ark)
