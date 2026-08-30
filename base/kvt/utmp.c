@@ -334,7 +334,7 @@ int write_utmp(struct utmp * u)
   pututline(u);
   endutent();
   updwtmp(WTMP_FILE, u);
-  pos = (int)NULL;
+  pos = 0;
   madeutent = 1;
 
   // drop root privileges again
