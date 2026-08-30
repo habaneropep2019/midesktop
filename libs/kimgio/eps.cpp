@@ -4,6 +4,8 @@
 #include <qiodevice.h>
 #include <qstring.h>
 
+#include <stdlib.h>
+
 #include "eps.h"
 
 #define BUFLEN 200
@@ -58,11 +60,13 @@ void kimgio_epsf_read (QImageIO *image)
 	}
 
 	// temporary file name
-	tmpFileName = tmpnam(NULL); 
-
-	if( tmpFileName == 0 ) {
+	char tmpFileName2[] = "/tmp/kimgio_eps_XXXXXX";
+	int tmpFd = mkstemp(tmpFileName2);
+	if ( tmpFd < 0 ) {
 		return;
 	}
+	// Close descriptor so Ghostscript can write to it cleanly
+	close(tmpFd);
 
 	// x1, y1 -> translation
 	// x2, y2 -> new size
