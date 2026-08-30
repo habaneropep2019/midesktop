@@ -29,3 +29,4 @@ if(CMAKE_COMPILER_IS_GNUCXX)
 endif()
 
 add_subdirectory(kwrite)
+add_subdirectory(kcalc)
