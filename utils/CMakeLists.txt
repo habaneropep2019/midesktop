@@ -30,3 +30,4 @@ endif()
 
 add_subdirectory(kwrite)
 add_subdirectory(kcalc)
+add_subdirectory(knotes)
