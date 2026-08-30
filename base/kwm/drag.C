@@ -446,7 +446,7 @@ void killSelect(){
       XMaskEvent(qt_xdisplay(), KeyPressMask | ButtonMask |
 		 PointerMotionMask, &ev);
       if (ev.type == KeyPress){
-	int kc = XKeycodeToKeysym(qt_xdisplay(), ev.xkey.keycode, 0);
+	KeySym kc = XkbKeycodeToKeysym(qt_xdisplay(), ev.xkey.keycode, 0, 0);
 	int mx = 0;
 	int my = 0;
 	return_pressed = (kc == XK_Return) || (kc == XK_space);
