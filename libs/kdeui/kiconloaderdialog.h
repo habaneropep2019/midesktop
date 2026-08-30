@@ -61,7 +61,7 @@ public:
   void cancelLoad();
 
 signals:
-  void nameChanged( const char * );
+  void nameChanged( const QString &);
   void doubleClicked();
   void interrupted();
 

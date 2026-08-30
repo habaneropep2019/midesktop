@@ -206,7 +206,7 @@ void KIconLoaderCanvas::mouseMoveEvent( QMouseEvent *e)
       return;
     }
   QString name = name_list.at(item_nr);
-  emit nameChanged( (const char *) name );
+  emit nameChanged( name );
 }
 
 void KIconLoaderCanvas::mousePressEvent( QMouseEvent *e)
@@ -273,7 +273,7 @@ void KIconLoaderDialog::init()
   cancel->setGeometry(325, 200, 80, 30);
   connect( ok, SIGNAL(clicked()), this, SLOT(accept()) );
   connect( cancel, SIGNAL(clicked()), this, SLOT(reject()) );
-  connect( canvas, SIGNAL(nameChanged(const char *)), l_name, SLOT(setText(const char *)) );
+  connect( canvas, SIGNAL(nameChanged(const QString &)), l_name, SLOT(setText(const QString &)) );
   connect( canvas, SIGNAL(doubleClicked()), this, SLOT(accept()) );
   connect( canvas, SIGNAL(interrupted()), this, SLOT(needReload()) );
   connect( i_filter, SIGNAL(returnPressed()), this, SLOT(filterChanged()) );
