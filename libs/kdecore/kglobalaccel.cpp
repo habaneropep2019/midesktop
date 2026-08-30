@@ -35,6 +35,7 @@
 #include <X11/X.h>
 #include <X11/Xlib.h>
 #include <X11/keysym.h>
+#include <X11/XKBlib.h>
 
 // NOTE ABOUT CONFIGURATION CHANGES
 // Test if keys enabled because these keys have made X server grabs
@@ -494,22 +495,18 @@ bool KGlobalAccel::x11EventFilter( const XEvent *event_ ) {
 	if ( event_->type != KeyPress ) return false;
 	
 	uint mod=event_->xkey.state & (ControlMask | ShiftMask | Mod1Mask);
-	uint keysym= XKeycodeToKeysym(qt_xdisplay(), event_->xkey.keycode, 0);
+	uint keysym = XkbKeycodeToKeysym(qt_xdisplay(), event_->xkey.keycode, 0, 0);
 	
 
-	QDictIterator<KKeyEntry> *aKeyIt = new QDictIterator<KKeyEntry>( aKeyDict );
-	aKeyIt->toFirst();
-#define pE aKeyIt->current()
-	while( pE ) { 
+	QDictIterator<KKeyEntry> aKeyIt( aKeyDict );
+	aKeyIt.toFirst();
+	#define pE aKeyIt.current()
+	while( pE ) {
 		int kc = pE->aCurrentKeyCode;
 		if ( mod == keyToXMod( kc ) && keysym == keyToXSym( kc ) ) {
-		break;
+			break;
 		}
-		++*aKeyIt;
-	}
-	
-	if ( !pE ) {
-		return false;
+		++aKeyIt;
 	}
 	
 	if ( !pE ) {
