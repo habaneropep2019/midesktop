@@ -429,6 +429,6 @@ void GetShmAdrByRef(int shm_talkid, char **shm_adr)
 
 void LogError(char *message)
 {
-  fprintf(stderr,message);
+  fprintf(stderr, "%s", message);
 }
 
