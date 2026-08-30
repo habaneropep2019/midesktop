@@ -38,8 +38,10 @@ install(TARGETS kcalc RUNTIME DESTINATION ${KDE1_BINDIR})
 #install(FILES directory.trash directory.autostart directory.templates directory.desktop DESTINATION ${KDE1_DATADIR}/kfm)
 
 
-#install(FILES config/kfmrc config/desktop DESTINATION ${KDE1_CONFDIR})
-#install(FILES magic DESTINATION ${KDE1_MIMEDIR})
+install(FILES kcalclogo.xpm DESTINATION ${KDE1_DATADIR}/kcalc/pics/)
 
-#install_icon(kfm.xpm "")
-#install_icon(link.xpm "")
+install(FILES mini-kcalc.xpm DESTINATION ${KDE1_ICONDIR}/mini)
+
+install(FILES kcalc.kdelnk DESTINATION ${KDE1_APPSDIR}/Utilities)
+
+install_icon(kcalc.xpm "")
