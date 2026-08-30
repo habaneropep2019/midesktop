@@ -36,8 +36,6 @@ install(TARGETS khexdit RUNTIME DESTINATION ${KDE1_BINDIR})
 
 
 
-install(FILES kwrite.xpm undo.xpm redo.xpm DESTINATION ${KDE1_ICONDIR})
-
 install(FILES mini-khexdit.xpm DESTINATION ${KDE1_ICONDIR}/mini)
 
 install(FILES large-khexdit.xpm DESTINATION ${KDE1_ICONDIR}/large)

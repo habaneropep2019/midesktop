@@ -37,7 +37,6 @@ install(TARGETS miark RUNTIME DESTINATION ${KDE1_BINDIR})
 
 
 
-install(FILES kwrite.xpm undo.xpm redo.xpm DESTINATION ${KDE1_ICONDIR})
 
 install(FILES mini-ark.xpm DESTINATION ${KDE1_ICONDIR}/mini)
 
