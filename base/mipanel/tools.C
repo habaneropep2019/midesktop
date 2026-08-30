@@ -1172,7 +1172,7 @@ void kPanel::desktopPreview()
 			int h = QApplication::desktop()->height();
 			int nX, nY;
 			QPoint btnPos(m_pBtnDesktopPreview->mapToGlobal(m_pBtnDesktopPreview->pos()));
-			if (orientation == horizontal)
+			if (orientation == Qt::Horizontal)
 			{
 				nX = w - m_pDesktopPreviewFrame->width();
 				if (nX > btnPos.x())
