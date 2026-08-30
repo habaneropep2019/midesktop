@@ -21,6 +21,9 @@ int bbox ( const char *fileName, int *x1, int *y1, int *x2, int *y2)
 	int ret = FALSE;
 
 	file = fopen (fileName, "r");
+	if (!file) {
+		return FALSE;
+	}
 
 	do {
 		if (! fgets (buf, BUFLEN, file)) break;
