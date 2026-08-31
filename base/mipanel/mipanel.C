@@ -1237,27 +1237,20 @@ void kPanel::button_clicked()
 	DesktopEntry * pEntry = entries.findButton(myPushButton::most_recent_pressed);
 	if (pEntry)
 	{
-		if (pEntry->button->last_button == LeftButton &&
-			pEntry->pmi && pEntry->pmi->getType() == unix_com)
+		if (pEntry->button->last_button == LeftButton)
 		{
-			pEntry->pmi->exec();
-		}
-	}
-}
-
-
-void kPanel::button_pressed()
-{
-	DesktopEntry * pEntry = entries.findButton(myPushButton::most_recent_pressed);
-	if (pEntry)
-	{
-		if (pEntry->button->last_button == LeftButton && pEntry->popup)
-		{
-			show_popup(pEntry->popup, pEntry->button);
-		}
-		else if (pEntry->button->last_button == LeftButton && pEntry->pmi && pEntry->pmi->getQPopupMenu())
-		{
-			show_popup(pEntry->pmi->getQPopupMenu(), pEntry->button);
+			if (pEntry->popup)
+			{
+				show_popup(pEntry->popup, pEntry->button);
+			}
+			else if (pEntry->pmi && pEntry->pmi->getQPopupMenu())
+			{
+				show_popup(pEntry->pmi->getQPopupMenu(), pEntry->button);
+			}
+			else if (pEntry->pmi && pEntry->pmi->getType() == unix_com)
+			{
+				pEntry->pmi->exec();
+			}
 		}
 		else if (pEntry->button->last_button == RightButton)
 		{
@@ -1270,16 +1263,14 @@ void kPanel::button_pressed()
 				myPopupMenu popup;
 				myPopupMenu popupNew;
 				popupNew.insertItem(i18n("&Folder"),
-														m_pKMenuEventFilter,
-														SLOT(addNewRootMenuFolder()));
+									m_pKMenuEventFilter,
+						SLOT(addNewRootMenuFolder()));
 				popupNew.insertItem(i18n("&Nickname"),
-														m_pKMenuEventFilter,
-														SLOT(addNewRootMenuItem()));
+									m_pKMenuEventFilter,
+						SLOT(addNewRootMenuItem()));
 
 				popup.insertItem(i18n("&New"), &popupNew, 10);
-
 				popup.insertSeparator();
-
 				popup.insertItem(i18n("Configure"), this, SLOT(configurePanel()));
 				popup.insertItem(i18n("Restart"), this, SLOT(restart()));
 
@@ -1319,27 +1310,22 @@ void kPanel::button_pressed()
 					if (pEntry->pmi)
 					{
 						QString a(pEntry->pmi->getFullPathName());
-
 						KFM* kfm = new KFM;
-						kfm->openProperties(a.latin1()); // Single argument, converted to const char*
+						kfm->openProperties(a.latin1());
 						delete kfm;
 					}
 					break;
 
-				case cmdMove: // move
-					{
-						startButtonMove(pEntry->button);
-					}
+				case cmdMove:
+					startButtonMove(pEntry->button);
 					break;
 
-				case cmdRemove: // remove
-					{
-						if (pEntry->swallowed)
-							KWM::close(pEntry->swallowed);
-						delete_button(pEntry->button);
-						writeOutConfiguration();
-					}
-					break;
+				case cmdRemove:
+					if (pEntry->swallowed)
+						KWM::close(pEntry->swallowed);
+				delete_button(pEntry->button);
+				writeOutConfiguration();
+				break;
 
 				default:
 					break;
@@ -1349,23 +1335,30 @@ void kPanel::button_pressed()
 }
 
 
+void kPanel::button_pressed()
+{
+	// Left empty: popups are not handled in button_clicked()
+}
+
+
 void kPanel::taskbarClicked(myTaskButton* b)
 {
-  switch (b->last_button)
+	switch (b->last_button)
 	{
-  case MidButton:
-    KWM::setIconify(b->win, !KWM::isIconified(b->win));
-    break;
-  case RightButton:
-
-    break;
-  default:
-      if (b->isActive() && KWM::desktop(b->win) == KWM::currentDesktop())
-	  KWM::setIconify(b->win, TRUE );
-      else
-	  KWM::activate(b->win);
-    break;
-  }
+		case MidButton:
+			KWM::setIconify(b->win, !KWM::isIconified(b->win));
+			break;
+		case RightButton:
+			// Trigger the right-click menu here on release
+			taskbarPressed(b);
+			break;
+		default:
+			if (b->isActive() && KWM::desktop(b->win) == KWM::currentDesktop())
+				KWM::setIconify(b->win, TRUE );
+		else
+			KWM::activate(b->win);
+		break;
+	}
 }
 
 
