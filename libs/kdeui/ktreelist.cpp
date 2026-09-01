@@ -1274,7 +1274,7 @@ void KTreeList::expandOrCollapse(KTreeListItem *parent)
   bool autoU = autoUpdate();
   setAutoUpdate(FALSE);
   int parentIndex = itemIndex(parent);
-  if(parent->isExpanded()) { 
+  if(parent->isExpanded()) {
     collapseSubTree(parent);
     emit collapsed(parentIndex);
   }
@@ -1282,9 +1282,10 @@ void KTreeList::expandOrCollapse(KTreeListItem *parent)
     expandSubTree(parent);
     emit expanded(parentIndex);
   }
-  if(autoU && isVisible())
-    repaint();
   setAutoUpdate(autoU);
+  if(autoU && isVisible())
+    updateScrollBars();
+  repaint(true);
 }
 
 // expands the subtree at the given item
