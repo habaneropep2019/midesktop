@@ -27,6 +27,19 @@ include(KDE1InstallDirs)
 
 set(KDELIBS_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
 
+# Source - https://stackoverflow.com/a/73463856
+# Posted by BullyWiiPlaza
+# Retrieved 2026-09-05, License - CC BY-SA 4.0
+# Modified 2026-09-05, Alec Bloss
+
+set(IS_DEBUG_BUILD CMAKE_BUILD_TYPE STREQUAL "Debug")
+
+# Indication to the code that this is a debug build
+if (${IS_DEBUG_BUILD})
+    add_compile_definitions(MIDEBUG)
+endif ()
+
+
 include_directories(common)
 
 add_definitions( -DHAVE_CONFIG_H )
