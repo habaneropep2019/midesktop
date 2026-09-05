@@ -336,6 +336,7 @@
 #include <qregexp.h>
 #include <qkeycode.h>
 #include <qvaluelist.h>
+#include <qscrollbar.h>
 #ifdef HAVE_SYS_STAT_H
 #include <sys/stat.h>
 #endif
@@ -692,71 +693,124 @@ KLocale* KApplication::getLocale()
 }
 
 
-bool KApplication::eventFilter ( QObject*, QEvent* e )
+bool KApplication::eventFilter( QObject *obj, QEvent *e )
 {
+  if ( e->type() == QEvent::Wheel && obj && obj->isWidgetType() )
+  {
+    QWidget *w = (QWidget *)obj;
+
+    // Do not intercept widgets that natively handle wheel events
+    if ( !w->inherits( "QScrollBar" ) &&
+      !w->inherits( "QSlider" ) &&
+      !w->inherits( "QSpinBox" ) &&
+      !w->inherits( "QComboBox" ) &&
+      !w->inherits( "QScrollView" ) &&
+      !( w->parentWidget() && w->parentWidget()->inherits( "QScrollView" ) ) )
+    {
+      QWheelEvent *we = (QWheelEvent *)e;
+
+      // Search bottom-up from the target widget for the closest visible vertical scrollbar
+      QWidget *container = w;
+      QScrollBar *targetBar = 0L;
+
+      while ( container && !targetBar )
+      {
+        const QObjectList *children = container->children();
+        if ( children )
+        {
+          for ( QObject *child = children->first(); child != 0L; child = children->next() )
+          {
+            if ( child->isWidgetType() && child->inherits( "QScrollBar" ) )
+            {
+              QScrollBar *sb = (QScrollBar *)child;
+              if ( sb->orientation() == QScrollBar::Vertical && sb->isVisible() )
+              {
+                targetBar = sb;
+                break;
+              }
+            }
+          }
+        }
+
+        // Do not search beyond top-level window boundaries
+        if ( container->isTopLevel() )
+          break;
+
+        container = container->parentWidget();
+      }
+
+      if ( targetBar )
+      {
+        // Forward the wheel event directly to the scrollbar
+        QApplication::sendEvent( targetBar, we );
+        return TRUE; // Event consumed
+      }
+    }
+  }
+
   if ( e->type() == QEvent::KeyPress )
-	{
-	  QKeyEvent *k = (QKeyEvent*)e;
-	  if( ( k->key() == Key_F12 ) &&
-		  ( k->state() & ControlButton ) &&
-		  ( k->state() & ShiftButton ) )
-		{
-		  KDebugDialog* pDialog = new KDebugDialog();
-		  /* Fill dialog fields with values from config data */
-		  KConfig* pConfig = getConfig();
-		  QString aOldGroup = pConfig->getGroup();
-		  pConfig->setGroup( "KDebug" );
-		  pDialog->setInfoOutput( pConfig->readNumEntry( "InfoOutput", 4 ) );
-		  pDialog->setInfoFile( pConfig->readEntry( "InfoFilename",
-													"kdebug.dbg" ) );
-		  pDialog->setInfoShow( pConfig->readEntry( "InfoShow", "" ) );
-		  pDialog->setWarnOutput( pConfig->readNumEntry( "WarnOutput", 4 ) );
-		  pDialog->setWarnFile( pConfig->readEntry( "WarnFilename",
-													"kdebug.dbg" ) );
-		  pDialog->setWarnShow( pConfig->readEntry( "WarnShow", "" ) );
-		  pDialog->setErrorOutput( pConfig->readNumEntry( "ErrorOutput", 4 ) );
-		  pDialog->setErrorFile( pConfig->readEntry( "ErrorFilename",
-													 "kdebug.dbg" ) );
-		  pDialog->setErrorShow( pConfig->readEntry( "ErrorShow", "" ) );
-		  pDialog->setFatalOutput( pConfig->readNumEntry( "FatalOutput", 4 ) );
-		  pDialog->setFatalFile( pConfig->readEntry( "FatalFilename",
-													 "kdebug.dbg" ) );
-		  pDialog->setFatalShow( pConfig->readEntry( "FatalShow", "" ) );
-		  pDialog->setAbortFatal( pConfig->readNumEntry( "AbortFatal", 0 ) );
-								
-		  /* Show dialog */
-		  int nRet = pDialog->exec();
+  {
+    QKeyEvent *k = (QKeyEvent*)e;
+    if( ( k->key() == Key_F12 ) &&
+      ( k->state() & ControlButton ) &&
+      ( k->state() & ShiftButton ) )
+    {
+      KDebugDialog* pDialog = new KDebugDialog();
+      /* Fill dialog fields with values from config data */
+      KConfig* pConfig = getConfig();
+      QString aOldGroup = pConfig->getGroup();
+      pConfig->setGroup( "KDebug" );
+      pDialog->setInfoOutput( pConfig->readNumEntry( "InfoOutput", 4 ) );
+      pDialog->setInfoFile( pConfig->readEntry( "InfoFilename",
+                                                "kdebug.dbg" ) );
+      pDialog->setInfoShow( pConfig->readEntry( "InfoShow", "" ) );
+      pDialog->setWarnOutput( pConfig->readNumEntry( "WarnOutput", 4 ) );
+      pDialog->setWarnFile( pConfig->readEntry( "WarnFilename",
+                                                "kdebug.dbg" ) );
+      pDialog->setWarnShow( pConfig->readEntry( "WarnShow", "" ) );
+      pDialog->setErrorOutput( pConfig->readNumEntry( "ErrorOutput", 4 ) );
+      pDialog->setErrorFile( pConfig->readEntry( "ErrorFilename",
+                                                 "kdebug.dbg" ) );
+      pDialog->setErrorShow( pConfig->readEntry( "ErrorShow", "" ) );
+      pDialog->setFatalOutput( pConfig->readNumEntry( "FatalOutput", 4 ) );
+      pDialog->setFatalFile( pConfig->readEntry( "FatalFilename",
+                                                 "kdebug.dbg" ) );
+      pDialog->setFatalShow( pConfig->readEntry( "FatalShow", "" ) );
+      pDialog->setAbortFatal( pConfig->readNumEntry( "AbortFatal", 0 ) );
 
-		  if( nRet == QDialog::Accepted )
-			{
-			  /* User pressed OK, retrieve values */
-			  pConfig->writeEntry( "InfoOutput", pDialog->infoOutput() );
-			  pConfig->writeEntry( "InfoFilename", pDialog->infoFile() );
-			  pConfig->writeEntry( "InfoShow", pDialog->infoShow() );
-			  pConfig->writeEntry( "WarnOutput", pDialog->warnOutput() );
-			  pConfig->writeEntry( "WarnFilename", pDialog->warnFile() );
-			  pConfig->writeEntry( "WarnShow", pDialog->warnShow() );
-			  pConfig->writeEntry( "ErrorOutput", pDialog->errorOutput() );
-			  pConfig->writeEntry( "ErrorFilename", pDialog->errorFile() );
-			  pConfig->writeEntry( "ErrorShow", pDialog->errorShow() );
-			  pConfig->writeEntry( "FatalOutput", pDialog->fatalOutput() );
-			  pConfig->writeEntry( "FatalFilename", pDialog->fatalFile() );
-			  pConfig->writeEntry( "FatalShow", pDialog->fatalShow() );
-			  pConfig->writeEntry( "AbortFatal", pDialog->abortFatal() );
+      /* Show dialog */
+      int nRet = pDialog->exec();
 
-			  //bAreaCalculated = false;
-			}
-		  else
-			{
-			  /* User pressed Cancel, do nothing */
-			}
-		
-		  /* restore old group */
-		  pConfig->setGroup( aOldGroup );
+      if( nRet == QDialog::Accepted )
+      {
+        /* User pressed OK, retrieve values */
+        pConfig->writeEntry( "InfoOutput", pDialog->infoOutput() );
+        pConfig->writeEntry( "InfoFilename", pDialog->infoFile() );
+        pConfig->writeEntry( "InfoShow", pDialog->infoShow() );
+        pConfig->writeEntry( "WarnOutput", pDialog->warnOutput() );
+        pConfig->writeEntry( "WarnFilename", pDialog->warnFile() );
+        pConfig->writeEntry( "WarnShow", pDialog->warnShow() );
+        pConfig->writeEntry( "ErrorOutput", pDialog->errorOutput() );
+        pConfig->writeEntry( "ErrorFilename", pDialog->errorFile() );
+        pConfig->writeEntry( "ErrorShow", pDialog->errorShow() );
+        pConfig->writeEntry( "FatalOutput", pDialog->fatalOutput() );
+        pConfig->writeEntry( "FatalFilename", pDialog->fatalFile() );
+        pConfig->writeEntry( "FatalShow", pDialog->fatalShow() );
+        pConfig->writeEntry( "AbortFatal", pDialog->abortFatal() );
 
-		  return TRUE; // do not process event further
-		}
-	}
+        //bAreaCalculated = false;
+      }
+      else
+      {
+        /* User pressed Cancel, do nothing */
+      }
+
+      /* restore old group */
+      pConfig->setGroup( aOldGroup );
+
+      return TRUE; // do not process event further
+    }
+  }
   return FALSE; // process event further
 }
 
