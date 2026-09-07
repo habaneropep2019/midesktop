@@ -1,25 +1,24 @@
-Source: midesktoputils
-Section: contrib/utils
+Source: midesktopgraphics
+Section: contrib/graphics
 Priority: extra
 Maintainer: Alec Bloss <abloss@libranext.com>
 Build-Depends:
  debhelper-compat (= 13),
  cmake,
  ninja-build,
- midesktoplibs,
- osiris (>=2.4.5),
+ osiris (>= 2.4.5),
  osiris (<< 2.5),
+ midesktoplibs (>=1.1.99),
  pkg-config
 Standards-Version: 4.7.0
 Homepage: https://midesk.top/
 Rules-Requires-Root: no
 
-Package: midesktoputils
+Package: midesktopgraphics
 Architecture: any
 Multi-Arch: foreign
 Depends:
  ${misc:Depends},
  ${shlibs:Depends},
-Description: collection of useful midesktop utilities
- this collection includes kcalc kwrite khexdit knotes ark etc.
- (calculator, editor, hex editor ...)
+Description: MiDesktop collection of graphics programs.
+ This collections includes kscreenshot, etc.
