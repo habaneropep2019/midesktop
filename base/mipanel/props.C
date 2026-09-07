@@ -731,7 +731,7 @@ void kPanel::readInConfiguration()
 	float real_space;
 	float delta = 0;
 
-	if (orientation == vertical)
+	if (orientation == Qt::Vertical)
 	{
 		real_space = height();
 //		x = margin; y = 0;
@@ -761,7 +761,7 @@ void kPanel::readInConfiguration()
 		}
 		else 
 		{
-			if (orientation == horizontal)
+			if (orientation == Qt::Horizontal)
 				x += delta;
 			else
 				y += delta;
@@ -794,7 +794,7 @@ void kPanel::readInConfiguration()
 	
 			if (buttonAdded && entries.last())
 			{
-			 if (orientation == horizontal)
+			 if (orientation == Qt::Horizontal)
 				 x += entries.last()->button->width();
 			 else
 				 y += entries.last()->button->height();

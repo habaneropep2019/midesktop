@@ -334,7 +334,7 @@ int write_utmp(struct utmp * u)
   pututline(u);
   endutent();
   updwtmp(WTMP_FILE, u);
-  pos = (int)NULL;
+  pos = 0;
   madeutent = 1;
 
   // drop root privileges again
@@ -367,7 +367,7 @@ void makeutent(char *ttyname)
   strcpy(u.ut_line,ttyname); /* This works at the moment. I don't think that 
                                 ttyname is NULL terminated, so something 
                                 more elaborate may need to be done. */
-  time(&u.ut_time);
+  u.ut_time = time(NULL);
   strncpy(u.ut_user,pwent->pw_name,sizeof(u.ut_user));
   u.ut_type = USER_PROCESS;
   u.ut_pid = getpid(); 
@@ -415,7 +415,7 @@ void cleanutent()
     {
       if(u->ut_pid == pid) 
 	{
-	  time(&u->ut_time);
+	  u->ut_time = time(NULL);
 #ifdef SVR4
  	  memset(&u->ut_user, 0, sizeof(u->ut_user));
 #else

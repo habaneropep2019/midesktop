@@ -482,13 +482,13 @@ int kPanel::show_popup(QPopupMenu* popup, QWidget* button, bool isTaskButton)
 {
 	int xp;
 	int yp;
-	
+
 	if (popup == windowlist)
 		generateWindowlist(windowlist);
-	
-	popup->move(-1000,-1000);
-	popup->show();
-	
+
+	// Calculate geometry cleanly without showing off-screen
+	popup->adjustSize();
+
 	if (!isTaskButton)
 	{
 		if (orientation == Qt::Vertical)
@@ -499,27 +499,27 @@ int kPanel::show_popup(QPopupMenu* popup, QWidget* button, bool isTaskButton)
 			else
 				xp = button->mapToGlobal(QPoint(0,0)).x() - popup->width();
 		}
-		else 
+		else
 		{
 			xp = button->mapToGlobal(QPoint(0,0)).x();
 			if (position == top_left)
 				yp = button->mapToGlobal(QPoint(0,0)).y() + button->height();
 			else
-			yp = button->mapToGlobal(QPoint(0,0)).y() - popup->height();
+				yp = button->mapToGlobal(QPoint(0,0)).y() - popup->height();
 		}
 		if (yp + popup->height() > QApplication::desktop()->height())
-			yp = button->y()+button->height()-popup->height();
+			yp = button->y() + button->height() - popup->height();
 		if (yp < 0)
-			yp = QApplication::desktop()->height()-popup->height()+button->height();
+			yp = QApplication::desktop()->height() - popup->height() + button->height();
 	}
-	else 
+	else
 	{
 		if (taskbar_position == taskbar_top_left)
 		{
 			xp = button->mapToGlobal(QPoint(0,0)).x() + button->width();
 			yp = button->mapToGlobal(QPoint(0,0)).y();
 		}
-		else 
+		else
 		{
 			xp = button->mapToGlobal(QPoint(0,0)).x();
 			if (taskbar_position == top)
@@ -528,13 +528,14 @@ int kPanel::show_popup(QPopupMenu* popup, QWidget* button, bool isTaskButton)
 				yp = button->mapToGlobal(QPoint(0,0)).y() - popup->height();
 		}
 	}
-	
-	popup->move(QPoint(xp, yp));
-	int v = popup->exec();
-	QEvent ev(QEvent::Leave);
-	QMouseEvent mev (QEvent::MouseButtonRelease, QCursor::pos(), LeftButton, LeftButton);
-	QApplication::sendEvent(button, &ev);
-	QApplication::sendEvent(button, &mev);
+
+	// Pass the calculated point directly to exec()
+	int v = popup->exec(QPoint(xp, yp));
+
+	if (button && button->inherits("QButton")) {
+		((QButton*)button)->setDown(false);
+		button->repaint(false);
+	}
 	return v;
 }
 
@@ -895,7 +896,7 @@ void kPanel::showMiniPanel ()
 		miniPanel->setFrameStyle(QFrame::Panel| QFrame::Raised);
 		miniPanel->setMouseTracking( true );
 		miniPanel->installEventFilter (this);
-		connect( miniPanel, SIGNAL( pressed( int )), this, SLOT( miniButtons(int)) );
+		connect( miniPanel, SIGNAL( clicked( int )), this, SLOT( miniButtons(int)) );
 		
 		miniSystem = new myPushButton(miniPanel);
 		QToolTip::add(miniSystem, i18n("Application Starter"));
@@ -996,22 +997,20 @@ void kPanel::miniButtons(int i)
 {
 	switch (i)
 	{
-	case 1:
+		case 1:
 		{
 			QPopupMenu *kmenu = pmenu->getQPopupMenu();
 			if (!kmenu)
 				break;
+			kmenu->adjustSize();
+			QPoint p;
 			if (taskbar_position == bottom)
-			{
-				kmenu->move(-1000,-1000);
-				kmenu->show();
-				kmenu->move(QPoint(miniPanelFrame->x() + miniSystem->x(),
-													miniPanelFrame->y() - kmenu->height()));
-			}
-			else
-				kmenu->move(QPoint(miniPanelFrame->x()+miniSystem->x(),
-													miniSystem->y()+miniPanelFrame->height()));
-			kmenu->exec();
+				p = QPoint(miniPanelFrame->x() + miniSystem->x(),
+						   miniPanelFrame->y() - kmenu->height());
+				else
+					p = QPoint(miniPanelFrame->x() + miniSystem->x(),
+							   miniSystem->y() + miniPanelFrame->height());
+					kmenu->exec(p);
 		}
 		break;
 		
@@ -1072,7 +1071,7 @@ QString kPanel::findMenuEditor( const QString& folder)
     QFileInfoListIterator it( *list );
     QFileInfo *fi;
     if( it.count() < 3 )
-	return -1;
+	return result;
     while ( (fi=it.current()) && result.isEmpty() )
 	{
 	    if( fi->fileName() == "." || fi->fileName() == ".." )
@@ -1172,7 +1171,7 @@ void kPanel::desktopPreview()
 			int h = QApplication::desktop()->height();
 			int nX, nY;
 			QPoint btnPos(m_pBtnDesktopPreview->mapToGlobal(m_pBtnDesktopPreview->pos()));
-			if (orientation == horizontal)
+			if (orientation == Qt::Horizontal)
 			{
 				nX = w - m_pDesktopPreviewFrame->width();
 				if (nX > btnPos.x())

@@ -175,7 +175,7 @@ CResizeBar::CResizeBar(QWidget *parent, Orientation orientation, bool bFixedPos/
 	setMidLineWidth(1);
 
 	m_Orientation = orientation;
-	if (orientation == horizontal)
+	if (orientation == Qt::Horizontal)
 	{
 		if (!bFixedPos)
 			setCursor(sizeHorCursor);
@@ -197,7 +197,7 @@ void CResizeBar::mousePressEvent(QMouseEvent *e)
 	{
 		m_bMove = true;
 		QPoint p = QCursor::pos();
-		m_nPrevPos = (m_Orientation == horizontal ? p.x() : p.y());
+		m_nPrevPos = (m_Orientation == Qt::Horizontal ? p.x() : p.y());
 	}
 }
 
@@ -206,7 +206,7 @@ void CResizeBar::mouseMoveEvent(QMouseEvent *e)
 	if (m_bMove)
 	{
 		QPoint p = QCursor::pos();
-		int nPos = (m_Orientation == horizontal ? p.x() : p.y());
+		int nPos = (m_Orientation == Qt::Horizontal ? p.x() : p.y());
 		int nStep = nPos - m_nPrevPos;
 		if (nStep)
 		{
@@ -307,7 +307,7 @@ protected:
 DesktopPreviewButton::DesktopPreviewButton(QWidget *pParent, Orientation o, Position p)
 	: QToolButton(pParent)
 {
-	if (o == horizontal)
+	if (o == Qt::Horizontal)
 	{
 		m_ArrowType = (p == top_left ? DownArrow : UpArrow);
   }
@@ -798,7 +798,7 @@ kPanel::kPanel( KWMModuleApplication* kwmapp_arg,
 		taskbar_frame = 0;
 		taskbar_position = hidden;
 		taskbar = new Taskbar(this, m_bTaskbarDocked, currentDesktop);
-		if (orientation == horizontal)
+		if (orientation == Qt::Horizontal)
 		{
 			taskbar->getButtonsArea()->setAllowMultipleRows(true);
 			bTaskbarButtonCanChangeSize = true;
@@ -908,7 +908,7 @@ kPanel::kPanel( KWMModuleApplication* kwmapp_arg,
 	QBoxLayout *pDockLayout;
 	const QString strTimeTest(clockAmPm ? "10:00AM" : "00:00");
 
-	if (orientation == horizontal)
+	if (orientation == Qt::Horizontal)
 	{
 		m_pRB0->setFixedHeight(box_height - 4);
 		m_pRB1->setFixedHeight(box_height - 4);
@@ -1014,7 +1014,7 @@ kPanel::kPanel( KWMModuleApplication* kwmapp_arg,
 		QBitmap bm;
 		QPainter paint;
 		QPainter paint2;
-		pm.resize(9, (orientation == horizontal)?panel_button->height():panel_button->width());
+		pm.resize(9, (orientation == Qt::Horizontal)?panel_button->height():panel_button->width());
 		bm.resize(pm.width(), pm.height());
 		bm.fill(color0);
 		pm.setMask(bm);
@@ -1049,7 +1049,7 @@ kPanel::kPanel( KWMModuleApplication* kwmapp_arg,
 		arrow_on_pixmap(&pm2, RightArrow);
 
 		QWMatrix m;
-		m.rotate((orientation == horizontal)?0:90);
+		m.rotate((orientation == Qt::Horizontal)?0:90);
 		panel_button->setPixmap(pm.xForm(m));
 		panel_button_standalone->setPixmap(pm2.xForm(m));
 		if (bShowSecondPanelButton)
@@ -1108,7 +1108,7 @@ kPanel::kPanel( KWMModuleApplication* kwmapp_arg,
 				fm.lineSpacing() * 3 > label_date->height())
 	{
 		int nPtSz = tmpfont.pointSize();
-		if (nPtSz < 12 && orientation != vertical)
+		if (nPtSz < 12 && orientation != Qt::Vertical)
 		{
 			// reset font - can't fit it anyway
 			label_date->setFont(savfont);
@@ -1120,7 +1120,7 @@ kPanel::kPanel( KWMModuleApplication* kwmapp_arg,
 	}
 
 	// update label_date size
-	if (orientation == horizontal)
+	if (orientation == Qt::Horizontal)
 	{
 		if (fm.width(strTimeTest) < label_date->width() - 4)
 		{
@@ -1237,27 +1237,20 @@ void kPanel::button_clicked()
 	DesktopEntry * pEntry = entries.findButton(myPushButton::most_recent_pressed);
 	if (pEntry)
 	{
-		if (pEntry->button->last_button == LeftButton &&
-			pEntry->pmi && pEntry->pmi->getType() == unix_com)
+		if (pEntry->button->last_button == LeftButton)
 		{
-			pEntry->pmi->exec();
-		}
-	}
-}
-
-
-void kPanel::button_pressed()
-{
-	DesktopEntry * pEntry = entries.findButton(myPushButton::most_recent_pressed);
-	if (pEntry)
-	{
-		if (pEntry->button->last_button == LeftButton && pEntry->popup)
-		{
-			show_popup(pEntry->popup, pEntry->button);
-		}
-		else if (pEntry->button->last_button == LeftButton && pEntry->pmi && pEntry->pmi->getQPopupMenu())
-		{
-			show_popup(pEntry->pmi->getQPopupMenu(), pEntry->button);
+			if (pEntry->popup)
+			{
+				show_popup(pEntry->popup, pEntry->button);
+			}
+			else if (pEntry->pmi && pEntry->pmi->getQPopupMenu())
+			{
+				show_popup(pEntry->pmi->getQPopupMenu(), pEntry->button);
+			}
+			else if (pEntry->pmi && pEntry->pmi->getType() == unix_com)
+			{
+				pEntry->pmi->exec();
+			}
 		}
 		else if (pEntry->button->last_button == RightButton)
 		{
@@ -1270,16 +1263,14 @@ void kPanel::button_pressed()
 				myPopupMenu popup;
 				myPopupMenu popupNew;
 				popupNew.insertItem(i18n("&Folder"),
-														m_pKMenuEventFilter,
-														SLOT(addNewRootMenuFolder()));
+									m_pKMenuEventFilter,
+						SLOT(addNewRootMenuFolder()));
 				popupNew.insertItem(i18n("&Nickname"),
-														m_pKMenuEventFilter,
-														SLOT(addNewRootMenuItem()));
+									m_pKMenuEventFilter,
+						SLOT(addNewRootMenuItem()));
 
 				popup.insertItem(i18n("&New"), &popupNew, 10);
-
 				popup.insertSeparator();
-
 				popup.insertItem(i18n("Configure"), this, SLOT(configurePanel()));
 				popup.insertItem(i18n("Restart"), this, SLOT(restart()));
 
@@ -1319,27 +1310,22 @@ void kPanel::button_pressed()
 					if (pEntry->pmi)
 					{
 						QString a(pEntry->pmi->getFullPathName());
-
 						KFM* kfm = new KFM;
-						kfm->openProperties(a.latin1()); // Single argument, converted to const char*
+						kfm->openProperties(a.latin1());
 						delete kfm;
 					}
 					break;
 
-				case cmdMove: // move
-					{
-						startButtonMove(pEntry->button);
-					}
+				case cmdMove:
+					startButtonMove(pEntry->button);
 					break;
 
-				case cmdRemove: // remove
-					{
-						if (pEntry->swallowed)
-							KWM::close(pEntry->swallowed);
-						delete_button(pEntry->button);
-						writeOutConfiguration();
-					}
-					break;
+				case cmdRemove:
+					if (pEntry->swallowed)
+						KWM::close(pEntry->swallowed);
+				delete_button(pEntry->button);
+				writeOutConfiguration();
+				break;
 
 				default:
 					break;
@@ -1349,23 +1335,30 @@ void kPanel::button_pressed()
 }
 
 
+void kPanel::button_pressed()
+{
+	// Left empty: popups are not handled in button_clicked()
+}
+
+
 void kPanel::taskbarClicked(myTaskButton* b)
 {
-  switch (b->last_button)
+	switch (b->last_button)
 	{
-  case MidButton:
-    KWM::setIconify(b->win, !KWM::isIconified(b->win));
-    break;
-  case RightButton:
-
-    break;
-  default:
-      if (b->isActive() && KWM::desktop(b->win) == KWM::currentDesktop())
-	  KWM::setIconify(b->win, TRUE );
-      else
-	  KWM::activate(b->win);
-    break;
-  }
+		case MidButton:
+			KWM::setIconify(b->win, !KWM::isIconified(b->win));
+			break;
+		case RightButton:
+			// Trigger the right-click menu here on release
+			taskbarPressed(b);
+			break;
+		default:
+			if (b->isActive() && KWM::desktop(b->win) == KWM::currentDesktop())
+				KWM::setIconify(b->win, TRUE );
+		else
+			KWM::activate(b->win);
+		break;
+	}
 }
 
 
@@ -1713,7 +1706,7 @@ void kPanel::hidePanelLeft()
   if (!panelCurrentlyHidden){
     QPoint p = pos();
     if (autoHidden){
-      if (orientation == horizontal){
+      if (orientation == Qt::Horizontal){
 	if (position == top_left)
 	  p.setY(y()+height()-4);
 	else
@@ -1737,7 +1730,7 @@ void kPanel::hidePanelLeft()
 
     if(hide_show_animation) {
       in_animation = true;
-      if (orientation == vertical) {
+      if (orientation == Qt::Vertical) {
 	for (int i = 0; i < geom.height() - panel_button_frame_standalone->height();
 	     i+=PANEL_SPEED(i,geom.height())){
 	  move(geom.x(), geom.y()-i);
@@ -1809,7 +1802,7 @@ void kPanel::hidePanelRight()
   if (!panelCurrentlyHidden){
     QPoint p = pos();
     if (autoHidden){
-      if (orientation == horizontal){
+      if (orientation == Qt::Horizontal){
 	if (position == top_left)
 	  p.setY(y()+height()-4);
 	else
@@ -1834,7 +1827,7 @@ void kPanel::hidePanelRight()
     if(hide_show_animation) {
       in_animation = true;
 
-      if (orientation == vertical) {
+      if (orientation == Qt::Vertical) {
 	for (int i = 0; i < geom.height() - panel_button_frame_standalone2->height();
 	     i += PANEL_SPEED(i,geom.height())){
 	  move(geom.x(), geom.y()+i);
@@ -1906,7 +1899,7 @@ void kPanel::showPanelFromLeft( bool smooth)
     move(-10000, -10000);
     QFrame::show();
     if(hide_show_animation) {
-      if (orientation == vertical) {
+      if (orientation == Qt::Vertical) {
 	for (int i = geom.height(); i>12;i-=smooth?(PANEL_SPEED(i,geom.height())):hide_show_animation){
 	  move(geom.x(), geom.y()-i);
 	  qApp->syncX();
@@ -1970,7 +1963,7 @@ void kPanel::showPanelFromRight(bool smooth)
     move(-10000, -10000);
     QFrame::show();
     if(hide_show_animation) {
-      if (orientation == vertical) {
+      if (orientation == Qt::Vertical) {
 	for (int i = geom.height(); i>12;i-=smooth?(PANEL_SPEED(i,geom.height())):hide_show_animation){
 	  move(geom.x(), geom.y()+i);
 	  qApp->syncX();
@@ -2097,7 +2090,7 @@ void kPanel::doGeometry (bool do_not_change_taskbar)
 		if (!panelCurrentlyLeft)
 		{
 			//right panel button, grrrrr it is becoming hacky......
-			if (orientation == horizontal)
+			if (orientation == Qt::Horizontal)
 			{
 				if (position == top_left)
 				{
@@ -2132,7 +2125,7 @@ void kPanel::doGeometry (bool do_not_change_taskbar)
 		else
 		{
 			// some corrections....
-			if (orientation == vertical)
+			if (orientation == Qt::Vertical)
 			{
 				if (taskbar_position == bottom)
 				{
@@ -2147,7 +2140,7 @@ void kPanel::doGeometry (bool do_not_change_taskbar)
 		// panel is in autohide mode and not hidden. Adjust the window region to the hidden state.
 		if (!autoHidden)
 		{
-			if (orientation == horizontal)
+			if (orientation == Qt::Horizontal)
 			{
 				if (position == top_left)
 					pyR = pyR -  height() + 4;
@@ -2192,7 +2185,7 @@ void kPanel::doGeometry (bool do_not_change_taskbar)
 		}
 	}
 
-	if (orientation == horizontal)
+	if (orientation == Qt::Horizontal)
 	{
 		if (position == top_left)
 		{
@@ -2343,7 +2336,7 @@ void kPanel::load_and_set_some_fonts()
 		}
   }
 
-	if (m_bTaskbarDocked && orientation != vertical)
+	if (m_bTaskbarDocked && orientation != Qt::Vertical)
 	{
 		int nMinHg = taskbar->getButtonsArea()->fontMetrics().height() + 6;
 		int nRows = (box_height - margin) / (nMinHg + margin);

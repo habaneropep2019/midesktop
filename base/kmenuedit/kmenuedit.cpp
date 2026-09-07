@@ -108,6 +108,9 @@ KMenuEdit::KMenuEdit( const char *name )
   f_move = new QFrame(f_mask, "f_move");
   f_move->setBackgroundMode( PaletteBase );
   f_move->setGeometry( 0, 0, QApplication::desktop()->width(), QApplication::desktop()->height() );
+  // Ensure frames are explicitly made visible in Osiris/Qt2
+  f_mask->show();
+  f_move->show();
   scrollx = new QScrollBar(f_main);
   scrollx->setMinimumSize( 16, 16 );
   scrollx->setOrientation(QScrollBar::Horizontal);
@@ -119,11 +122,11 @@ KMenuEdit::KMenuEdit( const char *name )
   scrolly->setSteps( 8, f_mask->height() );
 
   top2bottom = new QGridLayout( f_main, 2, 2, 2 );
-  top2bottom->addWidget( f_mask, 0, 0, Qt::AlignCenter );
+  top2bottom->addWidget( f_mask, 0, 0 );
   top2bottom->setRowStretch( 0, 1 );
   top2bottom->setColStretch( 0, 1 );
-  top2bottom->addWidget( scrolly, 0, 1, Qt::AlignCenter );
-  top2bottom->addWidget( scrollx, 1, 0, Qt::AlignCenter );
+  top2bottom->addWidget( scrolly, 0, 1 );
+  top2bottom->addWidget( scrollx, 1, 0 );
   top2bottom->activate();
 
   connect( scrollx, SIGNAL(valueChanged(int)), this, SLOT(move_h(int)) );
@@ -255,11 +258,15 @@ void KMenuEdit::loadMenus()
   QString temp = KApplication::localkdedir() +"/share/applnk";
   dir_name = config->readEntry("PersonalPath", temp.data());
   dir_name = dir_name.stripWhiteSpace();
+  // Debug statement
+  qDebug("KMenuEdit: Personal Path = %s", dir_name.data());
   QDir dir(dir_name);
   if( pers_menu_data )
     delete pers_menu_data;
   pers_menu_data = new PMenu;
   pers_menu_data->parse(dir);
+  // Debug statement
+   qDebug("KMenuEdit: Personal items parsed = %d", pers_menu_data->count());
   if( !pers_menu_data->count() )
     pers_menu_data->add(new PMenuItem(unix_com, klocale->translate("EMPTY")));
   QFileInfo fi(dir_name + "/.directory");
@@ -273,11 +280,15 @@ void KMenuEdit::loadMenus()
   temp = KApplication::kde_appsdir();
   dir_name = config->readEntry("Path", temp.data());
   dir_name = dir_name.stripWhiteSpace();
+  // Debug statement
+   qDebug("KMenuEdit: Global Path = %s", dir_name.data());
   dir = dir_name;
   if( glob_menu_data )
     delete glob_menu_data;
   glob_menu_data = new PMenu;
   glob_menu_data->parse(dir);
+  // Debug statement
+  qDebug("KMenuEdit: Global items parsed = %d", glob_menu_data->count());
   //if( !glob_menu_data->count() )
   //  glob_menu_data->add(new PMenuItem(unix_com, "EMPTY"));
   fi.setFile(dir_name + "/.directory");

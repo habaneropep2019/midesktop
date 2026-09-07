@@ -99,13 +99,21 @@ void KFM::removeTempFile(const QString & name){
 }
 
 bool KFM::downloadInternal(const QString & src, QString & target){
-  if (target.isEmpty()){
-    target = tmpnam(0);
-    if (!tmpfiles)
-      tmpfiles = new QStrList;
-    tmpfiles->append(qstrdup(target.data()));
-  }
-  download_state = true; // success
+    if (target.isEmpty()){
+        char tmppath[] = "/tmp/kfm_XXXXXX";
+        int fd = mkstemp(tmppath);
+        if (fd < 0) {
+            download_state = false;
+            return false;
+        }
+        close(fd);
+
+        target = tmppath;
+        if (!tmpfiles)
+            tmpfiles = new QStrList;
+        tmpfiles->append(qstrdup(target.data()));
+    }
+    download_state = true; // success
 
   /* this is a bit tricky. We use a faked modal dialog to be able to
      process the download syncronious. For the user it will look

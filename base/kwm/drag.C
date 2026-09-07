@@ -24,6 +24,8 @@
 #include <X11/Xutil.h>
 #include <X11/keysym.h>
 
+#include <X11/XKBlib.h>
+
 #define ButtonMask  (ButtonPressMask|ButtonReleaseMask)
 
 
@@ -295,7 +297,7 @@ bool sweepdrag(Client* c,void (*recalc)( Client *, int, int) ){
       XMaskEvent(qt_xdisplay(), ButtonMask|KeyPressMask|PointerMotionMask, &ev);
       return_pressed = ev.type == ButtonRelease;
       if (ev.type == KeyPress){
-	int kc = XKeycodeToKeysym(qt_xdisplay(), ev.xkey.keycode, 0);
+	KeySym kc = XkbKeycodeToKeysym(qt_xdisplay(), ev.xkey.keycode, 0, 0);
 	int mx = 0;
 	int my = 0;
 	return_pressed = (kc == XK_Return) || (kc == XK_space)
@@ -444,7 +446,7 @@ void killSelect(){
       XMaskEvent(qt_xdisplay(), KeyPressMask | ButtonMask |
 		 PointerMotionMask, &ev);
       if (ev.type == KeyPress){
-	int kc = XKeycodeToKeysym(qt_xdisplay(), ev.xkey.keycode, 0);
+	KeySym kc = XkbKeycodeToKeysym(qt_xdisplay(), ev.xkey.keycode, 0, 0);
 	int mx = 0;
 	int my = 0;
 	return_pressed = (kc == XK_Return) || (kc == XK_space);

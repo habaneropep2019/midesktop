@@ -37,74 +37,75 @@ void mainWidget::paintEvent(QPaintEvent *)
   QString str;
   char buf[512];
   QPainter p(this);
-  
+
   QFont normalFont("times",12,QFont::Normal);
   KApplication::getKApplication()->getCharsets()->setQFont(normalFont);
   QFont boldFont("times",12,QFont::Bold);
   KApplication::getKApplication()->getCharsets()->setQFont(boldFont);
 
+  const int labelX = 60;
+  const int valueX = 220; // Pushed from 180 to 220 to avoid overlap
+
   // center the pixmap horizontally
   p.drawPixmap( (width() - pmap.width())/2, 250, pmap);
+
   str = i18n("MiDesktop Version: ");
   p.setFont(boldFont);
-  p.drawText(60,70,str);
-  str.sprintf("%s",MIDESKTOP_VERSION_STRING);
+  p.drawText(labelX, 70, str);
+  str.sprintf("%s", MIDESKTOP_VERSION_STRING);
   p.setFont(normalFont);
-  p.drawText(180,70,str);
+  p.drawText(valueX, 70, str);
 
   p.setFont(boldFont);
-  str= i18n("User: ");
-  p.drawText(60,90,str);
+  str = i18n("User: ");
+  p.drawText(labelX, 90, str);
   char *login = getlogin(); // can't just use isEmpty... (mosfet)
   if(!login)
-      login = getenv("LOGNAME");
+    login = getenv("LOGNAME");
   if(!login)
-      str = i18n("Unknown");
+    str = i18n("Unknown");
   else
-      str.sprintf("%s", login);
-  
+    str.sprintf("%s", login);
   p.setFont(normalFont);
-  p.drawText(180,90,str);
+  p.drawText(valueX, 90, str);
 
   str = i18n("Hostname: ");
   p.setFont(boldFont);
-  p.drawText(60,110,str);
-  gethostname(buf,511);
-  str.sprintf("%s",buf);
+  p.drawText(labelX, 110, str);
+  gethostname(buf, 511);
+  str.sprintf("%s", buf);
   p.setFont(normalFont);
-  p.drawText(180,110,str);
+  p.drawText(valueX, 110, str);
 
   str = i18n("System: ");
   p.setFont(boldFont);
-  p.drawText(60,130,str);
-  str.sprintf("%s",info.sysname);
+  p.drawText(labelX, 130, str);
+  str.sprintf("%s", info.sysname);
   p.setFont(normalFont);
-  p.drawText(180,130,str);
-   
+  p.drawText(valueX, 130, str);
+
   str = i18n("Release: ");
   p.setFont(boldFont);
-  p.drawText(60,150,str);
-  str.sprintf("%s",info.release);
+  p.drawText(labelX, 150, str);
+  str.sprintf("%s", info.release);
   p.setFont(normalFont);
-  p.drawText(180,150,str);
-
+  p.drawText(valueX, 150, str);
 
   str = i18n("Version: ");
   p.setFont(boldFont);
-  p.drawText(60,170,str);
-  str.sprintf("%s",info.version);
+  p.drawText(labelX, 170, str);
+  str.sprintf("%s", info.version);
   p.setFont(normalFont);
-  p.drawText(180,170,str);
+  p.drawText(valueX, 170, str);
 
   str = i18n("Machine: ");
   p.setFont(boldFont);
-  p.drawText(60,190,str);
-  str.sprintf("%s",info.machine);
+  p.drawText(labelX, 190, str);
+  str.sprintf("%s", info.machine);
   p.setFont(normalFont);
-  p.drawText(180,190,str);
+  p.drawText(valueX, 190, str);
 
   p.end();
-
 }
 
 

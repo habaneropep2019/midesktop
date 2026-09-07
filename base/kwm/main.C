@@ -43,6 +43,8 @@
 #include <X11/extensions/shape.h>
 #include <X11/cursorfont.h>
 
+#include <X11/XKBlib.h>
+
 #define INT8 _X11INT8
 #define INT32 _X11INT32
 #include <X11/Xproto.h>
@@ -1451,7 +1453,7 @@ static bool control_grab = False;
 
 
 bool MyApp::handleKeyPress(XKeyEvent key){
-  int kc = XKeycodeToKeysym(qt_xdisplay(), key.keycode, 0);
+  int kc = XkbKeycodeToKeysym(qt_xdisplay(), key.keycode, 0, 0);
   int km = key.state & (ControlMask | Mod1Mask | ShiftMask);
 
   if (!control_grab){

@@ -407,7 +407,7 @@ void kPanel::layoutDockArea()
 	int nCnt = kwmmapp->dock_windows.count();
 	int nSz = (nCnt ? nCnt * 24 + 3 : 1);
 
-	if (orientation == vertical)
+	if (orientation == Qt::Vertical)
 	{
 		if (nSz != dock_area->height());
 		{
@@ -774,7 +774,7 @@ void kPanel::doButtonMove()
 		return;
 
 	int x, y;
-	if (orientation == horizontal)
+	if (orientation == Qt::Horizontal)
 	{
 		x = m_pButtonsArea->getButtonsArea()->mapFromGlobal(QCursor::pos()).x()
 					- moving_button_offset.x();
@@ -788,7 +788,7 @@ void kPanel::doButtonMove()
 	}
 
 #ifdef MMM
-	if (orientation == horizontal)
+	if (orientation == Qt::Horizontal)
 	{
 		if (x < 0) 
 			x = 0;
@@ -831,10 +831,10 @@ void kPanel::enterEvent( QEvent *)
   hideTimer->start(autoHideDelay, true);
 
   if (taskbar_frame &&
-      ((orientation == horizontal && position == top_left &&
+      ((orientation == Qt::Horizontal && position == top_left &&
       taskbar_frame->autoHidden && taskbar_position == top)
       ||
-      (orientation == horizontal && position == bottom_right &&
+      (orientation == Qt::Horizontal && position == bottom_right &&
       taskbar_frame->autoHidden && taskbar_position == bottom)))
 	{
     QEvent ev(QEvent::Enter);
@@ -843,7 +843,7 @@ void kPanel::enterEvent( QEvent *)
 
   if (!autoHidden)
     return;
-  if (orientation == horizontal){
+  if (orientation == Qt::Horizontal){
     if (position == top_left)
       animateMove (this, 0,0,4*autoHideSpeed);
     else
@@ -901,7 +901,7 @@ void kPanel::hideTimerDone()
     hideTimer->start(autoHideDelay, true);
   }
   else {
-    if (orientation == horizontal){
+    if (orientation == Qt::Horizontal){
 	if (position == top_left)
 	    animateMove (this, x(), y()-height()+4, -autoHideSpeed);
 	else
@@ -989,11 +989,11 @@ void kPanel::doPanelReposition()
 	if (m_nMovePos != -1)
 	{
 		int nCurPos = -1;
-		if (orientation == horizontal)
+		if (orientation == Qt::Horizontal)
 		{
 			nCurPos = (position == top_left ? 0 : 1);
 		}
-		else if (orientation == vertical)
+		else if (orientation == Qt::Vertical)
 		{
 			nCurPos = (position == top_left ? 2 : 3);
 		}
@@ -1101,7 +1101,7 @@ void kPanel::slotDropEvent( KDNDDropZone *_zone )
 				{
 					int x = margin;
 					int y = margin;
-					if (orientation == vertical)
+					if (orientation == Qt::Vertical)
 					{
 						y = p.y() - m_pButtonsArea->y() - box_height/2;
 						if (y<margin) y=margin;
