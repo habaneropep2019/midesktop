@@ -1,8 +1,6 @@
-midesktopbase (1.2.0~pre3-1) UNRELEASED; urgency=low
+midesktopbase (1.2.0~beta1-1) UNRELEASED; urgency=medium
 
-  * Updated XSession .desktop
-  * New session start script
-  * Workaround for GDM3 issues
-  * Bumped MiDesktop version to 1.2
+  * MiDesktop 1.2.0 beta 1 release
 
- -- Alec Bloss <abloss@libranext.com>  Sat, 17 Jan 2026 13:24:04 -0600
+
+ -- Alec Bloss <abloss@libranext.com>  Mon, 07 Sep 2026 09:31:15 -0500

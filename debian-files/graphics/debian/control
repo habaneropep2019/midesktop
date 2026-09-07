@@ -1,0 +1,25 @@
+Source: midesktoputils
+Section: contrib/utils
+Priority: extra
+Maintainer: Alec Bloss <abloss@libranext.com>
+Build-Depends:
+ debhelper-compat (= 13),
+ cmake,
+ ninja-build,
+ midesktoplibs,
+ osiris (>=2.4.5),
+ osiris (<< 2.5),
+ pkg-config
+Standards-Version: 4.7.0
+Homepage: https://midesk.top/
+Rules-Requires-Root: no
+
+Package: midesktoputils
+Architecture: any
+Multi-Arch: foreign
+Depends:
+ ${misc:Depends},
+ ${shlibs:Depends},
+Description: collection of useful midesktop utilities
+ this collection includes kcalc kwrite khexdit knotes ark etc.
+ (calculator, editor, hex editor ...)

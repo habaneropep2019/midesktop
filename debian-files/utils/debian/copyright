@@ -1,0 +1,415 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: midesktoputils
+Upstream-Contact: <preferred name and address to reach the upstream project>
+Source: <url://example.com>
+#
+# Please double check copyright with the licensecheck(1) command.
+
+Files:     CMakeLists.txt
+           ark/CMakeLists.txt
+           ark/Makefile.am
+           ark/README
+           ark/adddlg.h
+           ark/ar.h
+           ark/arch.h
+           ark/ark.kdelnk
+           ark/ark.xpm
+           ark/arkprocess.cc
+           ark/arkprocess.h
+           ark/arkwidget.h
+           ark/dlg/extract.dlg
+           ark/dlg/options.dlg
+           ark/doc/Makefile.am
+           ark/doc/en/Makefile.am
+           ark/doc/en/logotp3.gif
+           ark/errors.h
+           ark/extractdlg.h
+           ark/karchive.h
+           ark/large-ark.xpm
+           ark/lha.h
+           ark/mini-ark.xpm
+           ark/tar.h
+           ark/text.h
+           ark/zip.h
+           kcalc/CMakeLists.txt
+           kcalc/Makefile.am
+           kcalc/Makefile.in.orig
+           kcalc/README
+           kcalc/ToDo
+           kcalc/doc/Makefile.am
+           kcalc/doc/de/Makefile.am
+           kcalc/doc/de/logotp3.gif
+           kcalc/doc/kcalc_on_Aix.txt
+           kcalc/doc/kcalc_on_OSF.txt
+           kcalc/doc/logotp3.gif
+           kcalc/kcalc.kdelnk
+           kcalc/kcalc.lsm
+           kcalc/kcalc.on.OSF
+           kcalc/kcalc.xpm
+           kcalc/kcalclogo.xpm
+           kcalc/large-kcalc.xpm
+           kcalc/mini-kcalc.xpm
+           kcalc/version.h
+           khexdit/CMakeLists.txt
+           khexdit/Makefile.am
+           khexdit/doc/Makefile.am
+           khexdit/doc/en/Makefile.am
+           khexdit/doc/it/Makefile.am
+           khexdit/doc/no/Makefile.am
+           khexdit/khexdit.kdelnk
+           khexdit/khexdit.xpm
+           khexdit/large-khexdit.xpm
+           khexdit/mini-khexdit.xpm
+           knotes/AUTHORS
+           knotes/CMakeLists.txt
+           knotes/Makefile.am
+           knotes/Makefile.in.orig
+           knotes/README
+           knotes/TODO
+           knotes/docs/Makefile.am
+           knotes/docs/logotp3.gif
+           knotes/down.xbm
+           knotes/knotes.kdelnk
+           knotes/knotes.xpm
+           knotes/knotesclose.xpm
+           knotes/knoteslogo.xpm
+           knotes/large-knotes.xpm
+           knotes/mini-knotes.xpm
+           knotes/up.xbm
+           knotes/version.h
+           kwrite/CMakeLists.txt
+           kwrite/Makefile.am
+           kwrite/docs/Makefile.am
+           kwrite/docs/kwrite.lsm
+           kwrite/docs/logotp3.gif
+           kwrite/highlight.cpp
+           kwrite/highlight.h
+           kwrite/kmimemagic.cpp
+           kwrite/kmimemagic.h
+           kwrite/kwdialog.cpp
+           kwrite/kwdialog.h
+           kwrite/kwdoc.cpp
+           kwrite/kwdoc.h
+           kwrite/kwrite.kdelnk
+           kwrite/kwrite.xpm
+           kwrite/kwview.cpp
+           kwrite/kwview.h
+           kwrite/large-kwrite.xpm
+           kwrite/mini-kwrite.xpm
+           kwrite/redo.xpm
+           kwrite/toplevel.h
+           kwrite/undo.xpm
+           midesktoputils_1.2.0~beta1.orig.tar.gz
+Copyright: __NO_COPYRIGHT_NOR_LICENSE__
+License:   __NO_COPYRIGHT_NOR_LICENSE__
+
+Files:     kcalc/configdlg.cpp
+           kcalc/configdlg.h
+           kcalc/dlabel.cpp
+           kcalc/dlabel.h
+           kcalc/fontdlg.cpp
+           kcalc/fontdlg.h
+           kcalc/kcalc.h
+           kcalc/kcalc_core.cpp
+           kcalc/kcalctype.h
+           kcalc/stats.cpp
+           kcalc/stats.h
+           knotes/alarm.h
+           knotes/configdlg.h
+           knotes/fontdlg.h
+           knotes/knotes.h
+           knotes/mail.cpp
+           knotes/mail.h
+           knotes/renamedlg.h
+           knotes/savealarm.cpp
+           knotes/timer.cpp
+           knotes/timer.h
+           kwrite/toplevel.cpp
+Copyright: 1996 Bernd Johannes Wuebben wuebben@math.cornell.edu
+           1998 Jochen Wilhelmy digisnap@cs.tu-berlin.de
+           Bernd Johannes Wuebben wuebben@math.cornell.edu wuebben@kde.org
+           __NO_COPYRIGHT__ in: kcalc/kcalc_core.cpp
+License:   GPL-2.0+
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
+ .
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+ .
+ You should have received a copy of the GNU General Public License
+ along with this program; if not, write to the Free Software
+ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ .
+ The FSF address in the above text is the old one.
+ .
+ On Debian systems, the complete text of the GNU General Public License
+ Version 2 can be found in `/usr/share/common-licenses/GPL-2'.
+
+Files:     ark/Makefile.in
+           ark/doc/Makefile.in
+           ark/doc/en/Makefile.in
+           kcalc/Makefile.in
+           kcalc/doc/Makefile.in
+           kcalc/doc/de/Makefile.in
+           khexdit/Makefile.in
+           khexdit/doc/Makefile.in
+           khexdit/doc/en/Makefile.in
+           khexdit/doc/it/Makefile.in
+           khexdit/doc/no/Makefile.in
+           knotes/Makefile.in
+           knotes/docs/Makefile.in
+           kwrite/Makefile.in
+           kwrite/docs/Makefile.in
+Copyright: 1994-1999 Free Software Foundation, Inc.
+License:   __AUTO_PERMISSIVE__
+ Autogenerated files with permissive licenses.
+
+Files:     ark/adddlg.cc
+           ark/ar.cc
+           ark/arch.cc
+           ark/extractdlg.cc
+           ark/karchive.cc
+           ark/lha.cc
+           ark/tar.cc
+           ark/zip.cc
+           khexdit/hexdata.cpp
+           khexdit/hexdata.h
+           khexdit/hexfile.cpp
+           khexdit/hexfile.h
+           khexdit/hexwidget.cpp
+           khexdit/hexwidget.h
+Copyright: 1996-1998 Stephan Kulow
+           1997 Robert Palmbos
+           1997 Robert Palmbos See main.cc for license details
+           1998 David Faure See main.cc for license details
+License:   __NO_LICENSE__
+
+Files:     knotes/alarm.cpp
+           knotes/configdlg.cpp
+           knotes/fontdlg.cpp
+           knotes/knotes.cpp
+           knotes/renamedlg.cpp
+Copyright: Bernd Johannes Wuebben wuebben@math.cornell.edu wuebben@kde.org
+License:   GPL-2.0+
+ This program is free software; you can redistribute it and/or
+ modify it under the terms of the GNU General Public License
+ as published by the Free Software Foundation; either version 2
+ of the License, or (at your option) any later version.
+ .
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+ .
+ You should have received a copy of the GNU General Public License
+ along with this program; if not, write to the Free Software
+ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ .
+ (klocale->translate stuff added by didier Belot <dib@avo.fr>)
+ .
+ The FSF address in the above text is the old one.
+ .
+ On Debian systems, the complete text of the GNU General Public License
+ Version 2 can be found in `/usr/share/common-licenses/GPL-2'.
+
+Files:     knotes/bwdatetime.h
+           knotes/spin.cpp
+           knotes/spin.h
+Copyright: 1997 Bernd Johannes Wuebben
+License:   GPL-2.0+
+ wuebben@math.cornell.edu
+ wuebben@kde.org
+ .
+ This class is a modified version of a class found in:
+ .
+ qtremind - an X windows appoint reminder program.
+ Copyright (C) 1997  Tom Daley
+ .
+ This program is free software; you can redistribute it and/or
+ modify it under the terms of the GNU General Public License
+ as published by the Free Software Foundation; either version 2
+ of the License, or (at your option) any later version.
+ .
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+ .
+ You should have received a copy of the GNU General Public License
+ along with this program; if not, write to the Free Software
+ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ .
+ The FSF address in the above text is the old one.
+ .
+ On Debian systems, the complete text of the GNU General Public License
+ Version 2 can be found in `/usr/share/common-licenses/GPL-2'.
+
+Files:     knotes/docking.cpp
+           knotes/docking.h
+Copyright: 1997 Bernd Johannes Wuebben wuebben@math.cornell.edu
+License:   LGPL-2.0+
+ This program is free software; you can redistribute it and/or
+ modify it under the terms of the GNU Library General Public
+ License as published by the Free Software Foundation; either
+ version 2 of the License, or (at your option) any later version.
+ .
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ Library General Public License for more details.
+ .
+ You should have received a copy of the GNU Library General Public
+ License along with this program; if not, write to the Free
+ Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ .
+ The FSF address in the above text is the old one.
+ .
+ On Debian systems, the complete text of the GNU Library General Public License
+ Version 2 can be found in `/usr/share/common-licenses/LGPL-2'.
+
+Files:     knotes/bwdatetime.cpp
+Copyright: Bernd Johannes Wuebben wuebben@math.cornell.edu wuebben@kde.org
+License:   GPL-2.0+
+ This program is free software; you can redistribute it and/or
+ modify it under the terms of the GNU General Public License
+ as published by the Free Software Foundation; either version 2
+ of the License, or (at your option) any later version.
+ .
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+ .
+ You should have received a copy of the GNU General Public License
+ along with this program; if not, write to the Free Software
+ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ .
+ This class is based on a class taken from
+ qtremind - an X windows appoint reminder program.
+ Copyright (C) 1997  Tom Daley
+ .
+ (klocale->translate stuff added by didier Belot <dib@avo.fr>)
+ .
+ The FSF address in the above text is the old one.
+ .
+ On Debian systems, the complete text of the GNU General Public License
+ Version 2 can be found in `/usr/share/common-licenses/GPL-2'.
+
+Files:     ark/main.cc
+Copyright: 1997 Robert Palmbos
+License:   GPL-2.0+
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
+ .
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+ .
+ You should have received a copy of the GNU General Public License
+ along with this program; if not, write to the Free Software
+ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ .
+ I can be reached at:
+ .
+ robertp@macatawa.org
+ .
+ The FSF address in the above text is the old one.
+ .
+ On Debian systems, the complete text of the GNU General Public License
+ Version 2 can be found in `/usr/share/common-licenses/GPL-2'.
+
+Files:     kcalc/kcalc.cpp
+Copyright: 1996 Bernd Johannes Wuebben wuebben@math.cornell.edu
+License:   GPL-2.0+
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
+ .
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+ .
+ You should have received a copy of the GNU General Public License
+ along with this program; if not, write to the Free Software
+ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ .
+ #include "../config.h"
+ .
+ The FSF address in the above text is the old one.
+ .
+ On Debian systems, the complete text of the GNU General Public License
+ Version 2 can be found in `/usr/share/common-licenses/GPL-2'.
+
+Files:     ark/arkwidget.cc
+Copyright: 1997 Robert Palmbos See main.cc for license details Warning:  Uncommented spaghetti code next 500 lines
+License:   __UNKNOWN__
+ This is the main ark window widget
+
+Files:     ark/text.c
+Copyright: 1997 Robert Palmbos
+License:   __UNKNOWN__
+ This file is under the GPL.  See main.cc for more.
+
+#----------------------------------------------------------------------------
+# xml and html files (skipped):
+#         ark/doc/en/index-1.html
+#         ark/doc/en/index.html
+#         ark/doc/en/index-2.html
+#         ark/doc/en/index-3.html
+#         ark/doc/en/index.sgml
+#         ark/doc/en/index.nif
+#         ark/doc/en/index-4.html
+#         kwrite/docs/index-1.html
+#         kwrite/docs/index.html
+#         kwrite/docs/index-2.html
+#         kwrite/docs/index-3.html
+#         kwrite/docs/index.sgml
+#         kwrite/docs/index.nif
+#         kwrite/docs/index-4.html
+#         kwrite/docs/index-5.html
+#         kcalc/doc/index-1.html
+#         kcalc/doc/index.html
+#         kcalc/doc/index-6.html
+#         kcalc/doc/index-8.html
+#         kcalc/doc/index-9.html
+#         kcalc/doc/index-2.html
+#         kcalc/doc/index-3.html
+#         kcalc/doc/index.sgml
+#         kcalc/doc/index-7.html
+#         kcalc/doc/index-4.html
+#         kcalc/doc/index-5.html
+#         kcalc/doc/de/index-1.html
+#         kcalc/doc/de/index.html
+#         kcalc/doc/de/index-6.html
+#         kcalc/doc/de/index-8.html
+#         kcalc/doc/de/index-9.html
+#         kcalc/doc/de/index-2.html
+#         kcalc/doc/de/index-3.html
+#         kcalc/doc/de/index.sgml
+#         kcalc/doc/de/index-7.html
+#         kcalc/doc/de/index-4.html
+#         kcalc/doc/de/index-5.html
+#         khexdit/doc/en/index.html
+#         khexdit/doc/no/index.html
+#         khexdit/doc/it/index.html
+#         knotes/docs/index-1.html
+#         knotes/docs/index.html
+#         knotes/docs/index-2.html
+#         knotes/docs/index-3.html
+#         knotes/docs/index.sgml
+#         knotes/docs/index.nif
+#         knotes/docs/index-4.html
+#         knotes/docs/index-5.html
+
+#----------------------------------------------------------------------------
+# Files marked as NO_LICENSE_TEXT_FOUND may be covered by the following
+# license/copyright files.

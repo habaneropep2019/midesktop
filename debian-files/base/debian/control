@@ -6,7 +6,7 @@ Build-Depends:
  debhelper-compat (= 13),
  cmake,
  ninja-build,
- osiris (>= 2.4.4),
+ osiris (>= 2.4.5),
  osiris (<< 2.5),
  midesktoplibs (>=1.1.99),
  pkg-config
@@ -22,7 +22,7 @@ Multi-Arch: foreign
 Depends:
  ${misc:Depends},
  ${shlibs:Depends},
- osiris (>= 2.4.4),
+ osiris (>= 2.4.5),
  osiris (<< 2.5),
  midesktoplibs (>=1.1.99)
 Replaces: kdebase (<< 1.1.99)

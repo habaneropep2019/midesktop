@@ -7,3 +7,4 @@
 /opt/kde1/share/mimelnk/*
 /etc/profile.d/midesktop.sh
 /usr/share/xsessions/mi.desktop
+/opt/kde1/include/midesktop_config.h

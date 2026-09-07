@@ -7,15 +7,10 @@ Build-Depends:
  debhelper-compat (= 13),
  ninja-build,
  cmake,
- osiris (>= 2.4.4),
+ osiris (>= 2.4.5),
  osiris (<< 2.5),
- osiris-dev-tools (>= 2.4.4),
- osiris-dev-tools (<< 2.5),
- zlib1g,
- libjpeg,
- libtiff,
- libx11,
- libxext
+ osiris-dev-tools (>= 2.4.5),
+ osiris-dev-tools (<< 2.5)
 Standards-Version: 4.7.2
 Homepage: https://centre.libranext.com/libranext/mide
 #Vcs-Browser: https://salsa.debian.org/debian/midesktoplibs
@@ -26,7 +21,7 @@ Architecture: any
 Depends:
  ${shlibs:Depends},
  ${misc:Depends},
- osiris (>= 2.4.4),
+ osiris (>= 2.4.5),
  osiris (<< 2.5)
 Replaces: kdelibs2g (<< 1.1.99)
 Breaks: kdelibs2g (<< 1.1.99)

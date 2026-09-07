@@ -1,0 +1,8 @@
+Package: midesktop-full
+Version: 1.2.0~beta1
+Section: misc
+Priority: optional
+Depends: midesktopbase, midesktoplibs, midesktoputils, midesktopwallpapers, midesktopgraphics
+Architecture: all
+Maintainer: Alec Bloss <abloss@libranext.com>
+Description: This package installs the full MiDesktop environment

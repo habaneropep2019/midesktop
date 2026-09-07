@@ -10,3 +10,22 @@ that you will find under debian/.
 To use them, simply copy the correct debian/ folder into the correct directory. Example for base:
 
 cp -r debian-files/base/debian base/
+
+**Building the meta-package(s)**
+
+A meta package is a package that generally depends on other packages but does not install anything itself.
+This is useful for providing one package to install a whole desktop environment made up of many packages, for example.
+
+In MiDesktop, that package is midesktop-full.
+
+To build this package:
+
+```
+cp -r debian-files/midesktop-full .
+
+dpkg-deb --build midesktop-full
+
+mv midesktop-full.deb midesktop-full_1.2.0~beta1_all.deb
+```
+
+Make sure to change the version section appropriately  so it matches the correct version of your install.
