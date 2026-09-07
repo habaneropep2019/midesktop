@@ -9,6 +9,40 @@ The goal is to modernize MiDesktop without filling it with a bunch of features a
 
 **Important:** MiDesktop is still in the early stages and as such should be considered **experimental software**, in that it could have serious bugs or security flaws that have not been discovered yet. Use at your own risk!
 
+## Installing MiDesktop
+
+You can install pre-built packages for MiDesktop for Ubuntu and Debian systems. Currently, packages are built for Ubuntu 24.04 and Debian 13 amd64. As time allows, packages may be built for more systems.
+
+As of September 2026, the package repositories moved and are unified - meaning, one repository provides both Osiris and MiDesktop, making installation easier.
+
+**Important note if you've installed MiDesktop from the pre-release development preview packages:** You need to remove the old MiDesktop packages *and* repositories **BEFORE** you add the new repositories and install the newer MiDesktop packages. **Again**, you *must* remove the old packages AND repositories before you continue with these instructions. You'll run into issues if you do not.
+
+### Instructions
+
+You may need to run the following commands as `root` or using `sudo`.
+
+Be sure to replace `<distro>` with Ubuntu or Debian, as appropriate. Same goes for `<codename>`, replace with **trixie** (for Debian) or **noble** (for Ubuntu).
+
+There are three components you can choose from: `stable`, `testing`, and `nightly`. In order to use the MiDesktop beta, you should have both `stable` and `testing` enabled, which is why the instructions below have both. Once a stable version of MiDesktop is released, you can remove `testing` if you desire and stay on the stable branch.
+
+If you wish to use the bleeding edge development releases, you can add `nightly` as well, however, know that it's more likely to have bugs or other issues.
+
+### Get the package signing key
+
+```
+wget https://pkg.midesk.top/<distro>/pool/stable/m/midesktop-archive-keyring/midesktop-archive-keyring_1.0.0-1_all.deb
+
+dpkg -i midesktop-archive-keyring_1.0.0-1_all.deb
+
+echo 'deb [signed-by=/usr/share/keyrings/midesktop.pgp] https://pkg.midesk.top/<distro> <codename> stable testing' > /etc/apt/sources.list.d/midesktop.list
+
+apt update
+```
+
+### Installing MiDesktop
+
+To get the full desktop environment, simply run `apt install midesktop-full`. It is recommended that you reboot after installation.
+
 ## Building MiDesktop
 
 ### System Requirements
