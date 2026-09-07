@@ -1,0 +1,12 @@
+Originally, the debian/ folders for building Debian packages were included in the individual directories.
+In order to make this cleaner for future package building and to comply better with Debian policies, the debian/ folders
+have been moved into the root directory under debian-files/.
+
+Each section has its own directory, and in there you will find debian/ and debian-original/.
+
+debian-original/ is the original Debian package files provided with KDE1. These are used as reference for the modern version
+that you will find under debian/.
+
+To use them, simply copy the correct debian/ folder into the correct directory. Example for base:
+
+cp -r debian-files/base/debian base/
