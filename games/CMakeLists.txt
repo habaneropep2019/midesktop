@@ -29,4 +29,4 @@ if(CMAKE_COMPILER_IS_GNUCXX)
 endif()
 
 add_subdirectory(kmines)
-
+add_subdirectory(kabalone)
