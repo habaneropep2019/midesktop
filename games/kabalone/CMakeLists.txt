@@ -26,9 +26,9 @@ install(TARGETS kabalone RUNTIME DESTINATION ${KDE1_BINDIR})
 
 
 
-install(FILES data/mini-kabalone.xpm DESTINATION ${KDE1_ICONDIR}/mini)
+install(FILES mini-kabalone.xpm DESTINATION ${KDE1_ICONDIR}/mini)
 
-install(FILES data/large-kabalone.xpm DESTINATION ${KDE1_ICONDIR}/large)
+install(FILES large-kabalone.xpm DESTINATION ${KDE1_ICONDIR}/large)
 
 install(FILES kabalone.kdelnk DESTINATION ${KDE1_APPSDIR}/Games)
 

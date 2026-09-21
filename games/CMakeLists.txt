@@ -30,3 +30,4 @@ endif()
 
 add_subdirectory(kmines)
 add_subdirectory(kabalone)
+add_subdirectory(ksnake)
