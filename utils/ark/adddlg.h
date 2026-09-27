@@ -21,5 +21,5 @@ private:
 	QCheckBox *fullcb;
 };
 
-#endif ADDDLG_H
+#endif
 

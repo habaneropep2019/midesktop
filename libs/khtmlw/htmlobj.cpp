@@ -634,7 +634,7 @@ HTMLFitType HTMLTextSlave::fitLine( bool startOfLine, bool firstRun,
 {
     int newLen;
     int newWidth;
-    char *splitPtr;
+    const char *splitPtr;
 
     const char *text = owner->text;
     // Set font settings in painter for correct width calculation
@@ -673,7 +673,7 @@ HTMLFitType HTMLTextSlave::fitLine( bool startOfLine, bool firstRun,
 	    return HTMLCompleteFit;
 	    
 	// Text is followed by more text... break it before the last word.
-	splitPtr = rindex( text+1 , ' '); 
+	splitPtr = strrchr( text+1 , ' ');
 	if (!splitPtr)
 	    return HTMLCompleteFit;
     }
@@ -698,7 +698,7 @@ HTMLFitType HTMLTextSlave::fitLine( bool startOfLine, bool firstRun,
             
             for(;;)
             {
-                char *splitPtr2 = index( splitPtr+1, ' ');
+                const char *splitPtr2 = index( splitPtr+1, ' ');
                 if (!splitPtr2)
                     break;
 	    	extraLen = splitPtr2 - splitPtr;

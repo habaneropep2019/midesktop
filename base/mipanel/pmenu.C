@@ -382,7 +382,7 @@ short PMenuItem::parse(QFileInfo *fi, PMenu *menu)
 	
 	if (pixmap.isNull())
 	{
-		char *strPixmap = (fi->isDir() ? "folder.xpm" : "mini-default.xpm");
+		const char *strPixmap = (fi->isDir() ? "folder.xpm" : "mini-default.xpm");
 		pixmap = pIconLoader->loadApplicationMiniIcon(strPixmap, 16, 16);
 	}
 	

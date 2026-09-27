@@ -97,7 +97,7 @@ const int dsOthers = 9;
 
 
 bool testWw(char c) {
-  static char data[] = {0,0,0,0,0,0,255,3,254,255,255,135,254,255,255,7};
+  static const unsigned char data[] = {0,0,0,0,0,0,255,3,254,255,255,135,254,255,255,7};
   if (c & 128) return false;
   return !(data[c >> 3] & (1 << (c & 7)));
 }

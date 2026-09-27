@@ -37,6 +37,7 @@
 #include <kapp.h>
 #include <klocale.h>
 #include "kcalc.h"
+#include <cmath>
 
 // Undefine HAVE_LONG_DOUBLE for Beta 4 since RedHat 5.0 comes with a borken
 // glibc
@@ -52,7 +53,7 @@
 #include <math.h>
 #endif
 
-int isinf(double x) { return !finite(x) && x==x; }
+//int isinf(double x) { return !finite(x) && x==x; }
 #endif
 
 extern QList<CALCAMNT> temp_stack; 

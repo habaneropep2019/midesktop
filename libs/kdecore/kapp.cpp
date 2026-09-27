@@ -718,7 +718,8 @@ bool KApplication::eventFilter( QObject *obj, QEvent *e )
         const QObjectList *children = container->children();
         if ( children )
         {
-          for ( QObject *child = children->first(); child != 0L; child = children->next() )
+          QObjectListIt it( *children );
+          for ( QObject *child; ( child = it.current() ) != 0L; ++it )
           {
             if ( child->isWidgetType() && child->inherits( "QScrollBar" ) )
             {
