@@ -12,7 +12,7 @@ set(KNOTES_SRCS
 
 set(KNOTES_HEADERS
 	knotes.h configdlg.h fontdlg.h mail.h alarm.h
-		bwdatetime.h spin.h timer.h renamedlg.h docking.h)
+		spin.h renamedlg.h docking.h)
 
 OSIRIS_WRAP_HEADER(MOC_FILES ${KNOTES_HEADERS})
 

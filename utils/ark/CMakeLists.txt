@@ -13,7 +13,7 @@ set(MIARK_SRCS
                  arkwidget.cc lha.cc main.cc tar.cc zip.cc arkprocess.cc text.c)
 
 set(MIARK_HEADERS
-	adddlg.h errors.h lha.h zip.h ar.h extractdlg.h arkwidget.h tar.h arch.h karchive.h arkprocess.h text.h)
+	adddlg.h extractdlg.h arkwidget.h tar.h arch.h)
 
 OSIRIS_WRAP_HEADER(MOC_FILES ${MIARK_HEADERS})
 
