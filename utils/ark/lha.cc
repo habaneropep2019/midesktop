@@ -82,7 +82,7 @@ void LhaArch::openArch( QString file )
 // In the scanf's format string, the first and the fifth conversion string
 // contains a 'd' and an *, respectively so that scanf can parse directories,
 // too.
-		if( QString::QString(line).contains("[generic]") ) {
+		if( QString(line).contains("[generic]") ) {
 			sscanf( line, " %[]\[generic] %[0-9] %[0-9] %[0-9.%*] %10[-a-z0-9 ] "
 				"%12[A-Za-z0-9: ]%1[ ]%[^\n]", 
 				columns[0], columns[2], columns[3], columns[4], columns[5], 
