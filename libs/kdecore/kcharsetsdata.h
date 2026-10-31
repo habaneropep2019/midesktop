@@ -39,7 +39,7 @@
 * @internal
 */
 struct KCharsetEntry{
-  char *name;
+  const char *name;
   QFont::CharSet qtCharset;
   const unsigned *toUnicode;
   bool registered;
